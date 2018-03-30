@@ -168,13 +168,10 @@ function onDragMove()
     if (this.dragging) {
         var newPosition = this.data.getLocalPosition(this.parent);
 
-
         historyX.pop();
         historyX.unshift(newPosition.x);
         historyY.pop();
         historyY.unshift(newPosition.y);
-        //Update the points to correspond with history.
-
     }
 }
 
