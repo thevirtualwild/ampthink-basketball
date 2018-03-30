@@ -198,7 +198,18 @@ function throwBall(x1, y1, x2, y2)
 
 function shotAttempt()
 {
-    thrown = false;
-    basketball.x = app.screen.width/2;saz
-    basketball.y = app.screen.height/2;
+    /* data = {
+          xval: basketball.x
+        }
+    */
+    //socket.emit('shot attempt', data);
+
+    resetBall();
+}
+
+function resetBall()
+{
+  thrown = false;
+  basketball.x = app.screen.width/2;
+  basketball.y = app.screen.height/2;
 }
