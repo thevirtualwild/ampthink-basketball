@@ -19,21 +19,28 @@ function onConnection(socket) {
   console.log('a user connected');
 
 
-
-
-
-
   socket.on('throw ball', function(data) {
-    console.log('Full Data - ' + data);
+    // console.log('Full Data - ' + data);
 
-    var exitX = data.exitY;
+    var exitX = data.exitX;
     var exitY = data.exitY;
     var xSpeed = data.xSpeed;
     var ySpeed = data.ySpeed;
 
-    console.log('Data Saved');
+    // console.log('Data Saved');
+
+    var shotInfo = {
+      fromX: exitX,
+      fromY: exitY,
+      xSpeed: xSpeed,
+      ySpeed: ySpeed
+    }
 
     console.log('take shot');
+
+    socket.emit('shot sent');
+
+    io.emit('take shot', shotInfo);
   });
 
   socket.on('disconnect', function() {

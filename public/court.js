@@ -1,4 +1,5 @@
 var socket = io();
+// console.log('Socket - ' + socket);
 
 // Main Controller Code
 var app = new PIXI.Application(window.innerWidth, window.innerHeight, {backgroundColor : 0x1099bb});
@@ -23,6 +24,18 @@ var historySize = 10;
 //ropeSize determines how smooth the trail will be.
 var ropeSize = 100;
 var points = [];
+
+
+
+var myX1;
+var myY1;
+var myXspeed;
+var myYspeed;
+
+
+
+
+
 
 //Create history array.
 for( var i = 0; i < historySize; i++)
@@ -67,7 +80,7 @@ function drawBasketball(x, y) {
     basketball.scale.set(0.2);
     basketball.x = x;
     basketball.y = y;
-    console.log('initial xy - ' + basketball.x + ',' + basketball.y);
+    // console.log('initial xy - ' + basketball.x + ',' + basketball.y);
 }
 
 app.ticker.add(function(delta) {
@@ -109,6 +122,9 @@ function throwBall(x1, y1, xSpeed, ySpeed)
 {
     var y2 = basketY;
 
+    basketball.x = x1;
+    basketball.y = y1;
+
 
     var originX;
     var originY;
@@ -117,25 +133,25 @@ function throwBall(x1, y1, xSpeed, ySpeed)
     var duration = (ydistTraveling/ySpeed);
 
     var xdistTraveling = duration * xSpeed;
-    console.log(xdistTraveling);
+    // console.log(xdistTraveling);
     var x2 = (x1 + xdistTraveling);
-    console.log('X2' + x2);
+    // console.log('X2' + x2);
 
     var tweenDuration = duration;
 
     thrown = true;
-
-    console.log('Initial Basketbal X - ' + basketball.x);
-    console.log('Initial Basketball Y - ' + basketball.y);
-    console.log('Final Basketball X - ' + x2);
-    console.log('Final Basketball Y - ' + y2);
+    //
+    // console.log('Initial Basketbal X - ' + basketball.x);
+    // console.log('Initial Basketball Y - ' + basketball.y);
+    // console.log('Final Basketball X - ' + x2);
+    // console.log('Final Basketball Y - ' + y2);
     TweenMax.to(basketball, tweenDuration, {y:y2, x:x2, onComplete:shotAttempt, ease: Back.easeOut.config(4)});
 
 }
 
 function shotAttempt()
 {
-    console.log('Shot Thrown');
+    // console.log('Shot Thrown');
     /* data = {
           xval: basketball.x
         }
@@ -145,15 +161,16 @@ function shotAttempt()
     // resetBall();
 }
 
-socket.on('take shot', fuction(data) {
-  console.log('shot taken');
+socket.on('take shot', function(shotInfo) {
+  myX1 = shotInfo.fromX;
+  myY1 = 600;
+  myXspeed = shotInfo.xSpeed;
+  myYspeed = shotInfo.ySpeed;
+  console.log('shot X1- ' + myX1);
+  console.log('shot Y1- ' + myY1);
+  console.log('shot xSpeed- ' + myXspeed);
+  console.log('shot ySpeed- ' + myYspeed);
+
+  drawBasketball(myX1,myY1);
+  throwBall(myX1, myY1, myXspeed, myYspeed);
 });
-
-var myX1 = 800;
-var myY1 = 400;
-var myXspeed = 000;
-var myYspeed = 200;
-
-
-drawBasketball(myX1,myY1);
-throwBall(myX1, myY1, myXspeed, myYspeed);
