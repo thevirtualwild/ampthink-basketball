@@ -2,6 +2,8 @@
 var app = new PIXI.Application(window.innerWidth, window.innerHeight, {backgroundColor : 0x1099bb});
 document.body.appendChild(app.view);
 
+var socket = io();
+
 // create a texture from an image path
 var texture = PIXI.Texture.fromImage('basketball.png');
 var backgroundTexture= PIXI.Texture.fromImage('basketball.png');
@@ -196,6 +198,8 @@ function throwBall(x1, y1, x2, y2)
     var speedX; //speed in x
     var speedY;//speed in y
     var duration;//duration
+    var ratioX;
+    var ratioY;
 
     var shotInfo = {
         exitX:finalTweenPosX,
