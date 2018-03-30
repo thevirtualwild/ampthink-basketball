@@ -146,14 +146,14 @@ function onDragEnd() {
     dragging = false;
     // set the interaction data to null
 
-    console.log(" 0 " + historyY[historyY.length - 1]);
-    console.log("current y" + " " + this.data.getLocalPosition(this.parent).y);
+    //console.log(" 0 " + historyY[historyY.length - 1]);
+    //console.log("current y" + " " + this.data.getLocalPosition(this.parent).y);
 
     //detect if it's a swipe up
 
     if(this.data.getLocalPosition(this.parent).y - historyY[historyY.length - 1] < -30)
     {
-        throwBall();
+        throwBall(historyX[historyX.length - 1], historyY[historyY.length - 1], this.data.getLocalPosition(this.parent).x, this.data.getLocalPosition(this.parent).y);
     }
 
     this.data = null;
@@ -174,21 +174,31 @@ function onDragMove()
     }
 }
 
-function throwBall()
+function throwBall(x1, y1, x2, y2)
 {
     thrown = true;
     //var TweenMax = gsap.TweenMax;
     //basketball.scale = 0;
-    var finalTweenPosx;
+    var finalTweenPosX;
+    var vertDist;
+    var vertDragDist;
 
+    vertDragDist = y1- y2;
 
-    TweenMax.to(basketball, 0.5, {y:-100, onComplete:shotAttempt});
+    vertDist = y1 + 100;
+    finalTweenPosX = x2 + (x2 - x1) *vertDist/vertDragDist;
+
+    console.log("vertDist " + vertDist);
+    console.log("vertDragDist " + vertDragDist);
+    console.log("finaltweenPosX " + finalTweenPosX);
+
+    TweenMax.to(basketball, 0.5, {y:-100, x:finalTweenPosX, onComplete:shotAttempt});
     console.log("Swipe up");
 }
 
 function shotAttempt()
 {
     thrown = false;
-    basketball.x = app.screen.width/2;
+    basketball.x = app.screen.width/2;saz
     basketball.y = app.screen.height/2;
 }
