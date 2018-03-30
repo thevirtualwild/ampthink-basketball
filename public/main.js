@@ -43,7 +43,8 @@ background.alpha = 0;
 app.stage.addChild(background);
 background.anchor.set(0.5);
 
-createBasketball(10,10);
+console.log('creating basketball');
+createBasketball(100,150);
 
 background
     .on('pointerdown', onDragStart)
@@ -58,6 +59,7 @@ function createBasketball(x, y) {
     console.log(app.screen.width);
     basketball.x = app.screen.width/2;
     basketball.y = app.screen.height/2;
+    console.log('initial xy - ' + basketball.x + ',' + basketball.y);
 }
 
 app.ticker.add(function(delta) {
@@ -192,7 +194,7 @@ function throwBall(x1, y1, x2, y2)
     console.log("vertDragDist " + vertDragDist);
     console.log("finaltweenPosX " + finalTweenPosX);
 
-    TweenMax.to(basketball, 0.5, {y:-100, x:finalTweenPosX, onComplete:shotAttempt});
+    TweenMax.to(basketball, 3, {y:-100, x:finalTweenPosX, onComplete:shotAttempt});
     console.log("Swipe up");
 }
 
