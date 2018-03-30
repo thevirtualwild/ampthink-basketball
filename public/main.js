@@ -22,7 +22,7 @@ var points = [];
 
 //Create history array.
 for( var i = 0; i < historySize; i++)
-{
+{ 
     historyX.push(0);
     historyY.push(0);
 }
@@ -190,12 +190,53 @@ function throwBall(x1, y1, x2, y2)
     vertDist = y1 + 100;
     finalTweenPosX = x2 + (x2 - x1) *vertDist/vertDragDist;
 
-    console.log("vertDist " + vertDist);
-    console.log("vertDragDist " + vertDragDist);
-    console.log("finaltweenPosX " + finalTweenPosX);
+    var totalSpeed = 500;
+    var finalX; //my final x
+    var finalY = -100; //my final y
+    var speedX; //speed in x
+    var speedY;//speed in y
+    var duration;//duration
 
-    TweenMax.to(basketball, 3, {y:-100, x:finalTweenPosX, onComplete:shotAttempt});
+    var shotInfo = {
+        exitX:finalTweenPosX,
+        exitY:-100,
+        xSpeed:ratioY*totalSpeed ,
+        ySpeed:ratioX*totalSpeed,
+    }
+
+
+
+    //We travel at a rate of 5 pixels per unit ALWAYS
+    var absDistance = (x1-x2) * (x1 - x2) + (y1-y2) * (y1 - y2);
+    var distance = Math.sqrt(absDistance);
+    //First we need to find the proportion of that which is vertical
+    ratioY = (y1 - y2)/ distance;
+    ratioX = Math.abs(x1-x2)/distance;
+    totalYDistance = y2 + 100;
+
+    //Then we find the time it takes to complete that vertical tween
+    duration = totalYDistance / (ratioY * totalSpeed) ;
+
+    //Then we multiply the x proportion times the duration to find out the final X position
+    //Then we pass that all in.
+
+    finalTweenPosX = x2 + duration * (x2-x1);
+
+    //var absDistance = (x1-x2) * (x1 - x2) + (y1-y2) * (y1 - y2);
+    //var distance = math.sqrt(absDistance);
+
+    //duration = distance / totalSpeed;
+
+    console.log("duration " + duration);
+    console.log("yratio " + ratioY);
+    console.log("totalYDistance " + totalYDistance);
+    console.log("finalTweenPosX " + finalTweenPosX);
+
+    TweenMax.to(basketball, duration, {y:-100, x:finalTweenPosX, onComplete:shotAttempt});
+
     console.log("Swipe up");
+
+    socket.emit("throw ball", shotInfo);
 }
 
 function shotAttempt()
