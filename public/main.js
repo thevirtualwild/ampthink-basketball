@@ -24,7 +24,7 @@ var points = [];
 
 //Create history array.
 for( var i = 0; i < historySize; i++)
-{ 
+{
     historyX.push(0);
     historyY.push(0);
 }
@@ -198,12 +198,6 @@ function throwBall(x1, y1, x2, y2)
     var ratioX;
     var ratioY;
 
-    var shotInfo = {
-        exitX:finalTweenPosX,
-        exitY:-100,
-        xSpeed:ratioY*totalSpeed ,
-        ySpeed:ratioX*totalSpeed,
-    }
 
 
 
@@ -222,20 +216,28 @@ function throwBall(x1, y1, x2, y2)
     //Then we pass that all in.
 
     finalTweenPosX = x2 + duration * (x2-x1);
+    console.log('tweenposX - ' + finalTweenPosX);
 
     //var absDistance = (x1-x2) * (x1 - x2) + (y1-y2) * (y1 - y2);
     //var distance = math.sqrt(absDistance);
 
     //duration = distance / totalSpeed;
 
-    console.log("duration " + duration);
-    console.log("yratio " + ratioY);
-    console.log("totalYDistance " + totalYDistance);
-    console.log("finalTweenPosX " + finalTweenPosX);
+    // console.log("duration " + duration);
+    // console.log("yratio " + ratioY);
+    // console.log("totalYDistance " + totalYDistance);
+    // console.log("finalTweenPosX " + finalTweenPosX);
+
+    var shotInfo = {
+        exitX:finalTweenPosX,
+        exitY:-100,
+        xSpeed:ratioX*totalSpeed,
+        ySpeed:ratioY*totalSpeed
+    }
 
     TweenMax.to(basketball, duration, {y:-100, x:finalTweenPosX, onComplete:shotAttempt});
 
-    console.log("Swipe up");
+    console.log("throw ball");
 
     socket.emit("throw ball", shotInfo);
 }
@@ -257,3 +259,8 @@ function resetBall()
   basketball.x = app.screen.width/2;
   basketball.y = app.screen.height/2;
 }
+
+
+socket.on('shot sent', function() {
+  // console.log('We got a message back!');
+})
