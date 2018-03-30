@@ -1,3 +1,5 @@
+var socket = io();
+
 // Main Controller Code
 var app = new PIXI.Application(window.innerWidth, window.innerHeight, {backgroundColor : 0x1099bb});
 document.body.appendChild(app.view);
@@ -143,7 +145,9 @@ function shotAttempt()
     // resetBall();
 }
 
-// socket.on('')
+socket.on('take shot', fuction(data) {
+  console.log('shot taken');
+});
 
 var myX1 = 800;
 var myY1 = 400;

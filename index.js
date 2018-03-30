@@ -32,6 +32,8 @@ function onConnection(socket) {
     var ySpeed = data.ySpeed;
 
     console.log('Data Saved');
+
+    console.log('take shot');
   });
 
   socket.on('disconnect', function() {
