@@ -178,31 +178,15 @@ function onDragMove()
 function throwBall(x1, y1, x2, y2)
 {
     thrown = true;
-    //var TweenMax = gsap.TweenMax;
-    //basketball.scale = 0;
     var finalTweenPosX;
-    var vertDist;
-    var vertDragDist;
-
-    vertDragDist = y1- y2;
-
-    vertDist = y1 + 100;
-    finalTweenPosX = x2 + (x2 - x1) *vertDist/vertDragDist;
-
     var totalSpeed = 500;
-    var finalX; //my final x
-    var finalY = -100; //my final y
-    var speedX; //speed in x
-    var speedY;//speed in y
     var duration;//duration
     var ratioX;
     var ratioY;
 
-
-
-
     //We travel at a rate of 5 pixels per unit ALWAYS
     var absDistance = (x1-x2) * (x1 - x2) + (y1-y2) * (y1 - y2);
+
     var distance = Math.sqrt(absDistance);
     //First we need to find the proportion of that which is vertical
     ratioY = (y1 - y2)/ distance;
@@ -212,21 +196,16 @@ function throwBall(x1, y1, x2, y2)
     //Then we find the time it takes to complete that vertical tween
     duration = totalYDistance / (ratioY * totalSpeed) ;
 
-    //Then we multiply the x proportion times the duration to find out the final X position
+    //Then we add the final x drag position to the distance traveled which is found by multiplying the x rate proportion times the duration times the speed to find out the final X position
     //Then we pass that all in.
-
-    finalTweenPosX = x2 + duration * (x2-x1);
-    console.log('tweenposX - ' + finalTweenPosX);
-
-    //var absDistance = (x1-x2) * (x1 - x2) + (y1-y2) * (y1 - y2);
-    //var distance = math.sqrt(absDistance);
-
-    //duration = distance / totalSpeed;
-
-    // console.log("duration " + duration);
-    // console.log("yratio " + ratioY);
-    // console.log("totalYDistance " + totalYDistance);
-    // console.log("finalTweenPosX " + finalTweenPosX);
+    if(x2>x1)
+    {
+        finalTweenPosX = x2 + duration * ratioX * totalSpeed;
+    }
+    else
+    {
+        finalTweenPosX = x2 - duration * ratioX * totalSpeed;
+    }
 
     var shotInfo = {
         exitX:finalTweenPosX,
