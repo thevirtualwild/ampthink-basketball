@@ -9,6 +9,8 @@ var texture = PIXI.Texture.fromImage('basketball.png');
 var backgroundTexture= PIXI.Texture.fromImage('BasketballBackground.jpg');
 //from here http://www.zgjm-org.com/data/out/6/IMG_112426.jpg
 
+var shotInfo;
+
 texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 var basketball = new PIXI.Sprite(texture);
 var background = new PIXI.Sprite(backgroundTexture, app.screen.width, app.screen.height);
@@ -151,7 +153,7 @@ function throwBall(x1, y1, x2, y2)
         ratioX = -ratioX;
     }
 
-    var shotInfo = {
+    shotInfo = {
         exitX:finalTweenPosX,
         exitY:-100,
         xSpeed:ratioX*totalSpeed,
@@ -161,8 +163,6 @@ function throwBall(x1, y1, x2, y2)
     TweenMax.to(basketball, duration, {y:-100, x:finalTweenPosX, onComplete:shotAttempt});
 
     console.log("throw ball");
-
-    socket.emit("throw ball", shotInfo);
 }
 
 function shotAttempt()
@@ -172,6 +172,7 @@ function shotAttempt()
         }
     */
     //socket.emit('shot attempt', data);
+    socket.emit("throw ball", shotInfo);
 
     resetBall();
 }
