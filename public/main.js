@@ -6,7 +6,8 @@ var socket = io();
 
 // create a texture from an image path
 var texture = PIXI.Texture.fromImage('basketball.png');
-var backgroundTexture= PIXI.Texture.fromImage('basketball.png');
+var backgroundTexture= PIXI.Texture.fromImage('BasketballBackground.jpg');
+//from here http://www.zgjm-org.com/data/out/6/IMG_112426.jpg
 
 texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 var basketball = new PIXI.Sprite(texture);
@@ -18,20 +19,11 @@ var historyX = [];
 var historyY = [];
 //historySize determines how long the trail will be.
 var historySize = 10;
-//ropeSize determines how smooth the trail will be.
-var ropeSize = 100;
-var points = [];
-
 //Create history array.
 for( var i = 0; i < historySize; i++)
 {
     historyX.push(0);
     historyY.push(0);
-}
-
-for(var i = 0; i < ropeSize; i++)
-{
-    points.push(new PIXI.Point(0,0));
 }
 
 background.interactive = true;
@@ -40,7 +32,7 @@ background.x = app.screen.width/2;
 background.y = app.screen.height/2;
 background.width = app.screen.width;
 background.height = app.screen.height;
-background.alpha = 0;
+//background.alpha = 0;
 
 app.stage.addChild(background);
 background.anchor.set(0.5);
@@ -57,7 +49,7 @@ background
 function createBasketball(x, y) {
     app.stage.addChild(basketball);
     basketball.anchor.set(0.5);
-    basketball.scale.set(0.2);
+    basketball.scale.set(0.3);
     console.log(app.screen.width);
     basketball.x = app.screen.width/2;
     basketball.y = app.screen.height/2;
