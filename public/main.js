@@ -95,10 +95,6 @@ function onDragStart(event) {
 function onDragEnd() {
     this.dragging = false;
     dragging = false;
-    // set the interaction data to null
-
-    //console.log(" 0 " + historyY[historyY.length - 1]);
-    //console.log("current y" + " " + this.data.getLocalPosition(this.parent).y);
 
     //detect if it's a swipe up
 
@@ -152,6 +148,7 @@ function throwBall(x1, y1, x2, y2)
     else
     {
         finalTweenPosX = x2 - duration * ratioX * totalSpeed;
+        ratioX = -ratioX;
     }
 
     var shotInfo = {
