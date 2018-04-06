@@ -36,6 +36,7 @@ var myYspeed;
 
 var ballthrown = false;
 var ballabovehoop = false;
+var scorechecked = false;
 
 var hoopBounds;
 var ballBounds;
@@ -101,14 +102,18 @@ function drawBasketball(x, y) {
 app.ticker.add(function(delta) {
   if ( (basketball.y < basketY) && (ballthrown == true) ) {
     ballabovehoop = true;
+    console.log('ballabovehoop');
   }
-  if ( (basketball.y > basketY) && (ballabovehoop == true) ) {
+  if ((ballabovehoop == true) && (scorechecked = false)) {
+    scorechecked = true;
+    console.log('ball below');
     checkScore();
   }
 });
 
 function checkScore() {
   ballthrown = false;
+  console.log('checkingscore');
   if ((basketball.x > hoopBounds.left) && (basketball.x < hoopBounds.right)) {
     console.log('YOU SCOReD!');
   } else {
@@ -152,6 +157,7 @@ function throwBall(x1, y1, xSpeed, ySpeed)
     var y2 = basketY;
     ballthrown = true;
     ballabovehoop = false;
+    scorechecked = false;
 
     basketball.x = x1;
     basketball.y = y1;
