@@ -4,6 +4,7 @@ document.body.appendChild(app.view);
 var socket = io();
 
 var $window = $(window);
+var $pages = $('.pages'); // Input for roomname
 var $passcodeInput = $('.passcodeInput'); // Input for roomname
 var $passcodePage = $('.passcode.page') // The roomchange page
 
@@ -31,7 +32,54 @@ for( var i = 0; i < historySize; i++)
     historyY.push(0);
 }
 
+window.WebFontConfig = {
+    google: {
+        families: ['Snippet', 'Arvo:700italic', 'Podkova:700']
+    },
+
+    active: function() {
+        // do something
+        initText();
+    }
+};
+
+// include the web-font loader script
+//jshint ignore:start
+(function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' === document.location.protocol ? 'https' : 'http') +
+        '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+})();
+// jshint ignore:end
+
 $passcodeInput.focus();
+
+basketball = new PIXI.Sprite(texture);
+background = new PIXI.Sprite(backgroundTexture, app.screen.width, app.screen.height);
+
+background.interactive = true;
+background.buttonMode = true;
+background.x = app.screen.width/2;
+background.y = app.screen.height/2;
+background.width = app.screen.width;
+background.height = app.screen.height;
+//background.alpha = 0;
+
+app.stage.addChild(background);
+background.anchor.set(0.5);
+
+background
+    .on('pointerdown', onDragStart)
+    .on('pointerup', onDragEnd)
+    .on('pointerupoutside', onDragEnd)
+    .on('pointermove', onDragMove);
+
+console.log('creating basketball');
+createBasketball(100,150);
 
 function createBasketball(x, y) {
     app.stage.addChild(basketball);
@@ -64,42 +112,83 @@ app.ticker.add(function(delta) {
 
 function joinRoom()
 {
-    $passcodePage.fadeOut();
-    //$chatPage.show();
-    $passcodePage.off('click');
+    $pages.fadeOut();
 
-    basketball = new PIXI.Sprite(texture);
-    background = new PIXI.Sprite(backgroundTexture, app.screen.width, app.screen.height);
-
-    background.interactive = true;
-    background.buttonMode = true;
-    background.x = app.screen.width/2;
-    background.y = app.screen.height/2;
-    background.width = app.screen.width;
-    background.height = app.screen.height;
-//background.alpha = 0;
-
-    app.stage.addChild(background);
-    background.anchor.set(0.5);
-
-    background
-        .on('pointerdown', onDragStart)
-        .on('pointerup', onDragEnd)
-        .on('pointerupoutside', onDragEnd)
-        .on('pointermove', onDragMove);
-
-
-    console.log('creating basketball');
-    createBasketball(100,150);
+    initText();
     // Tell the server your new room to connect to
     //socket.emit('room', roomname);
     //socket.emit('add user', jsonstring);
+}
+
+function initText()
+{
+        // create a text object with a nice stroke
+        var textInstructions = new PIXI.Text('Score as many points as you can!', {
+            fontWeight: 'bold',
+            fontSize: 60,
+            fontFamily: 'Arial',
+            fill: '#000000',
+            align: 'center',
+            stroke: '#FFFFFF',
+            strokeThickness: 6
+        });
+
+        var textSwipe = new PIXI.Text('Swipe up to shoot', {
+            fontWeight: 'bold',
+            fontSize: 60,
+            fontFamily: 'Arial',
+            fill: '#000000',
+            align: 'center',
+            stroke: '#FFFFFF',
+            strokeThickness: 6
+        });
+
+        // setting the anchor point to 0.5 will center align the text... great for spinning!
+        textSwipe.anchor.set(0.5);
+         textSwipe.x = app.screen.width / 2;
+         textSwipe.y = app.screen.height - 60;
+
+        // setting the anchor point to 0.5 will center align the text... great for spinning!
+        textInstructions.anchor.set(0.5);
+        textInstructions.x = app.screen.width / 2;
+        textInstructions.y = app.screen.height - 130;
+
+        // create a text object that will be updated...
+        var countingText = new PIXI.Text('COUNT 4EVAR: 0', {
+            fontWeight: 'bold',
+            fontStyle: 'italic',
+            fontSize: 60,
+            fontFamily: 'Arvo',
+            fill: '#3e1707',
+            align: 'center',
+            stroke: '#a4410e',
+            strokeThickness: 7
+        });
+
+        countingText.x = app.screen.width / 2;
+        countingText.y = 500;
+        countingText.anchor.x = 0.5;
+
+        app.stage.addChild(textInstructions, textSwipe);
+/*
+        var count = 0;
+
+        app.ticker.add(function() {
+
+            count += 0.05;
+            // update the text with a new string
+            countingText.text = 'COUNT 4EVAR: ' + Math.floor(count);
+
+        });
+        */
+
 }
 
 function onDragStart(event) {
     // store a reference to the data
     // the reason for this is because of multitouch
     // we want to track the movement of this particular touch
+    console.log("drag started");
 
     this.data = event.data;
     this.dragging = true;
