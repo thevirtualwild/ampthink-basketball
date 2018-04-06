@@ -1,8 +1,11 @@
 // Main Controller Code
 var app = new PIXI.Application(window.innerWidth, window.innerHeight, {backgroundColor : 0x1099bb});
 document.body.appendChild(app.view);
-
 var socket = io();
+
+var $window = $(window);
+var $passcodeInput = $('.passcodeInput'); // Input for roomname
+var $passcodePage = $('.passcode.page') // The roomchange page
 
 // create a texture from an image path
 var texture = PIXI.Texture.fromImage('basketball.png');
@@ -12,8 +15,8 @@ var backgroundTexture= PIXI.Texture.fromImage('BasketballBackground.jpg');
 var shotInfo;
 
 texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-var basketball = new PIXI.Sprite(texture);
-var background = new PIXI.Sprite(backgroundTexture, app.screen.width, app.screen.height);
+var basketball;// = new PIXI.Sprite(texture);
+var background;// = new PIXI.Sprite(backgroundTexture, app.screen.width, app.screen.height);
 var dragging = false;
 var thrown = false;
 
@@ -28,25 +31,7 @@ for( var i = 0; i < historySize; i++)
     historyY.push(0);
 }
 
-background.interactive = true;
-background.buttonMode = true;
-background.x = app.screen.width/2;
-background.y = app.screen.height/2;
-background.width = app.screen.width;
-background.height = app.screen.height;
-//background.alpha = 0;
-
-app.stage.addChild(background);
-background.anchor.set(0.5);
-
-console.log('creating basketball');
-createBasketball(100,150);
-
-background
-    .on('pointerdown', onDragStart)
-    .on('pointerup', onDragEnd)
-    .on('pointerupoutside', onDragEnd)
-    .on('pointermove', onDragMove);
+$passcodeInput.focus();
 
 function createBasketball(x, y) {
     app.stage.addChild(basketball);
@@ -58,12 +43,58 @@ function createBasketball(x, y) {
     console.log('initial xy - ' + basketball.x + ',' + basketball.y);
 }
 
+$window.keydown(function (event) {
+    // Auto-focus the current input when a key is typed
+    if (!(event.ctrlKey || event.metaKey || event.altKey)) {
+        // $currentInput.focus();
+    }
+    // When the client hits ENTER on their keyboard
+    if (event.which === 13)
+    {
+            joinRoom();
+    }
+});
+
 app.ticker.add(function(delta) {
     if (thrown == false) {
         if (dragging)
             TweenMax.to(basketball, 0.1, {y: historyY[0], x: historyX[0]});
     }
 });
+
+function joinRoom()
+{
+    $passcodePage.fadeOut();
+    //$chatPage.show();
+    $passcodePage.off('click');
+
+    basketball = new PIXI.Sprite(texture);
+    background = new PIXI.Sprite(backgroundTexture, app.screen.width, app.screen.height);
+
+    background.interactive = true;
+    background.buttonMode = true;
+    background.x = app.screen.width/2;
+    background.y = app.screen.height/2;
+    background.width = app.screen.width;
+    background.height = app.screen.height;
+//background.alpha = 0;
+
+    app.stage.addChild(background);
+    background.anchor.set(0.5);
+
+    background
+        .on('pointerdown', onDragStart)
+        .on('pointerup', onDragEnd)
+        .on('pointerupoutside', onDragEnd)
+        .on('pointermove', onDragMove);
+
+
+    console.log('creating basketball');
+    createBasketball(100,150);
+    // Tell the server your new room to connect to
+    //socket.emit('room', roomname);
+    //socket.emit('add user', jsonstring);
+}
 
 function onDragStart(event) {
     // store a reference to the data
