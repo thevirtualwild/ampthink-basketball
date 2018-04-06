@@ -13,7 +13,7 @@ var hoopTexture = PIXI.Texture.fromImage('hoop.png');
 basketballTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 var basketball = new PIXI.Sprite(basketballTexture);
 var background = new PIXI.Sprite(backgroundTexture, app.screen.width, app.screen.height);
-var hoop = new PIXI.Sprite(hoopTexture);
+var hoop = new PIXI.Sprite(hoopTexture, 135, 96);
 
 var thrown = false;
 
@@ -34,6 +34,11 @@ var myYspeed;
 
 
 
+var ballthrown = false;
+var ballabovehoop = false;
+
+var hoopBounds;
+var ballBounds;
 
 
 
@@ -72,6 +77,12 @@ function drawHoop(x, y) {
     // hoop.scale.set(0.2);
     hoop.x = x;
     hoop.y = y;
+
+    hoop.width = 120;
+
+    hoopBounds = hoop.getBounds();
+    console.log('hbounds');
+    console.dir(hoopBounds);
 }
 
 function drawBasketball(x, y) {
@@ -81,11 +92,29 @@ function drawBasketball(x, y) {
     basketball.x = x;
     basketball.y = y;
     // console.log('initial xy - ' + basketball.x + ',' + basketball.y);
+
+    ballBounds = basketball.getBounds();
+    console.log('basketball');
+    console.dir(ballBounds);
 }
 
 app.ticker.add(function(delta) {
-
+  if ( (basketball.y < basketY) && (ballthrown == true) ) {
+    ballabovehoop = true;
+  }
+  if ( (basketball.y > basketY) && (ballabovehoop == true) ) {
+    checkScore();
+  }
 });
+
+function checkScore() {
+  ballthrown = false;
+  if ((basketball.x > hoopBounds.left) && (basketball.x < hoopBounds.right)) {
+    console.log('YOU SCOReD!');
+  } else {
+    console.log('Nope!');
+  }
+}
 
 function clipInput(k, arr)
 {
@@ -121,6 +150,8 @@ function cubicInterpolation(array, t, tangentFactor)
 function throwBall(x1, y1, xSpeed, ySpeed)
 {
     var y2 = basketY;
+    ballthrown = true;
+    ballabovehoop = false;
 
     basketball.x = x1;
     basketball.y = y1;
