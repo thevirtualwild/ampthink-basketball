@@ -19,8 +19,8 @@ texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 var basketball;// = new PIXI.Sprite(texture);
 var background;// = new PIXI.Sprite(backgroundTexture, app.screen.width, app.screen.height);
 var dragging = false;
-var thrown = false;
-
+var thrown = true;
+var countdownStarted = true;
 var historyX = [];
 var historyY = [];
 //historySize determines how long the trail will be.
@@ -31,17 +31,6 @@ for( var i = 0; i < historySize; i++)
     historyX.push(0);
     historyY.push(0);
 }
-
-window.WebFontConfig = {
-    google: {
-        families: ['Snippet', 'Arvo:700italic', 'Podkova:700']
-    },
-
-    active: function() {
-        // do something
-        initText();
-    }
-};
 
 // include the web-font loader script
 //jshint ignore:start
@@ -72,12 +61,6 @@ background.height = app.screen.height;
 app.stage.addChild(background);
 background.anchor.set(0.5);
 
-background
-    .on('pointerdown', onDragStart)
-    .on('pointerup', onDragEnd)
-    .on('pointerupoutside', onDragEnd)
-    .on('pointermove', onDragMove);
-
 console.log('creating basketball');
 createBasketball(100,150);
 
@@ -86,7 +69,7 @@ function createBasketball(x, y) {
     basketball.anchor.set(0.5);
     basketball.scale.set(0.3);
     console.log(app.screen.width);
-    basketball.x = app.screen.width/2;
+    basketball.x = -100;
     basketball.y = app.screen.height/2;
     console.log('initial xy - ' + basketball.x + ',' + basketball.y);
 }
@@ -108,11 +91,20 @@ app.ticker.add(function(delta) {
         if (dragging)
             TweenMax.to(basketball, 0.1, {y: historyY[0], x: historyX[0]});
     }
+    else {
+        basketball.rotation += 0.1 * delta;
+    }
 });
 
 function joinRoom()
 {
     $pages.fadeOut();
+
+    background
+        .on('pointerdown', onDragStart)
+        .on('pointerup', onDragEnd)
+        .on('pointerupoutside', onDragEnd)
+        .on('pointermove', onDragMove);
 
     initText();
     // Tell the server your new room to connect to
@@ -122,14 +114,15 @@ function joinRoom()
 
 function initText()
 {
+    countdownStarted = true;
         // create a text object with a nice stroke
         var textInstructions = new PIXI.Text('Score as many points as you can!', {
             fontWeight: 'bold',
             fontSize: 60,
             fontFamily: 'Arial',
-            fill: '#000000',
+            fill: '#FFFFFF',
             align: 'center',
-            stroke: '#FFFFFF',
+            stroke: '#000000',
             strokeThickness: 6
         });
 
@@ -137,9 +130,9 @@ function initText()
             fontWeight: 'bold',
             fontSize: 60,
             fontFamily: 'Arial',
-            fill: '#000000',
+            fill: '#FFFFFF',
             align: 'center',
-            stroke: '#FFFFFF',
+            stroke: '#000000',
             strokeThickness: 6
         });
 
@@ -154,33 +147,41 @@ function initText()
         textInstructions.y = app.screen.height - 130;
 
         // create a text object that will be updated...
-        var countingText = new PIXI.Text('COUNT 4EVAR: 0', {
+        var countingText = new PIXI.Text('3', {
             fontWeight: 'bold',
-            fontStyle: 'italic',
-            fontSize: 60,
-            fontFamily: 'Arvo',
-            fill: '#3e1707',
+            fontSize: 200,
+            fontFamily: 'Arial',
+            fill: '#FFFFFF',
             align: 'center',
-            stroke: '#a4410e',
+            stroke: '#000000',
             strokeThickness: 7
         });
 
         countingText.x = app.screen.width / 2;
-        countingText.y = 500;
+        countingText.y = 100;
         countingText.anchor.x = 0.5;
 
-        app.stage.addChild(textInstructions, textSwipe);
-/*
-        var count = 0;
+        app.stage.addChild(textInstructions, textSwipe, countingText);
+        var count = 4;
 
         app.ticker.add(function() {
 
-            count += 0.05;
-            // update the text with a new string
-            countingText.text = 'COUNT 4EVAR: ' + Math.floor(count);
-
+            if(countdownStarted)
+            {
+                count -= app.ticker.elapsedMS / 1000;
+                // update the text with a new string
+                countingText.text = Math.floor(count);
+                countingText.anchor.set(0.5);
+                if(count <= 0)
+                {
+                    TweenMax.to(countingText, 0.2, {width: 0, height: 0});
+                    countingText.text = "0";
+                    countdownStarted = false;
+                    resetBall();
+                }
+            }
         });
-        */
+
 
 }
 
@@ -299,11 +300,17 @@ function shotAttempt()
 
 function resetBall()
 {
-  thrown = false;
-  basketball.x = app.screen.width/2;
+  //thrown = false;
+  basketball.x = -100;
   basketball.y = app.screen.height/2;
+  TweenMax.to(basketball, 0.4, {x:app.screen.width/2, onComplete:canShoot});
+  //basketball.y = app.screen.height/2;
 }
 
+function canShoot()
+{
+    thrown = false;
+}
 
 socket.on('shot sent', function() {
   // console.log('We got a message back!');
