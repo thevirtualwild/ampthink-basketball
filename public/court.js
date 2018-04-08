@@ -217,6 +217,10 @@ socket.on('take shot', function(shotInfo) {
   console.log('shot xSpeed- ' + myXspeed);
   console.log('shot ySpeed- ' + myYspeed);
 
+  myX1 = myX1 * app.screen.width;
+  myXspeed = myXspeed * app.screen.width;
+  myYspeed = myYspeed * app.screen.height;
+
   drawBasketball(myX1,myY1);
   throwBall(myX1, myY1, myXspeed, myYspeed);
 });
