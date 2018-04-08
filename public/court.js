@@ -35,7 +35,7 @@ var myYspeed;
 
 
 var ballthrown = false;
-var ballabovehoop = false;
+var ballpasthoop = false;
 var scorechecked = false;
 
 var hoopBounds;
@@ -74,7 +74,7 @@ drawHoop(basketX,basketY)
 
 function drawHoop(x, y) {
     app.stage.addChild(hoop);
-    hoop.anchor.set(0.5); //set center as x,y coordinate
+    hoop.anchor.set(0.5, 0); //set center as x,y coordinate
     // hoop.scale.set(0.2);
     hoop.x = x;
     hoop.y = y;
@@ -95,16 +95,20 @@ function drawBasketball(x, y) {
     // console.log('initial xy - ' + basketball.x + ',' + basketball.y);
 
     ballBounds = basketball.getBounds();
-    console.log('basketball');
+    console.log('basketball - ' + basketball.y);
     console.dir(ballBounds);
 }
 
 app.ticker.add(function(delta) {
   if ( (basketball.y < basketY) && (ballthrown == true) ) {
-    ballabovehoop = true;
-    console.log('ballabovehoop');
+    ballpasthoop = true;
+    console.log('ballpasthoop');
+  } else {
+    console.log('ballbelowhoop - ' + basketball.y);
   }
-  if ((ballabovehoop == true) && (scorechecked = false)) {
+  if ( (ballpasthoop == true) ) { //}&& (scorechecked = false) && (basketball.y > basketY) ) {
+    //is collision?
+
     scorechecked = true;
     console.log('ball below');
     checkScore();
@@ -113,13 +117,14 @@ app.ticker.add(function(delta) {
 
 function checkScore() {
   ballthrown = false;
-  console.log('checkingscore');
+
   if ((basketball.x > hoopBounds.left) && (basketball.x < hoopBounds.right)) {
     console.log('YOU SCOReD!');
   } else {
     console.log('Nope!');
   }
 }
+
 
 function clipInput(k, arr)
 {
@@ -154,14 +159,18 @@ function cubicInterpolation(array, t, tangentFactor)
 
 function throwBall(x1, y1, xSpeed, ySpeed)
 {
-    var y2 = basketY;
+    var y2 = basketY + 50;
     ballthrown = true;
-    ballabovehoop = false;
+    ballpasthoop = false;
     scorechecked = false;
 
     basketball.x = x1;
     basketball.y = y1;
 
+    console.log('ball y1 -' + basketball.y);
+    console.log(hoop.y);
+    console.log('ball');
+    console.dir(basketball);
 
     var originX;
     var originY;
