@@ -3,8 +3,7 @@ var app = express();
 var path = require('path');
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
-var port = process.env.PORT || 5000;
-
+var port = process.env.PORT || 4000;
 
 // Routing
 app.use(express.static(path.join(__dirname, 'public')));
@@ -13,6 +12,11 @@ app.get('/game', function(req, res) {
     res.sendFile(path.join(__dirname + '/public/game.html'));
 });
 
+/*
+app.get('/babylon', function(req, res) {
+    res.sendFile(path.join(__dirname + '/public/babylon/game.html'));
+});
+*/
 
 // Web Socket (Socket.io)
 function onConnection(socket) {

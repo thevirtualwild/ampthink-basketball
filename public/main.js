@@ -275,10 +275,10 @@ function throwBall(x1, y1, x2, y2)
     }
 
     shotInfo = {
-        exitX:finalTweenPosX,
+        exitX:finalTweenPosX/app.screen.width,
         exitY:-100,
-        xSpeed:ratioX*totalSpeed,
-        ySpeed:ratioY*totalSpeed
+        xSpeed:ratioX*totalSpeed/app.screen.width,
+        ySpeed:ratioY*totalSpeed/app.screen.height
     }
 
     TweenMax.to(basketball, duration, {y:-100, x:finalTweenPosX, onComplete:shotAttempt});
