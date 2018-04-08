@@ -30,14 +30,17 @@ function onConnection(socket) {
     var exitY = data.exitY;
     var xSpeed = data.xSpeed;
     var ySpeed = data.ySpeed;
-
+      var deviceWidth = data.deviceWidth;
+      var deviceHeight = data.deviceHeight;
     // console.log('Data Saved');
 
     var shotInfo = {
       fromX: exitX,
       fromY: exitY,
       xSpeed: xSpeed,
-      ySpeed: ySpeed
+      ySpeed: ySpeed,
+        deviceWidth: deviceWidth,
+        deviceHeight: deviceHeight
     }
 
     console.log('take shot');
