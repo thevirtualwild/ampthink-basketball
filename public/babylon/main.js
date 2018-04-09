@@ -42,15 +42,19 @@ BABYLON.SceneLoader.ImportMesh("", "", "basketball3d.obj", clientScene, function
     // particleSystems are always null for glTF assets
     camera.target = mesh;
     clientScene.registerBeforeRender(scaleMesh.bind(this, mesh));
+    console.log("AfterImport");
 });
 
-function scaleMesh(mesh){
-    mesh.scaling = new BABYLON.Vector3(0.1, 0.1, 0.1);
-}
 
 engine.runRenderLoop(function(){
     clientScene.render();
 });
+
+function scaleMesh(mesh){
+    mesh.scaling = new BABYLON.Vector3(0.01, 0.01, 0.01);
+    console.log("Scale");
+}
+
 
 var $window = $(window);
 var $pages = $('.pages'); // Input for roomname
