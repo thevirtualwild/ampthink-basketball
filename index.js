@@ -5,11 +5,15 @@ var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var port = process.env.PORT || 4000;
 
+
+var query;
 // Routing
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/game', function(req, res) {
     res.sendFile(path.join(__dirname + '/public/game.html'));
+    query = req.query.roomId;
+    console.log('webapp routing - ' + query);
 });
 
 /*
@@ -22,6 +26,22 @@ app.get('/babylon', function(req, res) {
 function onConnection(socket) {
   console.log('a user connected');
 
+  socket.on('room', function(room) {
+    socket.join(room);
+  });
+
+  socket.on('query request', function() {
+    console.log('query request received');
+    if (query) {
+      console.log('there is a query - ' + query);
+
+      socket.emit('query', query);
+    } else {
+      console.log('no query found');
+
+      socket.emit('use random room');
+    }
+  });
 
   socket.on('throw ball', function(data) {
     // console.log('Full Data - ' + data);
@@ -30,8 +50,8 @@ function onConnection(socket) {
     var exitY = data.exitY;
     var xSpeed = data.xSpeed;
     var ySpeed = data.ySpeed;
-      var deviceWidth = data.deviceWidth;
-      var deviceHeight = data.deviceHeight;
+    var deviceWidth = data.deviceWidth;
+    var deviceHeight = data.deviceHeight;
     // console.log('Data Saved');
 
     var shotInfo = {

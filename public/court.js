@@ -7,23 +7,19 @@ document.body.appendChild(app.view);
 
 // create a texture from an image path
 var basketballTexture = PIXI.Texture.fromImage('basketball.png');
-var backgroundTexture= PIXI.Texture.fromImage('basketball.png');
+var backgroundTexture= PIXI.Texture.fromImage('black-backdrop.jpg');
 var hoopTexture = PIXI.Texture.fromImage('hoop.png');
 
 basketballTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 var basketball = new PIXI.Sprite(basketballTexture);
 var background = new PIXI.Sprite(backgroundTexture, app.screen.width, app.screen.height);
 var hoop = new PIXI.Sprite(hoopTexture, 135, 96);
+var rimleft = new PIXI.Sprite(basketballTexture);
+var rimright = new PIXI.Sprite(basketballTexture);
+
+var b = new Bump(PIXI);
 
 var thrown = false;
-
-var historyX = [];
-var historyY = [];
-//historySize determines how long the trail will be.
-var historySize = 10;
-//ropeSize determines how smooth the trail will be.
-var ropeSize = 100;
-var points = [];
 
 
 
@@ -41,19 +37,10 @@ var scorechecked = false;
 var hoopBounds;
 var ballBounds;
 
+var throwAnimation;
 
 
-//Create history array.
-for( var i = 0; i < historySize; i++)
-{
-    historyX.push(0);
-    historyY.push(0);
-}
 
-for(var i = 0; i < ropeSize; i++)
-{
-    points.push(new PIXI.Point(0,0));
-}
 
 background.interactive = true;
 background.buttonMode = true;
@@ -61,7 +48,6 @@ background.x = app.screen.width/2;
 background.y = app.screen.height/2;
 background.width = app.screen.width;
 background.height = app.screen.height;
-background.alpha = 0;
 
 app.stage.addChild(background);
 background.anchor.set(0.5);
@@ -82,6 +68,27 @@ function drawHoop(x, y) {
     hoop.width = 120;
 
     hoopBounds = hoop.getBounds();
+
+    app.stage.addChild(rimleft,rimright);
+
+    rimleft.circular = true;
+    rimright.circular = true;
+    basketball.circular = true;
+
+    var rimwidth = 20;
+
+    rimleft.width = rimwidth;
+    rimleft.height = rimwidth;
+    rimright.width = rimwidth;
+    rimright.height = rimwidth;
+
+    rimleft.x = hoopBounds.left;
+    rimleft.y = hoop.y;
+    rimright.anchor.set(.5);
+    rimleft.anchor.set(.5);
+    rimright.x = hoopBounds.right;
+    rimright.y = hoop.y;
+
     console.log('hbounds');
     console.dir(hoopBounds);
 }
@@ -99,99 +106,186 @@ function drawBasketball(x, y) {
     console.dir(ballBounds);
 }
 
-app.ticker.add(function(delta) {
-  if ( (basketball.y < basketY) && (ballthrown == true) ) {
-    ballpasthoop = true;
-    console.log('ballpasthoop');
-  } else {
-    console.log('ballbelowhoop - ' + basketball.y);
-  }
-  if ( (ballpasthoop == true) ) { //}&& (scorechecked = false) && (basketball.y > basketY) ) {
-    //is collision?
+function move(object,dx,dy) {
+  object.x += dx;
+  object.y += dy;
+  console.log('moved - ' + dx + ',' + dy);
+}
 
-    scorechecked = true;
-    console.log('ball below');
-    checkScore();
+var xv = 0;
+var yv = 0;
+var fac = .8;
+var gravity = 0.40;
+
+var score = 0;
+
+
+app.ticker.add(function(delta) {
+
+  if (ballthrown) {
+    yv += gravity;
   }
+
+  // console.log('basketballx,y - ' + basketball.x + ',' + basketball.y);
+
+  move(basketball, xv, yv);
+
+  if ( (basketball.y <= (basketY - 40)) && (ballthrown == true) ) {
+    ballpasthoop = true;
+    // collision detection on
+  }
+
+  if ( (ballpasthoop == true) ) { //}&& (scorechecked = false) && (basketball.y > basketY) ) {
+    //is collision on?
+
+    checkCollision(basketball, rimleft);
+    checkCollision(basketball, rimright);
+
+
+    if (b.circleCollision(basketball, rimleft, true, true)) {
+      if (basketball.x > (rimleft.x + rimleft.width/2)) {
+        xv += -(xv*8);
+      } else {
+        xv += (xv*8);
+      }
+      yv = -(yv)*fac;
+    }
+    if (b.circleCollision(basketball, rimright, true, true)) {
+      if (basketball.x < (rimright.x - rimright.width/2)) {
+        xv += -(xv*8);
+      } else {
+        xv += (xv*8);
+      }
+      yv = -(yv)*fac;
+    }
+
+    if (basketball.y >= basketY && scorechecked == false) {
+      checkScore();
+    }
+
+    // if (b.hitTestCircle(rimleft, basketball) || b.hitTestCircle(rimright, basketball)) {
+    //   console.log('hit left');
+    //
+    //   xv = basketball.x - rimleft.x;
+    //
+    //
+    // }
+    // if (b.hitTestCircle(rimright, basketball)) {
+    //   console.log('hit right');
+    // // }
+    // scorechecked = true;
+    // // console.log('ball below');
+    // checkScore();
+  }
+
 });
+
+
+function checkCollision(firstBall, secondBall) {
+  if (b.circleCollision(firstBall, secondBall, false, false)) {
+    collisionPointX =
+     ((firstBall.x * secondBall.radius) + (secondBall.x * firstBall.radius))
+     / (firstBall.radius + secondBall.radius);
+
+    collisionPointY =
+     ((firstBall.y * secondBall.radius) + (secondBall.y * firstBall.radius))
+     / (firstBall.radius + secondBall.radius);
+
+     // var xvang =
+
+
+    var pastxv = xv;
+    var pastyv = yv;
+
+    var disty = firstBall.y - secondBall.y;
+    var distx = firstBall.x - secondBall.x;
+
+     if (collisionPointX > secondBall.x) {
+       //always positive
+       xv = Math.abs(xv);
+     } else {
+       //always negative
+       xv = Math.abs(xv) * (-1);
+     }
+
+
+     xv = xv*(disty/distx);
+     yv = -(yv*(distx/disty));
+     // yv = -(yv);
+
+  }
+}
 
 function checkScore() {
   ballthrown = false;
+  scorechecked = true;
 
   if ((basketball.x > hoopBounds.left) && (basketball.x < hoopBounds.right)) {
-    console.log('YOU SCOReD!');
+    console.log('YOU SCOReD! - ' + score);
+
+    updateScore();
+    socket.emit('scored');
   } else {
     console.log('Nope!');
   }
 }
 
-
-function clipInput(k, arr)
-{
-    if (k < 0)
-        k = 0;
-    if (k > arr.length - 1)
-        k = arr.length - 1;
-    return arr[k];
+function updateScore() {
+  score += 1;
 }
-
-function getTangent(k, factor, array)
-{
-    return factor * (clipInput(k + 1, array) - clipInput(k - 1,array)) / 2;
-}
-
-function cubicInterpolation(array, t, tangentFactor)
-{
-    if (tangentFactor == null) tangentFactor = 1;
-
-    var k = Math.floor(t);
-    var m = [getTangent(k, tangentFactor, array), getTangent(k + 1, tangentFactor, array)];
-    var p = [clipInput(k,array), clipInput(k+1,array)];
-    t -= k;
-    var t2 = t * t;
-    var t3 = t * t2;
-    return (2 * t3 - 3 * t2 + 1) * p[0] + (t3 - 2 * t2 + t) * m[0] + ( -2 * t3 + 3 * t2) * p[1] + (t3 - t2) * m[1];
-}
-
-
-
 
 
 function throwBall(x1, y1, xSpeed, ySpeed)
 {
-    var y2 = basketY + 50;
-    ballthrown = true;
-    ballpasthoop = false;
-    scorechecked = false;
 
-    basketball.x = x1;
-    basketball.y = y1;
+  ballthrown = true;
+  ballpasthoop = false;
+  scorechecked = false;
 
-    console.log('ball y1 -' + basketball.y);
-    console.log(hoop.y);
-    console.log('ball');
-    console.dir(basketball);
+  basketball.x = x1;
+  basketball.y = 600;
 
-    var originX;
-    var originY;
+  xv = xSpeed/100;
+  yv = -(20);
 
-    var ydistTraveling = y1 - y2;
-    var duration = (ydistTraveling/ySpeed);
 
-    var xdistTraveling = duration * xSpeed;
-    // console.log(xdistTraveling);
-    var x2 = (x1 + xdistTraveling);
-    // console.log('X2' + x2);
 
-    var tweenDuration = duration;
 
-    thrown = true;
+
+    // var y2 = basketY - 62.5;
+    //
+    //
+    //
+    //
+    // console.log('ball y1 -' + basketball.y);
+    // console.log(hoop.y);
+    // console.log('ball');
+    // console.dir(basketball);
+    //
+    // var originX;
+    // var originY;
+    //
+    // var ydistTraveling = y1 - y2;
+    // var duration = (ydistTraveling/ySpeed);
+    //
+    // var xdistTraveling = duration * xSpeed;
+    // // console.log(xdistTraveling);
+    // var x2 = (x1 + xdistTraveling);
+    // // console.log('X2' + x2);
+    //
+    // var tweenDuration = duration;
+    //
+    // thrown = true;
     //
     // console.log('Initial Basketbal X - ' + basketball.x);
     // console.log('Initial Basketball Y - ' + basketball.y);
     // console.log('Final Basketball X - ' + x2);
     // console.log('Final Basketball Y - ' + y2);
-    TweenMax.to(basketball, tweenDuration, {y:y2, x:x2, onComplete:shotAttempt, ease: Back.easeOut.config(4)});
+
+
+
+
+    // throwAnimation = TweenMax.to(basketball, tweenDuration, {y:y2, x:x2, onComplete:shotAttempt, ease: Back.easeOut.config(4)});
 
 }
 
@@ -212,13 +306,19 @@ socket.on('take shot', function(shotInfo) {
   myY1 = 600;
   myXspeed = shotInfo.xSpeed;
   myYspeed = shotInfo.ySpeed;
-  console.log('shot X1- ' + myX1);
-  console.log('shot Y1- ' + myY1);
-  console.log('shot xSpeed- ' + myXspeed);
-  console.log('shot ySpeed- ' + myYspeed);
+  shotDeviceWidth = shotInfo.deviceWidth;
+  shotDeviceHeight = shotInfo.deviceHeight;
+  // console.log('shot X1- ' + myX1);
+  // console.log('shot Y1- ' + myY1);
+  // console.log('shot xSpeed- ' + myXspeed);
+  // console.log('shot ySpeed- ' + myYspeed);
 
-  myX1 = myX1 * app.screen.width;
-  myXspeed = myXspeed * app.screen.width;
+  var centerx = app.screen.width/2;
+  var shooterleftbounds = centerx - shotDeviceWidth/2;
+  var shooterrightbounds = centerx + shotDeviceWidth/2;
+
+  myX1 = (myX1 * shotDeviceWidth) + shooterleftbounds;
+  myXspeed = myXspeed * shotDeviceWidth;
   myYspeed = myYspeed * app.screen.height;
 
   drawBasketball(myX1,myY1);
