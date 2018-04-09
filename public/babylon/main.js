@@ -3,13 +3,13 @@ var socket = io();
 
 var canvas = document.getElementById("canvas");
 var engine = new BABYLON.Engine(canvas, true);
-
+engine.enableOfflineSupport = false;
 var createScene = function(){
     // This creates a basic Babylon Scene object (non-mesh)
-    var scene = new BABYLON.Scene(engine);
+    var clientScene = new BABYLON.Scene(engine);
 
     // This creates and positions a free camera (non-mesh)
-    var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), scene);
+    var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), clientScene);
 
     // This targets the camera to scene origin
     camera.setTarget(BABYLON.Vector3.Zero());
@@ -18,7 +18,7 @@ var createScene = function(){
     camera.attachControl(canvas, true);
 
     // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
-    var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
+    var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), clientScene);
 
     // Default intensity is 1. Let's dim the light a small amount
     light.intensity = 0.7;
@@ -30,23 +30,27 @@ var createScene = function(){
     //sphere.position.y = 1;
 
     // Our built-in 'ground' shape. Params: name, width, depth, subdivs, scene
-    var ground = BABYLON.Mesh.CreateGround("ground1", 6, 6, 2, scene);
+    var ground = BABYLON.Mesh.CreateGround("ground1", 6, 6, 2, clientScene);
 
-    return scene;
+    return clientScene;
 }
 
-var scene = createScene();
+var clientScene = createScene();
 
-BABYLON.SceneLoader.ImportMesh("basketball", "", "basketball3d.obj", scene, function (mesh) {
+BABYLON.SceneLoader.ImportMesh("", "", "basketball3d.obj", clientScene, function (mesh) {
     // do something with the meshes and skeletons
     // particleSystems are always null for glTF assets
     camera.target = mesh;
+    clientScene.registerBeforeRender(scaleMesh.bind(this, mesh));
 });
+
+function scaleMesh(mesh){
+    mesh.scaling = new BABYLON.Vector3(0.1, 0.1, 0.1);
+}
 
 engine.runRenderLoop(function(){
-    scene.render();
+    clientScene.render();
 });
-
 
 var $window = $(window);
 var $pages = $('.pages'); // Input for roomname
