@@ -28,7 +28,7 @@ var myY1;
 var myXspeed;
 var myYspeed;
 
-
+var nottouching = true;
 
 var ballthrown = false;
 var ballpasthoop = false;
@@ -40,6 +40,8 @@ var ballBounds;
 var throwAnimation;
 
 
+var floor = app.screen.height;
+console.log('floor - ' + floor);
 
 
 background.interactive = true;
@@ -91,6 +93,8 @@ function drawHoop(x, y) {
 
     console.log('hbounds');
     console.dir(hoopBounds);
+
+    socket.emit('query request');
 }
 
 function drawBasketball(x, y) {
@@ -109,22 +113,23 @@ function drawBasketball(x, y) {
 function move(object,dx,dy) {
   object.x += dx;
   object.y += dy;
-  console.log('moved - ' + dx + ',' + dy);
+  // console.log('moved - ' + dx + ',' + dy);
 }
 
 var xv = 0;
 var yv = 0;
 var fac = .8;
-var gravity = 0.40;
+var friction = .6;
+var gravity = 0.39;
 
 var score = 0;
 
 
 app.ticker.add(function(delta) {
 
-  if (ballthrown) {
+  // if (ballthrown) {
     yv += gravity;
-  }
+  // }
 
   // console.log('basketballx,y - ' + basketball.x + ',' + basketball.y);
 
@@ -178,11 +183,35 @@ app.ticker.add(function(delta) {
     // checkScore();
   }
 
+  if ( (basketball.getBounds().bottom >= floor) && (yv > 0)) {
+    console.log('basketball outofbounds');
+    yv = -(yv)*fac;
+    basketball.y = floor - basketball.radius;
+    xv = (xv*friction);
+  }
+  if ( (basketball.getBounds().left <= 0)) {
+    basketball.x = 0 + basketball.radius;
+    xv = -(xv);
+  } else if (basketball.getBounds().right >= app.screen.width) {
+    basketball.x = app.screen.width - basketball.radius;
+    xv = -(xv);
+  }
 });
 
 
 function checkCollision(firstBall, secondBall) {
-  if (b.circleCollision(firstBall, secondBall, false, false)) {
+  if (b.hitTestCircle(firstBall, secondBall)) {
+    console.log('hittest');
+    touching(firstBall,secondBall);
+    // nottouching = false;
+  } else {
+    notouching = true;
+  }
+}
+function touching(firstBall,secondBall) {
+  console.log('touching');
+  if (b.circleCollision(firstBall, secondBall, false ) && (nottouching)) {
+    console.log('first touch');
     collisionPointX =
      ((firstBall.x * secondBall.radius) + (secondBall.x * firstBall.radius))
      / (firstBall.radius + secondBall.radius);
@@ -193,12 +222,34 @@ function checkCollision(firstBall, secondBall) {
 
      // var xvang =
 
+     console.log('Collision: ' + collisionPointX + ',' + collisionPointY);
 
-    var pastxv = xv;
-    var pastyv = yv;
+     var newColX = collisionPointX - secondBall.x;
+     var newColY = collisionPointY - secondBall.y;
 
-    var disty = firstBall.y - secondBall.y;
-    var distx = firstBall.x - secondBall.x;
+     console.log('NewCol: ' + newColX + ',' + newColY);
+
+     var dx = xv;
+     var dy = yv;
+
+     var ang = Math.atan(newColY / newColX );
+     var vector1 = Math.sqrt( (dx*dx) + (dy*dy) );
+
+     var newxv = Math.abs(vector1) * Math.cos(ang + 90);
+     var newyv = Math.abs(vector1) * Math.sin(90 + ang);
+
+     console.log('newxv, newyv= ' + newxv + ',' + newyv);
+
+     var newyv = (-1)*(Math.abs(newyv));
+
+    // var pastxv = xv;
+    // var pastyv = yv;
+    //
+    // var disty = firstBall.y - secondBall.y;
+    // var distx = firstBall.x - secondBall.x;
+
+    xv = newxv;
+    yv = newyv;
 
      if (collisionPointX > secondBall.x) {
        //always positive
@@ -209,10 +260,12 @@ function checkCollision(firstBall, secondBall) {
      }
 
 
-     xv = xv*(disty/distx);
-     yv = -(yv*(distx/disty));
+     // xv = xv*(disty/distx);
+     // yv = -(yv*(distx/disty));
      // yv = -(yv);
 
+  } else {
+    nottouching = true;
   }
 }
 
@@ -241,9 +294,14 @@ function throwBall(x1, y1, xSpeed, ySpeed)
   ballthrown = true;
   ballpasthoop = false;
   scorechecked = false;
+  nottouching = true;
+
+  console.log('x, y, xspd, yspd = ' + x1 +','+ y1 +',' + xSpeed + ',' + ySpeed);
+
 
   basketball.x = x1;
   basketball.y = 600;
+
 
   xv = xSpeed/100;
   yv = -(20);
@@ -317,10 +375,18 @@ socket.on('take shot', function(shotInfo) {
   var shooterleftbounds = centerx - shotDeviceWidth/2;
   var shooterrightbounds = centerx + shotDeviceWidth/2;
 
+  console.log('exitX: ' + myX1);
+  console.log('deviceWidth: ' + shotDeviceWidth);
+  console.log('leftbounds: ' + shooterleftbounds);
   myX1 = (myX1 * shotDeviceWidth) + shooterleftbounds;
+  console.log('newx1: ' + myX1);
   myXspeed = myXspeed * shotDeviceWidth;
   myYspeed = myYspeed * app.screen.height;
 
   drawBasketball(myX1,myY1);
   throwBall(myX1, myY1, myXspeed, myYspeed);
+});
+
+socket.on('query', function(query) {
+  socket.emit('join room', query);
 });

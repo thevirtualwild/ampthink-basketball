@@ -84,6 +84,100 @@ $window.keydown(function (event) {
     {
             joinRoom();
     }
+
+    if (event.which === 65) {
+      // shotInfo = {
+      //     exitX:0.5, //middle of screen
+      //     exitY:-100,
+      //     xSpeed:ratioX*totalSpeed/app.screen.width,
+      //     ySpeed:ratioY*totalSpeed/app.screen.height,
+      //     deviceWidth:app.screen.width,
+      //     deviceHeight:app.screen.height
+      // }
+
+      shotInfo = {
+        exitX: 350/app.screen.width,
+        exitY: -100,
+        xSpeed: 0/app.screen.width,
+        ySpeed: 325/app.screen.height,
+        deviceWidth: app.screen.width,
+        deviceWidth: app.screen.height
+      }
+
+      socket.emit("throw ball", shotInfo);
+
+      resetBall();
+    }
+    if (event.which === 66) {
+      // shotInfo = {
+      //     exitX:0.5, //middle of screen
+      //     exitY:-100,
+      //     xSpeed:ratioX*totalSpeed/app.screen.width,
+      //     ySpeed:ratioY*totalSpeed/app.screen.height,
+      //     deviceWidth:app.screen.width,
+      //     deviceHeight:app.screen.height
+      // }
+
+      shotInfo = {
+        exitX: 0/app.screen.width,
+        exitY: -100,
+        xSpeed: 410/app.screen.width,
+        ySpeed: 326/app.screen.height,
+        deviceWidth: app.screen.width,
+        deviceWidth: app.screen.height
+      }
+
+      socket.emit("throw ball", shotInfo);
+
+      resetBall();
+    }
+    if (event.which === 67) {
+      // shotInfo = {
+      //     exitX:0.5, //middle of screen
+      //     exitY:-100,
+      //     xSpeed:ratioX*totalSpeed/app.screen.width,
+      //     ySpeed:ratioY*totalSpeed/app.screen.height,
+      //     deviceWidth:app.screen.width,
+      //     deviceHeight:app.screen.height
+      // }
+
+      shotInfo = {
+        exitX: 468/app.screen.width,
+        exitY: -100,
+        xSpeed: -320/app.screen.width,
+        ySpeed: 327/app.screen.height,
+        deviceWidth: app.screen.width,
+        deviceWidth: app.screen.height
+      }
+
+      socket.emit("throw ball", shotInfo);
+
+      resetBall();
+    }
+    if (event.which === 68) {
+      // shotInfo = {
+      //     exitX:0.5, //middle of screen
+      //     exitY:-100,
+      //     xSpeed:ratioX*totalSpeed/app.screen.width,
+      //     ySpeed:ratioY*totalSpeed/app.screen.height,
+      //     deviceWidth:app.screen.width,
+      //     deviceHeight:app.screen.height
+      // }
+
+      shotInfo = {
+        exitX: 144/app.screen.width,
+        exitY: -100,
+        xSpeed: 300/app.screen.width,
+        ySpeed: 327/app.screen.height,
+        deviceWidth: app.screen.width,
+        deviceWidth: app.screen.height
+      }
+
+      socket.emit("throw ball", shotInfo);
+
+      resetBall();
+    }
+
 });
 
 app.ticker.add(function(delta) {

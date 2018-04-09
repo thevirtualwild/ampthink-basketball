@@ -12,7 +12,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/game', function(req, res) {
     res.sendFile(path.join(__dirname + '/public/game.html'));
-    query = req.query.roomId;
+    query = req.query.room;
     console.log('webapp routing - ' + query);
 });
 
@@ -26,7 +26,7 @@ app.get('/babylon', function(req, res) {
 function onConnection(socket) {
   console.log('a user connected');
 
-  socket.on('room', function(room) {
+  socket.on('join room', function(room) {
     socket.join(room);
   });
 
