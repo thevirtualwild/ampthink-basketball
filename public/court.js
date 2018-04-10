@@ -5,6 +5,7 @@ var socket = io();
 var app = new PIXI.Application(window.innerWidth, window.innerHeight, {backgroundColor : 0x1099bb});
 document.body.appendChild(app.view);
 
+var collided = false;
 // create a texture from an image path
 var basketballTexture = PIXI.Texture.fromImage('basketball.png');
 var backgroundTexture= PIXI.Texture.fromImage('black-backdrop.jpg');
@@ -109,7 +110,7 @@ function drawBasketball(x, y) {
 function move(object,dx,dy) {
   object.x += dx;
   object.y += dy;
-  console.log('moved - ' + dx + ',' + dy);
+  //console.log('moved - ' + dx + ',' + dy);
 }
 
 var xv = 0;
@@ -138,10 +139,12 @@ app.ticker.add(function(delta) {
   if ( (ballpasthoop == true) ) { //}&& (scorechecked = false) && (basketball.y > basketY) ) {
     //is collision on?
 
-    checkCollision(basketball, rimleft);
-    checkCollision(basketball, rimright);
+      if(!collided) {
+          checkCollision(basketball, rimleft);
+          checkCollision(basketball, rimright);
+      }
 
-
+/*
     if (b.circleCollision(basketball, rimleft, true, true)) {
       if (basketball.x > (rimleft.x + rimleft.width/2)) {
         xv += -(xv*8);
@@ -158,9 +161,9 @@ app.ticker.add(function(delta) {
       }
       yv = -(yv)*fac;
     }
-
+*/
     if (basketball.y >= basketY && scorechecked == false) {
-      checkScore();
+     // checkScore();
     }
 
     // if (b.hitTestCircle(rimleft, basketball) || b.hitTestCircle(rimright, basketball)) {
@@ -182,7 +185,7 @@ app.ticker.add(function(delta) {
 
 
 function checkCollision(firstBall, secondBall) {
-  if (b.circleCollision(firstBall, secondBall, false, false)) {
+  if (b.circleCollision(firstBall, secondBall)) {
     collisionPointX =
      ((firstBall.x * secondBall.radius) + (secondBall.x * firstBall.radius))
      / (firstBall.radius + secondBall.radius);
@@ -192,14 +195,16 @@ function checkCollision(firstBall, secondBall) {
      / (firstBall.radius + secondBall.radius);
 
      // var xvang =
-
+    collided = true;
 
     var pastxv = xv;
     var pastyv = yv;
 
-    var disty = firstBall.y - secondBall.y;
-    var distx = firstBall.x - secondBall.x;
+    //firstball = basketball
 
+    var disty = Math.abs(firstBall.y - secondBall.y);
+    var distx = Math.abs(firstBall.x - secondBall.x);
+/*
      if (collisionPointX > secondBall.x) {
        //always positive
        xv = Math.abs(xv);
@@ -207,10 +212,20 @@ function checkCollision(firstBall, secondBall) {
        //always negative
        xv = Math.abs(xv) * (-1);
      }
+*/
+//var normalizedForce = disty/distx -
 
+      var angle = Math.atan(disty/distx);
 
-     xv = xv*(disty/distx);
-     yv = -(yv*(distx/disty));
+      console.log(" angle " + angle);
+      console.log("sin " + Math.sin(angle));
+      console.log("cos " + Math.cos(angle));
+
+      //if(firstBall.y > secondBall.y)
+      //{
+         xv += -2*xv*Math.cos(angle);
+         yv += -2*yv*Math.sin(angle);
+      //}
      // yv = -(yv);
 
   }
@@ -238,6 +253,7 @@ function updateScore() {
 function throwBall(x1, y1, xSpeed, ySpeed)
 {
 
+    collided = false;
   ballthrown = true;
   ballpasthoop = false;
   scorechecked = false;
