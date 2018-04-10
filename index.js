@@ -21,12 +21,72 @@ app.get('/babylon', function(req, res) {
 });
 */
 
+
+var numUsers = 0;
+var currentHighScore = 0;
+
 // Web Socket (Socket.io)
 function onConnection(socket) {
+
+  var addedUser = false;
   console.log('a user connected');
+
+  // when the client emits 'add user', this listens and executes
+  socket.on('add user', function(data) {
+    // dont add the user twice, just return if this is called again.
+    if (addedUser) return;
+
+    console.log('add user called - ' + data);
+    var userdata = '';
+
+    // if not valid json object, parse
+    try {
+        userdata = JSON.parse(data);
+        console.log('userdata' - userdata);
+    } catch (e) {
+        userdata = data;
+    }
+
+    // we store the username in the socket session for this client
+    socket.username = userdata.username;
+    ++numUsers;
+    addedUser = true;
+
+    if (numUsers == 1 ) {
+      socket.usercolor = 'pink';
+      socket.emit('change color', socket.usercolor);
+    } else if (numUsers == 2) {
+      socket.usercolor = 'mint';
+      socket.emit('change color', socket.usercolor);
+    } else {
+      socket.usercolor = userdata.usercolor;
+    }
+
+    // fake for now
+    // socket.roomname = 'GAME';
+
+    console.log("|New User: " + socket.username + "\n - Chosen color: " + socket.usercolor);
+
+    // socket.emit('login', {
+    //   numUsers: numUsers,
+    //   roomname: socket.roomname
+    // });
+
+    console.log(' - Joined Room: ' + socket.roomname);
+
+    // echo globally (all clients) that a person has connected
+    socket.broadcast.to(socket.roomname).emit('user joined', {
+      username: socket.username,
+      usercolor: socket.usercolor,
+      numUsers: numUsers
+    });
+  });
 
   socket.on('join room', function(room) {
     socket.join(room);
+
+    console.log('joining room - ' + room);
+    socket.roomname = room;
   });
 
   socket.on('query request', function() {
@@ -54,6 +114,8 @@ function onConnection(socket) {
     // console.log('Data Saved');
 
     var shotInfo = {
+      username: socket.username,
+      ballcolor: socket.usercolor,
       fromX: exitX,
       fromY: exitY,
       xSpeed: xSpeed,
@@ -77,9 +139,9 @@ function onConnection(socket) {
 
 
 
+
+
 io.on('connection', onConnection);
-
-
 
 server.listen(port, function(){
   console.log('listening on %d', port);

@@ -9,8 +9,8 @@ var $passcodeInput = $('.passcodeInput'); // Input for roomname
 var $passcodePage = $('.passcode.page') // The roomchange page
 
 // create a texture from an image path
-var texture = PIXI.Texture.fromImage('basketball.png');
-var backgroundTexture= PIXI.Texture.fromImage('BasketballBackground.jpg');
+var texture = PIXI.Texture.fromImage('ball-orange.png');
+var backgroundTexture= PIXI.Texture.fromImage('court.jpg');
 //from here http://www.zgjm-org.com/data/out/6/IMG_112426.jpg
 
 var shotInfo;
@@ -192,18 +192,33 @@ app.ticker.add(function(delta) {
 
 function joinRoom()
 {
+    // fade out input page
     $pages.fadeOut();
 
+    // make background interactive so you can drag and throw the ball (listeners)
     background
         .on('pointerdown', onDragStart)
         .on('pointerup', onDragEnd)
         .on('pointerupoutside', onDragEnd)
         .on('pointermove', onDragMove);
 
+    // draw the text on screen (countdown and instructions)
     initText();
+
+    name = 'boop';
+    color = 'blue';
+
+    roomtojoin = 'GAME';
+
+    userdata = {
+      'username': name,
+      'usercolor': color,
+      'userroom': roomtojoin
+    };
+
     // Tell the server your new room to connect to
-    //socket.emit('room', roomname);
-    //socket.emit('add user', jsonstring);
+    socket.emit('join room', roomtojoin);
+    socket.emit('add user', userdata);
 }
 
 function initText()
@@ -407,6 +422,23 @@ function canShoot()
 {
     thrown = false;
 }
+
+// socket.on('change color', function(data) {
+//   var texturenew = 'ball-orange.png';
+//   if (data == 'pink') {
+//     texturenew = 'ball-pink.png';
+//   } else if (data = 'mint') {
+//     texturenew = 'ball-mint.png';
+//   } else {
+//     console.log('no need to change color');
+//   }
+//   basketball.setTexture(texturenew);
+// });
+
+socket.on('user joined', function(data) {
+  console.log('User Joined');
+  console.dir(data);
+});
 
 socket.on('shot sent', function() {
   // console.log('We got a message back!');

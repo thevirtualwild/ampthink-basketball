@@ -8,9 +8,12 @@ document.body.appendChild(app.view);
 var b = new Bump(PIXI); // collider extension
 
 // create a texture from an image path
-var basketballTexture = PIXI.Texture.fromImage('basketball.png');
+var defaultballTexture = PIXI.Texture.fromImage('ball-orange.png');
+var pinkballTexture = PIXI.Texture.fromImage('ball-pink.png');
+var mintballTexture = PIXI.Texture.fromImage('ball-mint.png');
+var basketballTexture = PIXI.Texture.fromImage('ball-orange.png');
 basketballTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-var backgroundTexture= PIXI.Texture.fromImage('black-backdrop.jpg');
+var backgroundTexture= PIXI.Texture.fromImage('graffiti-wall.jpg');
 var hoopTexture = PIXI.Texture.fromImage('hoop.png');
 
 // create Layer Groups - used for zordering
@@ -34,6 +37,7 @@ background.x = app.screen.width/2;
 background.y = app.screen.height/2;
 background.width = app.screen.width;
 background.height = app.screen.height;
+app.stage.addChild(background);
 //set up the text display styles
 let textStyle = new PIXI.TextStyle({
   fontFamily: "Arial",
@@ -125,7 +129,7 @@ function setupRim(somehoop,somerim,side) {
   somerim.width = 20;
   somerim.height = 20;
   somerim.anchor.set(.5, .5);
-  somerim.alpha = 1;
+  somerim.alpha = 0;
 
   somerim.y = hoopBounds.top + somerim.height/2;
 
@@ -170,10 +174,6 @@ app.ticker.add(function(delta) {
       ball = balls.children[i];
 
       ball.yv += gravity;
-      // console.log('hmmm - ' + ball.yv);
-
-      // console.dir(ball);
-      // console.log('ballyv - ' + ball.yv);
       move(ball, ball.xv, ball.yv);
 
       ballbottom = getBounds(ball).bottom;
@@ -181,19 +181,12 @@ app.ticker.add(function(delta) {
 
       if ( (ballbottom < hooptop) && (ball.thrown == true) ) {
         ball.pasthoop = true;
-        console.log('hz - ' + hoop.zOrder);
-        console.log('bz - ' + ball.zOrder);
         ball.zOrder = 10;
         ball.parentGroup = behindBasketGroup;
-        console.log('bz after - ' + ball.zOrder);
-        console.log('detect collisions now');
         // collision detection on
       }
       if ( (ball.pasthoop == true) ) { //}&& (scorechecked = false) && (basketball.y > hoopY) ) {
         //is collision on?
-
-        // console.log('ballz - ' + ball.zOrder);
-        // console.log('hoopz - ' + hoop.zOrder);
 
         checkCollision(ball, rimleft);
         checkCollision(ball, rimright);
@@ -248,10 +241,20 @@ app.ticker.add(function(delta) {
 });
 
 // Basketball Methods
-function createBasketball(x, y) {
-  var basketball = new PIXI.Sprite(basketballTexture);
+function createBasketball(x, y, userinfo) {
+  var ballTexture;
+  if (userinfo.color == 'pink') {
+    ballTexture = pinkballTexture;
+  } else if (userinfo.color == 'mint') {
+    ballTexture = mintballTexture;
+  } else {
+    ballTexture = defaultballTexture;
+  }
+  var basketball = new PIXI.Sprite(ballTexture);
   console.log('--- New Ball ---' + basketball);
 
+  basketball.owner = userinfo.username;
+  basketball.color = userinfo.color;
   basketball.circular = true;
 
   basketball.parentGroup = foregroundGroup;
@@ -277,15 +280,13 @@ function createBasketball(x, y) {
   return basketball;
 }
 function move(object,dx,dy) {
-  // console.log('object moving - ' + dx + ',' + dy);
   object.x += dx;
   object.y += dy;
-  // console.log('moved - ' + dx + ',' + dy);
 }
-function throwBall(x1, y1, xSpeed, ySpeed) {
+function throwBall(x1, y1, xSpeed, ySpeed, userinfo) {
 
   // create individual balls
-  var newball = createBasketball(x1,y1);
+  var newball = createBasketball(x1,y1, userinfo);
   console.log('-- Throw Ball --');
   console.dir(newball);
 
@@ -315,11 +316,11 @@ function shotAttempt() {
   // resetBall();
 }
 function bounceOut(someball) {
-  console.log('bouncing out');
+  // console.log('bouncing out');
   TweenMax.to(someball, 5, {alpha:0, onComplete:removeBall, onCompleteParams:[ball, someball]});
 }
 function removeBall(balltoremove) {
-  console.log('remove ball - ' + balltoremove);
+  // console.log('remove ball - ' + balltoremove);
   balls.removeChild(balltoremove);
 }
 
@@ -342,7 +343,7 @@ function getBounds(someobject) {
 }
 function checkCollision(firstBall, secondBall) { //check if ball and rim are touching
   if (b.hitTestCircle(firstBall, secondBall)) {
-    console.log(' - Ball and rim are touching');
+    // console.log(' - Ball and rim are touching');
     touching(firstBall,secondBall);
     // nottouching = false;
   } else {
@@ -350,21 +351,21 @@ function checkCollision(firstBall, secondBall) { //check if ball and rim are tou
   }
 }
 function touching(firstBall,secondBall) { // if touching
-  console.log('  Doing stuff while touching');
+  // console.log('  Doing stuff while touching');
 
   //check for first collision
   if (b.circleCollision(firstBall, secondBall, false ) && (firstBall.nottouching)) {
-    console.log('  First touch');
+    // console.log('  First touch');
     collisionPointX = ((firstBall.x * secondBall.radius) + (secondBall.x * firstBall.radius)) / (firstBall.radius + secondBall.radius);
     collisionPointY = ((firstBall.y * secondBall.radius) + (secondBall.y * firstBall.radius)) / (firstBall.radius + secondBall.radius);
 
-    console.log('  - Collision at: ' + collisionPointX + ',' + collisionPointY);
-    console.log('   -- Ball at: ' + firstBall.x + ',' + firstBall.y + " - radius: " + firstBall.radius );
-    console.log('   -- Rim  at: ' + secondBall.x + ',' + secondBall.y + " - radius: " + secondBall.radius);
+    // console.log('  - Collision at: ' + collisionPointX + ',' + collisionPointY);
+    // console.log('   -- Ball at: ' + firstBall.x + ',' + firstBall.y + " - radius: " + firstBall.radius );
+    // console.log('   -- Rim  at: ' + secondBall.x + ',' + secondBall.y + " - radius: " + secondBall.radius);
     var newColX = collisionPointX - secondBall.x;
     var newColY = collisionPointY - secondBall.y;
 
-    console.log('  -NewCol point for calculation: ' + newColX + ',' + newColY);
+    // console.log('  -NewCol point for calculation: ' + newColX + ',' + newColY);
 
     var dx = firstBall.xv;
     var dy = firstBall.yv;
@@ -375,7 +376,7 @@ function touching(firstBall,secondBall) { // if touching
     var newxv = Math.abs(vector1) * Math.cos(ang + 90);
     var newyv = Math.abs(vector1) * Math.sin(90 + ang);
 
-    console.log('newxv, newyv= ' + newxv + ',' + newyv);
+    // console.log('newxv, newyv= ' + newxv + ',' + newyv);
 
     var newyv = (-1)*(Math.abs(newyv));
 
@@ -431,24 +432,20 @@ socket.on('take shot', function(shotInfo) {
   myYspeed = shotInfo.ySpeed;
   shotDeviceWidth = shotInfo.deviceWidth;
   shotDeviceHeight = shotInfo.deviceHeight;
-  // console.log('shot X1- ' + myX1);
-  // console.log('shot Y1- ' + myY1);
-  // console.log('shot xSpeed- ' + myXspeed);
-  // console.log('shot ySpeed- ' + myYspeed);
+  userinfo = {
+    username: shotInfo.username,
+    color: shotInfo.ballcolor
+  };
 
   var centerx = app.screen.width/2;
   var shooterleftbounds = centerx - shotDeviceWidth/2;
   var shooterrightbounds = centerx + shotDeviceWidth/2;
 
-  console.log('exitX: ' + myX1);
-  console.log('deviceWidth: ' + shotDeviceWidth);
-  console.log('leftbounds: ' + shooterleftbounds);
   myX1 = (myX1 * shotDeviceWidth) + shooterleftbounds;
-  console.log('newx1: ' + myX1);
   myXspeed = myXspeed * shotDeviceWidth;
   myYspeed = myYspeed * app.screen.height;
 
-  throwBall(myX1, myY1, myXspeed, myYspeed);
+  throwBall(myX1, myY1, myXspeed, myYspeed, userinfo);
 });
 socket.on('query', function(query) {
   socket.emit('join room', query);
