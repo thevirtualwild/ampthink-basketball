@@ -5,7 +5,6 @@ var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var port = process.env.PORT || 4000;
 
-
 var query;
 // Routing
 app.use(express.static(path.join(__dirname, 'public')));
