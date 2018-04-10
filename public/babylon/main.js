@@ -3,10 +3,13 @@ var socket = io();
 
 var canvas = document.getElementById("canvas");
 var engine = new BABYLON.Engine(canvas, true);
-engine.enableOfflineSupport = false;
+
 var createScene = function(){
     // This creates a basic Babylon Scene object (non-mesh)
     var clientScene = new BABYLON.Scene(engine);
+
+    clientScene.enablePhysics();
+    engine.enableOfflineSupport = false;
 
     // This creates and positions a free camera (non-mesh)
     var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), clientScene);
@@ -23,37 +26,77 @@ var createScene = function(){
     // Default intensity is 1. Let's dim the light a small amount
     light.intensity = 0.7;
 
-    // Our built-in 'sphere' shape. Params: name, subdivs, size, scene
-    //var sphere = BABYLON.Mesh.CreateSphere("sphere1", 16, 2, scene);
+    BABYLON.SceneLoader.ImportMesh("BASKET_BALL", "./assets/", "basketball3dtest.babylon", clientScene, function (mesh) {
 
-    // Move the sphere upward 1/2 its height
-    //sphere.position.y = 1;
+        mesh[0].scaling = new BABYLON.Vector3(0.05, 0.05, 0.05);
 
-    // Our built-in 'ground' shape. Params: name, width, depth, subdivs, scene
-    var ground = BABYLON.Mesh.CreateGround("ground1", 6, 6, 2, clientScene);
+        var myMaterial = new BABYLON.StandardMaterial("myMaterial", clientScene);
+
+        myMaterial.diffuseTexture = new BABYLON.Texture("./assets/basketball3dtestdiffuse.jpg", clientScene);
+        //myMaterial.bumpTexture = new BABYLON.Texture("./assets/basketball3dtestbump.jpg", clientScene);
+        mesh[0].material = myMaterial;
+
+        var sphere = BABYLON.Mesh.CreateSphere("sphere1", 16, 1.88, clientScene);
+        sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.SphereImpostor, {mass: 1});
+        sphere.position = new BABYLON.Vector3(0, 10, 10);
+
+        clientScene.registerBeforeRender(function()
+        {
+            mesh[0].parent = sphere;
+            //mesh[0].visible = false;
+            if(sphere.position.y < -15)
+            {
+                sphere.position = new BABYLON.Vector3(
+                    Math.random() * (-2 + 2) -2,
+                    Math.random() * (15 - 13) +13,
+                    Math.random() * (9 - 7) +7);
+                //sphere.position.y = 12;
+                sphere.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 0, 0));
+                sphere.physicsImpostor.setAngularVelocity(new BABYLON.Vector3(0,0,0));
+            }
+        });
+
+    });
+
+    BABYLON.SceneLoader.ImportMesh("", "./assets/", "bballnohooplowpoly.obj", clientScene, function (meshes) {
+
+        var myMaterial = new BABYLON.StandardMaterial("myMaterial", clientScene);
+        var mesh;
+
+        for(var i = 0; i < meshes.length; i++)
+        {
+            myMaterial.diffuseTexture = new BABYLON.Texture("./assets/basketball_hoop_diffuse_noAO.jpg", clientScene);
+            //myMaterial.bumpTexture = new BABYLON.Texture("./assets/basketball3dtestbump.tga", clientScene);
+            meshes[i].material = myMaterial;
+            meshes[i].position = new BABYLON.Vector3(0, -10, 17);
+            meshes[i].scaling = new BABYLON.Vector3(0.025, 0.02, 0.025);
+            meshes[i].rotate(BABYLON.Axis.Y, Math.PI, BABYLON.Space.WORLD);
+
+            var hoop = meshes[i];
+            hoop.physicsImpostor = new BABYLON.PhysicsImpostor(hoop, BABYLON.PhysicsImpostor.MeshImpostor, {
+                mass: 0,
+                friction: 1,
+                restitution: 3
+            });
+        }
+    });
 
     return clientScene;
 }
 
+
 var clientScene = createScene();
 
-BABYLON.SceneLoader.ImportMesh("", "", "basketball3d.obj", clientScene, function (mesh) {
-    // do something with the meshes and skeletons
-    // particleSystems are always null for glTF assets
-    camera.target = mesh;
-    clientScene.registerBeforeRender(scaleMesh.bind(this, mesh));
-    console.log("AfterImport");
-});
 
 
 engine.runRenderLoop(function(){
     clientScene.render();
+    var fpsLabel = document.getElementById("fpsLabel");
+    fpsLabel.innerHTML = engine.getFps().toFixed() + " fps";
+    //console.log("render");
 });
 
-function scaleMesh(mesh){
-    mesh.scaling = new BABYLON.Vector3(0.01, 0.01, 0.01);
-    console.log("Scale");
-}
+
 
 
 var $window = $(window);
