@@ -299,29 +299,11 @@ function onDragStart(event) {
     // the reason for this is because of multitouch
     // we want to track the movement of this particular touch
     console.log("drag started");
-
+if(thrown == false) {
     this.data = event.data;
     this.dragging = true;
     dragging = true;
-    this.anchor.set(0.5);
-
-    while(historyX.length > 0)
-    {
-        historyX.pop();
-    }
-
-    while(historyY.length > 0)
-    {
-        historyY.pop();
-    }
-
-    var newPosition = this.data.getLocalPosition(this.parent);
-
-    for( var i = 0; i < historySize; i++)
-    {
-        historyX.push(newPosition.x);
-        historyY.push(newPosition.y);
-    }
+}
 }
 
 function onDragEnd() {
