@@ -39,14 +39,14 @@ background.width = app.screen.width;
 background.height = app.screen.height;
 app.stage.addChild(background);
 //set up the text display styles
-let textStyle = new PIXI.TextStyle({
+var textStyle = new PIXI.TextStyle({
   fontFamily: "Arial",
   fontSize: 36,
   fill: "white",
   stroke: "white"
 });
-let message = new PIXI.Text("Score - ", textStyle);
-let clock = new PIXI.Text("Time - ", textStyle);
+var message = new PIXI.Text("Score - ", textStyle);
+var clock = new PIXI.Text("Time - ", textStyle);
 // add background elements to background group
 background.parentGroup = backgroundGroup;
 message.parentGroup = backgroundGroup;
