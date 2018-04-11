@@ -39,7 +39,9 @@ background.x = app.screen.width/2;
 background.y = app.screen.height/2;
 background.width = app.screen.width;
 background.height = app.screen.height;
+console.log('about to add background image');
 app.stage.addChild(background);
+console.log('background added');
 //set up the text display styles
 var textStyle = new PIXI.TextStyle({
   fontFamily: "Arial",
@@ -122,7 +124,9 @@ function setupHoop(thishoop,thishoopX, thishoopY, rleft, rright) {
   setupRim(thishoop,rimleft,'left');
   setupRim(thishoop,rimright,'right')
 
+  console.log('about to add hoop');
   app.stage.addChild(thishoop);
+  console.log('hoop added');
 }
 function setupRim(somehoop,somerim,side) {
   hoopBounds = somehoop.getBounds();
@@ -140,20 +144,25 @@ function setupRim(somehoop,somerim,side) {
   } else if (side == 'right') {
     somerim.x = hoopBounds.right - somerim.width/2;
   }
-
+  console.log('about to add rim');
   app.stage.addChild(somerim);
+  console.log('rim added');
 }
 function setupScore(x,y) {
   message.anchor.set(.5);
   message.position.set(x,y);
 
+  console.log('about to add message');
   app.stage.addChild(message);
+  console.log('message added');
 }
 function setupClock(x,y) {
   clock.anchor.set(.5);
   clock.position.set(x,y);
 
+  console.log('about to add clock');
   app.stage.addChild(clock);
+  console.log('clock added');
 }
 
 
@@ -191,8 +200,9 @@ app.ticker.add(function(delta) {
     if ( (ball.pasthoop == true) ) { //}&& (scorechecked = false) && (basketball.y > hoopY) ) {
       //is collision on?
 
-      checkCollision(ball, rimleft);
-      checkCollision(ball, rimright);
+      //fortesting
+      // checkCollision(ball, rimleft);
+      // checkCollision(ball, rimright);
 
       //
       // if (b.circleCollision(ball, rimleft, true, true)) {
