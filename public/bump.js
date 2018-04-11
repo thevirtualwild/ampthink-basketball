@@ -1,7 +1,8 @@
 'use strict';
 
 class Bump {
-  constructor(renderingEngine = PIXI) {
+  var renderingEngine = PIXI;
+  constructor(renderingEngine) {
     if (renderingEngine === undefined) throw new Error("Please assign a rendering engine in the constructor before using bump.js");
 
     this.renderer = "pixi";
