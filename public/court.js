@@ -169,72 +169,72 @@ app.ticker.add(function(delta) {
     if(count <= 0) {
       stopShooting();
     }
+  }
 
-    for (i in balls.children) {
-      ball = balls.children[i];
+  for (i in balls.children) {
+    ball = balls.children[i];
 
-      ball.yv += gravity;
-      move(ball, ball.xv, ball.yv);
+    ball.yv += gravity;
+    move(ball, ball.xv, ball.yv);
 
-      ballbottom = getBounds(ball).bottom;
-      hooptop = hoop.getBounds().top;
+    ballbottom = getBounds(ball).bottom;
+    hooptop = hoop.getBounds().top;
 
-      if ( (ballbottom < hooptop) && (ball.thrown == true) ) {
-        ball.pasthoop = true;
-        ball.zOrder = 10;
-        ball.parentGroup = behindBasketGroup;
-        // collision detection on
+    if ( (ballbottom < hooptop) && (ball.thrown == true) ) {
+      ball.pasthoop = true;
+      ball.zOrder = 10;
+      ball.parentGroup = behindBasketGroup;
+      // collision detection on
+    }
+    if ( (ball.pasthoop == true) ) { //}&& (scorechecked = false) && (basketball.y > hoopY) ) {
+      //is collision on?
+
+      checkCollision(ball, rimleft);
+      checkCollision(ball, rimright);
+
+      //
+      // if (b.circleCollision(ball, rimleft, true, true)) {
+      //   if (ball.x > (rimleft.x + rimleft.width/2)) {
+      //     ball.xv += -(ball.xv*8);
+      //   } else {
+      //     ball.xv += (ball.xv*8);
+      //   }
+      //   ball.yv = -(ball.yv)*fac;
+      // }
+      // if (b.circleCollision(ball, rimright, true, true)) {
+      //   if (ball.x < (rimright.x - rimright.width/2)) {
+      //     ball.xv += -(ball.xv*8);
+      //   } else {
+      //     ball.xv += (ball.xv*8);
+      //   }
+      //   ball.yv = -(ball.yv)*fac;
+      // }
+      //When ball falls below hoop again after "past hoop" check score
+      if ( (ball.y >= hoopY+20) && ball.scorechecked == false) {
+        checkScore(ball);
       }
-      if ( (ball.pasthoop == true) ) { //}&& (scorechecked = false) && (basketball.y > hoopY) ) {
-        //is collision on?
+    }
+    if ( (getBounds(ball).bottom >= floor) && (ball.yv > 0)) {
+      // console.log('basketball floor');
+      ball.yv = -(ball.yv)*fac;
+      ball.y = floor - ball.radius;
+      ball.xv = (ball.xv*friction);
 
-        checkCollision(ball, rimleft);
-        checkCollision(ball, rimright);
-
-        //
-        // if (b.circleCollision(ball, rimleft, true, true)) {
-        //   if (ball.x > (rimleft.x + rimleft.width/2)) {
-        //     ball.xv += -(ball.xv*8);
-        //   } else {
-        //     ball.xv += (ball.xv*8);
-        //   }
-        //   ball.yv = -(ball.yv)*fac;
-        // }
-        // if (b.circleCollision(ball, rimright, true, true)) {
-        //   if (ball.x < (rimright.x - rimright.width/2)) {
-        //     ball.xv += -(ball.xv*8);
-        //   } else {
-        //     ball.xv += (ball.xv*8);
-        //   }
-        //   ball.yv = -(ball.yv)*fac;
-        // }
-        //When ball falls below hoop again after "past hoop" check score
-        if ( (ball.y >= hoopY+20) && ball.scorechecked == false) {
-          checkScore(ball);
-        }
+      if ((ball.shouldremove) && (ball.nobounceyet)) {
+        bounceOut(ball);
+        ball.nobounceyet = false;
+      } else {
+        ball.shouldremove = true;
       }
-      if ( (getBounds(ball).bottom >= floor) && (ball.yv > 0)) {
-        // console.log('basketball floor');
-        ball.yv = -(ball.yv)*fac;
-        ball.y = floor - ball.radius;
-        ball.xv = (ball.xv*friction);
-
-        if ((ball.shouldremove) && (ball.nobounceyet)) {
-          bounceOut(ball);
-          ball.nobounceyet = false;
-        } else {
-          ball.shouldremove = true;
-        }
-      }
-      if ( (getBounds(ball).left <= leftWall)) {
-        // console.log('basketball lwall');
-        ball.x = leftWall + ball.radius;
-        ball.xv = -(ball.xv);
-      } else if (getBounds(ball).right >= rightWall) {
-        // console.log('basketball rwall');
-        ball.x = rightWall - ball.radius;
-        ball.xv = -(ball.xv);
-      }
+    }
+    if ( (getBounds(ball).left <= leftWall)) {
+      // console.log('basketball lwall');
+      ball.x = leftWall + ball.radius;
+      ball.xv = -(ball.xv);
+    } else if (getBounds(ball).right >= rightWall) {
+      // console.log('basketball rwall');
+      ball.x = rightWall - ball.radius;
+      ball.xv = -(ball.xv);
     }
   }
 
@@ -306,14 +306,14 @@ function throwBall(x1, y1, xSpeed, ySpeed, userinfo) {
 
 }
 function shotAttempt() {
-    // console.log('Shot Thrown');
-    /* data = {
-    xval: basketball.x
-  }
-  */
-  //socket.emit('shot attempt', data);
+  // console.log('Shot Thrown');
+  /* data = {
+  xval: basketball.x
+}
+*/
+//socket.emit('shot attempt', data);
 
-  // resetBall();
+// resetBall();
 }
 function bounceOut(someball) {
   // console.log('bouncing out');
@@ -401,7 +401,7 @@ function checkScore(ball) {
   ball.thrown = false;
   ball.scorechecked = true;
 
-  if ((ball.x > hoopBounds.left) && (ball.x < hoopBounds.right)) {
+  if ((ball.x > hoopBounds.left) && (ball.x < hoopBounds.right) && (countdownStarted)) {
     console.log('YOU SCOReD! - ' + score);
     updateScore();
   } else {
@@ -423,8 +423,17 @@ function updateTimer() {
 
   // clock.text = "Time - " + time;
 }
+function startShooting() {
+  countdownStarted = true;
+}
 
 // Socket Listeners
+socket.on('shooting started', function() {
+  if (countdownStarted = false) {
+    startShooting();
+  }
+});
+
 socket.on('take shot', function(shotInfo) {
   myX1 = shotInfo.fromX;
   myY1 = 600;
