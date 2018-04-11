@@ -5,7 +5,9 @@ var socket = io(); // console.log('Socket - ' + socket);
 var app = new PIXI.Application(window.innerWidth, window.innerHeight, {backgroundColor : 0x1099bb});
 document.body.appendChild(app.view);
 
-var b = new Bump(PIXI); // collider extension
+// var b = new Bump(PIXI); // collider extension
+
+var b;
 
 // create a texture from an image path
 var defaultballTexture = PIXI.Texture.fromImage('ball-orange.png');
