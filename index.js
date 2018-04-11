@@ -15,6 +15,11 @@ app.get('/game', function(req, res) {
     console.log('webapp routing - ' + query);
 });
 
+app.get('/regame', function(req, res) {
+  res.redirect('/game?room=' + 'something');
+  query = req.query.room;
+  console.log('query - ' + query);
+});
 /*
 app.get('/babylon', function(req, res) {
     res.sendFile(path.join(__dirname + '/public/babylon/game.html'));
