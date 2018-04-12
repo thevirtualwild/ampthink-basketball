@@ -3,101 +3,209 @@ var socket = io();
 
 var canvas = document.getElementById("canvas");
 var engine = new BABYLON.Engine(canvas, true);
+var useMeshCollision = false;
+var useCannon = true;
+var cameraTypes = Object.freeze({"freeThrow": 0, "quarterFar": 1, "close": 2});
+var selectedCameraType = cameraTypes.freeThrow;
 
 var createScene = function(){
     // This creates a basic Babylon Scene object (non-mesh)
-    var clientScene = new BABYLON.Scene(engine);
+    var scene = new BABYLON.Scene(engine);
 
-    clientScene.enablePhysics();
+    if(useCannon) {
+        var physicsPlugin = new BABYLON.CannonJSPlugin(true, 5);
+        physicsPlugin.setTimeStep(0.1);
+    }
+    else
+    {
+        var physicsPlugin = new BABYLON.OimoJSPlugin(2);
+
+    }
+    var gravityVector = new BABYLON.Vector3(0,-15.81, 0);
+    scene.enablePhysics(gravityVector, physicsPlugin);
+
     engine.enableOfflineSupport = false;
 
-    // This creates and positions a free camera (non-mesh)
-    var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), clientScene);
+    var initCameraPos;
+    var initCameraFocus;
 
+    // This creates and positions a free camera (non-mesh)
+    if(selectedCameraType == cameraTypes.quarterFar)
+    {
+        initCameraPos = new BABYLON.Vector3(50, 5, -25);
+        initCameraFocus = new BABYLON.Vector3(0, -2.6, 11.75);
+    }
+    else if(selectedCameraType == cameraTypes.freeThrow)
+    {
+        initCameraPos = new BABYLON.Vector3(0, -15, -40);
+        initCameraFocus = new BABYLON.Vector3(0, -8, 11.75);
+    }
+    else if(selectedCameraType == cameraTypes.close)
+    {
+        initCameraPos = new BABYLON.Vector3(8, 0, -4);
+        initCameraFocus = new BABYLON.Vector3(0, -2.6, 11.75);
+    }
+
+    var camera = new BABYLON.FreeCamera("camera1", initCameraPos, scene);
+    camera.setTarget(initCameraFocus);
     // This targets the camera to scene origin
-    camera.setTarget(BABYLON.Vector3.Zero());
+
 
     // This attaches the camera to the canvas
     camera.attachControl(canvas, true);
 
     // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
-    var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), clientScene);
+    var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
 
     // Default intensity is 1. Let's dim the light a small amount
     light.intensity = 0.7;
 
-    BABYLON.SceneLoader.ImportMesh("BASKET_BALL", "./assets/", "basketball3dtest.babylon", clientScene, function (mesh) {
+    var basketball = BABYLON.Mesh.CreateSphere("basketball", 16, 1.88, scene);
+
+    BABYLON.SceneLoader.ImportMesh("BASKET_BALL", "./assets/", "basketball3dtest.babylon", scene, function (mesh) {
 
         mesh[0].scaling = new BABYLON.Vector3(0.05, 0.05, 0.05);
 
-        var myMaterial = new BABYLON.StandardMaterial("myMaterial", clientScene);
+        var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
 
-        myMaterial.diffuseTexture = new BABYLON.Texture("./assets/basketball3dtestdiffuse.jpg", clientScene);
-        //myMaterial.bumpTexture = new BABYLON.Texture("./assets/basketball3dtestbump.jpg", clientScene);
+        myMaterial.diffuseTexture = new BABYLON.Texture("./assets/basketball3dtestdiffuse.jpg", scene);
+        //myMaterial.bumpTexture = new BABYLON.Texture("./assets/basketball3dtestbump.jpg", scene);
         mesh[0].material = myMaterial;
 
-        var sphere = BABYLON.Mesh.CreateSphere("sphere1", 16, 1.88, clientScene);
-        sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.SphereImpostor, {mass: 1});
-        sphere.position = new BABYLON.Vector3(0, 10, 10);
+        basketball.physicsImpostor = new BABYLON.PhysicsImpostor(basketball, BABYLON.PhysicsImpostor.SphereImpostor, {
+            mass: 1,
+            friction:0.1,
+            ignoreParent: true});
+        basketball.position = new BABYLON.Vector3(0, 10, 10);
 
-        clientScene.registerBeforeRender(function()
+        scene.registerBeforeRender(function()
         {
-            mesh[0].parent = sphere;
+            mesh[0].parent = basketball;
             //mesh[0].visible = false;
-            if(sphere.position.y < -15)
+            if(basketball.position.y < -15)
             {
+                /*
                 sphere.position = new BABYLON.Vector3(
                     Math.random() * (-2 + 2) -2,
                     Math.random() * (15 - 13) +13,
                     Math.random() * (9 - 7) +7);
                 //sphere.position.y = 12;
-                sphere.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 0, 0));
-                sphere.physicsImpostor.setAngularVelocity(new BABYLON.Vector3(0,0,0));
+                basketball.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0,0,0));
+                basketball.physicsImpostor.setAngularVelocity(new BABYLON.Vector3(0,0,0));
+                */
+                takeShot();
             }
         });
-
     });
 
-    BABYLON.SceneLoader.ImportMesh("", "./assets/", "bballnohooplowpoly.obj", clientScene, function (meshes) {
+    BABYLON.SceneLoader.ImportMesh("", "./assets/", "bballnohooplowpoly.obj", scene, function (meshes) {
 
-        var myMaterial = new BABYLON.StandardMaterial("myMaterial", clientScene);
+        var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
         var mesh;
 
         for(var i = 0; i < meshes.length; i++)
         {
-            myMaterial.diffuseTexture = new BABYLON.Texture("./assets/basketball_hoop_diffuse_noAO.jpg", clientScene);
-            //myMaterial.bumpTexture = new BABYLON.Texture("./assets/basketball3dtestbump.tga", clientScene);
+            myMaterial.diffuseTexture = new BABYLON.Texture("./assets/basketball_hoop_diffuse_noAO.jpg", scene);
+            //myMaterial.bumpTexture = new BABYLON.Texture("./assets/basketball3dtestbump.tga", scene);
             meshes[i].material = myMaterial;
-            meshes[i].position = new BABYLON.Vector3(0, -10, 17);
+            meshes[i].position = new BABYLON.Vector3(1.25, -10, 17);
             meshes[i].scaling = new BABYLON.Vector3(0.025, 0.02, 0.025);
             meshes[i].rotate(BABYLON.Axis.Y, Math.PI, BABYLON.Space.WORLD);
 
-            var hoop = meshes[i];
-            hoop.physicsImpostor = new BABYLON.PhysicsImpostor(hoop, BABYLON.PhysicsImpostor.MeshImpostor, {
-                mass: 0,
-                friction: 1,
-                restitution: 3
-            });
+            if(useMeshCollision) {
+                hoop.physicsImpostor = new BABYLON.PhysicsImpostor(hoop, BABYLON.PhysicsImpostor.MeshImpostor, {
+                    mass: 0,
+                    friction: 1,
+                    restitution: 3
+                });
+            }
         }
     });
 
-    return clientScene;
+    var torus = BABYLON.Mesh.CreateTorus("torus", 4.3, 0.2, 50, scene);
+    torus.position = new BABYLON.Vector3(0, -4.75, 8.9);
+    scene.meshes.pop(torus);
+
+    if(!useMeshCollision)
+    {
+        //CREATE CIRCLE OF SPHERE COLLIDERS
+        var sphereAmount = 30;
+        var radius = 2.15;
+        var sphereDiameter = 0.35;
+        var centerPos = torus.position;
+        for(var i = 0; i < sphereAmount; i++)
+        {
+            var sphere = BABYLON.Mesh.CreateSphere("sphere", 10, sphereDiameter, scene);
+            sphere.position = new BABYLON.Vector3(
+                centerPos.x + Math.sin(i*Math.PI * 2/sphereAmount) * radius,
+                centerPos.y + 0,
+                centerPos.z + Math.cos(i*Math.PI * 2/sphereAmount) * radius
+            );
+
+            //scene.meshes.pop(sphere);
+            sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.SphereImpostor, {mass: 0,
+                friction: 1,
+                restitution: .8} )
+            scene.meshes.pop(sphere);
+        }
+
+        //CREATE BACKBOARD COLLIDER
+        var backboard = BABYLON.Mesh.CreateBox("backboard", 1 , scene);
+
+        backboard.position = new BABYLON.Vector3(0, -2.6, 11.75);
+        backboard.scaling = new BABYLON.Vector3(16.3, 7.3, 1);
+        backboard.physicsImpostor = new BABYLON.PhysicsImpostor(backboard, BABYLON.PhysicsImpostor.BoxImpostor, {mass: 0,
+        friction: 1,
+        restitution: .8} )
+        scene.meshes.pop(backboard);
+    }
+
+   // console.log(backboard.position);
+    //console.log(backboard.absolutePosition);
+
+    //camera.setTarget(backboard.position);
+
+
+    scene.actionManager = new BABYLON.ActionManager(scene);
+
+    scene.actionManager.registerAction(
+        new BABYLON.ExecuteCodeAction(
+            {
+                trigger: BABYLON.ActionManager.OnKeyUpTrigger,
+                parameter: 'r'
+            },
+
+            function () {
+                takeShot();
+            }
+        )
+    );
+
+    function takeShot()
+    {
+        if(basketball.physicsImpostor) {
+            basketball.position = new BABYLON.Vector3(0, -10, -30);
+
+            basketball.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 0, 0));
+            basketball.physicsImpostor.setAngularVelocity(new BABYLON.Vector3(0, 0, 0));
+            //console.log(basketball.getAbsolutePosition());
+            //console.log(basketball.physicsImpostor.getAngularVelocity());
+            basketball.physicsImpostor.applyImpulse(new BABYLON.Vector3(randomRange(-.4, .4), randomRange(21, 23), randomRange(15, 17)), basketball.getAbsolutePosition());
+        }
+    }
+
+    return scene;
 }
 
-
-var clientScene = createScene();
-
-
+var scene = createScene();
 
 engine.runRenderLoop(function(){
-    clientScene.render();
+    scene.render();
     var fpsLabel = document.getElementById("fpsLabel");
-    fpsLabel.innerHTML = engine.getFps().toFixed() + " fps";
+    fpsLabel.innerHTML = engine.getFps().toFixed()+ " fps";
+
     //console.log("render");
 });
-
-
-
 
 var $window = $(window);
 var $pages = $('.pages'); // Input for roomname
@@ -160,6 +268,14 @@ function joinRoom()
     //socket.emit('room', roomname);
     //socket.emit('add user', jsonstring);
 }
+
+function randomRange (min, max)
+{
+    var number = (Math.random() * (min - max) + max);
+    //console.log(number);
+    return number;
+}
+
 /*
 function onDragStart(event) {
     // store a reference to the data
