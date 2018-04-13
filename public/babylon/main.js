@@ -4,9 +4,9 @@ var socket = io();
 var canvas = document.getElementById("canvas");
 var engine = new BABYLON.Engine(canvas, true);
 var useMeshCollision = false;
-var useCannon = true;
+var useCannon = false;
 var cameraTypes = Object.freeze({"freeThrow": 0, "quarterFar": 1, "close": 2});
-var selectedCameraType = cameraTypes.close;
+var selectedCameraType = cameraTypes.freeThrow;
 //console.log(engine.texturesSupported);
 
 for(var i = 0; i < engine.texturesSupported.length; i++)
