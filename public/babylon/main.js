@@ -6,7 +6,7 @@ var engine = new BABYLON.Engine(canvas, true);
 var useMeshCollision = false;
 var useCannon = true;
 var cameraTypes = Object.freeze({"freeThrow": 0, "quarterFar": 1, "close": 2});
-var selectedCameraType = cameraTypes.freeThrow;
+var selectedCameraType = cameraTypes.close;
 //console.log(engine.texturesSupported);
 
 for(var i = 0; i < engine.texturesSupported.length; i++)
@@ -61,10 +61,10 @@ var createScene = function(){
     camera.attachControl(canvas, true);
 
     // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
-    var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
+    //var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
 
     // Default intensity is 1. Let's dim the light a small amount
-    light.intensity = 0.7;
+    //light.intensity = 0.7;
 
     var basketball = BABYLON.Mesh.CreateSphere("basketball", 16, 1.88, scene);
 
