@@ -6,7 +6,13 @@ var engine = new BABYLON.Engine(canvas, true);
 var useMeshCollision = false;
 var useCannon = true;
 var cameraTypes = Object.freeze({"freeThrow": 0, "quarterFar": 1, "close": 2});
-var selectedCameraType = cameraTypes.freeThrow;
+var selectedCameraType = cameraTypes.close;
+//console.log(engine.texturesSupported);
+
+for(var i = 0; i < engine.texturesSupported.length; i++)
+{
+    console.log("Supported Texture: " + engine.texturesSupported[i]);
+}
 
 var createScene = function(){
     // This creates a basic Babylon Scene object (non-mesh)
@@ -98,20 +104,20 @@ var createScene = function(){
         });
     });
 
-    BABYLON.SceneLoader.ImportMesh("", "./assets/", "bballnohooplowpoly.obj", scene, function (meshes) {
+    BABYLON.SceneLoader.ImportMesh("", "./assets/", "Goal.babylon", scene, function (meshes) {
 
         var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
         var mesh;
 
         for(var i = 0; i < meshes.length; i++)
         {
-            myMaterial.diffuseTexture = new BABYLON.Texture("./assets/basketball_hoop_diffuse_noAO.jpg", scene);
+            //myMaterial.diffuseTexture = new BABYLON.Texture("./assets/basketball_hoop_diffuse_noAO.jpg", scene);
             //myMaterial.bumpTexture = new BABYLON.Texture("./assets/basketball3dtestbump.tga", scene);
             meshes[i].material = myMaterial;
-            meshes[i].position = new BABYLON.Vector3(1.25, -10, 17);
-            meshes[i].scaling = new BABYLON.Vector3(0.025, 0.02, 0.025);
-            meshes[i].rotate(BABYLON.Axis.Y, Math.PI, BABYLON.Space.WORLD);
-
+            meshes[i].position = new BABYLON.Vector3(0, -36.1, 17);
+            //meshes[i].scaling = new BABYLON.Vector3(0.025, 0.02, 0.025);
+            //meshes[i].rotate(BABYLON.Axis.Y, Math.PI, BABYLON.Space.WORLD);
+            console.log(i);
             if(useMeshCollision) {
                 hoop.physicsImpostor = new BABYLON.PhysicsImpostor(hoop, BABYLON.PhysicsImpostor.MeshImpostor, {
                     mass: 0,
@@ -124,7 +130,7 @@ var createScene = function(){
 
     var torus = BABYLON.Mesh.CreateTorus("torus", 4.3, 0.2, 50, scene);
     torus.position = new BABYLON.Vector3(0, -4.75, 8.9);
-    scene.meshes.pop(torus);
+    //scene.meshes.pop(torus);
 
     if(!useMeshCollision)
     {
