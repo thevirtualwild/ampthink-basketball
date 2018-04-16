@@ -48,7 +48,7 @@ var createScene = function(){
     }
     else if(selectedCameraType == cameraTypes.close)
     {
-        initCameraPos = new BABYLON.Vector3(8, 0, -4);
+        initCameraPos = new BABYLON.Vector3(-8, -6, -4);
         initCameraFocus = new BABYLON.Vector3(0, -2.6, 11.75);
     }
 
@@ -109,28 +109,83 @@ var createScene = function(){
         var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
         var mesh;
 
+        //console.log(i);
+        //console.log(meshes[i].name);
+
         for(var i = 0; i < meshes.length; i++)
         {
-            //myMaterial.diffuseTexture = new BABYLON.Texture("./assets/basketball_hoop_diffuse_noAO.jpg", scene);
-            //myMaterial.bumpTexture = new BABYLON.Texture("./assets/basketball3dtestbump.tga", scene);
+
+            if(meshes[i].name != "Net_Shell_01" &&
+                meshes[i].name != "Net_Shell_02" &&
+                meshes[i].name != "Net_Shell_03" &&
+                meshes[i].name != "Goal_BackboardFill" &&
+                meshes[i].name != "Net_Skinned" &&
+                meshes[i].name != "Goal_Col_01" &&
+                meshes[i].name != "Goal_Col_02" &&
+                meshes[i].name != "Ground" &&
+                meshes[i].name != "Net_Static" &&
+                meshes[i].name != "Hoop" &&
+                meshes[i].name != "Gofal" )
+            {
+
+                //myMaterial.diffuseTexture = new BABYLON.Texture("./assets/basketball_hoop_diffuse_noAO.jpg", scene);
+                //myMaterial.bumpTexture = new BABYLON.Texture("./assets/basketball3dtestbump.tga", scene);
+                meshes[i].material = myMaterial;
+                //console.log(i);
+                //console.log(meshes[i].name);
+                //console.log(meshes[i].getAbsolutePosition());
+                meshes[i].position = new BABYLON.Vector3(0, -36.1, 17);
+                //meshes[i].scaling = new BABYLON.Vector3(0.025, 0.02, 0.025);
+                //meshes[i].rotate(BABYLON.Axis.Y, Math.PI, BABYLON.Space.WORLD);
+
+                if (useMeshCollision) {
+                    hoop.physicsImpostor = new BABYLON.PhysicsImpostor(hoop, BABYLON.PhysicsImpostor.MeshImpostor, {
+                        mass: 0,
+                        friction: 1,
+                        restitution: 3
+                    });
+                }
+            }
+            else
+            {
+                scene.meshes.pop(meshes[i]);
+            }
+
+        }
+    });
+/*
+    BABYLON.SceneLoader.ImportMesh("Net_Skinned", "./assets/", "Goal_V2.babylon", scene, function (meshes) {
+
+        var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
+        var mesh;
+
+        //console.log(i);
+        //console.log(meshes[i].name);
+
+        for(var i = 0; i < meshes.length; i++)
+        {
+
             meshes[i].material = myMaterial;
-            meshes[i].position = new BABYLON.Vector3(0, -36.1, 17);
-            //meshes[i].scaling = new BABYLON.Vector3(0.025, 0.02, 0.025);
-            //meshes[i].rotate(BABYLON.Axis.Y, Math.PI, BABYLON.Space.WORLD);
             console.log(i);
-            if(useMeshCollision) {
+            console.log(meshes[i].name);
+            console.log(meshes[i].getAbsolutePosition());
+            //meshes[i].position = new BABYLON.Vector3(0, -36.1, 17);
+
+            if (useMeshCollision) {
                 hoop.physicsImpostor = new BABYLON.PhysicsImpostor(hoop, BABYLON.PhysicsImpostor.MeshImpostor, {
                     mass: 0,
                     friction: 1,
                     restitution: 3
                 });
             }
+
         }
     });
+*/
 
     var torus = BABYLON.Mesh.CreateTorus("torus", 4.3, 0.2, 50, scene);
     torus.position = new BABYLON.Vector3(0, -4.75, 8.9);
-    //scene.meshes.pop(torus);
+    scene.meshes.pop(torus);
 
     if(!useMeshCollision)
     {
@@ -166,6 +221,96 @@ var createScene = function(){
         scene.meshes.pop(backboard);
     }
 
+    //CREATE COLLIDERS FOR NET
+    var sphereAmount = 30;
+    var radius = 2.15;
+    var sphereDiameter = 0.15;
+    var centerPos = torus.position;
+    centerPos.y -= 4;
+    var height = 4;
+    var netSpheres = [];
+    for(var j = 0; j < height; j++)
+    {
+        for (var i = 0; i < sphereAmount; i++)
+        {
+            var sphere = BABYLON.Mesh.CreateSphere("sphere", 10, sphereDiameter, scene);
+            sphere.position = new BABYLON.Vector3(
+                centerPos.x + Math.sin(i * Math.PI * 2 / sphereAmount) * radius * (1- (j/2/height)),
+                centerPos.y + height - j,
+                centerPos.z + Math.cos(i * Math.PI * 2 / sphereAmount) * radius * (1- (j/2/height))
+            );
+
+            var currentMass = .1;
+            if(j == 0)//top row
+            {
+                currentMass = 0;
+            }
+            //scene.meshes.pop(sphere);
+            sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.ParticleImpostor, {
+                mass: currentMass
+
+            })
+            //scene.meshes.pop(sphere);
+            netSpheres.push(sphere);
+        }
+    }
+
+    netSpheres.forEach(function(point, idx) {
+        if (idx >= sphereAmount)
+        {
+            createJoint(point.physicsImpostor, netSpheres[idx - sphereAmount].physicsImpostor, 1);
+
+            var horiDistance = .4 - .075 * Math.floor(idx/sphereAmount);
+            if (idx % sphereAmount > 0)
+            {
+                createJoint(point.physicsImpostor, netSpheres[idx - 1].physicsImpostor, horiDistance);
+            }
+            else if(idx % sphereAmount == 0)
+            {
+                createJoint(point.physicsImpostor, netSpheres[idx + sphereAmount - 1].physicsImpostor, horiDistance);
+            }
+        }
+        scene.meshes.pop(netSpheres[i]);
+    });
+
+    var clothMat = new BABYLON.StandardMaterial("netMat", scene);
+    clothMat.diffuseTexture = new BABYLON.Texture("./assets/netTest.png", scene);
+    //clothMat.zOffset = -20;
+    clothMat.backFaceCulling = false;
+    //clothMat.alpha = 1;
+    clothMat.diffuseTexture.hasAlpha = true;
+
+    var net = BABYLON.Mesh.CreateGround("ground1", 1, 1, sphereAmount - 1, scene, true);
+    //net.position = netSpheres[0].position;
+    //var net = BABYLON.Mesh.CreateCylinder("ground1", 5, 4, 2.5, 30, sphereAmount - 1, scene, true);
+    //net.position = netSpheres[0].position;
+    var positions = net.getVerticesData(BABYLON.VertexBuffer.PositionKind);
+
+    net.material = clothMat;
+
+    var indices = net.getIndices();
+
+    console.log(netSpheres.length);
+    console.log(indices.length);
+    indices.splice(524, indices.length);
+
+    net.setIndices(indices, indices.length);
+
+    net.registerBeforeRender(function () {
+        var positions = [];
+
+        netSpheres.forEach(function (s)
+        {
+            //s.position += netSpheres[0].position;
+            positions.push(s.position.x, s.position.y, s.position.z);
+
+        });
+
+
+        net.updateVerticesData(BABYLON.VertexBuffer.PositionKind, positions);
+        net.refreshBoundingInfo();
+    });
+
    // console.log(backboard.position);
     //console.log(backboard.absolutePosition);
 
@@ -186,6 +331,13 @@ var createScene = function(){
             }
         )
     );
+
+    function createJoint(imp1, imp2, distance) {
+        var joint = new BABYLON.DistanceJoint({
+            maxDistance: distance
+        })
+        imp1.addJoint(imp2, joint);
+    }
 
     function takeShot()
     {
