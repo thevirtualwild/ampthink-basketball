@@ -68,7 +68,7 @@ var createScene = function(){
 
     var basketball = BABYLON.Mesh.CreateSphere("basketball", 16, 1.88, scene);
 
-    BABYLON.SceneLoader.ImportMesh("", "./assets/", "Goal.babylon", scene, function (meshes) {
+    BABYLON.SceneLoader.ImportMesh("", "./assets/", "Layout.babylon", scene, function (meshes) {
 
         //mesh[0].scaling = new BABYLON.Vector3(0.05, 0.05, 0.05);
         console.log("Words");
