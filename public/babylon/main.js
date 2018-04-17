@@ -4,7 +4,7 @@ var socket = io();
 var canvas = document.getElementById("canvas");
 var engine = new BABYLON.Engine(canvas, true);
 var useMeshCollision = false;
-var useCannon = true;
+var useCannon = false;
 
 var cameraTypes = Object.freeze({"freeThrow": 0, "quarterFar": 1, "close": 2});
 var selectedCameraType = cameraTypes.close;
@@ -26,7 +26,7 @@ var createScene = function(){
     }
     else
     {
-        var physicsPlugin = new BABYLON.OimoJSPlugin(2);
+        var physicsPlugin = new BABYLON.OimoJSPlugin(1);
 
     }
     var gravityVector = new BABYLON.Vector3(0,-15.81, 0);
@@ -190,7 +190,7 @@ var createScene = function(){
     //CREATE COLLIDERS FOR NET
     var sphereAmount = 30;
     var radius = 2.15;
-    var sphereDiameter = 0.15;
+    var sphereDiameter = 0.05;
     var centerPos = torus.position;
     centerPos.y -= 4;
     var height = 4;
@@ -212,7 +212,7 @@ var createScene = function(){
                 currentMass = 0;
             }
             //scene.meshes.pop(sphere);
-            sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.ParticleImpostor, {
+            sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.SphereImpostor, {
                 mass: currentMass
 
             })
