@@ -13,7 +13,7 @@ var currentCameraIndex = 0;
 var currentTextureIndex = 0;
 for(var i = 0; i < engine.texturesSupported.length; i++)
 {
-    console.log("Supported Texture: " + engine.texturesSupported[i]);
+    //console.log("Supported Texture: " + engine.texturesSupported[i]);
 }
 
 var createScene = function(){
@@ -27,8 +27,8 @@ var createScene = function(){
     else
     {
         var physicsPlugin = new BABYLON.OimoJSPlugin(1);
-
     }
+
     var gravityVector = new BABYLON.Vector3(0,-15.81, 0);
     scene.enablePhysics(gravityVector, physicsPlugin);
 
@@ -188,9 +188,9 @@ var createScene = function(){
     }
 
     //CREATE COLLIDERS FOR NET
-    var sphereAmount = 30;
+    var sphereAmount = 10;
     var radius = 2.15;
-    var sphereDiameter = 0.05;
+    var sphereDiameter = 0.25;
     var centerPos = torus.position;
     centerPos.y -= 4;
     var height = 4;
@@ -206,7 +206,7 @@ var createScene = function(){
                 centerPos.z + Math.cos(i * Math.PI * 2 / sphereAmount) * radius * (1- (j/2/height))
             );
 
-            var currentMass = .01;
+            var currentMass = 1.01;
             if(j == 0)//top row
             {
                 currentMass = 0;
@@ -216,7 +216,7 @@ var createScene = function(){
                 mass: currentMass
 
             })
-            //scene.meshes.pop(sphere);
+            scene.meshes.pop(sphere);
             netSpheres.push(sphere);
         }
     }
@@ -226,7 +226,7 @@ var createScene = function(){
         {
             createJoint(point.physicsImpostor, netSpheres[idx - sphereAmount].physicsImpostor, 1);
 
-            var horiDistance = .4 - .065 * Math.floor(idx/sphereAmount);
+            var horiDistance = .4*3 - .165* Math.floor(idx/sphereAmount);
             if (idx % sphereAmount > 0)
             {
                 createJoint(point.physicsImpostor, netSpheres[idx - 1].physicsImpostor, horiDistance);
@@ -243,7 +243,7 @@ var createScene = function(){
     //var testMat = new BABYLON.standr
     clothMat.diffuseTexture = new BABYLON.Texture("./assets/netTest.png", scene);
     //clothMat.diffuseTexture.vOffset = 0.;
-    clothMat.diffuseTexture.vScale = 9;
+    clothMat.diffuseTexture.vScale = 3;
     clothMat.diffuseTexture.uScale = 2;
     clothMat.backFaceCulling = false;
     clothMat.diffuseTexture.hasAlpha = true;
@@ -261,7 +261,7 @@ var createScene = function(){
     console.log(netSpheres.length);
     console.log(indices.length);
     //524
-    indices.splice(524, indices.length);
+    indices.splice(164, indices.length);
 
     net.setIndices(indices, indices.length);
 
