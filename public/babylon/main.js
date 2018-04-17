@@ -472,24 +472,7 @@ function randomRange (min, max)
 }
 
 socket.on('take shot', function(shotInfo) {
-    myX1 = shotInfo.fromX;
-    myY1 = 600;
-    myXspeed = shotInfo.xSpeed;
-    myYspeed = shotInfo.ySpeed;
-    shotDeviceWidth = shotInfo.deviceWidth;
-    shotDeviceHeight = shotInfo.deviceHeight;
-    userinfo = {
-        username: shotInfo.username,
-        color: shotInfo.ballcolor
-    };
 
-    var centerx = app.screen.width/2;
-    var shooterleftbounds = centerx - shotDeviceWidth/2;
-    var shooterrightbounds = centerx + shotDeviceWidth/2;
-
-    myX1 = (myX1 * shotDeviceWidth) + shooterleftbounds;
-    myXspeed = myXspeed * shotDeviceWidth;
-    myYspeed = myYspeed * app.screen.height;
 
     console.log("SHOT TAKEN BABY");
     //throwBall(myX1, myY1, myXspeed, myYspeed, userinfo);

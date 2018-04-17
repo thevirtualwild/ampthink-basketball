@@ -5,136 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c95612d-4678-4af6-a1f9-2ab5baa022a4" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/node_modules/engine.io-client/LICENSE" afterPath="$PROJECT_DIR$/node_modules/engine.io-client/LICENSE" />
-      <change beforePath="$PROJECT_DIR$/node_modules/engine.io-client/README.md" afterPath="$PROJECT_DIR$/node_modules/engine.io-client/README.md" />
-      <change beforePath="$PROJECT_DIR$/node_modules/engine.io-client/lib/index.js" afterPath="$PROJECT_DIR$/node_modules/engine.io-client/lib/index.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/engine.io-client/lib/socket.js" afterPath="$PROJECT_DIR$/node_modules/engine.io-client/lib/socket.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/engine.io-client/lib/transport.js" afterPath="$PROJECT_DIR$/node_modules/engine.io-client/lib/transport.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/engine.io-client/lib/transports/index.js" afterPath="$PROJECT_DIR$/node_modules/engine.io-client/lib/transports/index.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/engine.io-client/lib/transports/polling-jsonp.js" afterPath="$PROJECT_DIR$/node_modules/engine.io-client/lib/transports/polling-jsonp.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/engine.io-client/lib/transports/polling-xhr.js" afterPath="$PROJECT_DIR$/node_modules/engine.io-client/lib/transports/polling-xhr.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/engine.io-client/lib/transports/polling.js" afterPath="$PROJECT_DIR$/node_modules/engine.io-client/lib/transports/polling.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/engine.io-client/lib/transports/websocket.js" afterPath="$PROJECT_DIR$/node_modules/engine.io-client/lib/transports/websocket.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/engine.io-client/lib/xmlhttprequest.js" afterPath="$PROJECT_DIR$/node_modules/engine.io-client/lib/xmlhttprequest.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/engine.io-client/package.json" afterPath="$PROJECT_DIR$/node_modules/engine.io-client/package.json" />
-      <change beforePath="$PROJECT_DIR$/node_modules/engine.io/LICENSE" afterPath="$PROJECT_DIR$/node_modules/engine.io/LICENSE" />
-      <change beforePath="$PROJECT_DIR$/node_modules/engine.io/README.md" afterPath="$PROJECT_DIR$/node_modules/engine.io/README.md" />
-      <change beforePath="$PROJECT_DIR$/node_modules/engine.io/lib/engine.io.js" afterPath="$PROJECT_DIR$/node_modules/engine.io/lib/engine.io.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/engine.io/lib/server.js" afterPath="$PROJECT_DIR$/node_modules/engine.io/lib/server.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/engine.io/lib/socket.js" afterPath="$PROJECT_DIR$/node_modules/engine.io/lib/socket.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/engine.io/lib/transport.js" afterPath="$PROJECT_DIR$/node_modules/engine.io/lib/transport.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/engine.io/lib/transports/index.js" afterPath="$PROJECT_DIR$/node_modules/engine.io/lib/transports/index.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/engine.io/lib/transports/polling-jsonp.js" afterPath="$PROJECT_DIR$/node_modules/engine.io/lib/transports/polling-jsonp.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/engine.io/lib/transports/polling-xhr.js" afterPath="$PROJECT_DIR$/node_modules/engine.io/lib/transports/polling-xhr.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/engine.io/lib/transports/polling.js" afterPath="$PROJECT_DIR$/node_modules/engine.io/lib/transports/polling.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/engine.io/lib/transports/websocket.js" afterPath="$PROJECT_DIR$/node_modules/engine.io/lib/transports/websocket.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/engine.io/package.json" afterPath="$PROJECT_DIR$/node_modules/engine.io/package.json" />
-      <change beforePath="$PROJECT_DIR$/node_modules/socket.io-client/LICENSE" afterPath="$PROJECT_DIR$/node_modules/socket.io-client/LICENSE" />
-      <change beforePath="$PROJECT_DIR$/node_modules/socket.io-client/README.md" afterPath="$PROJECT_DIR$/node_modules/socket.io-client/README.md" />
-      <change beforePath="$PROJECT_DIR$/node_modules/socket.io-client/dist/socket.io.js" afterPath="$PROJECT_DIR$/node_modules/socket.io-client/dist/socket.io.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/socket.io-client/dist/socket.io.js.map" afterPath="$PROJECT_DIR$/node_modules/socket.io-client/dist/socket.io.js.map" />
-      <change beforePath="$PROJECT_DIR$/node_modules/socket.io-client/dist/socket.io.slim.js" afterPath="$PROJECT_DIR$/node_modules/socket.io-client/dist/socket.io.slim.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/socket.io-client/dist/socket.io.slim.js.map" afterPath="$PROJECT_DIR$/node_modules/socket.io-client/dist/socket.io.slim.js.map" />
-      <change beforePath="$PROJECT_DIR$/node_modules/socket.io-client/lib/index.js" afterPath="$PROJECT_DIR$/node_modules/socket.io-client/lib/index.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/socket.io-client/lib/manager.js" afterPath="$PROJECT_DIR$/node_modules/socket.io-client/lib/manager.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/socket.io-client/lib/on.js" afterPath="$PROJECT_DIR$/node_modules/socket.io-client/lib/on.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/socket.io-client/lib/socket.js" afterPath="$PROJECT_DIR$/node_modules/socket.io-client/lib/socket.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/socket.io-client/lib/url.js" afterPath="$PROJECT_DIR$/node_modules/socket.io-client/lib/url.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/socket.io-client/package.json" afterPath="$PROJECT_DIR$/node_modules/socket.io-client/package.json" />
-      <change beforePath="$PROJECT_DIR$/node_modules/socket.io-parser/LICENSE" afterPath="$PROJECT_DIR$/node_modules/socket.io-parser/LICENSE" />
-      <change beforePath="$PROJECT_DIR$/node_modules/socket.io-parser/Readme.md" afterPath="$PROJECT_DIR$/node_modules/socket.io-parser/Readme.md" />
-      <change beforePath="$PROJECT_DIR$/node_modules/socket.io-parser/binary.js" afterPath="$PROJECT_DIR$/node_modules/socket.io-parser/binary.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/socket.io-parser/index.js" afterPath="$PROJECT_DIR$/node_modules/socket.io-parser/index.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/socket.io-parser/is-buffer.js" afterPath="$PROJECT_DIR$/node_modules/socket.io-parser/is-buffer.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/socket.io-parser/package.json" afterPath="$PROJECT_DIR$/node_modules/socket.io-parser/package.json" />
-      <change beforePath="$PROJECT_DIR$/node_modules/socket.io/LICENSE" afterPath="$PROJECT_DIR$/node_modules/socket.io/LICENSE" />
-      <change beforePath="$PROJECT_DIR$/node_modules/socket.io/Readme.md" afterPath="$PROJECT_DIR$/node_modules/socket.io/Readme.md" />
-      <change beforePath="$PROJECT_DIR$/node_modules/socket.io/lib/client.js" afterPath="$PROJECT_DIR$/node_modules/socket.io/lib/client.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/socket.io/lib/index.js" afterPath="$PROJECT_DIR$/node_modules/socket.io/lib/index.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/socket.io/lib/namespace.js" afterPath="$PROJECT_DIR$/node_modules/socket.io/lib/namespace.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/socket.io/lib/socket.js" afterPath="$PROJECT_DIR$/node_modules/socket.io/lib/socket.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/socket.io/package.json" afterPath="$PROJECT_DIR$/node_modules/socket.io/package.json" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/LICENSE" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/README.md" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/binding.gyp" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/build/Makefile" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/build/Release/.deps/Release/obj.target/action_after_build.stamp.d" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/build/Release/.deps/Release/obj.target/uws/src/Extensions.o.d" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/build/Release/.deps/Release/obj.target/uws/src/Group.o.d" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/build/Release/.deps/Release/obj.target/uws/src/HTTPSocket.o.d" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/build/Release/.deps/Release/obj.target/uws/src/Hub.o.d" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/build/Release/.deps/Release/obj.target/uws/src/Networking.o.d" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/build/Release/.deps/Release/obj.target/uws/src/Node.o.d" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/build/Release/.deps/Release/obj.target/uws/src/Socket.o.d" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/build/Release/.deps/Release/obj.target/uws/src/WebSocket.o.d" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/build/Release/.deps/Release/obj.target/uws/src/addon.o.d" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/build/Release/.deps/Release/uws.node.d" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/build/Release/.deps/uws.d" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/build/Release/obj.target/action_after_build.stamp" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/build/Release/obj.target/uws/src/Extensions.o" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/build/Release/obj.target/uws/src/Group.o" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/build/Release/obj.target/uws/src/HTTPSocket.o" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/build/Release/obj.target/uws/src/Hub.o" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/build/Release/obj.target/uws/src/Networking.o" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/build/Release/obj.target/uws/src/Node.o" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/build/Release/obj.target/uws/src/Socket.o" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/build/Release/obj.target/uws/src/WebSocket.o" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/build/Release/obj.target/uws/src/addon.o" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/build/Release/uws.node" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/build/action_after_build.target.mk" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/build/binding.Makefile" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/build/config.gypi" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/build/gyp-mac-tool" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/build/uws.target.mk" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/build_log.txt" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/package.json" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/src/Asio.h" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/src/Backend.h" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/src/Epoll.cpp" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/src/Epoll.h" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/src/Extensions.cpp" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/src/Extensions.h" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/src/Group.cpp" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/src/Group.h" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/src/HTTPSocket.cpp" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/src/HTTPSocket.h" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/src/Hub.cpp" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/src/Hub.h" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/src/Libuv.h" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/src/Networking.cpp" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/src/Networking.h" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/src/Node.cpp" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/src/Node.h" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/src/Socket.cpp" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/src/Socket.h" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/src/WebSocket.cpp" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/src/WebSocket.h" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/src/WebSocketProtocol.h" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/src/addon.cpp" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/src/addon.h" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/src/http.h" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/src/uWS.h" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/uws.js" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/uws_darwin_46.node" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/uws_darwin_47.node" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/uws_darwin_48.node" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/uws_darwin_51.node" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/uws_darwin_57.node" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/uws_darwin_59.node" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/uws_linux_46.node" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/uws_linux_47.node" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/uws_linux_48.node" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/uws_linux_51.node" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/uws_linux_57.node" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/uws_linux_59.node" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/uws_win32_48.node" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/uws_win32_51.node" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uws/uws_win32_57.node" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" afterPath="$PROJECT_DIR$/package-lock.json" />
-      <change beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
       <change beforePath="$PROJECT_DIR$/public/babylon/main.js" afterPath="$PROJECT_DIR$/public/babylon/main.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -155,8 +25,8 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/babylon/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="517">
-              <caret line="493" column="35" lean-forward="false" selection-start-line="493" selection-start-column="35" selection-end-line="493" selection-end-column="35" />
+            <state relative-caret-position="415">
+              <caret line="495" column="5" lean-forward="true" selection-start-line="495" selection-start-column="5" selection-end-line="495" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -166,7 +36,7 @@
         <entry file="file://$PROJECT_DIR$/public/game.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="255">
-              <caret line="15" column="24" lean-forward="true" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
+              <caret line="15" column="24" lean-forward="false" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -1539,12 +1409,12 @@
       <workItem from="1522271975115" duration="1863000" />
       <workItem from="1522340610441" duration="25078000" />
       <workItem from="1523886309708" duration="23938000" />
-      <workItem from="1523919857858" duration="4904000" />
+      <workItem from="1523919857858" duration="5138000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="132864000" />
+    <option name="totallyTimeSpent" value="133098000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1791,7 +1661,7 @@
         <state relative-caret-position="867">
           <caret line="56" column="20" lean-forward="false" selection-start-line="56" selection-start-column="20" selection-end-line="56" selection-end-column="20" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2949,7 +2819,7 @@
     <entry file="file://$PROJECT_DIR$/public/game.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
-          <caret line="15" column="24" lean-forward="true" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
+          <caret line="15" column="24" lean-forward="false" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
           <folding />
         </state>
       </provider>
@@ -2964,8 +2834,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/babylon/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="517">
-          <caret line="493" column="35" lean-forward="false" selection-start-line="493" selection-start-column="35" selection-end-line="493" selection-end-column="35" />
+        <state relative-caret-position="415">
+          <caret line="495" column="5" lean-forward="true" selection-start-line="495" selection-start-column="5" selection-end-line="495" selection-end-column="5" />
           <folding />
         </state>
       </provider>
