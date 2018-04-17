@@ -136,6 +136,20 @@ function onConnection(socket) {
     io.emit('take shot', shotInfo);
   });
 
+    socket.on('switch camera', function(data) {
+
+        socket.emit('switch camera');
+
+        io.emit('switch camera');
+    });
+
+    socket.on('load texture', function(data) {
+
+        socket.emit('load texture');
+
+        io.emit('load texture');
+    });
+
   socket.on('disconnect', function() {
     console.log('user disconnected');
   })

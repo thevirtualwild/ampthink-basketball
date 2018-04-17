@@ -332,7 +332,16 @@ $(function() {
     {
       throwBall(historyX[historyX.length - 1], historyY[historyY.length - 1], this.data.getLocalPosition(this.parent).x, this.data.getLocalPosition(this.parent).y);
     }
-
+    else if(this.data.getLocalPosition(this.parent).y - historyY[historyY.length - 1] > 30)
+    {
+      socket.emit("switch camera");
+      console.log("swipe down");
+    }
+    else if(this.data.getLocalPosition(this.parent).x - historyX[historyX.length - 1] > 30)
+    {
+        socket.emit("load texture");
+        console.log("swipe right");
+    }
     this.data = null;
   }
 

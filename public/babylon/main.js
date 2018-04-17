@@ -5,10 +5,11 @@ var canvas = document.getElementById("canvas");
 var engine = new BABYLON.Engine(canvas, true);
 var useMeshCollision = false;
 var useCannon = true;
+
 var cameraTypes = Object.freeze({"freeThrow": 0, "quarterFar": 1, "close": 2});
 var selectedCameraType = cameraTypes.close;
 //console.log(engine.texturesSupported);
-
+var currentCameraIndex = 0;
 for(var i = 0; i < engine.texturesSupported.length; i++)
 {
     console.log("Supported Texture: " + engine.texturesSupported[i]);
@@ -360,14 +361,45 @@ var createScene = function(){
         new BABYLON.ExecuteCodeAction(
             {
                 trigger: BABYLON.ActionManager.OnKeyUpTrigger,
-                parameter: 'r'
+                additionalData: 'r'
             },
 
-            function () {
+            function ()
+            {
+                console.log("FIRED takeShot()");
+                //console.log(parameter);
                 takeShot();
             }
         )
     );
+
+    scene.actionManager.registerAction(
+        new BABYLON.ExecuteCodeAction(
+            {
+                trigger: BABYLON.ActionManager.OnKeyUpTrigger,
+                additionalData: 't'
+            },
+
+            function () {
+                changeCamera();
+            }
+        )
+    );
+
+    scene.actionManager.registerAction(
+        new BABYLON.ExecuteCodeAction(
+            {
+                trigger: BABYLON.ActionManager.OnKeyUpTrigger,
+                additionalData: 'y'
+            },
+
+            function () {
+                console.log("TEXTURE LOADED");
+            }
+        )
+    );
+
+    //scene.actionManager.ac
 
     function createJoint(imp1, imp2, distance) {
         var joint = new BABYLON.DistanceJoint({
@@ -389,6 +421,27 @@ var createScene = function(){
         }
     }
 
+    function changeCamera()
+    {
+        currentCameraIndex++;
+
+        if(currentCameraIndex % 3  == 0)
+        {
+            camera.position = new BABYLON.Vector3(50, 5, -25);
+            camera.setTarget(new BABYLON.Vector3(0, -2.6, 11.75));
+        }
+        else if(currentCameraIndex % 3  == 1)
+        {
+            camera.position = new BABYLON.Vector3(0, -15, -40);
+            camera.setTarget(new BABYLON.Vector3(0, -8, 11.75));
+        }
+        else if(currentCameraIndex % 3  ==2)
+        {
+            camera.position = new BABYLON.Vector3(-1, -6, -1);
+            camera.setTarget(new BABYLON.Vector3(0, -2.6, 11.75));
+        }
+    }
+
     return scene;
 }
 
@@ -405,56 +458,14 @@ engine.runRenderLoop(function(){
 var $window = $(window);
 var $pages = $('.pages'); // Input for roomname
 var $passcodeInput = $('.passcodeInput'); // Input for roomname
-
-// create a texture from an image path
-//var texture = PIXI.Texture.fromImage('basketball.png');
-//var backgroundTexture= PIXI.Texture.fromImage('BasketballBackground.jpg');
-//from here http://www.zgjm-org.com/data/out/6/IMG_112426.jpg
-
 var shotInfo;
-
-//texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-//var basketball;// = new PIXI.Sprite(texture);
-//var background;// = new PIXI.Sprite(backgroundTexture, app.screen.width, app.screen.height);
 var dragging = false;
 var thrown = true;
 var countdownStarted = true;
 
 $passcodeInput.focus();
 
-/*
-background.interactive = true;
-background.buttonMode = true;
-background.x = app.screen.width/2;
-background.y = app.screen.height/2;
-background.width = app.screen.width;
-background.height = app.screen.height;
-//background.alpha = 0;
-
-app.stage.addChild(background);
-background.anchor.set(0.5);
-
-console.log('creating basketball');
-*/
-createBasketball(0,0);
-
-function createBasketball(x, y) {
-
-}
-
 joinRoom();
-
-// $window.keydown(function (event) {
-//     // Auto-focus the current input when a key is typed
-//     if (!(event.ctrlKey || event.metaKey || event.altKey)) {
-//         // $currentInput.focus();
-//     }
-//     // When the client hits ENTER on their keyboard
-//     if (event.which === 13)
-//     {
-//             joinRoom();
-//     }
-// });
 
 function joinRoom()
 {
@@ -471,11 +482,22 @@ function randomRange (min, max)
     return number;
 }
 
-socket.on('take shot', function(shotInfo) {
+socket.on('take shot', function() {
 
+    //var trigger = scene.actionManager.actions[0].trigger;
+    var ae = BABYLON.ActionEvent.CreateNewFromScene(scene, {additionalData: "r"});
+    //console.log(ae);
+    scene.actionManager.processTrigger(scene.actionManager.actions[0].trigger,  ae);
 
-    console.log("SHOT TAKEN BABY");
-    //throwBall(myX1, myY1, myXspeed, myYspeed, userinfo);
+    //console.log(scene.actionManager.actions.length);
+});
+
+socket.on('switch camera', function() {
+    scene.actionManager.processTrigger(scene.actionManager.actions[1].trigger, {additionalData: "t"});
+});
+
+socket.on('load texture', function() {
+    scene.actionManager.processTrigger(scene.actionManager.actions[2].trigger, {additionalData: "y"});
 });
 
 /*
