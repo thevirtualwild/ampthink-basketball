@@ -4,12 +4,13 @@ var socket = io();
 var canvas = document.getElementById("canvas");
 var engine = new BABYLON.Engine(canvas, true);
 var useMeshCollision = false;
-var useCannon = true;
+var useCannon = false;
 
 var cameraTypes = Object.freeze({"freeThrow": 0, "quarterFar": 1, "close": 2});
 var selectedCameraType = cameraTypes.close;
 //console.log(engine.texturesSupported);
 var currentCameraIndex = 0;
+var currentTextureIndex = 0;
 for(var i = 0; i < engine.texturesSupported.length; i++)
 {
     console.log("Supported Texture: " + engine.texturesSupported[i]);
@@ -93,15 +94,6 @@ var createScene = function(){
             //mesh[0].visible = false;
             if(basketball.position.y < -15)
             {
-                /*
-                sphere.position = new BABYLON.Vector3(
-                    Math.random() * (-2 + 2) -2,
-                    Math.random() * (15 - 13) +13,
-                    Math.random() * (9 - 7) +7);
-                //sphere.position.y = 12;
-                basketball.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0,0,0));
-                basketball.physicsImpostor.setAngularVelocity(new BABYLON.Vector3(0,0,0));
-                */
                 //takeShot();
             }
         });
@@ -156,35 +148,6 @@ var createScene = function(){
 
         }
     });
-/*
-    BABYLON.SceneLoader.ImportMesh("Net_Skinned", "./assets/", "Goal_V2.babylon", scene, function (meshes) {
-
-        var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
-        var mesh;
-
-        //console.log(i);
-        //console.log(meshes[i].name);
-
-        for(var i = 0; i < meshes.length; i++)
-        {
-
-            meshes[i].material = myMaterial;
-            console.log(i);
-            console.log(meshes[i].name);
-            console.log(meshes[i].getAbsolutePosition());
-            //meshes[i].position = new BABYLON.Vector3(0, -36.1, 17);
-
-            if (useMeshCollision) {
-                hoop.physicsImpostor = new BABYLON.PhysicsImpostor(hoop, BABYLON.PhysicsImpostor.MeshImpostor, {
-                    mass: 0,
-                    friction: 1,
-                    restitution: 3
-                });
-            }
-
-        }
-    });
-*/
 
     var torus = BABYLON.Mesh.CreateTorus("torus", 4.3, 0.2, 50, scene);
     torus.position = new BABYLON.Vector3(0, -4.75, 8.9);
@@ -344,17 +307,6 @@ var createScene = function(){
         net.refreshBoundingInfo();
     });
 
-    for(var i = 0; i < debugPos.length; i++)
-    {
-        //var sphere = BABYLON.Mesh.CreateSphere("sphere", 10, 0.2, scene);
-        //sphere.position = debugPos[i];
-    }
-   // console.log(backboard.position);
-    //console.log(backboard.absolutePosition);
-
-    //camera.setTarget(backboard.position);
-
-
     scene.actionManager = new BABYLON.ActionManager(scene);
 
     scene.actionManager.registerAction(
@@ -394,12 +346,10 @@ var createScene = function(){
             },
 
             function () {
-                console.log("TEXTURE LOADED");
+                loadTexture();
             }
         )
     );
-
-    //scene.actionManager.ac
 
     function createJoint(imp1, imp2, distance) {
         var joint = new BABYLON.DistanceJoint({
@@ -440,6 +390,23 @@ var createScene = function(){
             camera.position = new BABYLON.Vector3(-1, -6, -1);
             camera.setTarget(new BABYLON.Vector3(0, -2.6, 11.75));
         }
+    }
+
+    function loadTexture()
+    {
+        currentTextureIndex++;
+
+        if(currentTextureIndex>9) return;
+
+        var box = BABYLON.Mesh.CreateBox("box" + currentTextureIndex, 1, scene);
+        var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
+
+        box.position = new BABYLON.Vector3(-10 + currentTextureIndex*2, 0, 0);
+
+        myMaterial.diffuseTexture = new BABYLON.Texture("./assets/test" + currentTextureIndex + ".png", scene);
+        //myMaterial.bumpTexture = new BABYLON.Texture("./assets/basketball3dtestbump.jpg", scene);
+        box.material = myMaterial;
+        console.log("load Texture");
     }
 
     return scene;
@@ -500,109 +467,6 @@ socket.on('load texture', function() {
     scene.actionManager.processTrigger(scene.actionManager.actions[2].trigger, {additionalData: "y"});
 });
 
-/*
-function onDragStart(event) {
-    // store a reference to the data
-    // the reason for this is because of multitouch
-    // we want to track the movement of this particular touch
-    console.log("drag started");
-
-    this.data = event.data;
-    this.dragging = true;
-    dragging = true;
-    this.anchor.set(0.5);
-
-    while(historyX.length > 0)
-    {
-        historyX.pop();
-    }
-
-    while(historyY.length > 0)
-    {
-        historyY.pop();
-    }
-
-    var newPosition = this.data.getLocalPosition(this.parent);
-
-    for( var i = 0; i < historySize; i++)
-    {
-        historyX.push(newPosition.x);
-        historyY.push(newPosition.y);
-    }
-}
-
-function onDragEnd() {
-    this.dragging = false;
-    dragging = false;
-
-    //detect if it's a swipe up
-
-    if(this.data.getLocalPosition(this.parent).y - historyY[historyY.length - 1] < -30)
-    {
-        throwBall(historyX[historyX.length - 1], historyY[historyY.length - 1], this.data.getLocalPosition(this.parent).x, this.data.getLocalPosition(this.parent).y);
-    }
-
-    this.data = null;
-}
-
-function onDragMove()
-{
-    if (this.dragging) {
-        var newPosition = this.data.getLocalPosition(this.parent);
-
-        historyX.pop();
-        historyX.unshift(newPosition.x);
-        historyY.pop();
-        historyY.unshift(newPosition.y);
-    }
-}
-
-function throwBall(x1, y1, x2, y2)
-{
-    thrown = true;
-    var finalTweenPosX;
-    var totalSpeed = 500;
-    var duration;//duration
-    var ratioX;
-    var ratioY;
-
-    //We travel at a rate of 5 pixels per unit ALWAYS
-    var absDistance = (x1-x2) * (x1 - x2) + (y1-y2) * (y1 - y2);
-
-    var distance = Math.sqrt(absDistance);
-    //First we need to find the proportion of that which is vertical
-    ratioY = (y1 - y2)/ distance;
-    ratioX = Math.abs(x1-x2)/distance;
-    totalYDistance = y2 + 100;
-
-    //Then we find the time it takes to complete that vertical tween
-    duration = totalYDistance / (ratioY * totalSpeed) ;
-
-    //Then we add the final x drag position to the distance traveled which is found by multiplying the x rate proportion times the duration times the speed to find out the final X position
-    //Then we pass that all in.
-    if(x2>x1)
-    {
-        finalTweenPosX = x2 + duration * ratioX * totalSpeed;
-    }
-    else
-    {
-        finalTweenPosX = x2 - duration * ratioX * totalSpeed;
-        ratioX = -ratioX;
-    }
-
-    shotInfo = {
-        exitX:finalTweenPosX,
-        exitY:-100,
-        xSpeed:ratioX*totalSpeed,
-        ySpeed:ratioY*totalSpeed
-    }
-
-    TweenMax.to(basketball, duration, {y:-100, x:finalTweenPosX, onComplete:shotAttempt});
-
-    console.log("throw ball");
-}
-*/
-
 function shotAttempt()
 {
     /* data = {
@@ -613,15 +477,6 @@ function shotAttempt()
     socket.emit("throw ball", shotInfo);
 
     resetBall();
-}
-
-function resetBall()
-{
-  //thrown = false;
-  //basketball.x = -100;
-  //basketball.y = app.screen.height/2;
-  //TweenMax.to(basketball, 0.4, {x:app.screen.width/2, onComplete:canShoot});
-  //basketball.y = app.screen.height/2;
 }
 
 function canShoot()
