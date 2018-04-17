@@ -27,6 +27,10 @@ var createScene = function(){
     else
     {
         var physicsPlugin = new BABYLON.OimoJSPlugin(1);
+        physicsPlugin.allowSleep = true;
+        console.log(physicsPlugin.setTimeStep(0.55));
+        console.log(physicsPlugin.getTimeStep());
+
     }
 
     var gravityVector = new BABYLON.Vector3(0,-15.81, 0);
@@ -67,6 +71,48 @@ var createScene = function(){
 
     // Default intensity is 1. Let's dim the light a small amount
     light.intensity = 0.7;
+
+    BABYLON.SceneLoader.ImportMesh("", "./assets/", "Frame_Geo.babylon", scene, function (mesh)
+    {
+
+        var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
+
+        myMaterial.diffuseTexture = new BABYLON.Texture("./assets/FillrateTexture.png", scene);
+        myMaterial.diffuseTexture.hasAlpha = false;
+        //myMaterial.bumpTexture = new BABYLON.Texture("./assets/basketball3dtestbump.jpg", scene);
+        mesh[0].material = myMaterial;
+        mesh[0].position = new BABYLON.Vector3(-50, -50, 0);
+
+    });
+
+    BABYLON.SceneLoader.ImportMesh("", "./assets/", "Frame_Solid.babylon", scene, function (mesh)
+    {
+
+        var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
+
+        myMaterial.diffuseTexture = new BABYLON.Texture("./assets/FillrateTexture.png", scene);
+        myMaterial.diffuseTexture.hasAlpha = true;
+        myMaterial.alpha = 0;
+        //myMaterial.bumpTexture = new BABYLON.Texture("./assets/basketball3dtestbump.jpg", scene);
+        mesh[0].material = myMaterial;
+        mesh[0].position = new BABYLON.Vector3(-40, -50, 0);
+
+
+    });
+
+    BABYLON.SceneLoader.ImportMesh("", "./assets/", "Frame_Solid.babylon", scene, function (mesh)
+    {
+
+        var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
+
+        myMaterial.diffuseTexture = new BABYLON.Texture("./assets/FillrateTexture.png", scene);
+        myMaterial.diffuseTexture.hasAlpha = false;
+        //myMaterial.bumpTexture = new BABYLON.Texture("./assets/basketball3dtestbump.jpg", scene);
+        mesh[0].material = myMaterial;
+        mesh[0].position = new BABYLON.Vector3(-30, -50, 0);
+
+
+    });
 
     var basketball = BABYLON.Mesh.CreateSphere("basketball", 16, 1.88, scene);
 
@@ -377,18 +423,25 @@ var createScene = function(){
 
         if(currentCameraIndex % 3  == 0)
         {
-            camera.position = new BABYLON.Vector3(50, 5, -25);
-            camera.setTarget(new BABYLON.Vector3(0, -2.6, 11.75));
+            //camera.position = new BABYLON.Vector3(50, 5, -25);
+            //camera.setTarget(new BABYLON.Vector3(0, -2.6, 11.75));
+
+            camera.position = new BABYLON.Vector3(-50, -50,-2);
+            camera.setTarget(new BABYLON.Vector3(-50, -50, 0));
         }
         else if(currentCameraIndex % 3  == 1)
         {
-            camera.position = new BABYLON.Vector3(0, -15, -40);
-            camera.setTarget(new BABYLON.Vector3(0, -8, 11.75));
+            //camera.position = new BABYLON.Vector3(0, -15, -40);
+            //camera.setTarget(new BABYLON.Vector3(0, -8, 11.75));
+            camera.position = new BABYLON.Vector3(-40, -50, -2);
+            camera.setTarget(new BABYLON.Vector3(-40, -50, 0));
         }
         else if(currentCameraIndex % 3  ==2)
         {
-            camera.position = new BABYLON.Vector3(-1, -6, -1);
-            camera.setTarget(new BABYLON.Vector3(0, -2.6, 11.75));
+            //camera.position = new BABYLON.Vector3(-1, -6, -1);
+            //camera.setTarget(new BABYLON.Vector3(0, -2.6, 11.75));
+            camera.position = new BABYLON.Vector3(-30, -50, -2);
+            camera.setTarget(new BABYLON.Vector3(-30, -50, 0));
         }
     }
 
