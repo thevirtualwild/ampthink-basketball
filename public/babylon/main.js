@@ -181,7 +181,7 @@ var createScene = function(){
         else if(currentGameState == gameStates.RESULTS)
         {
             currentResultsTime -= (engine.getDeltaTime() / 1000);
-            //attractLabel.innerHTML = currentResultsTime.toFixed(2);
+            attractLabel.innerHTML = "Score: " + score;
             if(currentResultsTime <= 0)
             {
                 changeGameState(gameStates.ATTRACT);
