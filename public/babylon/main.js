@@ -109,6 +109,25 @@ var createScene = function(){
         });
     });
 
+    //BABYLON.SceneLoader.Append("./assets/", "sceneTest.babylon", scene);
+
+    /*
+    BABYLON.SceneLoader.ImportMesh("", "./assets/", "sceneTest.babylon", scene, function (meshes) {
+
+        var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
+        var mesh;
+
+        console.log(meshes[i].name);
+        //console.log(i);
+        //console.log(meshes[i].name);
+
+        //for(var i = 0; i < meshes.length; i++)
+       // {
+        //        meshes[i].material = myMaterial;
+
+        //}
+    });
+*/
     BABYLON.SceneLoader.ImportMesh("", "./assets/", "Goal.babylon", scene, function (meshes) {
 
         var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
@@ -216,14 +235,16 @@ var createScene = function(){
                 centerPos.z + Math.cos(i * Math.PI * 2 / sphereAmount) * radius * (1- (j/2/height))
             );
 
-            var currentMass = 1.01;
+            var currentMass = 10.01;
             if(j == 0)//top row
             {
                 currentMass = 0;
             }
             //scene.meshes.pop(sphere);
             sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.SphereImpostor, {
-                mass: currentMass
+                mass: currentMass,
+                restitution: 0.1,
+                friction:0.1
 
             })
             scene.meshes.pop(sphere);
@@ -248,6 +269,29 @@ var createScene = function(){
         }
         scene.meshes.pop(netSpheres[i]);
     });
+
+    var scoreTrigger = new BABYLON.Mesh.CreateBox("scoreTrigger", 0.8, scene);
+
+    var score = 0;
+
+    var manager = new BABYLON.ActionManager(scene);
+    scoreTrigger.actionManager = manager;
+
+    scoreTrigger.actionManager.registerAction(
+        new BABYLON.ExecuteCodeAction(
+            {
+                trigger: BABYLON.ActionManager.OnIntersectionEnterTrigger,
+                parameter: basketball
+            },
+
+            function(){
+                addScore();
+            }
+        )
+    );
+
+    scoreTrigger.position = torus.position;
+    scoreTrigger.position.y += 2;
 
     var clothMat = new BABYLON.StandardMaterial("netMat", scene);
     //var testMat = new BABYLON.standr
@@ -417,6 +461,13 @@ var createScene = function(){
         //myMaterial.bumpTexture = new BABYLON.Texture("./assets/basketball3dtestbump.jpg", scene);
         box.material = myMaterial;
         console.log("load Texture");
+    }
+
+    function addScore()
+    {
+        score++;
+        var scoreLabel = document.getElementById("scoreLabel");
+        scoreLabel.innerHTML = "Score: " + score;
     }
 
     return scene;

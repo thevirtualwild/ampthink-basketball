@@ -10,6 +10,21 @@
   cursor: default;
 }
 
+#scoreLabel {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  color: #999;
+  cursor: default;
+}
+
+#timeLabel {
+  position: absolute;
+  top: 20px;
+  color: #999;
+  cursor: default;
+}
+
 html, body {
   height: 100%;
   margin: 0;
