@@ -18,6 +18,20 @@
   cursor: default;
 }
 
+#attractLabel {
+  position: absolute;
+  left: 35%;
+  top: 15%;
+  width: 800px;
+  height: 500px;
+  font-size: 64px;
+  margin: 0 auto;
+
+
+  color: #999;
+  cursor: default;
+}
+
 #timeLabel {
   position: absolute;
   top: 20px;

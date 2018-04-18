@@ -92,6 +92,7 @@ function onConnection(socket) {
 
     console.log('joining room - ' + room);
     socket.roomname = room;
+      io.emit('join room');
   });
 
   socket.on('query request', function() {
