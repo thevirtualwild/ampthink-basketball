@@ -16,8 +16,12 @@ var selectedCameraType = cameraNames.freeThrow;
 
 var cameraSettings = [];
 var score = 0;
-var initWaitTime = 5;
-var currentWaitTime = 5;
+var initWaitTime = 7;
+var currentWaitTime = 7;
+var initGameTime = 30;
+var currentGameTime = 30;
+var initResultsTime = 10;
+var currentResultsTime = 10;
 createCameraTypes();
 
 var currentCameraIndex = 0;
@@ -63,7 +67,7 @@ var createScene = function(){
                 currentGameState = gameState;
                 currentCameraIndex = 0;
                 animateCamera();
-                showAttractMessage();
+                updateUI();
                 break;
             case gameStates.WAITING:
                 currentGameState = gameState;
@@ -79,6 +83,7 @@ var createScene = function(){
             case gameStates.RESULTS:
                 currentGameState = gameState;
                 currentCameraIndex = 1;
+                updateUI();
                 break;
             default:
                 currentGameState = gameStates.ATTRACT;
@@ -93,15 +98,21 @@ var createScene = function(){
         if(currentGameState == gameStates.ATTRACT)
         {
             initPosition = camera.position;
-            finalPosition = new BABYLON.Vector3(initPosition.x, initPosition.y, initPosition.z);
-            finalPosition.x = -finalPosition.x;
+
+            finalPosition = new BABYLON.Vector3(
+                cameraSettings[currentCameraIndex].initPos.x,
+                cameraSettings[currentCameraIndex].initPos.y,
+                cameraSettings[currentCameraIndex].initPos.z);
+
+            if(initPosition.y == finalPosition.y)
+            finalPosition.x = -initPosition.x;
 
             var keys = [];
             keys.push({
                     frame: 0,
                     value: initPosition});
             keys.push(
-                {frame: 600,
+                {frame: 300,
                     value: finalPosition});
 
             var dataType = BABYLON.Animation.ANIMATIONTYPE_VECTOR3;
@@ -113,7 +124,7 @@ var createScene = function(){
             animation.setEasingFunction(ease);
             camera.animations = [];
             camera.animations.push(animation);
-            scene.beginAnimation(camera, 0, 600, false, 1, animateCamera);
+            scene.beginAnimation(camera, 0, 300, false, 1, animateCamera);
             //prevAnimation = scene.beginAnimation(camera, 0, 600, false, 1, animateCamera);
             //prevAnimation = animation;
         }
@@ -127,11 +138,11 @@ var createScene = function(){
                 frame: 0,
                 value: initPosition});
             keys.push(
-                {frame: 180,
+                {frame: 240,
                     value: finalPosition});
 
             var dataType = BABYLON.Animation.ANIMATIONTYPE_VECTOR3;
-            var animation = new BABYLON.Animation("freeThrowAnimation", "position", 180, dataType, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+            var animation = new BABYLON.Animation("freeThrowAnimation", "position", 240, dataType, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
 
             var ease = new BABYLON.QuadraticEase();
             ease.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
@@ -140,24 +151,40 @@ var createScene = function(){
             camera.animations = [];
             camera.animations.push(animation);
             scene.beginAnimation(camera, 0, 600, false, 1);
-
         }
-
     }
 
     scene.registerBeforeRender(function()
     {
-        console.log(currentWaitTime);
-        camera.setTarget(cameraSettings[currentCameraIndex].initFocus);
+        camera.setTarget(torus.position);
 
         if(currentGameState == gameStates.WAITING)
         {
             currentWaitTime -= (engine.getDeltaTime() / 1000);
-            attractLabel.innerHTML = currentWaitTime.toFixed(2);
+            attractLabel.innerHTML = currentWaitTime.toFixed(2) + "<br /> WAITING FOR PLAYERS";
 
             if(currentWaitTime <= 0)
             {
                 changeGameState(gameStates.GAMEPLAY);
+            }
+        }
+        else if(currentGameState == gameStates.GAMEPLAY)
+        {
+            currentGameTime -= (engine.getDeltaTime() / 1000);
+            attractLabel.innerHTML = currentGameTime.toFixed(2);
+
+            if(currentGameTime <= 0)
+            {
+                changeGameState(gameStates.RESULTS);
+            }
+        }
+        else if(currentGameState == gameStates.RESULTS)
+        {
+            currentResultsTime -= (engine.getDeltaTime() / 1000);
+            //attractLabel.innerHTML = currentResultsTime.toFixed(2);
+            if(currentResultsTime <= 0)
+            {
+                changeGameState(gameStates.ATTRACT);
             }
         }
     });
@@ -167,6 +194,7 @@ var createScene = function(){
     light.intensity = 0.7;
 
     var basketball = BABYLON.Mesh.CreateSphere("basketball", 16, 1.88, scene);
+
 
     BABYLON.SceneLoader.ImportMesh("BASKET_BALL", "./assets/", "basketball3dtest.babylon", scene, function (mesh) {
 
@@ -182,7 +210,7 @@ var createScene = function(){
             mass: 1,
             friction:0.1,
             ignoreParent: true});
-        basketball.position = new BABYLON.Vector3(0, 10, 10);
+        basketball.position = new BABYLON.Vector3(0, -50, 0);
 
         scene.registerBeforeRender(function()
         {
@@ -360,7 +388,10 @@ var createScene = function(){
     var scoreTrigger = new BABYLON.Mesh.CreateBox("scoreTrigger", 0.8, scene);
     scoreTrigger.position = torus.position;
     scoreTrigger.position.y += 2;
-    scene.meshes.pop(scoreTrigger);
+    var clearMat = new BABYLON.StandardMaterial("myMaterial", scene);
+    clearMat.alpha = 0;
+    scoreTrigger.material = clearMat;
+    //scene.meshes.pop(scoreTrigger);
     var score = 0;
     var manager = new BABYLON.ActionManager(scene);
     scoreTrigger.actionManager = manager;
@@ -585,17 +616,11 @@ socket.on('shot sent', function() {
 
 function addScore()
 {
-    if(currentGameState != gameStates.GAMEPLAY) return;
-
+    if(currentGameState != gameStates.GAMEPLAY && currentGameState != gameStates.GAMEPLAY) return;
+    console.log("SCORE ADDED");
     score++;
     var scoreLabel = document.getElementById("scoreLabel");
     scoreLabel.innerHTML = "Score: " + score;
-}
-
-function showAttractMessage()
-{
-    var attractLabel = document.getElementById("attractLabel");
-    attractLabel.innerHTML = "BASKETBALL <br /> JOIN GAME";
 }
 
 function updateUI()
@@ -613,11 +638,13 @@ function updateUI()
             break;
         case gameStates.GAMEPLAY:
             scoreLabel.innerHTML = "Score: " + score;
-            attractLabel.innerHTML = "";
+            attractLabel.innerHTML = initGameTime.toString();
+            currentGameTime = initGameTime;
             break;
         case gameStates.RESULTS:
             scoreLabel.innerHTML = "";
-            attractLabel.innerHTML = "";
+            attractLabel.innerHTML = "Score: " + score;
+            currentResultsTime = initResultsTime;
             break;
         default:
             attractLabel.innerHTML = "";

@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/public/babylon/main.js" line="499" />
+    <bookmark url="file://$PROJECT_DIR$/public/babylon/main.js" line="530" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c95612d-4678-4af6-a1f9-2ab5baa022a4" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/index.js" afterPath="$PROJECT_DIR$/index.js" />
-      <change beforePath="$PROJECT_DIR$/public/babylon/index.html" afterPath="$PROJECT_DIR$/public/babylon/index.html" />
       <change beforePath="$PROJECT_DIR$/public/babylon/main.js" afterPath="$PROJECT_DIR$/public/babylon/main.js" />
-      <change beforePath="$PROJECT_DIR$/public/babylon/style.css" afterPath="$PROJECT_DIR$/public/babylon/style.css" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -29,8 +25,8 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/babylon/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="427">
-              <caret line="164" column="33" lean-forward="false" selection-start-line="164" selection-start-column="33" selection-end-line="164" selection-end-column="33" />
+            <state relative-caret-position="444">
+              <caret line="210" column="25" lean-forward="true" selection-start-line="210" selection-start-column="25" selection-end-line="210" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -137,8 +133,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>camerasettings</find>
-      <find>switch camera</find>
       <find>changecamera</find>
       <find>cameratypes</find>
       <find>take shot</find>
@@ -157,16 +151,18 @@
       <find>user h</find>
       <find>actionmanager</find>
       <find>actionmanager.registeraction</find>
-      <find>addscore</find>
-      <find>updateui</find>
       <find>scene.register</find>
       <find>registeraction</find>
       <find>score</find>
       <find>takeShot()</find>
       <find>scene.registerbeforerender</find>
-      <find>changegamestate</find>
-      <find>animatecamera</find>
       <find>currentwaittime</find>
+      <find>changegamestate</find>
+      <find>updateui</find>
+      <find>animatecamera</find>
+      <find>material</find>
+      <find>addscore</find>
+      <find>basketball</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -332,7 +328,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="164089000" />
+    <option name="totallyTimeSpent" value="167472000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -660,8 +656,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/babylon/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="427">
-          <caret line="164" column="33" lean-forward="false" selection-start-line="164" selection-start-column="33" selection-end-line="164" selection-end-column="33" />
+        <state relative-caret-position="444">
+          <caret line="210" column="25" lean-forward="true" selection-start-line="210" selection-start-column="25" selection-end-line="210" selection-end-column="25" />
           <folding />
         </state>
       </provider>
