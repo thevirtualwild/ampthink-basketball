@@ -15,11 +15,19 @@ app.get('/game', function(req, res) {
     console.log('webapp routing - ' + query);
 });
 
-app.get('/regame', function(req, res) {
-  res.redirect('/game?room=' + 'something');
-  query = req.query.room;
-  console.log('query - ' + query);
+app.set('view engine', 'ejs');
+
+app.get('/about', function(req, res) {
+  res.render('pages/about');
 });
+
+// app.get('/regame', function(req, res) {
+//   var randlist = ['pink','mint','orange'];
+//   var randquery = randlist[ Math.floor(Math.random()*randlist.length) ];
+//   res.redirect('/game?room=' + randquery);
+//   query = req.query.room;
+//   console.log('query - ' + query);
+// });
 /*
 app.get('/babylon', function(req, res) {
     res.sendFile(path.join(__dirname + '/public/babylon/game.html'));

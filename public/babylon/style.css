@@ -20,12 +20,20 @@
 
 #attractLabel {
   position: absolute;
-  left: 35%;
-  top: 15%;
-  width: 800px;
+  left:0;
+  right:0;
+  top: 0;
+  bottom:0;
+  width: 100%;
+  max-width: 800px;
   height: 500px;
   font-size: 64px;
-  margin: 0 auto;
+  margin: auto;
+  padding:50px;
+  border-radius:3px;
+  text-align: center;
+  background:rgba(0,0,0, 0.2);
+
 
 
   color: #999;
@@ -34,8 +42,16 @@
 
 #timeLabel {
   position: absolute;
+  left:0;
+  right:0;
   top: 20px;
-  color: #999;
+  text-align:center;
+
+  background: red;
+  border: 2px solid #333;
+  border-radius: 3px;
+
+  color: #fff;
   cursor: default;
 }
 
