@@ -224,7 +224,7 @@ var createScene = function(){
             if(basketball.position.y < -25)
             {
                 if(currentGameState == gameStates.ATTRACT) {
-                    //takeShot();
+                    takeShot();
                 }
             }
         });
@@ -376,7 +376,7 @@ var createScene = function(){
         if (idx >= sphereAmount)
         {
 
-            createJoint(point.physicsImpostor, netSpheres[idx - sphereAmount].physicsImpostor, 1.1);
+            createJoint(point.physicsImpostor, netSpheres[idx - sphereAmount].physicsImpostor, 1);
             var horiDistance = .4*3 - .165* Math.floor(idx/sphereAmount);
             if (idx % sphereAmount > 0)
             {
