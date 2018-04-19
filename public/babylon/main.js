@@ -14,6 +14,8 @@ var currentGameState = gameStates.ATTRACT;
 var cameraNames = Object.freeze({"freeThrow": 0, "quarterFar": 1, "close": 2});
 var selectedCameraType = cameraNames.freeThrow;
 
+var netSpheres = [];
+
 var cameraSettings = [];
 var score = 0;
 var initWaitTime = 7;
@@ -38,17 +40,19 @@ var createScene = function(){
 
     if(useCannon) {
         var physicsPlugin = new BABYLON.CannonJSPlugin(true, 5);
-        physicsPlugin.setTimeStep(0.1);
+        //physicsPlugin.setTimeStep(1/100);
     }
     else
     {
         var physicsPlugin = new BABYLON.OimoJSPlugin(1);
+        //physicsPlugin.setTimeStep(1/100);
         physicsPlugin.allowSleep = true;
     }
 
     var gravityVector = new BABYLON.Vector3(0,-15.81, 0);
     scene.enablePhysics(gravityVector, physicsPlugin);
-
+    scene.getPhysicsEngine().setTimeStep(1/45);
+    scene.getPhysicsEngine().getPhysicsPlugin().world.allowSleep = true;
     var camera = new BABYLON.FreeCamera("camera1", initCameraPos, scene);
     //camera.setTarget(initCameraFocus);
 
@@ -187,6 +191,7 @@ var createScene = function(){
                 changeGameState(gameStates.ATTRACT);
             }
         }
+
     });
 
     var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
@@ -219,7 +224,7 @@ var createScene = function(){
             if(basketball.position.y < -25)
             {
                 if(currentGameState == gameStates.ATTRACT) {
-                    takeShot();
+                    //takeShot();
                 }
             }
         });
@@ -340,7 +345,6 @@ var createScene = function(){
     var centerPos = torus.position;
     centerPos.y -= 4;
     var height = 4;
-    var netSpheres = [];
     for(var j = 0; j < height; j++)
     {
         for (var i = 0; i < sphereAmount; i++)
@@ -352,7 +356,7 @@ var createScene = function(){
                 centerPos.z + Math.cos(i * Math.PI * 2 / sphereAmount) * radius * (1- (j/2/height))
             );
 
-            var currentMass = 1.01;
+            var currentMass = 50.01;
             if(j == 0)//top row
             {
                 currentMass = 0;
@@ -363,6 +367,7 @@ var createScene = function(){
 
             })
             scene.meshes.pop(sphere);
+            sphere.physicsImpostor.sleep();
             netSpheres.push(sphere);
         }
     }
@@ -370,8 +375,8 @@ var createScene = function(){
     netSpheres.forEach(function(point, idx) {
         if (idx >= sphereAmount)
         {
-            createJoint(point.physicsImpostor, netSpheres[idx - sphereAmount].physicsImpostor, 1);
 
+            createJoint(point.physicsImpostor, netSpheres[idx - sphereAmount].physicsImpostor, 1.1);
             var horiDistance = .4*3 - .165* Math.floor(idx/sphereAmount);
             if (idx % sphereAmount > 0)
             {
@@ -382,6 +387,7 @@ var createScene = function(){
                 createJoint(point.physicsImpostor, netSpheres[idx + sphereAmount - 1].physicsImpostor, horiDistance);
             }
         }
+
         scene.meshes.pop(netSpheres[i]);
     });
 
@@ -417,14 +423,14 @@ var createScene = function(){
     clothMat.backFaceCulling = false;
     clothMat.diffuseTexture.hasAlpha = true;
 
-    var net = BABYLON.Mesh.CreateGround("ground1", 1, 1, sphereAmount - 1, scene, true);
+    var net = BABYLON.Mesh.CreateGround("ground1", 1, 1, sphereAmount, scene, true);
     var positions = net.getVerticesData(BABYLON.VertexBuffer.PositionKind);
 
     net.material = clothMat;
 
     var indices = net.getIndices();
     //524
-    indices.splice(164, indices.length);
+    indices.splice(182, indices.length);
 
     net.setIndices(indices, indices.length);
 
@@ -435,35 +441,12 @@ var createScene = function(){
 
         netSpheres.forEach(function (s, idx)
         {
-            //s.position += netSpheres[0].position;
             positions.push(netSpheres[idx].position.x, netSpheres[idx].position.y, netSpheres[idx].position.z);
-            //console.log(idx);
-            /*
+
             if((idx % sphereAmount) == (sphereAmount - 1))
             {
-                //console.log(idx);
-                //console.log(idx - sphereAmount + 1);
-                //console.log(s.position);
-                //console.log(netSpheres[idx - sphereAmount + 1].position);
-                /*
                 positions.push(netSpheres[idx - sphereAmount + 1].position.x, netSpheres[idx - sphereAmount + 1].position.y, netSpheres[idx - sphereAmount + 1].position.z);
-                //var debugSphere = BABYLON.Mesh.CreateSphere("sphere", 10, 0.1, scene);
-                if(debugPos.length < 8)
-                {
-                    debugPos.push(s.position);
-                    var sphere = BABYLON.Mesh.CreateSphere("sphere", 10, 0.2, scene);
-                    sphere.position = s.position;
-                    var redMat = new BABYLON.StandardMaterial("redMat", scene);
-                    redMat.diffuseColor = new BABYLON.Color3(1, 0, 1);
-                    sphere.material = redMat;
-                    var sphere1 = BABYLON.Mesh.CreateSphere("sphere1", 10, 0.2, scene);
-                    sphere1.position = new BABYLON.Vector3(
-                        netSpheres[idx - sphereAmount + 1].position.x, netSpheres[idx - sphereAmount + 1].position.y, netSpheres[idx - sphereAmount + 1].position.z);
-                }
-                */
-            //}
-
-
+            }
         });
 
         net.updateVerticesData(BABYLON.VertexBuffer.PositionKind, positions);
@@ -657,6 +640,7 @@ function createCameraTypes()
     var cameraType = {
         cameraNames: cameraNames.quarterFar,
         initPos: new BABYLON.Vector3(35, 5, -25),
+        //initPos: new BABYLON.Vector3(0, 5, -10),
         initFocus: new BABYLON.Vector3(0, -2.6, 11.75)
     }
     cameraSettings.push(cameraType);
