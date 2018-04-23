@@ -296,7 +296,7 @@ var createScene = function(){
         }
     });
 
-    BABYLON.SceneLoader.ImportMesh("", "./assets/", "Seating_Low.babylon", scene, function (meshes) {
+    BABYLON.SceneLoader.ImportMesh("", "./assets/Layout/", "Layout.babylon", scene, function (meshes) {
 
         var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
         var mesh;
@@ -304,23 +304,31 @@ var createScene = function(){
         for(var i = 0; i < meshes.length; i++)
         {
 
-            if(meshes[i].name != "Net_Shell_01" &&
-                meshes[i].name != "Net_Shell_02" &&
-                meshes[i].name != "Net_Shell_03" &&
-                meshes[i].name != "Goal_BackboardFill" &&
-                meshes[i].name != "Net_Skinned" &&
-                meshes[i].name != "Goal_Col_01" &&
-                meshes[i].name != "Goal_Col_02" &&
-                meshes[i].name != "Ground" &&
-                meshes[i].name != "Net_Static" &&
-                meshes[i].name != "Ref" &&
-                meshes[i].name != "Floor" )
+            if(meshes[i].name != "Nedt_Shell_01" &&
+                meshes[i].name != "SeatfGroup_Low" &&
+                meshes[i].name != "Seatf_Low" &&
+                meshes[i].name != "Seatf_Med" &&
+                meshes[i].name != "Seatf_High" &&
+                meshes[i].name != "Stairf_Base" &&
+                meshes[i].name != "Stairf_Base_High" &&
+                meshes[i].name != "Stairf_Base_Low" &&
+                meshes[i].name != "Stairf_Base_Med" &&
+                meshes[i].name != "Rfef" &&
+                meshes[i].name != "Ffloor" )
             {
 
                 //myMaterial.diffuseTexture = new BABYLON.Texture("./assets/basketball_hoop_diffuse_noAO.jpg", scene);
                 //myMaterial.bumpTexture = new BABYLON.Texture("./assets/basketball3dtestbump.tga", scene);
-                meshes[i].position = new BABYLON.Vector3(50, -32, 50);
+                //console.log(meshes[i].position);
+                var newPos = new BABYLON.Vector3(0,0,0);
+                newPos.x = meshes[i].position.x + 0;
+                newPos.y = meshes[i].position.y + -36;
+                newPos.z = meshes[i].position.z - 60;
+                meshes[i].position = newPos
                 console.log(meshes[i].name);
+                //console.log(meshes[i].position);
+
+                //console.log(meshes[i].name);
                 //meshes[i].scaling = new BABYLON.Vector3(0.025, 0.02, 0.025);
                 //meshes[i].rotate(BABYLON.Axis.Y, Math.PI, BABYLON.Space.WORLD);
             }

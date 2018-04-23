@@ -1,36 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/public/babylon/main.js" line="538" />
+    <bookmark url="file://$PROJECT_DIR$/public/babylon/main.js" line="546" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c95612d-4678-4af6-a1f9-2ab5baa022a4" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/public/babylon/assets/babylon.simpleMaterial.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/public/babylon/assets/babylonjs.materials.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/public/babylon/shaders/Shaders/babylonjs.materials.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/public/babylon/shaders/Shaders/simple.fragment.fx" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/public/babylon/Football.mtl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/public/babylon/Football.obj" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/public/babylon/assets/basketball3dtest.log" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/public/babylon/assets/basketball3dtestbump.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/public/babylon/assets/src/cell/babylon.cellMaterial.js" afterPath="$PROJECT_DIR$/public/babylon/assets/babylon.cellMaterial.js" />
-      <change beforePath="$PROJECT_DIR$/public/babylon/assets/test0.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/public/babylon/assets/test1.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/public/babylon/assets/test2.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/public/babylon/assets/test3.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/public/babylon/assets/test4.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/public/babylon/assets/test5.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/public/babylon/assets/test6.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/public/babylon/assets/test7.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/public/babylon/assets/test8.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/public/babylon/assets/test9.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/public/babylon/babylon.custom.js" afterPath="$PROJECT_DIR$/public/babylon/babylon.custom.js" />
-      <change beforePath="$PROJECT_DIR$/public/babylon/index.html" afterPath="$PROJECT_DIR$/public/babylon/index.html" />
       <change beforePath="$PROJECT_DIR$/public/babylon/main.js" afterPath="$PROJECT_DIR$/public/babylon/main.js" />
-      <change beforePath="$PROJECT_DIR$/public/babylonWIP/assets/Material Resources/SteveShader_V1_Fragment.txt" afterPath="$PROJECT_DIR$/public/babylonWIP/assets/Material Resources/SteveShader_V1_Fragment.txt" />
-      <change beforePath="$PROJECT_DIR$/public/babylonWIP/babylon.custom.js" afterPath="$PROJECT_DIR$/public/babylonWIP/babylon.custom.js" />
-      <change beforePath="$PROJECT_DIR$/public/pixi.min.js" afterPath="$PROJECT_DIR$/public/pixi.min.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -50,8 +25,8 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/babylon/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="344">
-              <caret line="238" column="0" lean-forward="true" selection-start-line="238" selection-start-column="0" selection-end-line="238" selection-end-column="0" />
+            <state relative-caret-position="445">
+              <caret line="324" column="49" lean-forward="true" selection-start-line="324" selection-start-column="49" selection-end-line="324" selection-end-column="49" />
               <folding />
             </state>
           </provider>
@@ -61,7 +36,7 @@
         <entry file="file://$PROJECT_DIR$/public/index.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="272">
-              <caret line="16" column="12" lean-forward="true" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
+              <caret line="16" column="12" lean-forward="false" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -71,7 +46,7 @@
         <entry file="file://$PROJECT_DIR$/public/babylon/index.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="539">
-              <caret line="46" column="7" lean-forward="true" selection-start-line="46" selection-start-column="7" selection-end-line="46" selection-end-column="7" />
+              <caret line="46" column="7" lean-forward="false" selection-start-line="46" selection-start-column="7" selection-end-line="46" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -141,7 +116,7 @@
         <entry file="file://$PROJECT_DIR$/public/babylon/shaders/Shaders/simple.vertex.fx">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="306">
-              <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+              <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -277,6 +252,21 @@
               <item name="public" type="462c0819:PsiDirectoryNode" />
               <item name="babylon" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="ampthink-basketball" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ampthink-basketball" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="babylon" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ampthink-basketball" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ampthink-basketball" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="babylon" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="Layout" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -357,12 +347,12 @@
       <workItem from="1522340610441" duration="25078000" />
       <workItem from="1523886309708" duration="23938000" />
       <workItem from="1523919857858" duration="15263000" />
-      <workItem from="1524498240817" duration="10625000" />
+      <workItem from="1524498240817" duration="12417000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="195633000" />
+    <option name="totallyTimeSpent" value="197425000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -652,7 +642,7 @@
     <entry file="file://$PROJECT_DIR$/public/babylon/shaders/Shaders/simple.vertex.fx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
-          <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -692,7 +682,7 @@
     <entry file="file://$PROJECT_DIR$/public/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
-          <caret line="16" column="12" lean-forward="true" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
+          <caret line="16" column="12" lean-forward="false" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
           <folding />
         </state>
       </provider>
@@ -700,7 +690,7 @@
     <entry file="file://$PROJECT_DIR$/public/babylon/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="539">
-          <caret line="46" column="7" lean-forward="true" selection-start-line="46" selection-start-column="7" selection-end-line="46" selection-end-column="7" />
+          <caret line="46" column="7" lean-forward="false" selection-start-line="46" selection-start-column="7" selection-end-line="46" selection-end-column="7" />
           <folding />
         </state>
       </provider>
@@ -715,8 +705,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/babylon/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="344">
-          <caret line="238" column="0" lean-forward="true" selection-start-line="238" selection-start-column="0" selection-end-line="238" selection-end-column="0" />
+        <state relative-caret-position="445">
+          <caret line="324" column="49" lean-forward="true" selection-start-line="324" selection-start-column="49" selection-end-line="324" selection-end-column="49" />
           <folding />
         </state>
       </provider>
