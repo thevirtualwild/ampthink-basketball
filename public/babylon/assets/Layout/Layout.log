@@ -721,50 +721,6 @@ Exporter version: 5.6.2, Blender version: 2.79 (sub 0)
 		num uvs2           :  0
 		num colors         :  16768
 		num indices        :  8820
-	processing begun of mesh:  Bench_Med
-		registered as also a user of material:  Seat_Med
-		num positions      :  415
-		num normals        :  415
-		num uvs            :  830
-		num uvs2           :  0
-		num colors         :  1660
-		num indices        :  870
-	processing begun of mesh:  SeatGroup_Med
-		registered as also a user of material:  Stair_Med
-		registered as also a user of material:  Seat_Med
-		processing begun of multimaterial:  Layout.Multimaterial#67
-		num positions      :  4192
-		num normals        :  4192
-		num uvs            :  8384
-		num uvs2           :  0
-		num colors         :  16768
-		num indices        :  8820
-	processing begun of mesh:  Bench_Low
-		registered as also a user of material:  Seat_Low
-		num positions      :  150
-		num normals        :  150
-		num uvs            :  300
-		num uvs2           :  0
-		num colors         :  600
-		num indices        :  270
-	processing begun of mesh:  SeatGroup_Low
-		registered as also a user of material:  Seat_Low
-		registered as also a user of material:  Stair_Low
-		processing begun of multimaterial:  Layout.Multimaterial#68
-		num positions      :  1504
-		num normals        :  1504
-		num uvs            :  3008
-		num uvs2           :  0
-		num colors         :  6016
-		num indices        :  2706
-	processing begun of mesh:  Stair_Base_Med
-		registered as also a user of material:  Stair_Med
-		num positions      :  42
-		num normals        :  42
-		num uvs            :  84
-		num uvs2           :  0
-		num colors         :  168
-		num indices        :  120
 	processing begun of mesh:  Stair_Base_Low
 		registered as also a user of material:  Stair_Low
 		num positions      :  4
@@ -773,94 +729,6 @@ Exporter version: 5.6.2, Blender version: 2.79 (sub 0)
 		num uvs2           :  0
 		num colors         :  0
 		num indices        :  6
-	processing begun of mesh:  Stair_Base_High
-		registered as also a user of material:  Stair_Med
-		num positions      :  770
-		num normals        :  770
-		num uvs            :  1540
-		num uvs2           :  0
-		num colors         :  0
-		num indices        :  3600
-	processing begun of mesh:  Rails_X1
-		WARNING: No materials have been assigned: 
-		num positions      :  36
-		num normals        :  36
-		num uvs            :  0
-		num uvs2           :  0
-		num colors         :  144
-		num indices        :  108
-	processing begun of mesh:  Rails_X2
-		WARNING: No materials have been assigned: 
-		num positions      :  47
-		num normals        :  47
-		num uvs            :  0
-		num uvs2           :  0
-		num colors         :  0
-		num indices        :  186
-	processing begun of mesh:  Rails_X3
-		WARNING: No materials have been assigned: 
-		num positions      :  70
-		num normals        :  70
-		num uvs            :  0
-		num uvs2           :  0
-		num colors         :  0
-		num indices        :  264
-	processing begun of mesh:  Rails_X4
-		WARNING: No materials have been assigned: 
-		num positions      :  87
-		num normals        :  87
-		num uvs            :  0
-		num uvs2           :  0
-		num colors         :  348
-		num indices        :  342
-	processing begun of mesh:  Wall_Low
-		WARNING: No materials have been assigned: 
-		num positions      :  37
-		num normals        :  37
-		num uvs            :  74
-		num uvs2           :  0
-		num colors         :  0
-		num indices        :  66
-	processing begun of mesh:  Wall_Angle_Low
-		WARNING: No materials have been assigned: 
-		num positions      :  39
-		num normals        :  39
-		num uvs            :  78
-		num uvs2           :  0
-		num colors         :  0
-		num indices        :  60
-	processing begun of mesh:  Seat_Low
-		registered as also a user of material:  Seat_Low
-		num positions      :  30
-		num normals        :  30
-		num uvs            :  60
-		num uvs2           :  0
-		num colors         :  120
-		num indices        :  54
-	processing begun of mesh:  Seat_Med
-		registered as also a user of material:  Seat_Med
-		num positions      :  83
-		num normals        :  83
-		num uvs            :  166
-		num uvs2           :  0
-		num colors         :  332
-		num indices        :  174
-	processing begun of mesh:  Seat_High
-		WARNING: No materials have been assigned: 
-		num positions      :  7423
-		num normals        :  7423
-		num uvs            :  0
-		num uvs2           :  0
-		num colors         :  0
-		num indices        :  44256
-	processing begun of mesh:  Stair_Base
-		registered as also a user of material:  Stair_Med
-		num positions      :  237
-		num normals        :  237
-		num uvs            :  474
-		num uvs2           :  0
-		num colors         :  0
-		num indices        :  420
 	processing begun of mesh:  Ref
 		processing begun of Standard material:  Goal
 		num positions      :  358
@@ -880,4 +748,4 @@ Exporter version: 5.6.2, Blender version: 2.79 (sub 0)
 ========= Writing of scene file started =========
 ========= Writing of scene file completed =========
 ========= end of processing =========
-elapsed time:  0 min, 14.983 secs
+elapsed time:  0 min, 15.2476 secs
