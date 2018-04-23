@@ -214,7 +214,6 @@ var createScene = function(){
         basketball.material = myMaterial;
         basketball.position = torus.position;
         basketball.scaling = new BABYLON.Vector3(1,1,1);
-        console.log(basketball.position);
         basketballs.push(basketball);
     }
 
@@ -223,7 +222,10 @@ var createScene = function(){
         //var newBasketball;
         var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
         myMaterial.diffuseTexture = new BABYLON.Texture("./assets/basketball3dtestdiffuse.jpg", scene);
+
         var newBasketballs = [];
+
+        //var testBasketball = mesh[0];
         scene.meshes.pop(mesh[0]);
 
         for (var i= 0; i< basketballs.length; i++)
@@ -232,7 +234,6 @@ var createScene = function(){
                 mass: 1,
                 friction:0.1,
                 ignoreParent: true});
-            //basketballs[i].position = new BABYLON.Vector3(0, 0, 0);
 
             var newBasketball = mesh[0].clone("index: " + i);
 
@@ -240,12 +241,7 @@ var createScene = function(){
             newBasketball.scaling = new BABYLON.Vector3(0.05, 0.05, 0.05);
             newBasketball.material = myMaterial;
             newBasketballs.push(newBasketball);
-            //scene.meshes.pop(newBasketball);
-
         }
-
-        //console.log(basketballs.length);
-        //console.log(newBasketballs.length);
         scene.registerBeforeRender(function()
         {
             for(var i = 0 ; i < basketballs.length; i++)
