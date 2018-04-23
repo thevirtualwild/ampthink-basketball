@@ -207,19 +207,22 @@ var createScene = function(){
 
         var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
 
+        var cellMaterial = new BABYLON.CellMaterial("test", scene);
         myMaterial.diffuseTexture = new BABYLON.Texture("./assets/basketball3dtestdiffuse.jpg", scene);
+        cellMaterial.diffuseTexture = new BABYLON.Texture("./assets/basketball3dtestdiffuse.jpg", scene);
         //myMaterial.bumpTexture = new BABYLON.Texture("./assets/basketball3dtestbump.jpg", scene);
         mesh[0].material = myMaterial;
+        //mesh[0].material = cellMaterial;
 
         basketball.physicsImpostor = new BABYLON.PhysicsImpostor(basketball, BABYLON.PhysicsImpostor.SphereImpostor, {
             mass: 1,
             friction:0.1,
             ignoreParent: true});
-        basketball.position = new BABYLON.Vector3(0, -50, 0);
+        basketball.position = new BABYLON.Vector3(0, 0, 0);
 
         scene.registerBeforeRender(function()
         {
-            mesh[0].parent = basketball;
+            //mesh[0].parent = basketball;
             //mesh[0].visible = false;
             if(basketball.position.y < -25)
             {
