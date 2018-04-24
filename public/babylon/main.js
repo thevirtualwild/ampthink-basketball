@@ -80,8 +80,8 @@ var createScene = function(){
 
     camera.position = cameraSettings[currentCameraIndex].initPos;
     camera.setTarget(cameraSettings[currentCameraIndex].initFocus);
-    //camera.maxZ = 130;
-    //camera.minZ = 1;
+    camera.maxZ = 130;
+    camera.minZ = 1;
     changeGameState(gameStates.ATTRACT);
 
     function changeGameState(gameState)
