@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/public/babylon/main.js" line="672" />
+    <bookmark url="file://$PROJECT_DIR$/public/babylon/main.js" line="676" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c95612d-4678-4af6-a1f9-2ab5baa022a4" name="Default" comment="">
@@ -25,8 +25,8 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/babylon/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="235">
-              <caret line="615" column="34" lean-forward="true" selection-start-line="615" selection-start-column="34" selection-end-line="615" selection-end-column="34" />
+            <state relative-caret-position="290">
+              <caret line="45" column="4" lean-forward="false" selection-start-line="45" selection-start-column="4" selection-end-line="45" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -373,7 +373,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>takeshot()</find>
       <find>camera.settarget(</find>
       <find>.pop</find>
       <find>fragment</find>
@@ -403,6 +402,7 @@
       <find>settime</find>
       <find>fps</find>
       <find>settimestep</find>
+      <find>var scene</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -577,7 +577,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="215336000" />
+    <option name="totallyTimeSpent" value="215572000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1144,8 +1144,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/babylon/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="615" column="34" lean-forward="true" selection-start-line="615" selection-start-column="34" selection-end-line="615" selection-end-column="34" />
+        <state relative-caret-position="290">
+          <caret line="45" column="4" lean-forward="false" selection-start-line="45" selection-start-column="4" selection-end-line="45" selection-end-column="4" />
           <folding />
         </state>
       </provider>

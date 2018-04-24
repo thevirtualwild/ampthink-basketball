@@ -34,14 +34,18 @@ var prevAnimation;
 
 var createScene = function(){
     var scene = new BABYLON.Scene(engine);
+
     engine.enableOfflineSupport = false;
 
     scene.clearColor = BABYLON.Color3.Black();
     scene.fogMode = BABYLON.Scene.FOGMODE_LINEAR;
     scene.fogStart = 80;
     scene.fogEnd = 130;
-
     scene.fogColor =  BABYLON.Color3.Black();
+
+    scene.autoClear = false; // Color buffer
+    scene.autoClearDepthAndStencil = false; // Depth and stencil, obviously
+
     var initCameraPos;
     var initCameraFocus;
 
