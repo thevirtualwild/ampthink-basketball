@@ -183,8 +183,66 @@ var createScene = function(){
         }
     }
 
+    // Instrumentation
+    var instrumentation = new BABYLON.EngineInstrumentation(engine);
+    instrumentation.captureGPUFrameTime = true;
+    instrumentation.captureShaderCompilationTime = true;
+
+    // GUI
+    var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+    var stackPanel = new BABYLON.GUI.StackPanel();
+    stackPanel.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+    stackPanel.isVertical = true;
+    advancedTexture.addControl(stackPanel);
+
+    var text1 = new BABYLON.GUI.TextBlock();
+    text1.text = "";
+    text1.color = "white";
+    text1.fontSize = 16;
+    text1.height = "30px";
+    stackPanel.addControl(text1);
+
+    var text2 = new BABYLON.GUI.TextBlock();
+    text2.text = "";
+    text2.color = "white";
+    text2.fontSize = 16;
+    text2.height = "30px";
+    stackPanel.addControl(text2);
+
+    var text3 = new BABYLON.GUI.TextBlock();
+    text3.text = "";
+    text3.color = "white";
+    text3.fontSize = 16;
+    text3.height = "30px";
+    stackPanel.addControl(text3);
+
+    var text4 = new BABYLON.GUI.TextBlock();
+    text4.text = "";
+    text4.color = "white";
+    text4.fontSize = 16;
+    text4.height = "30px";
+    stackPanel.addControl(text4);
+
+    var text5 = new BABYLON.GUI.TextBlock();
+    text5.text = "";
+    text5.color = "white";
+    text5.fontSize = 16;
+    text5.height = "30px";
+    stackPanel.addControl(text5);
+
     scene.registerBeforeRender(function()
     {
+        var i = 0;
+        scene.registerBeforeRender(function () {
+            //colorGrading.level = Math.sin(i++ / 120) * 0.5 + 0.5;
+
+            text1.text = "current frame time (GPU): " + (instrumentation.gpuFrameTimeCounter.current * 0.000001).toFixed(2) + "ms";
+            text2.text = "average frame time (GPU): " + (instrumentation.gpuFrameTimeCounter.average * 0.000001).toFixed(2) + "ms";
+            text3.text = "total shader compilation time: " + (instrumentation.shaderCompilationTimeCounter.total).toFixed(2) + "ms";
+            text4.text = "average shader compilation time: " + (instrumentation.shaderCompilationTimeCounter.average).toFixed(2) + "ms";
+            text5.text = "compiler shaders count: " + instrumentation.shaderCompilationTimeCounter.count;
+        });
+
 
         var newPos = new BABYLON.Vector3(0,0,0);
         newPos.x = torus.position.x + 0;
