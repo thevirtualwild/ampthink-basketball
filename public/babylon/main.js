@@ -240,7 +240,7 @@ var createScene = function(){
     // BABYLON.MeshBuilder.CreateSphere("basketball", { diameter: 2, segments: 16 }, scene);
     //var bigSphere = BABYLON.MeshBuilder.CreateSphere("bigSphere", { diameter: 2, segments: 16 }, scene);
     //bigSphere.position.y = -3;
-    for(var i = 0; i < 1; i++)
+    for(var i = 0; i < 10; i++)
     {
         basketball = BABYLON.Mesh.CreateSphere("basketball", 16, 1.88, scene);
         //basketball.position.y =+ i*2;
@@ -466,6 +466,7 @@ var createScene = function(){
         particleSystem.start();
     });
 
+
     //CREATE CIRCLE OF SPHERE COLLIDERS
     var sphereAmount = 30;
     var radius = 2.15;
@@ -497,6 +498,7 @@ var createScene = function(){
     restitution: .8} )
     scene.meshes.pop(backboard);
 
+    /*
     //CREATE COLLIDERS FOR NET
     var sphereAmount = 10;
     var radius = 2.15;
@@ -549,7 +551,7 @@ var createScene = function(){
 
         scene.meshes.pop(netSpheres[i]);
     });
-
+*/
     var scoreTrigger = new BABYLON.Mesh.CreateBox("scoreTrigger", 0.8, scene);
     scoreTrigger.position = torus.position;
     scoreTrigger.position.y += 2;
