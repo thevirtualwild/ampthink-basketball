@@ -5,7 +5,7 @@ var canvas = document.getElementById("canvas");
 var attractLabel = document.getElementById("attractLabel");
 var scoreLabel = document.getElementById("scoreLabel");
 
-var engine = new BABYLON.Engine(canvas, true);
+var engine = new BABYLON.Engine(canvas, true, null, false);
 var useCannon = false;
 
 var gameStates = Object.freeze({"ATTRACT": 0, "WAITING": 1, "GAMEPLAY": 2, "RESULTS": 3});
