@@ -320,8 +320,8 @@ var createScene = function(){
 
                 myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
                 myMaterial.diffuseTexture.hasAlpha = true;
-                myMaterial.bumpTexture = new BABYLON.Texture("./assets/Layout/Layout_Normal.png", scene);
-                myMaterial.specularTexture = new BABYLON.Texture("./assets/Layout/Layout_Smoothness.png", scene);
+                //myMaterial.bumpTexture = new BABYLON.Texture("./assets/Layout/Layout_Normal.png", scene);
+                //myMaterial.specularTexture = new BABYLON.Texture("./assets/Layout/Layout_Smoothness.png", scene);
 
                 var newPos = new BABYLON.Vector3(0,0,0);
                 newPos.x = meshes[i].position.x + 0;
@@ -364,14 +364,14 @@ var createScene = function(){
                 normalTexture.uOffset = offset.x;
                 normalTexture.vOffset = offset.y;
                 //myMaterial1.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
-                myMaterial1.bumpTexture = normalTexture;
+                //myMaterial1.bumpTexture = normalTexture;
                 var specularTexture = new BABYLON.Texture("./assets/Layout/Layout_Smoothness.png", scene);
                 specularTexture.uScale =  scale.x;
                 specularTexture.vScale = scale.y;
                 specularTexture.uOffset = offset.x;
                 specularTexture.vOffset = offset.y;
                 //myMaterial1.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
-                myMaterial1.specularTexture = specularTexture;
+                //myMaterial1.specularTexture = specularTexture;
                 //myMaterial1.
                 //meshes[i].material.zOffset = 0.5;
                 //myMaterial1.alpha = 0;
