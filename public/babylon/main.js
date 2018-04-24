@@ -68,7 +68,7 @@ var createScene = function(){
     scene.getPhysicsEngine().getPhysicsPlugin().world.allowSleep = true;
     var camera = new BABYLON.FreeCamera("camera1", initCameraPos, scene);
 
-    /*
+
     var pipeline = new BABYLON.DefaultRenderingPipeline(
         "default", // The name of the pipeline
         true, // Do you want HDR textures ?
@@ -81,7 +81,7 @@ var createScene = function(){
     pipeline.bloomWeight = 0.2;
     pipeline.bloomKernel = 64;
     pipeline.bloomScale = 0.5;
-*/
+
     camera.attachControl(canvas, true);
 
     camera.position = cameraSettings[currentCameraIndex].initPos;
