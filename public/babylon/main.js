@@ -404,7 +404,7 @@ var createScene = function(){
                 scene.meshes.pop(meshes[i]);
             }
         }
-
+/*
         var particleSystem = new BABYLON.ParticleSystem("particles", 200, scene);
 
         //Texture of each particle
@@ -464,6 +464,7 @@ var createScene = function(){
         scene.meshes.pop(fountain);
         // Start the particle system
         particleSystem.start();
+        */
     });
 
 
