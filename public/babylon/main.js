@@ -310,7 +310,7 @@ var createScene = function(){
         {
 
             if(meshes[i].name != "LightfBeam.004" &&
-                meshes[i].name != "Flfoor" &&
+                meshes[i].name != "Floor" &&
                 meshes[i].name != "Plane" &&
                 meshes[i].name != "Seatf_Med" &&
                 meshes[i].name != "Seatf_High" &&
@@ -498,7 +498,7 @@ var createScene = function(){
     restitution: .8} )
     scene.meshes.pop(backboard);
 
-    /*
+
     //CREATE COLLIDERS FOR NET
     var sphereAmount = 10;
     var radius = 2.15;
@@ -551,7 +551,7 @@ var createScene = function(){
 
         scene.meshes.pop(netSpheres[i]);
     });
-*/
+
     var scoreTrigger = new BABYLON.Mesh.CreateBox("scoreTrigger", 0.8, scene);
     scoreTrigger.position = torus.position;
     scoreTrigger.position.y += 2;
