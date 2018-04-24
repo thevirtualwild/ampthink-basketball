@@ -58,7 +58,7 @@ var createScene = function(){
 
     var gravityVector = new BABYLON.Vector3(0,-15.81, 0);
     scene.enablePhysics(gravityVector, physicsPlugin);
-    scene.getPhysicsEngine().setTimeStep(1/45);
+    scene.getPhysicsEngine().setTimeStep(1/(30 * .75));
     scene.getPhysicsEngine().getPhysicsPlugin().world.allowSleep = true;
     var camera = new BABYLON.FreeCamera("camera1", initCameraPos, scene);
 
@@ -80,8 +80,8 @@ var createScene = function(){
 
     camera.position = cameraSettings[currentCameraIndex].initPos;
     camera.setTarget(cameraSettings[currentCameraIndex].initFocus);
-    camera.maxZ = 130;
-    camera.minZ = 1;
+    //camera.maxZ = 130;
+    //camera.minZ = 1;
     changeGameState(gameStates.ATTRACT);
 
     function changeGameState(gameState)
@@ -682,9 +682,12 @@ var createScene = function(){
 var scene = createScene();
 
 engine.runRenderLoop(function(){
+
     scene.render();
     var fpsLabel = document.getElementById("fpsLabel");
     fpsLabel.innerHTML = engine.getFps().toFixed()+ " fps";
+
+    //scene.getPhysicsEngine().setTimeStep(1/(engine.getFps() * .75));
 });
 
 var $window = $(window);
