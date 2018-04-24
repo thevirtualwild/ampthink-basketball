@@ -43,7 +43,7 @@ var createScene = function(){
     scene.fogEnd = 130;
     scene.fogColor =  BABYLON.Color3.Black();
 
-    scene.autoClear = false; // Color buffer
+    //scene.autoClear = false; // Color buffer
     scene.autoClearDepthAndStencil = false; // Depth and stencil, obviously
 
     var initCameraPos;
