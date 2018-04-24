@@ -62,11 +62,25 @@ var createScene = function(){
     scene.getPhysicsEngine().getPhysicsPlugin().world.allowSleep = true;
     var camera = new BABYLON.FreeCamera("camera1", initCameraPos, scene);
 
+    var pipeline = new BABYLON.DefaultRenderingPipeline(
+        "default", // The name of the pipeline
+        true, // Do you want HDR textures ?
+        scene, // The scene instance
+        [camera] // The list of cameras to be attached to
+    );
+
+    pipeline.bloomEnabled = true;
+    pipeline.bloomThreshold = 0.8;
+    pipeline.bloomWeight = 0.2;
+    pipeline.bloomKernel = 64;
+    pipeline.bloomScale = 0.5;
+
     camera.attachControl(canvas, true);
 
     camera.position = cameraSettings[currentCameraIndex].initPos;
     camera.setTarget(cameraSettings[currentCameraIndex].initFocus);
     camera.maxZ = 130;
+    camera.minZ = 1;
     changeGameState(gameStates.ATTRACT);
 
     function changeGameState(gameState)
@@ -169,7 +183,7 @@ var createScene = function(){
 
         var newPos = new BABYLON.Vector3(0,0,0);
         newPos.x = torus.position.x + 0;
-        newPos.y = torus.position.y + -12;
+        newPos.y = torus.position.y + -10;
         newPos.z = torus.position.z - 0;
         camera.setTarget(newPos);
         camera.fov = 1;
@@ -291,16 +305,16 @@ var createScene = function(){
         {
 
             if(meshes[i].name != "LightfBeam.004" &&
-                meshes[i].name != "Blocgking" &&
-                meshes[i].name != "Seatf_Low" &&
+                meshes[i].name != "Flfoor" &&
+                meshes[i].name != "Plane" &&
                 meshes[i].name != "Seatf_Med" &&
                 meshes[i].name != "Seatf_High" &&
                 meshes[i].name != "Stairf_Base" &&
                 meshes[i].name != "Stairf_Base_High" &&
                 meshes[i].name != "Stairf_Base_Low" &&
                 meshes[i].name != "Stairf_Base_Med" &&
-                meshes[i].name != "Rfef" &&
-                meshes[i].name != "Ffloor" )
+                meshes[i].name != "Ref" &&
+                meshes[i].name != "Blocking" )
             {
 
                 myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
@@ -313,10 +327,66 @@ var createScene = function(){
                 newPos.y = meshes[i].position.y + -36;
                 newPos.z = meshes[i].position.z - 60;
                 meshes[i].position = newPos
-                //console.log(meshes[i].name);
+                console.log(meshes[i].name);
                 meshes[i].material = myMaterial;
 
 
+            }
+            else if(meshes[i].name == "Ref" || meshes[i].name == "Plane")
+            {
+               var myMaterial1 = new BABYLON.StandardMaterial("myMaterial1", scene);
+
+                var newPos = new BABYLON.Vector3(0,0,0);
+                newPos.x = meshes[i].position.x + 0;
+                newPos.y = meshes[i].position.y + -36;
+                newPos.z = meshes[i].position.z - 60;
+                meshes[i].position = newPos;
+                meshes[i].material = myMaterial1;
+                //scene.meshes.pop(meshes[i]);
+            }
+            else if(meshes[i].name == "Blocking")
+            {
+                var myMaterial1 = new BABYLON.StandardMaterial("myMaterial1", scene);
+                var diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
+                var offset = new BABYLON.Vector2(1, 1);
+                var scale = new BABYLON.Vector2(.5, .5);
+                diffuseTexture.uScale =  scale.x;
+                diffuseTexture.vScale = scale.y;
+                diffuseTexture.uOffset = offset.x;
+                diffuseTexture.vOffset = offset.y;
+                //myMaterial1.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
+                myMaterial1.diffuseTexture = diffuseTexture;
+                myMaterial1.diffuseTexture.hasAlpha = true;
+                var normalTexture = new BABYLON.Texture("./assets/Layout/Layout_Normal.png", scene);
+                normalTexture.uScale =  scale.x;
+                normalTexture.vScale = scale.y;
+                normalTexture.uOffset = offset.x;
+                normalTexture.vOffset = offset.y;
+                //myMaterial1.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
+                myMaterial1.bumpTexture = normalTexture;
+                var specularTexture = new BABYLON.Texture("./assets/Layout/Layout_Smoothness.png", scene);
+                specularTexture.uScale =  scale.x;
+                specularTexture.vScale = scale.y;
+                specularTexture.uOffset = offset.x;
+                specularTexture.vOffset = offset.y;
+                //myMaterial1.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
+                myMaterial1.specularTexture = specularTexture;
+                //myMaterial1.
+                //meshes[i].material.zOffset = 0.5;
+                //myMaterial1.alpha = 0;
+                var newPos = new BABYLON.Vector3(0,0,0);
+                newPos.x = meshes[i].position.x + 0;
+                newPos.y = meshes[i].position.y + -36;
+                newPos.z = meshes[i].position.z - 60;
+                meshes[i].position = newPos;
+                meshes[i].material = myMaterial1;
+                //scene.meshes.pop(meshes[i]);
+            }
+            else if(meshes[i].name == "Floor")
+            {
+                //var myMaterial2 = new BABYLON.StandardMaterial("myMaterial2", scene);
+                //meshes[i].material = myMaterial2;
+                //scene.meshes.pop(meshes[i]);
             }
             else
             {
@@ -504,6 +574,7 @@ var createScene = function(){
     clothMat.diffuseTexture.hasAlpha = true;
 
     var net = BABYLON.Mesh.CreateGround("ground1", 1, 1, sphereAmount, scene, true);
+
     var positions = net.getVerticesData(BABYLON.VertexBuffer.PositionKind);
 
     net.material = clothMat;
@@ -724,7 +795,7 @@ function createCameraTypes()
 {
     var cameraType = {
         cameraNames: cameraNames.quarterFar,
-        initPos: new BABYLON.Vector3(25, 5, -20),
+        initPos: new BABYLON.Vector3(30, -5, -25),
         //initPos: new BABYLON.Vector3(0, 5, -10),
         initFocus: new BABYLON.Vector3(0, -2.6, 11.75)
         //initFocus: new BABYLON.Vector3(0, -10, -30)
@@ -733,7 +804,7 @@ function createCameraTypes()
 
     var cameraType = {
         cameraNames: cameraNames.freeThrow,
-        initPos: new BABYLON.Vector3(0, -30, -60),
+        initPos: new BABYLON.Vector3(0, -25, -60),
         initFocus: new BABYLON.Vector3(0, -12, 11.75),
     }
     cameraSettings.push(cameraType);
