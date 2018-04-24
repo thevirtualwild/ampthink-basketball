@@ -37,7 +37,7 @@ var createScene = function(){
 
     engine.enableOfflineSupport = false;
 
-    engine.setHardwareScalingLevel(2);
+    engine.setHardwareScalingLevel(1.25);
 
     scene.clearColor = BABYLON.Color3.Black();
     scene.fogMode = BABYLON.Scene.FOGMODE_LINEAR;
