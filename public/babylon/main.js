@@ -79,8 +79,8 @@ var createScene = function(){
     pipeline.bloomEnabled = true;
     pipeline.bloomThreshold = 0.8;
     pipeline.bloomWeight = 0.2;
-    pipeline.bloomKernel = 64;
-    pipeline.bloomScale = 0.5;
+    pipeline.bloomKernel = 4;
+    pipeline.bloomScale = 0.3;
 
     camera.attachControl(canvas, true);
 
