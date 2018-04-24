@@ -258,7 +258,7 @@ var createScene = function(){
         //var newBasketball;
         var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
         myMaterial.diffuseTexture = new BABYLON.Texture("./assets/basketball3dtestdiffuse.jpg", scene);
-
+        myMaterial.freeze();
         var newBasketballs = [];
 
         var newBasketball = mesh[0];
@@ -320,6 +320,7 @@ var createScene = function(){
 
                 myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
                 myMaterial.diffuseTexture.hasAlpha = true;
+                myMaterial.freeze();
                 //myMaterial.bumpTexture = new BABYLON.Texture("./assets/Layout/Layout_Normal.png", scene);
                 //myMaterial.specularTexture = new BABYLON.Texture("./assets/Layout/Layout_Smoothness.png", scene);
 
@@ -330,6 +331,7 @@ var createScene = function(){
                 meshes[i].position = newPos
                 console.log(meshes[i].name);
                 meshes[i].material = myMaterial;
+                meshes[i].freezeWorldMatrix();
 
 
             }
@@ -343,6 +345,8 @@ var createScene = function(){
                 newPos.z = meshes[i].position.z - 60;
                 meshes[i].position = newPos;
                 meshes[i].material = myMaterial1;
+                myMaterial1.freeze();
+                meshes[i].freezeWorldMatrix();
                 //scene.meshes.pop(meshes[i]);
             }
             else if(meshes[i].name == "Blocking")
@@ -381,6 +385,8 @@ var createScene = function(){
                 newPos.z = meshes[i].position.z - 60;
                 meshes[i].position = newPos;
                 meshes[i].material = myMaterial1;
+                myMaterial1.freeze();
+                meshes[i].freezeWorldMatrix();
                 //scene.meshes.pop(meshes[i]);
             }
             else if(meshes[i].name == "Floor")
