@@ -226,7 +226,7 @@ var createScene = function(){
 
     });
 
-    //var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
+    var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
 
     //light.intensity = 0.7;
 
@@ -240,7 +240,7 @@ var createScene = function(){
     // BABYLON.MeshBuilder.CreateSphere("basketball", { diameter: 2, segments: 16 }, scene);
     //var bigSphere = BABYLON.MeshBuilder.CreateSphere("bigSphere", { diameter: 2, segments: 16 }, scene);
     //bigSphere.position.y = -3;
-    for(var i = 0; i < 10; i++)
+    for(var i = 0; i < 1; i++)
     {
         basketball = BABYLON.Mesh.CreateSphere("basketball", 16, 1.88, scene);
         //basketball.position.y =+ i*2;
