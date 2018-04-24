@@ -37,11 +37,11 @@ var createScene = function(){
     engine.enableOfflineSupport = false;
 
     scene.clearColor = BABYLON.Color3.Black();
-    scene.fogMode = BABYLON.Scene.FOGMODE_LINEAR;
-    scene.fogStart = 80;
-    scene.fogEnd = 130;
+    //scene.fogMode = BABYLON.Scene.FOGMODE_LINEAR;
+    //scene.fogStart = 80;
+    //scene.fogEnd = 130;
 
-    scene.fogColor =  BABYLON.Color3.Black();
+    //scene.fogColor =  BABYLON.Color3.Black();
     var initCameraPos;
     var initCameraFocus;
 
