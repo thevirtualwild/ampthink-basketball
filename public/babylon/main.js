@@ -37,7 +37,7 @@ var createScene = function(){
 
     engine.enableOfflineSupport = false;
 
-    engine.setHardwareScalingLevel(1.25);
+    //engine.setHardwareScalingLevel(1.25);
 
     scene.clearColor = BABYLON.Color3.Black();
     scene.fogMode = BABYLON.Scene.FOGMODE_LINEAR;
@@ -75,13 +75,13 @@ var createScene = function(){
         scene, // The scene instance
         [camera] // The list of cameras to be attached to
     );
-
+/*
     pipeline.bloomEnabled = true;
     pipeline.bloomThreshold = 0.8;
     pipeline.bloomWeight = 0.2;
     pipeline.bloomKernel = 4;
     pipeline.bloomScale = 0.3;
-
+*/
     camera.attachControl(canvas, true);
 
     camera.position = cameraSettings[currentCameraIndex].initPos;
@@ -315,14 +315,14 @@ var createScene = function(){
             if(meshes[i].name != "LightfBeam.004" &&
                 meshes[i].name != "Floor" &&
                 meshes[i].name != "Plane" &&
-                meshes[i].name != "Seatf_Med" &&
+                meshes[i].name != "Glow_Floor" &&
                 meshes[i].name != "Seatf_High" &&
                 meshes[i].name != "Stairf_Base" &&
                 meshes[i].name != "Stairf_Base_High" &&
                 meshes[i].name != "Stairf_Base_Low" &&
                 meshes[i].name != "Stairf_Base_Med" &&
                 meshes[i].name != "Ref" &&
-                meshes[i].name != "Blocking" )
+                meshes[i].name != "Blofcking" )
             {
 
                 myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
@@ -342,7 +342,7 @@ var createScene = function(){
 
 
             }
-            else if(meshes[i].name == "Ref" || meshes[i].name == "Plane")
+            else if(meshes[i].name == "Ref" || meshes[i].name == "Plane" || meshes[i].name == "Glow_Floor")
             {
                var myMaterial1 = new BABYLON.StandardMaterial("myMaterial1", scene);
 
@@ -356,7 +356,7 @@ var createScene = function(){
                 meshes[i].freezeWorldMatrix();
                 //scene.meshes.pop(meshes[i]);
             }
-            else if(meshes[i].name == "Blocking")
+            else if(meshes[i].name == "Blofcking")
             {
                 var myMaterial1 = new BABYLON.StandardMaterial("myMaterial1", scene);
                 var diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
