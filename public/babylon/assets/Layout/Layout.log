@@ -367,9 +367,9 @@ Exporter version: 5.6.2, Blender version: 2.79 (sub 0)
 		num indices        :  36
 	processing begun of mesh:  Glow_Floor
 		registered as also a user of material:  Glow
-		num positions      :  1259
-		num normals        :  1259
-		num uvs            :  2518
+		num positions      :  556
+		num normals        :  556
+		num uvs            :  0
 		num uvs2           :  0
 		num colors         :  0
 		num indices        :  1668
@@ -399,6 +399,8 @@ Exporter version: 5.6.2, Blender version: 2.79 (sub 0)
 		num indices        :  6
 	processing begun of mesh:  Ref
 		processing begun of Standard material:  Goal
+		registered as also a user of material:  Glow
+		processing begun of multimaterial:  Layout.Multimaterial#0
 		num positions      :  358
 		num normals        :  358
 		num uvs            :  0
@@ -416,4 +418,4 @@ Exporter version: 5.6.2, Blender version: 2.79 (sub 0)
 ========= Writing of scene file started =========
 ========= Writing of scene file completed =========
 ========= end of processing =========
-elapsed time:  0 min, 3.9839 secs
+elapsed time:  0 min, 4.0804 secs
