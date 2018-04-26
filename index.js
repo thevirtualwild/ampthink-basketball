@@ -66,19 +66,19 @@ function onConnection(socket) {
     addedUser = true;
 
     if (numUsers == 1 ) {
-      socket.usercolor = 'pink';
-      socket.emit('change color', socket.usercolor);
+      socket.team = 'red';
+      socket.emit('change team', socket.team);
     } else if (numUsers == 2) {
-      socket.usercolor = 'mint';
-      socket.emit('change color', socket.usercolor);
+      socket.team = 'blue';
+      socket.emit('change team', socket.team);
     } else {
-      socket.usercolor = userdata.usercolor;
+      socket.team = userdata.team;
     }
 
     // fake for now
     // socket.roomname = 'GAME';
 
-    console.log("|New User: " + socket.username + "\n - Chosen color: " + socket.usercolor);
+    console.log("|New User: " + socket.username + "\n - Chosen team: " + socket.team);
 
     // socket.emit('login', {
     //   numUsers: numUsers,
@@ -90,25 +90,26 @@ function onConnection(socket) {
     // echo globally (all clients) that a person has connected
     socket.broadcast.to(socket.roomname).emit('user joined', {
       username: socket.username,
-      usercolor: socket.usercolor,
+      team: socket.team,
       numUsers: numUsers
     });
   });
 
-  socket.on('join room', function(room) {
-        socket.join(room);
+  socket.on('join room', function(userdata) {
+    room = userdata.room;
+    socket.join(room);
 
-        console.log('joining room - ' + room);
-        socket.roomname = room;
-        io.emit('join room');
-    });
+    socket.roomname = room;
+    console.log('index.js: joining room - ' + socket.roomname);
+    socket.broadcast.to(socket.roomname).emit('joined room', userdata);
+  });
 
-    socket.on('game over', function(room) {
+  socket.on('game over', function(room) {
 
-        console.log('game over - ' + room);
-        socket.roomname = room;
-        io.emit('game over');
-    });
+    console.log('game over - ' + room);
+    socket.roomname = room;
+    io.emit('game over');
+  });
 
     socket.on('game almost ready', function(room) {
 
@@ -153,24 +154,24 @@ function onConnection(socket) {
 
     console.log('take shot');
 
-    socket.emit('shot sent');
+    socket.broadcast.to(socket.roomname).emit('take shot', shotInfo);
 
-    io.emit('take shot', shotInfo);
+    // io.emit('take shot', shotInfo);
   });
 
-    socket.on('switch camera', function(data) {
+  socket.on('switch camera', function(data) {
 
-        socket.emit('switch camera');
+      socket.emit('switch camera');
 
-        io.emit('switch camera');
-    });
+      io.emit('switch camera');
+  });
 
-    socket.on('load texture', function(data) {
+  socket.on('load texture', function(data) {
 
-        socket.emit('load texture');
+      socket.emit('load texture');
 
-        io.emit('load texture');
-    });
+      io.emit('load texture');
+  });
 
   socket.on('disconnect', function() {
     console.log('user disconnected');

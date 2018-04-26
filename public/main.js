@@ -252,7 +252,8 @@ engine.runRenderLoop(function(){
 var $window = $(window);
 var $pages = $('.pages'); // Input for roomname
 var $passcodeInput = $('.passcodeInput'); // Input for roomname
-var $passcodePage = $('.passcode.page') // The roomchange page
+var $usernameInput = $('.usernameInput');
+var $passcodePage = $('.passcode.page'); // The roomchange page
 
 //(function() {
   var wf = document.createElement('script');
@@ -265,7 +266,7 @@ var $passcodePage = $('.passcode.page') // The roomchange page
 //})();
 // jshint ignore:end
 
-$passcodeInput.focus();
+$usernameInput.focus();
 
 $window.keydown(function (event)
 {
@@ -299,8 +300,15 @@ $window.keydown(function (event)
 
 function joinRoom()
 {
+  var username;
+  username = cleanInput($usernameInput.val().trim());
   var roomtojoin;
   roomtojoin = cleanInput($passcodeInput.val().trim());
+  if (username) {
+    username = username.toUpperCase();
+  } else {
+    username = randomName().toUpperCase();
+  }
   if (roomtojoin) {
 
       roomtojoin = roomtojoin.toUpperCase();
@@ -312,17 +320,17 @@ function joinRoom()
   $pages.fadeOut();
 
   var name = 'boop';
-  color = 'blue';
+  color = 'white';
 
   userdata = {
-      'username': name,
-      'usercolor': color,
-      'userroom': roomtojoin
+      'username': username,
+      'team': color,
+      'room': roomtojoin
   };
 
   console.log('Room name - ' + roomtojoin);
   // Tell the server your new room to connect to
-  socket.emit('join room', roomtojoin);
+  socket.emit('join room', userdata);
   socket.emit('add user', userdata);
 
   console.log(generateName());
@@ -331,4 +339,14 @@ function joinRoom()
 
 function cleanInput (input) {
   return $('<div/>').text(input).html();
+}
+
+function randomName () {
+  var randomname = "Player";
+  var possible = "0123456789";
+
+  for (var i = 0; i < 5; i++)
+    randomname += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return randomname;
 }

@@ -78,12 +78,14 @@ var createScene = function(){
         [camera] // The list of cameras to be attached to
     );
 
-    pipeline.bloomEnabled = true;
-    pipeline.bloomThreshold = 0.8;
-    pipeline.bloomWeight = 0.2;
-    pipeline.bloomKernel = 4;
-    pipeline.bloomScale = 0.3;
-*/
+    /*
+        pipeline.bloomEnabled = true;
+        pipeline.bloomThreshold = 0.8;
+        pipeline.bloomWeight = 0.2;
+        pipeline.bloomKernel = 4;
+        pipeline.bloomScale = 0.3;
+    */
+
     camera.attachControl(canvas, true);
 
     camera.position = cameraSettings[currentCameraIndex].initPos;
@@ -410,7 +412,7 @@ var createScene = function(){
                 scene.meshes.pop(meshes[i]);
             }
         }
-/*
+    /*
         var particleSystem = new BABYLON.ParticleSystem("particles", 200, scene);
 
         //Texture of each particle
@@ -729,16 +731,31 @@ var dragging = false;
 var thrown = true;
 var countdownStarted = true;
 
+var thisRoom = '';
+
 $passcodeInput.focus();
 
 joinRoom();
 
 function joinRoom()
 {
-    $pages.fadeOut();
-    // Tell the server your new room to connect to
-    //socket.emit('room', roomname);
-    //socket.emit('add user', jsonstring);
+  var roomtojoin = 'GAME';
+
+  var userdata = {
+    username: 'COURT',
+    room: roomtojoin
+  };
+
+  thisRoom = userdata.room;
+  socket.emit('join room', userdata);
+
+  console.log('main.js - joining room - ' + userdata.room);
+
+  updateUI();
+  // $pages.fadeOut();
+  // Tell the server your new room to connect to
+  //socket.emit('room', roomname);
+  //socket.emit('add user', jsonstring);
 }
 
 function randomRange (min, max)
@@ -763,7 +780,8 @@ socket.on('switch camera', function() {
     scene.actionManager.processTrigger(scene.actionManager.actions[1].trigger, {additionalData: "t"});
 });
 
-socket.on('join room', function() {
+socket.on('joined room', function(userdata) {
+    console.log('User Joined Room - ' + userdata.username);
     scene.actionManager.processTrigger(scene.actionManager.actions[2].trigger, {additionalData: "y"});
 });
 
@@ -805,7 +823,7 @@ function updateUI()
             score = 0;
             currentWaitTime = initWaitTime;
             scoreLabel.innerHTML = "";
-            attractLabel.innerHTML = "BASKETBALL <br /> JOIN GAME";
+            attractLabel.innerHTML = "ROOM CODE: <br /> " + thisRoom;
             break;
         case gameStates.WAITING:
             scoreLabel.innerHTML = "";
