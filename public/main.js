@@ -14,7 +14,7 @@
   var initCameraPos;
 
   var ballStates = Object.freeze({"WAITING": 0, "DRAGGABLE": 1, "DRAGGING": 2, "SHOT": 3});
-  var currentBallState = ballStates.DRAGGABLE;
+  var currentBallState = ballStates.WAITING;
 
   var createScene = function()
   {
@@ -55,7 +55,7 @@ light.intensity = 0.6;
       //var ball = BABYLON.Mesh.CreateSphere("sphere", 2, 0.5, scene);
       //ball.isPickable = false;
 
-    BABYLON.SceneLoader.ImportMesh("", "/babylon/assets/BBall/", "BBall.obj", scene, function (mesh)
+    BABYLON.SceneLoader.ImportMesh("", "/babylon/assets/BBall/", "BBall.babylon", scene, function (mesh)
     {
         var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
         myMaterial.diffuseTexture = new BABYLON.Texture("/babylon/assets/BBall/BBall_Albedo.png", scene);
@@ -63,6 +63,7 @@ light.intensity = 0.6;
         myMaterial.freeze();
 
         basketball = mesh[0];
+        basketball.position = new BABYLON.Vector3(-10, 0, 0);
         basketball.isPickable = false;
         basketball.physicsImpostor = new BABYLON.PhysicsImpostor(basketball, BABYLON.PhysicsImpostor.SphereImpostor,
         {
@@ -70,10 +71,6 @@ light.intensity = 0.6;
             friction:0.1,
             ignoreParent: true
         });
-
-
-
-
 
         scene.registerBeforeRender(function()
         {
@@ -188,11 +185,6 @@ light.intensity = 0.6;
         currentBallState = ballStates.SHOT;
     }
 
-    function updateUI()
-    {
-
-    }
-
     function resetBall()
     {
         currentBallState = ballStates.WAITING;
@@ -206,6 +198,45 @@ light.intensity = 0.6;
         convertedRot.z = -velocity.x;
         basketball.physicsImpostor.setAngularVelocity(convertedRot);
     }
+
+    function resetGame()
+    {
+        currentBallState = ballStates.WAITING;
+        console.log("RESET");
+        basketball.position = new BABYLON.Vector3(-10, 0, 0);
+        basketball.physicsImpostor.setAngularVelocity(0,0,0);
+        basketball.physicsImpostor.setLinearVelocity(0,0,0);
+    }
+
+      scene.actionManager = new BABYLON.ActionManager(scene);
+
+      scene.actionManager.registerAction(
+          new BABYLON.ExecuteCodeAction(
+              {
+                  trigger: BABYLON.ActionManager.OnKeyUpTrigger,
+                  additionalData: 'r'
+              },
+
+              function ()
+              {
+                  resetBall();
+              }
+          )
+      );
+
+      scene.actionManager.registerAction(
+          new BABYLON.ExecuteCodeAction(
+              {
+                  trigger: BABYLON.ActionManager.OnKeyUpTrigger,
+                  additionalData: 't'
+              },
+
+              function ()
+              {
+                  resetGame();
+              }
+          )
+      );
 
     return scene;
 }
@@ -243,28 +274,24 @@ $window.keydown(function (event)
   {
       joinRoom();
   }
-
-  if (event.which === 65)
-  {
-      /*
-      shotInfo = {
-          exitX: 350 / app.screen.width,
-          exitY: -100,
-          xSpeed: 0 / app.screen.width,
-          ySpeed: 325 / app.screen.height,
-          deviceWidth: app.screen.width,
-          deviceWidth: app.screen.height
-      }
-
-      socket.emit("throw ball", shotInfo);
-      //resetBall();
-      */
-  }
 });
+
+  socket.on('game almost ready', function()
+  {
+      //fade out customization screen
+      //roll in ball;
+
+      var ae = BABYLON.ActionEvent.CreateNewFromScene(scene, {additionalData: "r"});
+      //console.log(ae);
+      scene.actionManager.processTrigger(scene.actionManager.actions[0].trigger,  ae);
+  });
 
   socket.on('game over', function()
   {
       $pages.fadeIn();
+      var ae = BABYLON.ActionEvent.CreateNewFromScene(scene, {additionalData: "t"});
+      //console.log(ae);
+      scene.actionManager.processTrigger(scene.actionManager.actions[1].trigger,  ae);
       socket.emit('leave room');
       //$passcodeInput.text = "";
       //scene.actionManager.processTrigger(scene.actionManager.actions[1].trigger, {additionalData: "t"});
@@ -297,6 +324,9 @@ function joinRoom()
   // Tell the server your new room to connect to
   socket.emit('join room', roomtojoin);
   socket.emit('add user', userdata);
+
+  console.log(generateName());
+  console.log(generateColor());
 }
 
 function cleanInput (input) {

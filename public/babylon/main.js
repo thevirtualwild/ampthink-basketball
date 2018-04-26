@@ -27,6 +27,8 @@ var currentResultsTime = 10;
 var shotIndex = 0;
 createCameraTypes();
 
+var gameReady = false;
+
 var currentCameraIndex = 0;
 var currentTextureIndex = 0;
 
@@ -68,13 +70,14 @@ var createScene = function(){
     scene.getPhysicsEngine().getPhysicsPlugin().world.allowSleep = true;
     var camera = new BABYLON.FreeCamera("camera1", initCameraPos, scene);
 
+    /*
     var pipeline = new BABYLON.DefaultRenderingPipeline(
         "default", // The name of the pipeline
         true, // Do you want HDR textures ?
         scene, // The scene instance
         [camera] // The list of cameras to be attached to
     );
-/*
+
     pipeline.bloomEnabled = true;
     pipeline.bloomThreshold = 0.8;
     pipeline.bloomWeight = 0.2;
@@ -96,6 +99,7 @@ var createScene = function(){
             case gameStates.ATTRACT:
                 currentGameState = gameState;
                 currentCameraIndex = 0;
+                gameReady = false;
                 animateCamera();
                 updateUI();
                 break;
@@ -191,7 +195,7 @@ var createScene = function(){
 
         var newPos = new BABYLON.Vector3(0,0,0);
         newPos.x = torus.position.x + 0;
-        newPos.y = torus.position.y + -10;
+        newPos.y = torus.position.y + 5;
         newPos.z = torus.position.z - 0;
         camera.setTarget(newPos);
         camera.fov = 1;
@@ -205,6 +209,11 @@ var createScene = function(){
             if(currentWaitTime <= 0)
             {
                 changeGameState(gameStates.GAMEPLAY);
+            }
+            else if(currentWaitTime < 2 && !gameReady)
+            {
+                gameReady = true;
+                socket.emit("game almost ready");
             }
         }
         else if(currentGameState == gameStates.GAMEPLAY)
@@ -240,15 +249,9 @@ var createScene = function(){
     var basketballs = [];
 
     var basketball;
-    // BABYLON.MeshBuilder.CreateSphere("basketball", { diameter: 2, segments: 16 }, scene);
-    //var bigSphere = BABYLON.MeshBuilder.CreateSphere("bigSphere", { diameter: 2, segments: 16 }, scene);
-    //bigSphere.position.y = -3;
     for(var i = 0; i < 10; i++)
     {
         basketball = BABYLON.Mesh.CreateSphere("basketball", 16, 1.88, scene);
-        //basketball.position.y =+ i*2;
-        //var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
-        //basketball.material = myMaterial;
         basketball.position = torus.position;
         var newPos = new BABYLON.Vector3(0,0,0);
         newPos.x = basketball.position.x + i*3;
@@ -260,9 +263,8 @@ var createScene = function(){
         basketballs.push(basketball);
     }
 
-    BABYLON.SceneLoader.ImportMesh("", "./assets/BBall/", "BBall.obj", scene, function (mesh) {
+    BABYLON.SceneLoader.ImportMesh("", "./assets/BBall/", "BBall.babylon", scene, function (mesh) {
 
-        //var newBasketball;
         var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
         myMaterial.diffuseTexture = new BABYLON.Texture("./assets/BBall/BBall_Albedo.png", scene);
         myMaterial.freeze();
@@ -281,7 +283,7 @@ var createScene = function(){
             var newBasketball = mesh[0].clone("index: " + i);
 
             //newBasketball.position.x =+ i*2;
-            //newBasketball.scaling = new BABYLON.Vector3(0.05, 0.05, 0.05);
+            newBasketball.scaling = new BABYLON.Vector3(1.3, 1.3, 1.3);
             newBasketball.material = myMaterial;
             newBasketballs.push(newBasketball);
         }
@@ -322,7 +324,8 @@ var createScene = function(){
                 meshes[i].name != "Stairf_Base_Low" &&
                 meshes[i].name != "Stairf_Base_Med" &&
                 meshes[i].name != "Ref" &&
-                meshes[i].name != "Blofcking" )
+                meshes[i].name != "Blofcking" &&
+                meshes[i].name.substr(0, 4) != "Sedat")
             {
 
                 myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
@@ -679,14 +682,14 @@ var createScene = function(){
 
             basketballs[shotIndex].physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 0, 0));
             basketballs[shotIndex].physicsImpostor.setAngularVelocity(new BABYLON.Vector3(0, 0, 0));
-            basketballs[shotIndex].physicsImpostor.applyImpulse(new BABYLON.Vector3(randomRange(-.3, .3), randomRange(26, 28), randomRange(17, 20)), basketballs[shotIndex].getAbsolutePosition());
+            basketballs[shotIndex].physicsImpostor.applyImpulse(new BABYLON.Vector3(randomRange(-.3, .3), randomRange(26, 28), randomRange(18, 20)), basketballs[shotIndex].getAbsolutePosition());
         }
         else if(currentGameState == gameStates.GAMEPLAY){
             basketballs[shotIndex].position = new BABYLON.Vector3(0, -20, -40);
 
             basketballs[shotIndex].physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 0, 0));
             basketballs[shotIndex].physicsImpostor.setAngularVelocity(new BABYLON.Vector3(0, 0, 0));
-            basketballs[shotIndex].physicsImpostor.applyImpulse(new BABYLON.Vector3(shotInfo.xSpeed, randomRange(26, 28), randomRange(17, 20)), basketballs[shotIndex].getAbsolutePosition());
+            basketballs[shotIndex].physicsImpostor.applyImpulse(new BABYLON.Vector3(shotInfo.xSpeed, randomRange(26, 28), randomRange(18, 20)), basketballs[shotIndex].getAbsolutePosition());
         }
 
         var convertedRot = new BABYLON.Vector3(0,0,0);
@@ -838,8 +841,10 @@ function createCameraTypes()
 
     var cameraType = {
         cameraNames: cameraNames.freeThrow,
-        initPos: new BABYLON.Vector3(0, -25, -60),
-        initFocus: new BABYLON.Vector3(0, -12, 11.75),
+        //initPos: new BABYLON.Vector3(0, -25, -60),
+        initPos: new BABYLON.Vector3(0, -8, -15),
+        //initFocus: new BABYLON.Vector3(0, -12, 11.75),
+        //initFocus: new BABYLON.Vector3(0, -12, 11.75),
     }
     cameraSettings.push(cameraType);
 

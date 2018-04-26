@@ -110,6 +110,12 @@ function onConnection(socket) {
         io.emit('game over');
     });
 
+    socket.on('game almost ready', function(room) {
+
+        console.log('game almost ready - ' + room);
+        io.emit('game almost ready');
+    });
+
   socket.on('query request', function() {
     console.log('query request received');
     if (query) {
