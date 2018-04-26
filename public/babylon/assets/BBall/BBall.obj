@@ -1,6 +1,6 @@
 # Blender v2.79 (sub 0) OBJ File: 'BasketBall.blend'
 # www.blender.org
-mtllib BasketBall.mtl
+
 o BBall_Low_Sphere
 v 0.000667 -0.980065 0.195196
 v 0.000667 -0.923128 0.382891

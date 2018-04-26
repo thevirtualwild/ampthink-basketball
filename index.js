@@ -96,12 +96,19 @@ function onConnection(socket) {
   });
 
   socket.on('join room', function(room) {
-    socket.join(room);
+        socket.join(room);
 
-    console.log('joining room - ' + room);
-    socket.roomname = room;
-      io.emit('join room');
-  });
+        console.log('joining room - ' + room);
+        socket.roomname = room;
+        io.emit('join room');
+    });
+
+    socket.on('game over', function(room) {
+
+        console.log('game over - ' + room);
+        socket.roomname = room;
+        io.emit('game over');
+    });
 
   socket.on('query request', function() {
     console.log('query request received');
