@@ -20,12 +20,14 @@ app.get('/babylon', function(req, res) {
     console.log('babylon loaded');
     res.sendFile(path.join(__dirname + '/public/babylon/index.html'));
     query = req.query.roomId;
-    console.log('feed routing - ' + query);
+    console.log('feed routing bab - ' + query);
 });
 
 app.use(express.static(path.join(__dirname, 'public')), function(req, res) {
-  query = req.query.roomId;
-  console.log('feed routing - ' + query);
+  if (req.query.roomId) {
+    query = req.query.roomId;
+    console.log('feed routing use - ' + query);
+  }
 });
 // app.use(express.static(path.join(__dirname, 'babylon')));
 //
@@ -200,19 +202,6 @@ function onConnection(socket) {
       socket.broadcast.to(socket.roomname).emit('game almost ready', courtName);
   });
 
-  socket.on('query request', function() {
-    console.log('query request received');
-    if (query) {
-      console.log('there is a query - ' + query);
-
-      socket.emit('query', query);
-    } else {
-      console.log('no query found');
-
-      socket.emit('use random room');
-    }
-  });
-
   socket.on('room reset', function() {
     socket.broadcast.to(socket.roomname).emit('reset game');
   });
@@ -253,17 +242,15 @@ function onConnection(socket) {
 
   socket.on('query request', function() {
     console.log('query request received');
-    console.log(query);
     if (query) {
       console.log('there is a query - ' + query);
-
       socket.emit('query', query);
     } else {
       console.log('no query found');
-
-      socket.emit('use random room');
+      socket.emit('use random query');
     }
   });
+
 }
 
 

@@ -901,6 +901,10 @@ socket.on('shot sent', function() {
 
 socket.on('use random query', function() {
   console.log('no query received starting random');
+
+  var query = randomCode(7);
+
+  joinQueryRoom(query);
 });
 
 
