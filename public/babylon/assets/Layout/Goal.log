@@ -11,35 +11,39 @@ Exporter version: 5.6.2, Blender version: 2.79 (sub 0)
 		texture directory:  C:\Users\steve\Documents\GIT Projects\Ampthink Basketball\public\babylon\assets\Layout\
 	Python World class constructor completed
 	WARNING: No active camera has been assigned, or is not in a currently selected Blender layer
+	processing begun of mesh:  Goal_Lights_Backboard
+		processing begun of Standard material:  Goal_Lights
+		num positions      :  96
+		num normals        :  96
+		num uvs            :  192
+		num uvs2           :  0
+		num colors         :  384
+		num indices        :  120
 	processing begun of mesh:  Goal_Backboard
 		processing begun of Standard material:  Goal
-		num positions      :  204
-		num normals        :  204
-		num uvs            :  0
+		num positions      :  277
+		num normals        :  277
+		num uvs            :  554
 		num uvs2           :  0
 		num colors         :  0
 		num indices        :  774
 	processing begun of mesh:  Goal_Rim
 		registered as also a user of material:  Goal
-		processing begun of Standard material:  Glow
-		processing begun of multimaterial:  Goal.Multimaterial#0
-		num positions      :  108
-		num normals        :  108
-		num uvs            :  0
+		num positions      :  232
+		num normals        :  232
+		num uvs            :  464
 		num uvs2           :  0
 		num colors         :  0
-		num indices        :  312
+		num indices        :  672
 	processing begun of mesh:  Goal_Base
 		registered as also a user of material:  Goal
-		registered as also a user of material:  Glow
-		processing begun of multimaterial:  Goal.Multimaterial#1
-		num positions      :  146
-		num normals        :  146
-		num uvs            :  0
+		num positions      :  277
+		num normals        :  277
+		num uvs            :  554
 		num uvs2           :  0
 		num colors         :  0
-		num indices        :  360
+		num indices        :  432
 ========= Writing of scene file started =========
 ========= Writing of scene file completed =========
 ========= end of processing =========
-elapsed time:  0 min, 0.0482 secs
+elapsed time:  0 min, 0.0807 secs
