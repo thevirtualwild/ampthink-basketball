@@ -13,18 +13,16 @@ Exporter version: 5.6.2, Blender version: 2.79 (sub 0)
 	WARNING: No active camera has been assigned, or is not in a currently selected Blender layer
 	processing begun of mesh:  Goal_Backboard
 		processing begun of Standard material:  Goal
-		processing begun of Standard material:  Glow
-		processing begun of multimaterial:  Goal.Multimaterial#0
-		num positions      :  60
-		num normals        :  60
+		num positions      :  204
+		num normals        :  204
 		num uvs            :  0
 		num uvs2           :  0
 		num colors         :  0
-		num indices        :  222
+		num indices        :  774
 	processing begun of mesh:  Goal_Rim
 		registered as also a user of material:  Goal
-		registered as also a user of material:  Glow
-		processing begun of multimaterial:  Goal.Multimaterial#1
+		processing begun of Standard material:  Glow
+		processing begun of multimaterial:  Goal.Multimaterial#0
 		num positions      :  108
 		num normals        :  108
 		num uvs            :  0
@@ -34,7 +32,7 @@ Exporter version: 5.6.2, Blender version: 2.79 (sub 0)
 	processing begun of mesh:  Goal_Base
 		registered as also a user of material:  Goal
 		registered as also a user of material:  Glow
-		processing begun of multimaterial:  Goal.Multimaterial#2
+		processing begun of multimaterial:  Goal.Multimaterial#1
 		num positions      :  146
 		num normals        :  146
 		num uvs            :  0
@@ -44,4 +42,4 @@ Exporter version: 5.6.2, Blender version: 2.79 (sub 0)
 ========= Writing of scene file started =========
 ========= Writing of scene file completed =========
 ========= end of processing =========
-elapsed time:  0 min, 0.0421 secs
+elapsed time:  0 min, 0.0482 secs
