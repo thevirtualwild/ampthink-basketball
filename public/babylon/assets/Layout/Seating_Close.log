@@ -35,14 +35,6 @@ Exporter version: 5.6.2, Blender version: 2.79 (sub 0)
 		num uvs2           :  0
 		num colors         :  10480
 		num indices        :  4320
-	processing begun of mesh:  SeatGroup_Low.008
-		registered as also a user of material:  Layout
-		num positions      :  1634
-		num normals        :  1634
-		num uvs            :  3268
-		num uvs2           :  0
-		num colors         :  6536
-		num indices        :  2700
 	processing begun of mesh:  SeatGroup_Low.007
 		registered as also a user of material:  Layout
 		num positions      :  1634
@@ -52,14 +44,6 @@ Exporter version: 5.6.2, Blender version: 2.79 (sub 0)
 		num colors         :  6536
 		num indices        :  2700
 	processing begun of mesh:  SeatGroup_Low.006
-		registered as also a user of material:  Layout
-		num positions      :  1634
-		num normals        :  1634
-		num uvs            :  3268
-		num uvs2           :  0
-		num colors         :  6536
-		num indices        :  2700
-	processing begun of mesh:  SeatGroup_Low.005
 		registered as also a user of material:  Layout
 		num positions      :  1634
 		num normals        :  1634
@@ -126,4 +110,4 @@ Exporter version: 5.6.2, Blender version: 2.79 (sub 0)
 ========= Writing of scene file started =========
 ========= Writing of scene file completed =========
 ========= end of processing =========
-elapsed time:  0 min, 1.5311 secs
+elapsed time:  0 min, 1.3678 secs
