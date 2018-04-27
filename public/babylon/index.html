@@ -31,11 +31,26 @@
 
   <canvas id = "canvas"></canvas>
 
+
+  <table id="GeoResults"></table>
+
+
+
+
   <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/babylon/babylon.custom.js"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenMax.min.js"></script>
+
+
+  <script>
+    $.getJSON("http://ip-api.com/json/?callback=?", function(data) {
+      var table_body = "";
+      table_body += "<tr><td>" + data.query + "</td></tr>";
+      $("#GeoResults").html(table_body);
+    });
+  </script>
 
   <script src="/babylon/babylon.objFileLoader.min.js"></script>
   <script src ="/babylon/shaders/Shaders/babylonjs.materials.js"></script>

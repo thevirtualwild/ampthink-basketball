@@ -2,12 +2,16 @@
   box-sizing: border-box;
 }
 
-#fpsLabel {
-  position: absolute;
+#fpsLabel, #GeoResults {
+  position: fixed;
   right: 20px;
   top: 20px;
   color: #999;
   cursor: default;
+}
+#GeoResults {
+  left: 20px;
+  right: initial;
 }
 
 #scoreLabel {
