@@ -119,20 +119,26 @@ var createScene = function(){
             //shotClockTextures.push(texture);
             console.log(texture.name);
 
+            texture.hasAlpha = true;
 
                 myMaterialTens.emissiveTexture = texture;
                 myMaterialOnes.emissiveTexture = texture;
                 myMaterialTens.diffuseTexture = texture;
                 myMaterialOnes.diffuseTexture = texture;
+                myMaterialTens.opacityTexture = texture;
+                myMaterialOnes.opacityTexture = texture;
 
                 myMaterialTens.emissiveTexture.uScale = 1;
                 myMaterialOnes.emissiveTexture.vScale = -1;
 
+                myMaterialTens.specularColor = new BABYLON.Color3(1,0,0);
                 myMaterialTens.backFaceCulling = true;
                 myMaterialTens.diffuseTexture.hasAlpha = true;
                 myMaterialTens.emissiveTexture.hasAlpha = true;
 
-                myMaterialTens.alphaMode = BABYLON.Engine.ALPHA_ONEONE;
+                //myMaterialTens.useAlphaFromDiffuseTexture = true;
+
+                //myMaterialTens.alphaMode = BABYLON.Engine.ALPHA_ONEONE;
 
                 myMaterialOnes.backFaceCulling = true;
                 myMaterialOnes.diffuseTexture.hasAlpha = true;
@@ -736,7 +742,7 @@ var createScene = function(){
     //clothMat.diffuseTexture.vOffset = 0.;
     clothMat.emissiveTexture = new BABYLON.Texture("./assets/Layout/Net.png", scene);
     clothMat.diffuseTexture.vScale = 4;
-    clothMat.diffuseTexture.uScale = 2;
+    clothMat.diffuseTexture.uScale = 4;
     clothMat.backFaceCulling = false;
     clothMat.diffuseTexture.hasAlpha = true;
 
