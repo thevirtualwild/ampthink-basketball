@@ -46,8 +46,8 @@ var createScene = function(){
     scene.clearColor = BABYLON.Color3.Black();
 
     scene.fogMode = BABYLON.Scene.FOGMODE_LINEAR;
-    scene.fogStart = 80;
-    scene.fogEnd = 130;
+    scene.fogStart = 30;
+    scene.fogEnd = 100;
     scene.fogColor =  BABYLON.Color3.Black();
 
     //scene.autoClear = false; // Color buffer
@@ -69,7 +69,7 @@ var createScene = function(){
 
     var gravityVector = new BABYLON.Vector3(0,-15.81, 0);
     scene.enablePhysics(gravityVector, physicsPlugin);
-    scene.getPhysicsEngine().setTimeStep(1/(60 * .75));
+    scene.getPhysicsEngine().setTimeStep(1/(40 * .6));
     scene.getPhysicsEngine().getPhysicsPlugin().world.allowSleep = true;
     var camera = new BABYLON.FreeCamera("camera1", initCameraPos, scene);
 
@@ -285,7 +285,7 @@ var createScene = function(){
 
         var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
         myMaterial.diffuseTexture = new BABYLON.Texture("./assets/BBall/BBall_Albedo.png", scene);
-        //myMaterial.normalTexture = new BABYLON.Texture("./assets/BBall/BBall_Normal.png", scene);
+        myMaterial.bumpTexture = new BABYLON.Texture("./assets/BBall/BBall_Normal.png", scene);
         //myMaterial.freeze();
         var newBasketballs = [];
 
@@ -324,113 +324,6 @@ var createScene = function(){
         });
     });
 
-    /*
-
-    BABYLON.SceneLoader.ImportMesh("", "./assets/Layout/", "Layout.babylon", scene, function (meshes) {
-
-        var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
-
-        var mesh;
-
-        for (var i = 0; i < meshes.length; i++) {
-
-            if (meshes[i].name != "LightfBeam.004" &&
-                meshes[i].name != "Floor" &&
-                meshes[i].name != "Plane" &&
-                meshes[i].name != "Glow_Floor" &&
-                meshes[i].name != "Seatf_High" &&
-                meshes[i].name != "Stairf_Base" &&
-                meshes[i].name != "Stairf_Base_High" &&
-                meshes[i].name != "Stairf_Base_Low" &&
-                meshes[i].name != "Stairf_Base_Med" &&
-                meshes[i].name != "Ref" &&
-                meshes[i].name != "Blofcking" &&
-                meshes[i].name.substr(0, 4) != "Seaft") {
-
-                myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
-                myMaterial.diffuseTexture.hasAlpha = true;
-                myMaterial.freeze();
-                //myMaterial.bumpTexture = new BABYLON.Texture("./assets/Layout/Layout_Normal.png", scene);
-                //myMaterial.specularTexture = new BABYLON.Texture("./assets/Layout/Layout_Smoothness.png", scene);
-
-                var newPos = new BABYLON.Vector3(0, 0, 0);
-                newPos.x = meshes[i].position.x + 0;
-                newPos.y = meshes[i].position.y + -36;
-                newPos.z = meshes[i].position.z - 60;
-                meshes[i].position = newPos
-                console.log(meshes[i].name);
-                meshes[i].material = myMaterial;
-                meshes[i].freezeWorldMatrix();
-
-
-            }
-            else if (meshes[i].name == "Rfef" || meshes[i].name == "Plane" || meshes[i].name == "Glow_Floor") {
-                var myMaterial1 = new BABYLON.StandardMaterial("myMaterial1", scene);
-
-                var newPos = new BABYLON.Vector3(0, 0, 0);
-                newPos.x = meshes[i].position.x + 0;
-                newPos.y = meshes[i].position.y + -36;
-                newPos.z = meshes[i].position.z - 60;
-                meshes[i].position = newPos;
-                meshes[i].material = myMaterial1;
-                console.log(meshes[i].name);
-                //myMaterial1.freeze();
-                //meshes[i].freezeWorldMatrix();
-                //scene.meshes.pop(meshes[i]);
-            }
-            else if (meshes[i].name == "Blofcking") {
-                var myMaterial1 = new BABYLON.StandardMaterial("myMaterial1", scene);
-                var diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
-                var offset = new BABYLON.Vector2(1, 1);
-                var scale = new BABYLON.Vector2(.5, .5);
-                diffuseTexture.uScale = scale.x;
-                diffuseTexture.vScale = scale.y;
-                diffuseTexture.uOffset = offset.x;
-                diffuseTexture.vOffset = offset.y;
-                //myMaterial1.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
-                myMaterial1.diffuseTexture = diffuseTexture;
-                myMaterial1.diffuseTexture.hasAlpha = true;
-                var normalTexture = new BABYLON.Texture("./assets/Layout/Layout_Normal.png", scene);
-                normalTexture.uScale = scale.x;
-                normalTexture.vScale = scale.y;
-                normalTexture.uOffset = offset.x;
-                normalTexture.vOffset = offset.y;
-                //myMaterial1.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
-                //myMaterial1.bumpTexture = normalTexture;
-                var specularTexture = new BABYLON.Texture("./assets/Layout/Layout_Smoothness.png", scene);
-                specularTexture.uScale = scale.x;
-                specularTexture.vScale = scale.y;
-                specularTexture.uOffset = offset.x;
-                specularTexture.vOffset = offset.y;
-                //myMaterial1.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
-                //myMaterial1.specularTexture = specularTexture;
-                //myMaterial1.
-                //meshes[i].material.zOffset = 0.5;
-                //myMaterial1.alpha = 0;
-                var newPos = new BABYLON.Vector3(0, 0, 0);
-                newPos.x = meshes[i].position.x + 0;
-                newPos.y = meshes[i].position.y + -36;
-                newPos.z = meshes[i].position.z - 60;
-                meshes[i].position = newPos;
-                meshes[i].material = myMaterial1;
-                myMaterial1.freeze();
-                meshes[i].freezeWorldMatrix();
-                //scene.meshes.pop(meshes[i]);
-            }
-            else if (meshes[i].name == "Floor") {
-                //var myMaterial2 = new BABYLON.StandardMaterial("myMaterial2", scene);
-                //meshes[i].material = myMaterial2;
-                //scene.meshes.pop(meshes[i]);
-            }
-            else {
-                scene.meshes.pop(meshes[i]);
-            }
-            console.log(i);
-
-        }
-<<<<<<< HEAD:public/babylon/main.js
-    });
-*/
     BABYLON.SceneLoader.ImportMesh("Goal_Backboard", "./assets/Layout/", "Goal.babylon", scene, function (mesh) {
 
         var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
@@ -491,22 +384,114 @@ var createScene = function(){
 
     });
 
+    BABYLON.SceneLoader.ImportMesh("", "./assets/Layout/", "Seating_Close.babylon", scene, function (meshes) {
+
+        var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
+
+        for (var i = 0; i < meshes.length; i++) {
+
+            if (meshes[i].name != "LightfBeam.004" &&
+                meshes[i].name != "Floor") {
+
+                myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
+                myMaterial.diffuseTexture.hasAlpha = true;
+                myMaterial.freeze();
+                //myMaterial.bumpTexture = new BABYLON.Texture("./assets/Layout/Layout_Normal.png", scene);
+                //myMaterial.specularTexture = new BABYLON.Texture("./assets/Layout/Layout_Smoothness.png", scene);
+
+                var newPos = new BABYLON.Vector3(0, 0, 0);
+                newPos.x = meshes[i].position.x + 0;
+                newPos.y = meshes[i].position.y + -36;
+                newPos.z = meshes[i].position.z - 60;
+                meshes[i].position = newPos
+                console.log(meshes[i].name);
+                meshes[i].material = myMaterial;
+                meshes[i].freezeWorldMatrix();
+            }
+            else {
+                scene.meshes.pop(meshes[i]);
+            }
+            console.log(i);
+        }
+    });
+
 /*
-=======
-    /*
->>>>>>> 872137512613ca873dafffe47accb2602e02d3a7:public/babylon/court.js
+    BABYLON.SceneLoader.ImportMesh("", "./assets/Layout/", "Seating_Far.babylon", scene, function (meshes) {
+
+        var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
+
+        for (var i = 0; i < meshes.length; i++) {
+
+            if (meshes[i].name != "LightfBeam.004" &&
+                meshes[i].name != "Floor") {
+
+                myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
+                myMaterial.diffuseTexture.hasAlpha = true;
+                myMaterial.freeze();
+                //myMaterial.bumpTexture = new BABYLON.Texture("./assets/Layout/Layout_Normal.png", scene);
+                //myMaterial.specularTexture = new BABYLON.Texture("./assets/Layout/Layout_Smoothness.png", scene);
+
+                var newPos = new BABYLON.Vector3(0, 0, 0);
+                newPos.x = meshes[i].position.x + 0;
+                newPos.y = meshes[i].position.y + -36;
+                newPos.z = meshes[i].position.z - 60;
+                meshes[i].position = newPos
+                console.log(meshes[i].name);
+                meshes[i].material = myMaterial;
+                meshes[i].freezeWorldMatrix();
+            }
+            else {
+                scene.meshes.pop(meshes[i]);
+            }
+            console.log(i);
+        }
+    });
+
+
+    BABYLON.SceneLoader.ImportMesh("", "./assets/Layout/", "Layout.babylon", scene, function (meshes) {
+
+        var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
+
+        for (var i = 0; i < meshes.length; i++) {
+
+            if (meshes[i].name != "LightfBeam.004" &&
+                meshes[i].name != "Flfdoor") {
+
+                myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
+                myMaterial.diffuseTexture.hasAlpha = true;
+                myMaterial.freeze();
+                //myMaterial.bumpTexture = new BABYLON.Texture("./assets/Layout/Layout_Normal.png", scene);
+                //myMaterial.specularTexture = new BABYLON.Texture("./assets/Layout/Layout_Smoothness.png", scene);
+
+                var newPos = new BABYLON.Vector3(0, 0, 0);
+                newPos.x = meshes[i].position.x + 0;
+                newPos.y = meshes[i].position.y + -36;
+                newPos.z = meshes[i].position.z - 60;
+                meshes[i].position = newPos
+                console.log(meshes[i].name);
+                meshes[i].material = myMaterial;
+                meshes[i].freezeWorldMatrix();
+            }
+            else {
+                scene.meshes.pop(meshes[i]);
+            }
+            console.log(i);
+        }
+    });
+*/
+
         var particleSystem = new BABYLON.ParticleSystem("particles", 200, scene);
 
         //Texture of each particle
         particleSystem.particleTexture = new BABYLON.Texture("./assets/Alpha Textures/LenseFlash_01.png", scene);
 
         var fountain = BABYLON.Mesh.CreateBox("fountain", 1.0, scene);
-        fountain.scaling = new BABYLON.Vector3(120, 120, 1);
+        fountain.scaling = new BABYLON.Vector3(800, 120, 1);
 
         var newPos = new BABYLON.Vector3(0,0,0);
         newPos.x = fountain.position.x + 0;
-        newPos.y = fountain.position.y + 0;
-        newPos.z = fountain.position.z + 100;
+        newPos.y = fountain.position.y + 55;
+        newPos.z = fountain.position.z + 170;
 
         fountain.position = newPos;
         fountain.rotation = new BABYLON.Vector3(45, 0, 0);
@@ -530,7 +515,7 @@ var createScene = function(){
         particleSystem.maxLifeTime = 0.3;
 
         // Emission rate
-        particleSystem.emitRate = 30;
+        particleSystem.emitRate = 3000;
 
         // Blend mode : BLENDMODE_ONEONE, or BLENDMODE_STANDARD
         particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
@@ -554,7 +539,7 @@ var createScene = function(){
         scene.meshes.pop(fountain);
         // Start the particle system
         particleSystem.start();
-        */
+
 
     //CREATE CIRCLE OF SPHERE COLLIDERS
     var sphereAmount = 20;
@@ -761,18 +746,18 @@ centerPos.y -= 0.5;
     function takeShot()
     {
         if(currentGameState == gameStates.ATTRACT) {
-            basketballs[shotIndex].position = new BABYLON.Vector3(0, -20, -40);
+            basketballs[shotIndex].position = new BABYLON.Vector3(0, -10, -20);
 
             basketballs[shotIndex].physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 0, 0));
             basketballs[shotIndex].physicsImpostor.setAngularVelocity(new BABYLON.Vector3(0, 0, 0));
-            basketballs[shotIndex].physicsImpostor.applyImpulse(new BABYLON.Vector3(randomRange(-.3, .3), randomRange(26, 27), randomRange(19, 20)), basketballs[shotIndex].getAbsolutePosition());
+            basketballs[shotIndex].physicsImpostor.applyImpulse(new BABYLON.Vector3(randomRange(-1.5, 1.5), randomRange(22, 23), randomRange(11, 12)), basketballs[shotIndex].getAbsolutePosition());
         }
         else if(currentGameState == gameStates.GAMEPLAY){
-            basketballs[shotIndex].position = new BABYLON.Vector3(0, -20, -40);
+            basketballs[shotIndex].position = new BABYLON.Vector3(0, -10, -20);
 
             basketballs[shotIndex].physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 0, 0));
             basketballs[shotIndex].physicsImpostor.setAngularVelocity(new BABYLON.Vector3(0, 0, 0));
-            basketballs[shotIndex].physicsImpostor.applyImpulse(new BABYLON.Vector3(shotInfo.xSpeed, randomRange(26, 27), randomRange(19, 20)), basketballs[shotIndex].getAbsolutePosition());
+            basketballs[shotIndex].physicsImpostor.applyImpulse(new BABYLON.Vector3(shotInfo.xSpeed, randomRange(22, 23), randomRange(11, 12)), basketballs[shotIndex].getAbsolutePosition());
         }
 
         var convertedRot = new BABYLON.Vector3(0,0,0);
@@ -986,7 +971,7 @@ function createCameraTypes()
     var cameraType = {
         cameraNames: cameraNames.freeThrow,
         //initPos: new BABYLON.Vector3(0, -25, -60),
-        initPos: new BABYLON.Vector3(0, -8, -20),
+        initPos: new BABYLON.Vector3(0, -6, -5),
         //initFocus: new BABYLON.Vector3(0, -12, 11.75),
         //initFocus: new BABYLON.Vector3(0, -12, 11.75),
     }

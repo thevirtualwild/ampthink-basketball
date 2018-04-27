@@ -45,7 +45,7 @@
 
     var distVec;
 
-    var ground = BABYLON.Mesh.CreateGround("ground1", 15, 15, 1, scene);
+    var ground = BABYLON.Mesh.CreateGround("ground1", 35, 35, 1, scene);
       var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
       myMaterial.diffuseTexture = new BABYLON.Texture("/babylon/assets/FillrateTexture.png", scene);
       ground.material = myMaterial;
@@ -104,9 +104,9 @@
             if(currentBallState == ballStates.DRAGGABLE)
             {
                 var vel = basketball.physicsImpostor.getLinearVelocity();
-                vel.x*= .98;
-                vel.y*= .98;
-                vel.z*= .98;
+                vel.x*= .96;
+                vel.y*= .96;
+                vel.z*= .96;
                 basketball.physicsImpostor.setLinearVelocity(vel);
                 var convertedRot = new BABYLON.Vector3(0,0,0);
                 var velocity = basketball.physicsImpostor.getLinearVelocity();
@@ -184,6 +184,24 @@
     function takeShot()
     {
         currentBallState = ballStates.SHOT;
+        var vel = basketball.physicsImpostor.getLinearVelocity();
+        vel.z *= 2;
+        vel.y = 10;
+        basketball.physicsImpostor.setLinearVelocity(vel);
+        vel.x = -30;
+        vel.y = 0;
+        vel.z = 0;
+        basketball.physicsImpostor.setAngularVelocity(vel);
+        /*
+        basketball.physicsImpostor.setAngularVelocity(0,0,0);
+        basketball.physicsImpostor.setLinearVelocity(0,0,0);
+        basketball.physicsImpostor.applyImpulse(new BABYLON.Vector3(5, 0, 0), basketball.position);
+        var convertedRot = new BABYLON.Vector3(0,0,0);
+        var velocity = basketball.physicsImpostor.getLinearVelocity();
+        convertedRot.x = velocity.z;
+        convertedRot.z = -velocity.x;
+        basketball.physicsImpostor.setAngularVelocity(convertedRot);
+        */
     }
 
     function resetBall()
@@ -192,7 +210,7 @@
         basketball.position = new BABYLON.Vector3(-10, 0, 0);
         basketball.physicsImpostor.setAngularVelocity(0,0,0);
         basketball.physicsImpostor.setLinearVelocity(0,0,0);
-        basketball.physicsImpostor.applyImpulse(new BABYLON.Vector3(5, 0, 0), basketball.position);
+        basketball.physicsImpostor.applyImpulse(new BABYLON.Vector3(10, 0, 0), basketball.position);
         var convertedRot = new BABYLON.Vector3(0,0,0);
         var velocity = basketball.physicsImpostor.getLinearVelocity();
         convertedRot.x = velocity.z;
