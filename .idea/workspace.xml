@@ -2,17 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1c95612d-4678-4af6-a1f9-2ab5baa022a4" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/public/babylon/assets/ShotClock/Texture0.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/public/babylon/assets/ShotClock/Texture1.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/public/babylon/assets/ShotClock/Texture2.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/public/babylon/assets/ShotClock/Texture3.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/public/babylon/assets/ShotClock/Texture4.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/public/babylon/assets/ShotClock/Texture5.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/public/babylon/assets/ShotClock/Texture6.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/public/babylon/assets/ShotClock/Texture7.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/public/babylon/assets/ShotClock/Texture8.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/public/babylon/assets/ShotClock/Texture9.png" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/public/babylon/court.js" afterPath="$PROJECT_DIR$/public/babylon/court.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -120,8 +109,8 @@
       <file leaf-file-name="court.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/babylon/court.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="290">
-              <caret line="626" column="44" lean-forward="false" selection-start-line="626" selection-start-column="44" selection-end-line="626" selection-end-column="44" />
+            <state relative-caret-position="294">
+              <caret line="384" column="40" lean-forward="true" selection-start-line="384" selection-start-column="40" selection-end-line="384" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -138,8 +127,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>joinroom</find>
-      <find>updateui</find>
       <find>currentwaittime</find>
       <find>changegamestate</find>
       <find>basketball</find>
@@ -168,6 +155,8 @@
       <find>shotclocktextures</find>
       <find>registerbeforerender</find>
       <find>shotclocktens</find>
+      <find>emissive</find>
+      <find>specular</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -272,14 +261,6 @@
               <item name="babylon" type="462c0819:PsiDirectoryNode" />
               <item name="assets" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="ampthink-basketball" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ampthink-basketball" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="babylon" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="ShotClock" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -363,7 +344,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="264597000" />
+    <option name="totallyTimeSpent" value="265118000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -719,8 +700,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/babylon/court.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="626" column="44" lean-forward="false" selection-start-line="626" selection-start-column="44" selection-end-line="626" selection-end-column="44" />
+        <state relative-caret-position="294">
+          <caret line="384" column="40" lean-forward="true" selection-start-line="384" selection-start-column="40" selection-end-line="384" selection-end-column="40" />
           <folding />
         </state>
       </provider>

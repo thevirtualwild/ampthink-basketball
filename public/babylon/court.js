@@ -353,7 +353,7 @@ var createScene = function(){
             shotClockTextures.push(texture);
         }
 
-        //myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
+        myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Colors.png", scene);
 
         var newPos = new BABYLON.Vector3(0, 0, 0);
         newPos.x = mesh.position.x + 0;
@@ -373,8 +373,12 @@ var createScene = function(){
 
         var mesh = mesh[0];
 
+        myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Colors.png", scene);
         //myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
 
+        myMaterial.specularPower = 20;
+        //myMaterial.specularColor = new BABYLON.Color3(0.5, 0.5, 0.5);
+        //myMaterial.roughness = 100;
         var newPos = new BABYLON.Vector3(0, 0, 0);
         newPos.x = mesh.position.x + 0;
         newPos.y = mesh.position.y + -35.75;
@@ -382,7 +386,7 @@ var createScene = function(){
         mesh.position = newPos;
         mesh.scaling = new BABYLON.Vector3(1.1, 1, 1.1);
         //console.log(meshes[i].name);
-        myMaterial.emissiveColor = new BABYLON.Color3(1, .2, 0);
+        //myMaterial.emissiveColor = new BABYLON.Color3(1, .2, 0);
         mesh.material = myMaterial;
         mesh.freezeWorldMatrix();
 
@@ -394,6 +398,7 @@ var createScene = function(){
 
         var mesh = mesh[0];
 
+        myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Colors.png", scene);
         //myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
 
         var newPos = new BABYLON.Vector3(0, 0, 0);
