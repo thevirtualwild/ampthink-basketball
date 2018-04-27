@@ -750,14 +750,14 @@ centerPos.y -= 0.5;
 
             basketballs[shotIndex].physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 0, 0));
             basketballs[shotIndex].physicsImpostor.setAngularVelocity(new BABYLON.Vector3(0, 0, 0));
-            basketballs[shotIndex].physicsImpostor.applyImpulse(new BABYLON.Vector3(randomRange(-1.5, 1.5), randomRange(22, 23), randomRange(11, 12)), basketballs[shotIndex].getAbsolutePosition());
+            basketballs[shotIndex].physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 22.5, 11.5), basketballs[shotIndex].getAbsolutePosition());
         }
         else if(currentGameState == gameStates.GAMEPLAY){
             basketballs[shotIndex].position = new BABYLON.Vector3(0, -10, -20);
 
             basketballs[shotIndex].physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 0, 0));
             basketballs[shotIndex].physicsImpostor.setAngularVelocity(new BABYLON.Vector3(0, 0, 0));
-            basketballs[shotIndex].physicsImpostor.applyImpulse(new BABYLON.Vector3(shotInfo.xSpeed, randomRange(22, 23), randomRange(11, 12)), basketballs[shotIndex].getAbsolutePosition());
+            basketballs[shotIndex].physicsImpostor.applyImpulse(new BABYLON.Vector3(shotInfo.xSpeed, 22.5, 11.5), basketballs[shotIndex].getAbsolutePosition());
         }
 
         var convertedRot = new BABYLON.Vector3(0,0,0);
@@ -975,9 +975,9 @@ function createCameraTypes()
     var cameraType = {
         cameraNames: cameraNames.freeThrow,
         //initPos: new BABYLON.Vector3(0, -25, -60),
-        initPos: new BABYLON.Vector3(0, -6, -5),
+        initPos: new BABYLON.Vector3(0, -7, -15),
         //initFocus: new BABYLON.Vector3(0, -12, 11.75),
-        //initFocus: new BABYLON.Vector3(0, -12, 11.75),
+        initFocus: new BABYLON.Vector3(0, -12, 11.75),
     }
     cameraSettings.push(cameraType);
 
