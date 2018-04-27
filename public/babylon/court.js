@@ -36,8 +36,12 @@ var prevAnimation;
 
 var playerData;
 
+
+
 var createScene = function(){
     var scene = new BABYLON.Scene(engine);
+
+    var shotClockTextures = [];
 
     engine.enableOfflineSupport = false;
 
@@ -208,7 +212,10 @@ var createScene = function(){
         newPos.z = torus.position.z - 0;
         camera.setTarget(newPos);
         camera.fov = 1;
+        light.position = camera.position;
         //camera.setTarget(cameraSettings[0].initFocus);
+
+
 
         if(currentGameState == gameStates.WAITING)
         {
@@ -236,7 +243,15 @@ var createScene = function(){
         else if(currentGameState == gameStates.GAMEPLAY)
         {
             currentGameTime -= (engine.getDeltaTime() / 1000);
-            attractLabel.innerHTML = currentGameTime.toFixed(2);
+            var time = currentGameTime.toFixed(2);
+            attractLabel.innerHTML =  time;
+
+            //UPDATE SHOT CLOCK
+            var tensTexture = shotClockTextures[ parseInt(time.substr(0,1))];
+            var onesTexture = shotClockTextures[ parseInt(time.substr(1,1))];
+
+            shotClockTens.material.diffuseTexture = tensTexture;
+            shotClockOnes.material.diffuseTexture = onesTexture;
 
             if(currentGameTime <= 0)
             {
@@ -258,7 +273,7 @@ var createScene = function(){
 
     var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
 
-    //light.intensity = 0.7;
+    light.intensity = 1;
 
     var torus = BABYLON.Mesh.CreateTorus("torus", 4.3, 0.2, 50, scene);
     torus.position = new BABYLON.Vector3(0, -4.75, 8.9);
@@ -304,6 +319,7 @@ var createScene = function(){
             //newBasketball.position.x =+ i*2;
             newBasketball.scaling = new BABYLON.Vector3(1.3, 1.4, 1.3);
             newBasketball.material = myMaterial;
+
             newBasketballs.push(newBasketball);
         }
         scene.registerBeforeRender(function()
@@ -330,14 +346,21 @@ var createScene = function(){
 
         var mesh = mesh[0];
 
+
+        for(var i = 0; i < 10; i++)
+        {
+            var texture = new BABYLON.Texture("./assets/ShotClock/Texture0.png", scene);
+            shotClockTextures.push(texture);
+        }
+
         //myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
 
         var newPos = new BABYLON.Vector3(0, 0, 0);
         newPos.x = mesh.position.x + 0;
-        newPos.y = mesh.position.y + -33.75;
+        newPos.y = mesh.position.y + -35.75;
         newPos.z = mesh.position.z - 60;
         mesh.position = newPos;
-        mesh.scaling = new BABYLON.Vector3(0.8, 1, 1);
+        //mesh.scaling = new BABYLON.Vector3(0.8, 1, 1);
         //console.log(meshes[i].name);
         mesh.material = myMaterial;
         mesh.freezeWorldMatrix();
@@ -359,6 +382,7 @@ var createScene = function(){
         mesh.position = newPos;
         mesh.scaling = new BABYLON.Vector3(1.1, 1, 1.1);
         //console.log(meshes[i].name);
+        myMaterial.emissiveColor = new BABYLON.Color3(1, .2, 0);
         mesh.material = myMaterial;
         mesh.freezeWorldMatrix();
 
@@ -543,7 +567,7 @@ var createScene = function(){
 
     //CREATE CIRCLE OF SPHERE COLLIDERS
     var sphereAmount = 20;
-    var radius = 3;
+    var radius = 3.5;
     var sphereDiameter = .8;
     var centerPos = torus.position;
     centerPos.y += 0.5;
@@ -563,6 +587,21 @@ var createScene = function(){
         scene.meshes.pop(sphere);
     }
 centerPos.y -= 0.5;
+
+    var shotClockTens = BABYLON.Mesh.CreateBox("shotclock", 1, scene);
+    shotClockTens.position = new BABYLON.Vector3(-1.3, +3.5, 12);
+    shotClockTens.scaling = new BABYLON.Vector3(2.5, 5, .1);
+    var shotMatTens = new BABYLON.StandardMaterial("myMaterial", scene);
+    //shotMatTens.diffuseColor= new BABYLON.Color3(0.2,0.2,0.2);
+    shotClockTens.material = shotMatTens;
+
+    var shotClockOnes = BABYLON.Mesh.CreateBox("shotclock", 1, scene);
+    shotClockOnes.position = new BABYLON.Vector3(1.3, +3.5, 12);
+    shotClockOnes.scaling = new BABYLON.Vector3(2.5, 5, .1);
+    var shotMatOnes = new BABYLON.StandardMaterial("myMaterial", scene);
+    //shotMatOnes.diffuseColor= new BABYLON.Color3(0.2,0.2,0.2);
+    shotClockOnes.material = shotMatOnes;
+
     //CREATE BACKBOARD COLLIDER
     var backboard = BABYLON.Mesh.CreateBox("backboard", 1 , scene);
 
@@ -576,7 +615,7 @@ centerPos.y -= 0.5;
 
     //CREATE COLLIDERS FOR NET
     var sphereAmount = 10;
-    var radius = 3;
+    var radius = 3.4;
     var sphereDiameter = 0.25;
     var centerPos = torus.position;
     centerPos.y -= 4;
@@ -612,8 +651,8 @@ centerPos.y -= 0.5;
         if (idx >= sphereAmount)
         {
 
-            createJoint(point.physicsImpostor, netSpheres[idx - sphereAmount].physicsImpostor, 1.25);
-            var horiDistance = .55*3 - .3* Math.floor(idx/sphereAmount);
+            createJoint(point.physicsImpostor, netSpheres[idx - sphereAmount].physicsImpostor, 1.5);
+            var horiDistance = .65*3 - .4* Math.floor(idx/sphereAmount);
             if (idx % sphereAmount > 0)
             {
                 createJoint(point.physicsImpostor, netSpheres[idx - 1].physicsImpostor, horiDistance);
@@ -746,18 +785,18 @@ centerPos.y -= 0.5;
     function takeShot()
     {
         if(currentGameState == gameStates.ATTRACT) {
-            basketballs[shotIndex].position = new BABYLON.Vector3(0, -10, -20);
+            basketballs[shotIndex].position = new BABYLON.Vector3(0, -9, -14);
 
             basketballs[shotIndex].physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 0, 0));
             basketballs[shotIndex].physicsImpostor.setAngularVelocity(new BABYLON.Vector3(0, 0, 0));
-            basketballs[shotIndex].physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 22.5, 11.5), basketballs[shotIndex].getAbsolutePosition());
+            basketballs[shotIndex].physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 18, 12), basketballs[shotIndex].getAbsolutePosition());
         }
         else if(currentGameState == gameStates.GAMEPLAY){
-            basketballs[shotIndex].position = new BABYLON.Vector3(0, -10, -20);
+            basketballs[shotIndex].position = new BABYLON.Vector3(0, -9, -14);
 
             basketballs[shotIndex].physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 0, 0));
             basketballs[shotIndex].physicsImpostor.setAngularVelocity(new BABYLON.Vector3(0, 0, 0));
-            basketballs[shotIndex].physicsImpostor.applyImpulse(new BABYLON.Vector3(shotInfo.xSpeed, 22.5, 11.5), basketballs[shotIndex].getAbsolutePosition());
+            basketballs[shotIndex].physicsImpostor.applyImpulse(new BABYLON.Vector3(shotInfo.xSpeed, 18, 12), basketballs[shotIndex].getAbsolutePosition());
         }
 
         var convertedRot = new BABYLON.Vector3(0,0,0);
