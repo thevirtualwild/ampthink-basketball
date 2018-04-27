@@ -252,8 +252,10 @@ engine.runRenderLoop(function(){
 
 var $window = $(window);
 var $pages = $('.pages'); // Input for roomname
+var $gameover = $('#gameover');
 var $passcodeInput = $('.passcodeInput'); // Input for roomname
-var $passcodePage = $('.passcode.page') // The roomchange page
+var $usernameInput = $('.usernameInput');
+var $passcodePage = $('.passcode.page'); // The roomchange page
 
 //(function() {
   var wf = document.createElement('script');
@@ -266,68 +268,75 @@ var $passcodePage = $('.passcode.page') // The roomchange page
 //})();
 // jshint ignore:end
 
-$passcodeInput.focus();
+$gameover.fadeOut();
+$usernameInput.focus();
 
 $window.keydown(function (event)
 {
   // When the client hits ENTER on their keyboard
   if (event.which === 13)
   {
-      joinRoom();
+      initializePlayer();
   }
 });
 
-  socket.on('game almost ready', function()
-  {
-      //fade out customization screen
-      //roll in ball;
+function initializePlayer() {
+  var courttojoin;
+  courttojoin = cleanInput($passcodeInput.val().trim());
 
-      var ae = BABYLON.ActionEvent.CreateNewFromScene(scene, {additionalData: "r"});
-      //console.log(ae);
-      scene.actionManager.processTrigger(scene.actionManager.actions[0].trigger,  ae);
-  });
+  joinCourt(courttojoin);
+}
 
-  socket.on('game over', function()
-  {
-      $pages.fadeIn();
-      var ae = BABYLON.ActionEvent.CreateNewFromScene(scene, {additionalData: "t"});
-      //console.log(ae);
-      scene.actionManager.processTrigger(scene.actionManager.actions[1].trigger,  ae);
-      socket.emit('leave room');
-      //$passcodeInput.text = "";
-      //scene.actionManager.processTrigger(scene.actionManager.actions[1].trigger, {additionalData: "t"});
-  });
-
-function joinRoom()
+socket.on('game almost ready', function(courtName)
 {
-  var roomtojoin;
-  roomtojoin = cleanInput($passcodeInput.val().trim());
-  if (roomtojoin) {
+    //fade out customization screen
+    //roll in ball;
 
-      roomtojoin = roomtojoin.toUpperCase();
+    var ae = BABYLON.ActionEvent.CreateNewFromScene(scene, {additionalData: "r"});
+    //console.log(ae);
+    scene.actionManager.processTrigger(scene.actionManager.actions[0].trigger,  ae);
+});
 
+socket.on('end player game', function()
+{
+    console.log('Player Game Ended');
+    //show this players score
+    $gameover.fadeIn();
+    var ae = BABYLON.ActionEvent.CreateNewFromScene(scene, {additionalData: "t"});
+    //console.log(ae);
+    scene.actionManager.processTrigger(scene.actionManager.actions[1].trigger,  ae);
+    //$passcodeInput.text = "";
+    //scene.actionManager.processTrigger(scene.actionManager.actions[1].trigger, {additionalData: "t"});
+});
+
+function joinCourt(someCourt)
+{
+  var username = generateName();
+  var team = generateTeam();
+  // if (username) {
+  //   username = username.toUpperCase();
+  // } else {
+  //   username = generateName();
+  // }
+  var courttojoin = someCourt;
+  if (courttojoin) {
+      courttojoin = courttojoin.toUpperCase();
   } else {
-      roomtojoin = 'GAME';
+      courttojoin = 'GAME';
   }
   // fade out input page
   $pages.fadeOut();
 
-  var name = 'boop';
-  color = 'blue';
-
   userdata = {
-      'username': name,
-      'usercolor': color,
-      'userroom': roomtojoin
+      'username': username,
+      'team': team,
+      'court': courttojoin
   };
 
-  console.log('Room name - ' + roomtojoin);
+  console.log('Court name - ' + courttojoin);
   // Tell the server your new room to connect to
-  socket.emit('join room', roomtojoin);
-  socket.emit('add user', userdata);
-
-  console.log(generateName());
-  console.log(generateColor());
+  socket.emit('join court', userdata);
+  // socket.emit('add user', userdata);
 }
 
 function cleanInput (input) {

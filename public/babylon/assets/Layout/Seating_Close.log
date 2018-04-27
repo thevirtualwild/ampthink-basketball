@@ -1,0 +1,129 @@
+Exporter version: 5.6.2, Blender version: 2.79 (sub 0)
+========= Conversion from Blender to Babylon.js =========
+	Scene settings used:
+		selected layers only:  false
+		inline textures:  false
+		Positions Precision :  4
+		Normals Precision   :  3
+		UVs Precision       :  3
+		Vert Color Precision:  3
+		Mat Weight Precision:  2
+		texture directory:  C:\Users\steve\Documents\GIT Projects\Ampthink Basketball\public\babylon\assets\Layout\
+	Python World class constructor completed
+	WARNING: No active camera has been assigned, or is not in a currently selected Blender layer
+	processing begun of mesh:  SeatGroup_Low.054
+		processing begun of Standard material:  Layout
+		num positions      :  1504
+		num normals        :  1504
+		num uvs            :  3008
+		num uvs2           :  0
+		num colors         :  6016
+		num indices        :  2706
+	processing begun of mesh:  SeatGroup_Low.053
+		registered as also a user of material:  Layout
+		num positions      :  1504
+		num normals        :  1504
+		num uvs            :  3008
+		num uvs2           :  0
+		num colors         :  6016
+		num indices        :  2706
+	processing begun of mesh:  SeatGroup_Low.052
+		registered as also a user of material:  Layout
+		num positions      :  1504
+		num normals        :  1504
+		num uvs            :  3008
+		num uvs2           :  0
+		num colors         :  6016
+		num indices        :  2706
+	processing begun of mesh:  SeatGroup_Corner_Low.011
+		registered as also a user of material:  Layout
+		num positions      :  2409
+		num normals        :  2409
+		num uvs            :  4818
+		num uvs2           :  0
+		num colors         :  9636
+		num indices        :  4332
+	processing begun of mesh:  SeatGroup_Corner_Low.010
+		registered as also a user of material:  Layout
+		num positions      :  2409
+		num normals        :  2409
+		num uvs            :  4818
+		num uvs2           :  0
+		num colors         :  9636
+		num indices        :  4332
+	processing begun of mesh:  SeatGroup_Low.051
+		registered as also a user of material:  Layout
+		num positions      :  1504
+		num normals        :  1504
+		num uvs            :  3008
+		num uvs2           :  0
+		num colors         :  6016
+		num indices        :  2706
+	processing begun of mesh:  SeatGroup_Low.050
+		registered as also a user of material:  Layout
+		num positions      :  1504
+		num normals        :  1504
+		num uvs            :  3008
+		num uvs2           :  0
+		num colors         :  6016
+		num indices        :  2706
+	processing begun of mesh:  SeatGroup_Low.049
+		registered as also a user of material:  Layout
+		num positions      :  1504
+		num normals        :  1504
+		num uvs            :  3008
+		num uvs2           :  0
+		num colors         :  6016
+		num indices        :  2706
+	processing begun of mesh:  SeatGroup_Corner_Low.009
+		registered as also a user of material:  Layout
+		num positions      :  2409
+		num normals        :  2409
+		num uvs            :  4818
+		num uvs2           :  0
+		num colors         :  9636
+		num indices        :  4332
+	processing begun of mesh:  SeatGroup_Corner_Low.006
+		registered as also a user of material:  Layout
+		num positions      :  2409
+		num normals        :  2409
+		num uvs            :  4818
+		num uvs2           :  0
+		num colors         :  9636
+		num indices        :  4332
+	processing begun of mesh:  SeatGroup_Low.048
+		registered as also a user of material:  Layout
+		num positions      :  1504
+		num normals        :  1504
+		num uvs            :  3008
+		num uvs2           :  0
+		num colors         :  6016
+		num indices        :  2706
+	processing begun of mesh:  SeatGroup_Low.047
+		registered as also a user of material:  Layout
+		num positions      :  1504
+		num normals        :  1504
+		num uvs            :  3008
+		num uvs2           :  0
+		num colors         :  6016
+		num indices        :  2706
+	processing begun of mesh:  SeatGroup_Low.046
+		registered as also a user of material:  Layout
+		num positions      :  1504
+		num normals        :  1504
+		num uvs            :  3008
+		num uvs2           :  0
+		num colors         :  6016
+		num indices        :  2706
+	processing begun of mesh:  SeatGroup_Low.039
+		registered as also a user of material:  Layout
+		num positions      :  1504
+		num normals        :  1504
+		num uvs            :  3008
+		num uvs2           :  0
+		num colors         :  6016
+		num indices        :  2706
+========= Writing of scene file started =========
+========= Writing of scene file completed =========
+========= end of processing =========
+elapsed time:  0 min, 1.2005 secs

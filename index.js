@@ -7,13 +7,46 @@ var port = process.env.PORT || 4000;
 
 var query;
 // Routing
-app.use(express.static(path.join(__dirname, 'public')));
 
+app.get('/rebabylon', function(req, res) {
+  var randquery = randomCode(7);
+  console.log('redirecting');
+  res.redirect('/babylon/?roomId=' + randquery);
+  query = randquery;
+  console.log('query - ' + query);
+});
+
+app.get('/babylon', function(req, res) {
+    console.log('babylon loaded');
+    res.sendFile(path.join(__dirname + '/public/babylon/index.html'));
+    query = req.query.roomId;
+    console.log('feed routing - ' + query);
+});
+
+app.use(express.static(path.join(__dirname, 'public')), function(req, res) {
+  query = req.query.roomId;
+  console.log('feed routing - ' + query);
+});
+// app.use(express.static(path.join(__dirname, 'babylon')));
+//
 app.get('/game', function(req, res) {
     res.sendFile(path.join(__dirname + '/public/game.html'));
     query = req.query.room;
     console.log('webapp routing - ' + query);
 });
+
+
+
+
+function randomCode(howLong) {
+  var randomname = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+  for (var i = 0; i < howLong; i++)
+    randomname += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return randomname;
+}
 
 app.set('view engine', 'ejs');
 
@@ -37,6 +70,9 @@ app.get('/babylon', function(req, res) {
 
 var numUsers = 0;
 var currentHighScore = 0;
+
+
+var courts = {};
 
 // Web Socket (Socket.io)
 function onConnection(socket) {
@@ -66,19 +102,19 @@ function onConnection(socket) {
     addedUser = true;
 
     if (numUsers == 1 ) {
-      socket.usercolor = 'pink';
-      socket.emit('change color', socket.usercolor);
+      socket.team = 'red';
+      socket.emit('change team', socket.team);
     } else if (numUsers == 2) {
-      socket.usercolor = 'mint';
-      socket.emit('change color', socket.usercolor);
+      socket.team = 'blue';
+      socket.emit('change team', socket.team);
     } else {
-      socket.usercolor = userdata.usercolor;
+      socket.team = userdata.team;
     }
 
     // fake for now
     // socket.roomname = 'GAME';
 
-    console.log("|New User: " + socket.username + "\n - Chosen color: " + socket.usercolor);
+    console.log("|New User: " + socket.username + "\n - Chosen team: " + socket.team);
 
     // socket.emit('login', {
     //   numUsers: numUsers,
@@ -90,31 +126,79 @@ function onConnection(socket) {
     // echo globally (all clients) that a person has connected
     socket.broadcast.to(socket.roomname).emit('user joined', {
       username: socket.username,
-      usercolor: socket.usercolor,
+      team: socket.team,
       numUsers: numUsers
     });
   });
 
-  socket.on('join room', function(room) {
-        socket.join(room);
+  socket.on('add court', function(courtdata) {
+    console.log('adding court');
+    // var newCourt = {
+    //   name: data.courtname,
+    //   room: socket.roomname
+    // };
+    courts[courtdata.name] = socket.roomname;
+    console.log('Courts: ');
+    console.dir(courts);
+  });
 
-        console.log('joining room - ' + room);
-        socket.roomname = room;
-        io.emit('join room');
-    });
+  socket.on('update court', function(courtdata) {
+    console.log('updating court');
+    // var newCourt = {
+    //   name: data.courtname,
+    //   room: socket.roomname
+    // };
+    var newroom = courtdata.room;
+    courts[courtdata.name] = newroom;
+    socket.join(newroom);
+    console.log('Courts: ');
+    console.dir(courts);
+  });
 
-    socket.on('game over', function(room) {
+  socket.on('join room', function(userdata) {
+    room = userdata.room;
+    socket.join(room);
 
-        console.log('game over - ' + room);
-        socket.roomname = room;
-        io.emit('game over');
-    });
+    socket.roomname = room;
+    console.log('index.js: joining room - ' + socket.roomname);
+    socket.broadcast.to(socket.roomname).emit('joined room', userdata);
+  });
 
-    socket.on('game almost ready', function(room) {
+  socket.on('join court', function(userdata) {
+    socket.username = userdata.username;
+    socket.team = userdata.team;
+    socket.court = userdata.court;
 
-        console.log('game almost ready - ' + room);
-        io.emit('game almost ready');
-    });
+    socket.roomname = courts[userdata.court];
+    console.log('joining room? - ' + socket.roomname);
+    socket.join(socket.roomname);
+    socket.broadcast.to(socket.roomname).emit('player joined court', userdata);
+  });
+
+
+  socket.on('game over', function(playerdata) {
+
+    // Submit Player Data To Database
+    // Check Database for High Score (of room)
+
+    var highscorer = {
+      name: 'wouldnt you like to know',
+      team: 'something',
+      score: 99
+    }
+
+    socket.broadcast.to(socket.roomname).emit('show results', highscorer);
+
+  });
+
+  socket.on('game almost ready', function(courtName) {
+
+      console.log('game almost ready - ' + courtName);
+      console.log('court room - ' + courts[courtName]);
+      socket.roomname = courts[courtName];
+      console.log('socket.room - ' + socket.roomname);
+      socket.broadcast.to(socket.roomname).emit('game almost ready', courtName);
+  });
 
   socket.on('query request', function() {
     console.log('query request received');
@@ -127,6 +211,10 @@ function onConnection(socket) {
 
       socket.emit('use random room');
     }
+  });
+
+  socket.on('room reset', function() {
+    socket.broadcast.to(socket.roomname).emit('reset game');
   });
 
   socket.on('throw ball', function(data) {
@@ -153,28 +241,29 @@ function onConnection(socket) {
 
     console.log('take shot');
 
-    socket.emit('shot sent');
+    socket.broadcast.to(socket.roomname).emit('take shot', shotInfo);
 
-    io.emit('take shot', shotInfo);
   });
-
-    socket.on('switch camera', function(data) {
-
-        socket.emit('switch camera');
-
-        io.emit('switch camera');
-    });
-
-    socket.on('load texture', function(data) {
-
-        socket.emit('load texture');
-
-        io.emit('load texture');
-    });
 
   socket.on('disconnect', function() {
     console.log('user disconnected');
   })
+
+
+
+  socket.on('query request', function() {
+    console.log('query request received');
+    console.log(query);
+    if (query) {
+      console.log('there is a query - ' + query);
+
+      socket.emit('query', query);
+    } else {
+      console.log('no query found');
+
+      socket.emit('use random room');
+    }
+  });
 }
 
 
