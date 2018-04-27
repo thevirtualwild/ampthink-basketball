@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1c95612d-4678-4af6-a1f9-2ab5baa022a4" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/public/babylon/court.js" afterPath="$PROJECT_DIR$/public/babylon/court.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -34,16 +35,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="195">
               <caret line="13" column="34" lean-forward="false" selection-start-line="13" selection-start-column="34" selection-end-line="13" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bump.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/2dgame/bump.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -99,7 +90,7 @@
       <file leaf-file-name="player.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/player.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2115">
+            <state relative-caret-position="-2743">
               <caret line="157" column="13" lean-forward="false" selection-start-line="157" selection-start-column="13" selection-end-line="157" selection-end-column="13" />
               <folding />
             </state>
@@ -109,8 +100,18 @@
       <file leaf-file-name="court.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/babylon/court.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
-              <caret line="384" column="40" lean-forward="true" selection-start-line="384" selection-start-column="40" selection-end-line="384" selection-end-column="40" />
+            <state relative-caret-position="137">
+              <caret line="126" column="0" lean-forward="true" selection-start-line="126" selection-start-column="0" selection-end-line="126" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/babylon/style.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1069">
+              <caret line="95" column="1" lean-forward="false" selection-start-line="95" selection-start-column="1" selection-end-line="95" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -127,15 +128,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>currentwaittime</find>
-      <find>changegamestate</find>
-      <find>basketball</find>
-      <find>currentballstate</find>
-      <find>socket.on</find>
-      <find>resetball</find>
-      <find>resetgame</find>
-      <find>actionmanager</find>
-      <find>actionma</find>
       <find>albedo</find>
       <find>radius</find>
       <find>timestep</find>
@@ -147,16 +139,25 @@
       <find>close</find>
       <find>mymaterial</find>
       <find>camerasettings</find>
-      <find>takeshot</find>
       <find>scaling</find>
-      <find>light</find>
       <find>backboard</find>
-      <find>shotclocktexture</find>
-      <find>shotclocktextures</find>
       <find>registerbeforerender</find>
-      <find>shotclocktens</find>
       <find>emissive</find>
       <find>specular</find>
+      <find>light</find>
+      <find>goal</find>
+      <find>takeshot</find>
+      <find>shotclocktexture</find>
+      <find>HEY</find>
+      <find>shotclocktext</find>
+      <find>createbox</find>
+      <find>texture</find>
+      <find>t.png</find>
+      <find>.png</find>
+      <find>10</find>
+      <find>shotclock</find>
+      <find>shotclocktens</find>
+      <find>shotclocktextures</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -214,8 +215,8 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="8" />
-    <option name="y" value="91" />
+    <option name="x" value="6" />
+    <option name="y" value="74" />
     <option name="width" value="1424" />
     <option name="height" value="877" />
   </component>
@@ -260,6 +261,23 @@
               <item name="public" type="462c0819:PsiDirectoryNode" />
               <item name="babylon" type="462c0819:PsiDirectoryNode" />
               <item name="assets" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ampthink-basketball" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ampthink-basketball" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="babylon" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="ShotClock" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ampthink-basketball" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ampthink-basketball" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="babylon" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="ShotClock" type="462c0819:PsiDirectoryNode" />
+              <item name="Alphas" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -344,7 +362,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="265118000" />
+    <option name="totallyTimeSpent" value="273314000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -356,7 +374,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="8" y="91" width="1424" height="877" extended-state="0" />
+    <frame x="6" y="74" width="1424" height="877" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3285816" sideWeight="0.49027237" order="0" side_tool="false" content_ui="combo" />
@@ -589,14 +607,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/babylon/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="86" column="0" lean-forward="false" selection-start-line="86" selection-start-column="0" selection-end-line="89" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Temp/tmp97DA.tmp.js" />
     <entry file="file://$PROJECT_DIR$/public/style.css">
       <provider selected="true" editor-type-id="text-editor">
@@ -690,9 +700,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/babylon/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1069">
+          <caret line="95" column="1" lean-forward="false" selection-start-line="95" selection-start-column="1" selection-end-line="95" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/player.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2115">
+        <state relative-caret-position="-2743">
           <caret line="157" column="13" lean-forward="false" selection-start-line="157" selection-start-column="13" selection-end-line="157" selection-end-column="13" />
           <folding />
         </state>
@@ -700,8 +718,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/babylon/court.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="384" column="40" lean-forward="true" selection-start-line="384" selection-start-column="40" selection-end-line="384" selection-end-column="40" />
+        <state relative-caret-position="137">
+          <caret line="126" column="0" lean-forward="true" selection-start-line="126" selection-start-column="0" selection-end-line="126" selection-end-column="0" />
           <folding />
         </state>
       </provider>

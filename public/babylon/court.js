@@ -99,6 +99,54 @@ var createScene = function(){
     camera.setTarget(cameraSettings[currentCameraIndex].initFocus);
     camera.maxZ = 130;
     camera.minZ = 1;
+
+    var shotClockTens =  BABYLON.Mesh.CreatePlane("shotClock", 1.0, scene);
+    var shotClockOnes =  BABYLON.Mesh.CreatePlane("shotClock", 1.0, scene);
+
+    shotClockTens.position = new BABYLON.Vector3(-1.3, +3.5, 12);
+    shotClockTens.scaling = new BABYLON.Vector3(2.5, 5, .1);
+
+    shotClockOnes.position = new BABYLON.Vector3(1.3, +3.5, 12);
+    shotClockOnes.scaling = new BABYLON.Vector3(2.5, 5, .1);
+
+    for(var i = 0; i < 10; i++) {
+        var texture = new BABYLON.Texture("./assets/ShotClock/Alphas/Texture" + i + ".png", scene, false, false, 1, function(tex)
+        {
+            var myMaterialTens = new BABYLON.StandardMaterial("myMaterial", scene);
+            var myMaterialOnes = new BABYLON.StandardMaterial("myMaterial", scene);
+
+            //var texture = shotClockTextures[i];
+            //shotClockTextures.push(texture);
+            console.log(texture.name);
+
+
+                myMaterialTens.emissiveTexture = texture;
+                myMaterialOnes.emissiveTexture = texture;
+                myMaterialTens.diffuseTexture = texture;
+                myMaterialOnes.diffuseTexture = texture;
+
+                myMaterialTens.emissiveTexture.uScale = 1;
+                myMaterialOnes.emissiveTexture.vScale = -1;
+
+                myMaterialTens.backFaceCulling = true;
+                myMaterialTens.diffuseTexture.hasAlpha = true;
+                myMaterialTens.emissiveTexture.hasAlpha = true;
+
+                myMaterialTens.alphaMode = BABYLON.Engine.ALPHA_ONEONE;
+
+                myMaterialOnes.backFaceCulling = true;
+                myMaterialOnes.diffuseTexture.hasAlpha = true;
+
+                shotClockTens.material = myMaterialTens;
+                shotClockOnes.material = myMaterialOnes;
+
+
+        });
+    }
+
+
+
+
     changeGameState(gameStates.ATTRACT);
 
     function changeGameState(gameState)
@@ -212,10 +260,10 @@ var createScene = function(){
         newPos.z = torus.position.z - 0;
         camera.setTarget(newPos);
         camera.fov = 1;
-        light.position = camera.position;
+        //light.position = camera.position;
         //camera.setTarget(cameraSettings[0].initFocus);
 
-
+//UPDATE SHOT CLOCK
 
         if(currentGameState == gameStates.WAITING)
         {
@@ -246,13 +294,17 @@ var createScene = function(){
             var time = currentGameTime.toFixed(2);
             attractLabel.innerHTML =  time;
 
+            /*
             //UPDATE SHOT CLOCK
             var tensTexture = shotClockTextures[ parseInt(time.substr(0,1))];
             var onesTexture = shotClockTextures[ parseInt(time.substr(1,1))];
 
+            //shotClockTens.material.diffuseTexture.alphaMode = BABYLON.material.alphaMode.ALPHA_ADD;
+            //shotClockOnes.material.diffuseTexture.alphaMode = BABYLON.material.alphaMode.ALPHA_ADD;
+
             shotClockTens.material.diffuseTexture = tensTexture;
             shotClockOnes.material.diffuseTexture = onesTexture;
-
+*/
             if(currentGameTime <= 0)
             {
                 changeGameState(gameStates.RESULTS);
@@ -271,9 +323,9 @@ var createScene = function(){
 
     });
 
-    var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
+    //var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
 
-    light.intensity = 1;
+    //light.intensity = 0;
 
     var torus = BABYLON.Mesh.CreateTorus("torus", 4.3, 0.2, 50, scene);
     torus.position = new BABYLON.Vector3(0, -4.75, 8.9);
@@ -299,8 +351,9 @@ var createScene = function(){
     BABYLON.SceneLoader.ImportMesh("", "./assets/BBall/", "BBall.babylon", scene, function (mesh) {
 
         var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
-        myMaterial.diffuseTexture = new BABYLON.Texture("./assets/BBall/BBall_Albedo.png", scene);
-        myMaterial.bumpTexture = new BABYLON.Texture("./assets/BBall/BBall_Normal.png", scene);
+        myMaterial.emissiveTexture = new BABYLON.Texture("./assets/BBall/BBall_Albedo_Logo.png", scene);
+        //myMaterial.diffuseTexture = new BABYLON.Texture("./assets/BBall/BBall_Logo.png", scene);
+        //myMaterial.bumpTexture = new BABYLON.Texture("./assets/BBall/BBall_Normal.png", scene);
         //myMaterial.freeze();
         var newBasketballs = [];
 
@@ -346,14 +399,7 @@ var createScene = function(){
 
         var mesh = mesh[0];
 
-
-        for(var i = 0; i < 10; i++)
-        {
-            var texture = new BABYLON.Texture("./assets/ShotClock/Texture0.png", scene);
-            shotClockTextures.push(texture);
-        }
-
-        myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Colors.png", scene);
+        myMaterial.emissiveTexture = new BABYLON.Texture("./assets/Colors.png", scene);
 
         var newPos = new BABYLON.Vector3(0, 0, 0);
         newPos.x = mesh.position.x + 0;
@@ -373,10 +419,10 @@ var createScene = function(){
 
         var mesh = mesh[0];
 
-        myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Colors.png", scene);
+        myMaterial.emissiveTexture = new BABYLON.Texture("./assets/Colors.png", scene);
         //myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
 
-        myMaterial.specularPower = 20;
+        //myMaterial.specularPower = 20;
         //myMaterial.specularColor = new BABYLON.Color3(0.5, 0.5, 0.5);
         //myMaterial.roughness = 100;
         var newPos = new BABYLON.Vector3(0, 0, 0);
@@ -398,7 +444,7 @@ var createScene = function(){
 
         var mesh = mesh[0];
 
-        myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Colors.png", scene);
+        myMaterial.emissiveTexture = new BABYLON.Texture("./assets/Colors.png", scene);
         //myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
 
         var newPos = new BABYLON.Vector3(0, 0, 0);
@@ -422,8 +468,8 @@ var createScene = function(){
             if (meshes[i].name != "LightfBeam.004" &&
                 meshes[i].name != "Floor") {
 
-                myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
-                myMaterial.diffuseTexture.hasAlpha = true;
+                myMaterial.emissiveTexture = new BABYLON.Texture("./assets/Colors.png", scene);
+                //myMaterial.diffuseTexture.hasAlpha = true;
                 myMaterial.freeze();
                 //myMaterial.bumpTexture = new BABYLON.Texture("./assets/Layout/Layout_Normal.png", scene);
                 //myMaterial.specularTexture = new BABYLON.Texture("./assets/Layout/Layout_Smoothness.png", scene);
@@ -591,21 +637,8 @@ var createScene = function(){
             restitution: .8} )
         scene.meshes.pop(sphere);
     }
-centerPos.y -= 0.5;
 
-    var shotClockTens = BABYLON.Mesh.CreateBox("shotclock", 1, scene);
-    shotClockTens.position = new BABYLON.Vector3(-1.3, +3.5, 12);
-    shotClockTens.scaling = new BABYLON.Vector3(2.5, 5, .1);
-    var shotMatTens = new BABYLON.StandardMaterial("myMaterial", scene);
-    //shotMatTens.diffuseColor= new BABYLON.Color3(0.2,0.2,0.2);
-    shotClockTens.material = shotMatTens;
-
-    var shotClockOnes = BABYLON.Mesh.CreateBox("shotclock", 1, scene);
-    shotClockOnes.position = new BABYLON.Vector3(1.3, +3.5, 12);
-    shotClockOnes.scaling = new BABYLON.Vector3(2.5, 5, .1);
-    var shotMatOnes = new BABYLON.StandardMaterial("myMaterial", scene);
-    //shotMatOnes.diffuseColor= new BABYLON.Color3(0.2,0.2,0.2);
-    shotClockOnes.material = shotMatOnes;
+    centerPos.y -= 0.5;
 
     //CREATE BACKBOARD COLLIDER
     var backboard = BABYLON.Mesh.CreateBox("backboard", 1 , scene);
@@ -698,14 +731,20 @@ centerPos.y -= 0.5;
 
     var clothMat = new BABYLON.StandardMaterial("netMat", scene);
     //var testMat = new BABYLON.standr
-    clothMat.diffuseTexture = new BABYLON.Texture("./assets/netTest.png", scene);
+    clothMat.diffuseTexture = new BABYLON.Texture("./assets/Layout/Net.png", scene);
+    //clothMat.diffuseColor = new BABYLON.Color3(1,1,1);
     //clothMat.diffuseTexture.vOffset = 0.;
-    clothMat.diffuseTexture.vScale = 3;
+    clothMat.emissiveTexture = new BABYLON.Texture("./assets/Layout/Net.png", scene);
+    clothMat.diffuseTexture.vScale = 4;
     clothMat.diffuseTexture.uScale = 2;
     clothMat.backFaceCulling = false;
     clothMat.diffuseTexture.hasAlpha = true;
 
+
     var net = BABYLON.Mesh.CreateGround("ground1", 1, 1, sphereAmount, scene, true);
+
+    //net.needAlphaBlending = true;
+    //net.needAlphaTesting = true;
 
     var positions = net.getVerticesData(BABYLON.VertexBuffer.PositionKind);
 
