@@ -42,6 +42,7 @@ var createScene = function(){
     //engine.setHardwareScalingLevel(1.25);
 
     scene.clearColor = BABYLON.Color3.Black();
+
     scene.fogMode = BABYLON.Scene.FOGMODE_LINEAR;
     scene.fogStart = 80;
     scene.fogEnd = 130;
@@ -251,7 +252,7 @@ var createScene = function(){
     var basketball;
     for(var i = 0; i < 10; i++)
     {
-        basketball = BABYLON.Mesh.CreateSphere("basketball", 16, 1.88, scene);
+        basketball = BABYLON.Mesh.CreateSphere("basketball", 16, 2.5, scene);
         basketball.position = torus.position;
         var newPos = new BABYLON.Vector3(0,0,0);
         newPos.x = basketball.position.x + i*3;
@@ -267,7 +268,8 @@ var createScene = function(){
 
         var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
         myMaterial.diffuseTexture = new BABYLON.Texture("./assets/BBall/BBall_Albedo.png", scene);
-        myMaterial.freeze();
+        //myMaterial.normalTexture = new BABYLON.Texture("./assets/BBall/BBall_Normal.png", scene);
+        //myMaterial.freeze();
         var newBasketballs = [];
 
         var newBasketball = mesh[0];
@@ -283,7 +285,7 @@ var createScene = function(){
             var newBasketball = mesh[0].clone("index: " + i);
 
             //newBasketball.position.x =+ i*2;
-            newBasketball.scaling = new BABYLON.Vector3(1.3, 1.3, 1.3);
+            newBasketball.scaling = new BABYLON.Vector3(1.3, 1.4, 1.3);
             newBasketball.material = myMaterial;
             newBasketballs.push(newBasketball);
         }
@@ -305,16 +307,17 @@ var createScene = function(){
         });
     });
 
+    /*
+
     BABYLON.SceneLoader.ImportMesh("", "./assets/Layout/", "Layout.babylon", scene, function (meshes) {
 
         var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
 
         var mesh;
 
-        for(var i = 0; i < meshes.length; i++)
-        {
+        for (var i = 0; i < meshes.length; i++) {
 
-            if(meshes[i].name != "LightfBeam.004" &&
+            if (meshes[i].name != "LightfBeam.004" &&
                 meshes[i].name != "Floor" &&
                 meshes[i].name != "Plane" &&
                 meshes[i].name != "Glow_Floor" &&
@@ -325,8 +328,7 @@ var createScene = function(){
                 meshes[i].name != "Stairf_Base_Med" &&
                 meshes[i].name != "Ref" &&
                 meshes[i].name != "Blofcking" &&
-                meshes[i].name.substr(0, 4) != "Sedat")
-            {
+                meshes[i].name.substr(0, 4) != "Seaft") {
 
                 myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
                 myMaterial.diffuseTexture.hasAlpha = true;
@@ -334,7 +336,7 @@ var createScene = function(){
                 //myMaterial.bumpTexture = new BABYLON.Texture("./assets/Layout/Layout_Normal.png", scene);
                 //myMaterial.specularTexture = new BABYLON.Texture("./assets/Layout/Layout_Smoothness.png", scene);
 
-                var newPos = new BABYLON.Vector3(0,0,0);
+                var newPos = new BABYLON.Vector3(0, 0, 0);
                 newPos.x = meshes[i].position.x + 0;
                 newPos.y = meshes[i].position.y + -36;
                 newPos.z = meshes[i].position.z - 60;
@@ -345,27 +347,26 @@ var createScene = function(){
 
 
             }
-            else if(meshes[i].name == "Ref" || meshes[i].name == "Plane" || meshes[i].name == "Glow_Floor")
-            {
-               var myMaterial1 = new BABYLON.StandardMaterial("myMaterial1", scene);
+            else if (meshes[i].name == "Rfef" || meshes[i].name == "Plane" || meshes[i].name == "Glow_Floor") {
+                var myMaterial1 = new BABYLON.StandardMaterial("myMaterial1", scene);
 
-                var newPos = new BABYLON.Vector3(0,0,0);
+                var newPos = new BABYLON.Vector3(0, 0, 0);
                 newPos.x = meshes[i].position.x + 0;
                 newPos.y = meshes[i].position.y + -36;
                 newPos.z = meshes[i].position.z - 60;
                 meshes[i].position = newPos;
                 meshes[i].material = myMaterial1;
-                myMaterial1.freeze();
-                meshes[i].freezeWorldMatrix();
+                console.log(meshes[i].name);
+                //myMaterial1.freeze();
+                //meshes[i].freezeWorldMatrix();
                 //scene.meshes.pop(meshes[i]);
             }
-            else if(meshes[i].name == "Blofcking")
-            {
+            else if (meshes[i].name == "Blofcking") {
                 var myMaterial1 = new BABYLON.StandardMaterial("myMaterial1", scene);
                 var diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
                 var offset = new BABYLON.Vector2(1, 1);
                 var scale = new BABYLON.Vector2(.5, .5);
-                diffuseTexture.uScale =  scale.x;
+                diffuseTexture.uScale = scale.x;
                 diffuseTexture.vScale = scale.y;
                 diffuseTexture.uOffset = offset.x;
                 diffuseTexture.vOffset = offset.y;
@@ -373,14 +374,14 @@ var createScene = function(){
                 myMaterial1.diffuseTexture = diffuseTexture;
                 myMaterial1.diffuseTexture.hasAlpha = true;
                 var normalTexture = new BABYLON.Texture("./assets/Layout/Layout_Normal.png", scene);
-                normalTexture.uScale =  scale.x;
+                normalTexture.uScale = scale.x;
                 normalTexture.vScale = scale.y;
                 normalTexture.uOffset = offset.x;
                 normalTexture.vOffset = offset.y;
                 //myMaterial1.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
                 //myMaterial1.bumpTexture = normalTexture;
                 var specularTexture = new BABYLON.Texture("./assets/Layout/Layout_Smoothness.png", scene);
-                specularTexture.uScale =  scale.x;
+                specularTexture.uScale = scale.x;
                 specularTexture.vScale = scale.y;
                 specularTexture.uOffset = offset.x;
                 specularTexture.vOffset = offset.y;
@@ -389,7 +390,7 @@ var createScene = function(){
                 //myMaterial1.
                 //meshes[i].material.zOffset = 0.5;
                 //myMaterial1.alpha = 0;
-                var newPos = new BABYLON.Vector3(0,0,0);
+                var newPos = new BABYLON.Vector3(0, 0, 0);
                 newPos.x = meshes[i].position.x + 0;
                 newPos.y = meshes[i].position.y + -36;
                 newPos.z = meshes[i].position.z - 60;
@@ -399,17 +400,79 @@ var createScene = function(){
                 meshes[i].freezeWorldMatrix();
                 //scene.meshes.pop(meshes[i]);
             }
-            else if(meshes[i].name == "Floor")
-            {
+            else if (meshes[i].name == "Floor") {
                 //var myMaterial2 = new BABYLON.StandardMaterial("myMaterial2", scene);
                 //meshes[i].material = myMaterial2;
                 //scene.meshes.pop(meshes[i]);
             }
-            else
-            {
+            else {
                 scene.meshes.pop(meshes[i]);
             }
+            console.log(i);
+
         }
+    });
+*/
+    BABYLON.SceneLoader.ImportMesh("Goal_Backboard", "./assets/Layout/", "Goal.babylon", scene, function (mesh) {
+
+        var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
+
+        var mesh = mesh[0];
+
+        //myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
+
+        var newPos = new BABYLON.Vector3(0, 0, 0);
+        newPos.x = mesh.position.x + 0;
+        newPos.y = mesh.position.y + -33.75;
+        newPos.z = mesh.position.z - 60;
+        mesh.position = newPos;
+        mesh.scaling = new BABYLON.Vector3(0.8, 1, 1);
+        //console.log(meshes[i].name);
+        mesh.material = myMaterial;
+        mesh.freezeWorldMatrix();
+
+    });
+
+    BABYLON.SceneLoader.ImportMesh("Goal_Rim", "./assets/Layout/", "Goal.babylon", scene, function (mesh) {
+
+        var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
+
+        var mesh = mesh[0];
+
+        //myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
+
+        var newPos = new BABYLON.Vector3(0, 0, 0);
+        newPos.x = mesh.position.x + 0;
+        newPos.y = mesh.position.y + -35.75;
+        newPos.z = mesh.position.z - 70;
+        mesh.position = newPos;
+        mesh.scaling = new BABYLON.Vector3(1.1, 1, 1.1);
+        //console.log(meshes[i].name);
+        mesh.material = myMaterial;
+        mesh.freezeWorldMatrix();
+
+    });
+
+    BABYLON.SceneLoader.ImportMesh("Goal_Base", "./assets/Layout/", "Goal.babylon", scene, function (mesh) {
+
+        var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
+
+        var mesh = mesh[0];
+
+        //myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
+
+        var newPos = new BABYLON.Vector3(0, 0, 0);
+        newPos.x = mesh.position.x + 0;
+        newPos.y = mesh.position.y + -35.75;
+        newPos.z = mesh.position.z - 60;
+        mesh.position = newPos;
+        //mesh.scaling = new BABYLON.Vector3(.8, 1, 1.1);
+        //console.log(meshes[i].name);
+        mesh.material = myMaterial;
+        mesh.freezeWorldMatrix();
+
+    });
+
 /*
         var particleSystem = new BABYLON.ParticleSystem("particles", 200, scene);
 
@@ -471,14 +534,13 @@ var createScene = function(){
         // Start the particle system
         particleSystem.start();
         */
-    });
-
 
     //CREATE CIRCLE OF SPHERE COLLIDERS
-    var sphereAmount = 30;
-    var radius = 2.55;
-    var sphereDiameter = 0.35;
+    var sphereAmount = 20;
+    var radius = 3;
+    var sphereDiameter = .8;
     var centerPos = torus.position;
+    centerPos.y += 0.5;
     for(var i = 0; i < sphereAmount; i++)
     {
         var sphere = BABYLON.Mesh.CreateSphere("sphere", 10, sphereDiameter, scene);
@@ -494,7 +556,7 @@ var createScene = function(){
             restitution: .8} )
         scene.meshes.pop(sphere);
     }
-
+centerPos.y -= 0.5;
     //CREATE BACKBOARD COLLIDER
     var backboard = BABYLON.Mesh.CreateBox("backboard", 1 , scene);
 
@@ -508,7 +570,7 @@ var createScene = function(){
 
     //CREATE COLLIDERS FOR NET
     var sphereAmount = 10;
-    var radius = 2.55;
+    var radius = 3;
     var sphereDiameter = 0.25;
     var centerPos = torus.position;
     centerPos.y -= 4;
@@ -524,7 +586,7 @@ var createScene = function(){
                 centerPos.z + Math.cos(i * Math.PI * 2 / sphereAmount) * radius * (1- (j/2/height))
             );
 
-            var currentMass = 50.01;
+            var currentMass = 100.01;
             if(j == 0)//top row
             {
                 currentMass = 0;
@@ -544,8 +606,8 @@ var createScene = function(){
         if (idx >= sphereAmount)
         {
 
-            createJoint(point.physicsImpostor, netSpheres[idx - sphereAmount].physicsImpostor, 1);
-            var horiDistance = .45*3 - .165* Math.floor(idx/sphereAmount);
+            createJoint(point.physicsImpostor, netSpheres[idx - sphereAmount].physicsImpostor, 1.25);
+            var horiDistance = .55*3 - .3* Math.floor(idx/sphereAmount);
             if (idx % sphereAmount > 0)
             {
                 createJoint(point.physicsImpostor, netSpheres[idx - 1].physicsImpostor, horiDistance);
@@ -682,19 +744,19 @@ var createScene = function(){
 
             basketballs[shotIndex].physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 0, 0));
             basketballs[shotIndex].physicsImpostor.setAngularVelocity(new BABYLON.Vector3(0, 0, 0));
-            basketballs[shotIndex].physicsImpostor.applyImpulse(new BABYLON.Vector3(randomRange(-.3, .3), randomRange(26, 28), randomRange(18, 20)), basketballs[shotIndex].getAbsolutePosition());
+            basketballs[shotIndex].physicsImpostor.applyImpulse(new BABYLON.Vector3(randomRange(-.3, .3), randomRange(26, 27), randomRange(19, 20)), basketballs[shotIndex].getAbsolutePosition());
         }
         else if(currentGameState == gameStates.GAMEPLAY){
             basketballs[shotIndex].position = new BABYLON.Vector3(0, -20, -40);
 
             basketballs[shotIndex].physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 0, 0));
             basketballs[shotIndex].physicsImpostor.setAngularVelocity(new BABYLON.Vector3(0, 0, 0));
-            basketballs[shotIndex].physicsImpostor.applyImpulse(new BABYLON.Vector3(shotInfo.xSpeed, randomRange(26, 28), randomRange(18, 20)), basketballs[shotIndex].getAbsolutePosition());
+            basketballs[shotIndex].physicsImpostor.applyImpulse(new BABYLON.Vector3(shotInfo.xSpeed, randomRange(26, 27), randomRange(19, 20)), basketballs[shotIndex].getAbsolutePosition());
         }
 
         var convertedRot = new BABYLON.Vector3(0,0,0);
         var velocity = basketballs[shotIndex].physicsImpostor.getLinearVelocity();
-        convertedRot.x = velocity.z;
+        convertedRot.x = -velocity.z/5;
         convertedRot.z = -velocity.x;
         basketballs[shotIndex].physicsImpostor.setAngularVelocity(convertedRot);
 
@@ -842,7 +904,7 @@ function createCameraTypes()
     var cameraType = {
         cameraNames: cameraNames.freeThrow,
         //initPos: new BABYLON.Vector3(0, -25, -60),
-        initPos: new BABYLON.Vector3(0, -8, -15),
+        initPos: new BABYLON.Vector3(0, -8, -20),
         //initFocus: new BABYLON.Vector3(0, -12, 11.75),
         //initFocus: new BABYLON.Vector3(0, -12, 11.75),
     }

@@ -51,7 +51,7 @@
       ground.material = myMaterial;
     var basketball;
 
-light.intensity = 0.6;
+    light.intensity = 0.6;
       //var ball = BABYLON.Mesh.CreateSphere("sphere", 2, 0.5, scene);
       //ball.isPickable = false;
 
@@ -59,6 +59,7 @@ light.intensity = 0.6;
     {
         var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
         myMaterial.diffuseTexture = new BABYLON.Texture("/babylon/assets/BBall/BBall_Albedo.png", scene);
+        myMaterial.bumpTexture = new BABYLON.Texture("/babylon/assets/BBall/BBall_Normal.png", scene);
         mesh[0].material = myMaterial;
         myMaterial.freeze();
 
