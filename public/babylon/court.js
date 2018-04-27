@@ -8,7 +8,7 @@ var scoreLabel = document.getElementById("scoreLabel");
 var engine = new BABYLON.Engine(canvas, true, null, false);
 var useCannon = false;
 
-var gameStates = Object.freeze({"ATTRACT": 0, "WAITING": 1, "GAMEPLAY": 2, "RESULTS": 3});
+var gameStates = Object.freeze({"ATTRACT": 0, "WAITING": 1, "GAMEPLAY": 2, "RESULTS": 3, "INACTIVE": 4});
 var currentGameState = gameStates.ATTRACT;
 
 var cameraNames = Object.freeze({"freeThrow": 0, "quarterFar": 1, "close": 2});
@@ -33,6 +33,8 @@ var currentCameraIndex = 0;
 var currentTextureIndex = 0;
 
 var prevAnimation;
+
+var playerData;
 
 var createScene = function(){
     var scene = new BABYLON.Scene(engine);
@@ -119,7 +121,11 @@ var createScene = function(){
             case gameStates.RESULTS:
                 currentGameState = gameState;
                 currentCameraIndex = 1;
-                socket.emit("game over");
+                socket.emit("game over", playerData);
+                updateUI();
+                break;
+            case gameStates.INACTIVE:
+                currentGameState = gameState;
                 updateUI();
                 break;
             default:
@@ -206,16 +212,24 @@ var createScene = function(){
         if(currentGameState == gameStates.WAITING)
         {
             currentWaitTime -= (engine.getDeltaTime() / 1000);
-            attractLabel.innerHTML = currentWaitTime.toFixed(2) + "<br /> WAITING FOR PLAYERS";
+            if (hasplayer) {
+              attractLabel.innerHTML =  currentWaitTime.toFixed(2) + "<br /> WAITING FOR PLAYERS";
+            }
 
             if(currentWaitTime <= 0)
             {
+              if (hasplayer) {
                 changeGameState(gameStates.GAMEPLAY);
+              } else {
+                changeGameState(gameStates.INACTIVE);
+              }
             }
             else if(currentWaitTime < 2 && !gameReady)
             {
                 gameReady = true;
-                socket.emit("game almost ready");
+                if (hasplayer) {
+                  socket.emit("game almost ready", courtName);
+                }
             }
         }
         else if(currentGameState == gameStates.GAMEPLAY)
@@ -235,6 +249,7 @@ var createScene = function(){
             if(currentResultsTime <= 0)
             {
                 changeGameState(gameStates.ATTRACT);
+                socket.emit('room reset');
             }
         }
 
@@ -652,7 +667,7 @@ var createScene = function(){
             },
 
             function () {
-                changeCamera();
+                changeGameState(gameStates.ATTRACT);
             }
         )
     );
@@ -732,6 +747,8 @@ var thrown = true;
 var countdownStarted = true;
 
 var thisRoom = '';
+var courtName = '';
+var hasplayer = false;
 
 $passcodeInput.focus();
 
@@ -739,17 +756,20 @@ joinRoom();
 
 function joinRoom()
 {
-  var roomtojoin = 'GAME';
+  var roomtojoin = randomCode(7);
 
-  var userdata = {
-    username: 'COURT',
+  var courtdata = {
+    name: nameCourt(),
     room: roomtojoin
   };
 
-  thisRoom = userdata.room;
-  socket.emit('join room', userdata);
+  thisRoom = courtdata.room;
+  courtName = courtdata.name;
 
-  console.log('main.js - joining room - ' + userdata.room);
+  socket.emit('query request');
+  socket.emit('join room', courtdata);
+  socket.emit('add court', courtdata);
+  console.log('COURT ' + courtdata.name + ' - joining room - ' + courtdata.room);
 
   updateUI();
   // $pages.fadeOut();
@@ -758,11 +778,48 @@ function joinRoom()
   //socket.emit('add user', jsonstring);
 }
 
+function joinQueryRoom(query) {
+  roomcode = query;
+
+  $('.insertRoomCode').text(roomcode);
+  $(document).prop('title', roomcode);
+
+  roomcode = roomcode.toUpperCase();
+
+  courtData = {
+    name: courtName,
+    room: roomcode
+  }
+
+  console.log('joining room - ' + roomcode);
+  socket.emit('room', roomcode);
+  socket.emit('update court', courtData );
+}
+
+function nameCourt() {
+  return randomCode(5);
+}
+function randomCode(howLong) {
+  var randomname = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+  for (var i = 0; i < howLong; i++)
+    randomname += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return randomname;
+}
+
 function randomRange (min, max)
 {
     var number = (Math.random() * (min - max) + max);
     return number;
 }
+
+socket.on('query', function(query) {
+  console.log('query received - ' + query);
+
+  joinQueryRoom(query);
+});
 
 socket.on('take shot', function(info) {
 
@@ -776,35 +833,31 @@ socket.on('take shot', function(info) {
     //console.log(scene.actionManager.actions.length);
 });
 
-socket.on('switch camera', function() {
-    scene.actionManager.processTrigger(scene.actionManager.actions[1].trigger, {additionalData: "t"});
-});
-
-socket.on('joined room', function(userdata) {
-    console.log('User Joined Room - ' + userdata.username);
+socket.on('player joined court', function(userdata) {
+    console.log('Player ' + userdata.username + ' - Joined Court - ' + userdata.court);
+    playerData = userdata;
+    if (userdata.court == courtName) {
+      hasplayer = true;
+    }
     scene.actionManager.processTrigger(scene.actionManager.actions[2].trigger, {additionalData: "y"});
 });
 
-function shotAttempt()
-{
-    /* data = {
-          xval: basketball.x
-        }
-    */
-    //socket.emit('shot attempt', data);
-    socket.emit("throw ball", shotInfo);
 
-    resetBall();
-}
-
-function canShoot()
-{
-    thrown = false;
-}
 
 socket.on('shot sent', function() {
   // console.log('We got a message back!');
 })
+
+socket.on('use random query', function() {
+  console.log('no query received starting random');
+});
+
+
+socket.on('reset game', function() {
+  scene.actionManager.processTrigger(scene.actionManager.actions[1].trigger, {additionalData: "t"});
+});
+
+
 
 function addScore()
 {
@@ -813,6 +866,7 @@ function addScore()
     score++;
     var scoreLabel = document.getElementById("scoreLabel");
     scoreLabel.innerHTML = "Score: " + score;
+    playerData.score = score;
 }
 
 function updateUI()
@@ -822,12 +876,13 @@ function updateUI()
         case gameStates.ATTRACT:
             score = 0;
             currentWaitTime = initWaitTime;
+            hasplayer = false;
             scoreLabel.innerHTML = "";
-            attractLabel.innerHTML = "ROOM CODE: <br /> " + thisRoom;
+            attractLabel.innerHTML = "COURT CODE: <br /> " + courtName;
             break;
         case gameStates.WAITING:
-            scoreLabel.innerHTML = "";
-            attractLabel.innerHTML = initWaitTime.toString();
+            scoreLabel.innerHTML = "COURT CODE: " + courtName;
+            // attractLabel.innerHTML = "COURT CODE: " + courtName; + " <br/>" + initWaitTime.toString();
             currentWaitTime = initWaitTime;
             break;
         case gameStates.GAMEPLAY:
@@ -838,6 +893,11 @@ function updateUI()
         case gameStates.RESULTS:
             scoreLabel.innerHTML = "";
             attractLabel.innerHTML = "Score: " + score;
+            currentResultsTime = initResultsTime;
+            break;
+        case gameStates.INACTIVE:
+            scoreLabel.innerHTML = "";
+            attractLabel.innerHTML = "Please Wait, Game In Progress";
             currentResultsTime = initResultsTime;
             break;
         default:

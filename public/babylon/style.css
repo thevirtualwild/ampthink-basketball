@@ -27,6 +27,7 @@
   width: 100%;
   max-width: 800px;
   height: 500px;
+  overflow: visible;
   font-size: 64px;
   margin: auto;
   padding:50px;

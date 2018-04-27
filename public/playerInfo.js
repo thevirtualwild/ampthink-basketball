@@ -20,30 +20,39 @@ function generateName()
     return name;
 }
 
-var primaryColor = "#ff3300";
-var secondaryColor = "#ffffff";
-var tertiaryColor = "#003399";
+var primaryTeam = {
+  name: 'Red',
+  colorHex: '#ff3300'
+}
+var secondaryTeam = {
+  name: 'White',
+  colorHex: '#ffffff'
+}
+var tertiaryTeam = {
+  name: 'Blue',
+  colorHex: '#003399'
+}
 
-function generateColor()
+function generateTeam()
 {
     max = 3;
     var number = Math.floor((Math.random() * (-max) + max));
-    var hexColor;
+    var randTeam;
 
     switch(number)
     {
         case 0:
-            hexColor = primaryColor;
+            randTeam = primaryTeam;
             break;
         case 1:
-            hexColor = secondaryColor;
+            randTeam = secondaryTeam;
             break;
         case 2:
-            hexColor = tertiaryColor;
+            randTeam = tertiaryTeam;
             break;
         default:
-            hexColor = primaryColor;
+            randTeam = primaryTeam;
     }
 
-    return hexColor;
+    return randTeam;
 }

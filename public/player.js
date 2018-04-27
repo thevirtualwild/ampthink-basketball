@@ -251,6 +251,7 @@ engine.runRenderLoop(function(){
 
 var $window = $(window);
 var $pages = $('.pages'); // Input for roomname
+var $gameover = $('#gameover');
 var $passcodeInput = $('.passcodeInput'); // Input for roomname
 var $usernameInput = $('.usernameInput');
 var $passcodePage = $('.passcode.page'); // The roomchange page
@@ -266,6 +267,7 @@ var $passcodePage = $('.passcode.page'); // The roomchange page
 //})();
 // jshint ignore:end
 
+$gameover.fadeOut();
 $usernameInput.focus();
 
 $window.keydown(function (event)
@@ -273,80 +275,69 @@ $window.keydown(function (event)
   // When the client hits ENTER on their keyboard
   if (event.which === 13)
   {
-      joinRoom();
+      initializePlayer();
   }
 });
 
-  socket.on('game almost ready', function()
-  {
-      //fade out customization screen
-      //roll in ball;
+function initializePlayer() {
+  var courttojoin;
+  courttojoin = cleanInput($passcodeInput.val().trim());
 
-      var ae = BABYLON.ActionEvent.CreateNewFromScene(scene, {additionalData: "r"});
-      //console.log(ae);
-      scene.actionManager.processTrigger(scene.actionManager.actions[0].trigger,  ae);
-  });
+  joinCourt(courttojoin);
+}
 
-  socket.on('game over', function()
-  {
-      $pages.fadeIn();
-      var ae = BABYLON.ActionEvent.CreateNewFromScene(scene, {additionalData: "t"});
-      //console.log(ae);
-      scene.actionManager.processTrigger(scene.actionManager.actions[1].trigger,  ae);
-      socket.emit('leave room');
-      //$passcodeInput.text = "";
-      //scene.actionManager.processTrigger(scene.actionManager.actions[1].trigger, {additionalData: "t"});
-  });
-
-function joinRoom()
+socket.on('game almost ready', function(courtName)
 {
-  var username;
-  username = cleanInput($usernameInput.val().trim());
-  var roomtojoin;
-  roomtojoin = cleanInput($passcodeInput.val().trim());
-  if (username) {
-    username = username.toUpperCase();
-  } else {
-    username = randomName().toUpperCase();
-  }
-  if (roomtojoin) {
+    //fade out customization screen
+    //roll in ball;
 
-      roomtojoin = roomtojoin.toUpperCase();
+    var ae = BABYLON.ActionEvent.CreateNewFromScene(scene, {additionalData: "r"});
+    //console.log(ae);
+    scene.actionManager.processTrigger(scene.actionManager.actions[0].trigger,  ae);
+});
 
+socket.on('end player game', function()
+{
+    console.log('Player Game Ended');
+    //show this players score
+    $gameover.fadeIn();
+    var ae = BABYLON.ActionEvent.CreateNewFromScene(scene, {additionalData: "t"});
+    //console.log(ae);
+    scene.actionManager.processTrigger(scene.actionManager.actions[1].trigger,  ae);
+    //$passcodeInput.text = "";
+    //scene.actionManager.processTrigger(scene.actionManager.actions[1].trigger, {additionalData: "t"});
+});
+
+function joinCourt(someCourt)
+{
+  var username = generateName();
+  var team = generateTeam();
+  // if (username) {
+  //   username = username.toUpperCase();
+  // } else {
+  //   username = generateName();
+  // }
+  var courttojoin = someCourt;
+  if (courttojoin) {
+      courttojoin = courttojoin.toUpperCase();
   } else {
-      roomtojoin = 'GAME';
+      courttojoin = 'GAME';
   }
   // fade out input page
   $pages.fadeOut();
 
-  var name = 'boop';
-  color = 'white';
-
   userdata = {
       'username': username,
-      'team': color,
-      'room': roomtojoin
+      'team': team,
+      'court': courttojoin
   };
 
-  console.log('Room name - ' + roomtojoin);
+  console.log('Court name - ' + courttojoin);
   // Tell the server your new room to connect to
-  socket.emit('join room', userdata);
-  socket.emit('add user', userdata);
-
-  console.log(generateName());
-  console.log(generateColor());
+  socket.emit('join court', userdata);
+  // socket.emit('add user', userdata);
 }
 
 function cleanInput (input) {
   return $('<div/>').text(input).html();
-}
-
-function randomName () {
-  var randomname = "Player";
-  var possible = "0123456789";
-
-  for (var i = 0; i < 5; i++)
-    randomname += possible.charAt(Math.floor(Math.random() * possible.length));
-
-  return randomname;
 }
