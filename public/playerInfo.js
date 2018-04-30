@@ -20,17 +20,24 @@ function generateName()
     return name;
 }
 
-var primaryTeam = {
-  name: 'Red',
-  colorHex: '#ff3300'
+var primaryTeam =
+{
+    name: 'Red',
+    colorHex: '#ff3300',
+    colorRGB: BABYLON.Color3.Red()
 }
-var secondaryTeam = {
-  name: 'White',
-  colorHex: '#ffffff'
+
+var secondaryTeam =
+{
+    name: 'White',
+    colorHex: '#ffffff',
+    colorRGB: BABYLON.Color3.White()
 }
-var tertiaryTeam = {
-  name: 'Blue',
-  colorHex: '#003399'
+var tertiaryTeam =
+{
+    name: 'Blue',
+    colorHex: '#003399',
+    colorRGB: BABYLON.Color3.Blue()
 }
 
 function generateTeam()

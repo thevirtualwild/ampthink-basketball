@@ -11,6 +11,9 @@ var useCannon = false;
 var gameStates = Object.freeze({"ATTRACT": 0, "WAITING": 1, "GAMEPLAY": 2, "RESULTS": 3, "INACTIVE": 4});
 var currentGameState = gameStates.ATTRACT;
 
+var netStates = Object.freeze({"FREE": 0, "WAITING": 1, "LERPING": 2});
+var currentNetState = netStates.FREE;
+
 var cameraNames = Object.freeze({"freeThrow": 0, "quarterFar": 1, "close": 2});
 var selectedCameraType = cameraNames.freeThrow;
 
@@ -26,6 +29,11 @@ var initResultsTime = 10;
 var currentResultsTime = 10;
 var shotIndex = 0;
 var attractIndex = 0;
+var currentNetLerpDelayTime = 2;
+var initNetLerpDelayTime = 2;
+var currentNetLerpTime = 0.25;
+var initNetLerpTime = 0.25;
+
 createCameraTypes();
 
 var gameReady = false;
@@ -55,8 +63,9 @@ var createScene = function(){
     scene.fogEnd = 100;
     scene.fogColor =  BABYLON.Color3.Black();
 
+
     //scene.autoClear = false; // Color buffer
-    scene.autoClearDepthAndStencil = false; // Depth and stencil, obviously
+    //scene.autoClearDepthAndStencil = false; // Depth and stencil, obviously
 
     var initCameraPos;
     var initCameraFocus;
@@ -252,7 +261,7 @@ var createScene = function(){
         {
             currentWaitTime -= (engine.getDeltaTime() / 1000);
             if (hasplayer) {
-              attractLabel.innerHTML =  currentWaitTime.toFixed(2) + "<br /> WAITING FOR PLAYERS";
+              attractLabel.innerHTML =  currentWaitTime.toFixed(0) + "<br /> WAITING FOR PLAYERS";
             }
 
             if(currentWaitTime <= 0)
@@ -275,7 +284,7 @@ var createScene = function(){
         {
             currentGameTime -= (engine.getDeltaTime() / 1000);
             var time = currentGameTime.toFixed(2);
-            attractLabel.innerHTML =  time;
+            attractLabel.innerHTML =  "";
 
             if(currentGameTime <= 0)
             {
@@ -295,6 +304,30 @@ var createScene = function(){
                 currentGameTime = initGameTime;
                 updateClock();
                 socket.emit('room reset');
+            }
+        }
+
+        if(currentNetState ==  netStates.FREE)
+        {
+            currentNetLerpDelayTime = initNetLerpDelayTime;
+            currentNetLerpTime = initNetLerpTime;
+        }
+        else if(currentNetState == netStates.WAITING)
+        {
+            currentNetLerpTime = initNetLerpTime;
+            //console.log(currentNetLerpDelayTime);
+            currentNetLerpDelayTime -= (engine.getDeltaTime() / 1000);
+            if(currentNetLerpDelayTime <= 0)
+            {
+                currentNetState = netStates.FREE;
+            }
+        }
+        else if(currentNetState == netStates.LERPING)
+        {
+            currentNetLerpTime -= (engine.getDeltaTime() / 1000);
+            if(currentNetLerpTime <= 0)
+            {
+                currentNetState = netStates.FREE;
             }
         }
 
@@ -384,8 +417,33 @@ var createScene = function(){
         //console.log(meshes[i].name);
         mesh.material = myMaterial;
         mesh.freezeWorldMatrix();
-        //mesh.material.emissiveColor = new BABYLON.Color3(1,0,0);
-        console.log(mesh.name);
+        //mesh.material.emissiveColor = BABYLON.Color3.Red();
+        //console.log(mesh.name);
+
+        var h1 = new BABYLON.HighlightLayer("hl1", scene);
+
+
+    });
+
+    BABYLON.SceneLoader.ImportMesh("Goal_Lights_Backboard", "./assets/Layout/", "Goal.babylon", scene, function (mesh) {
+
+            var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
+
+            var mesh = mesh[0];
+
+            //myMaterial.emissiveTexture = new BABYLON.Texture("./assets/Colors.png", scene);
+
+            var newPos = new BABYLON.Vector3(0, 0, 0);
+            newPos.x = mesh.position.x + 0;
+            newPos.y = mesh.position.y + -35.75;
+            newPos.z = mesh.position.z - 60;
+            mesh.position = newPos;
+            //mesh.scaling = new BABYLON.Vector3(0.8, 1, 1);
+            //console.log(meshes[i].name);
+            mesh.material = myMaterial;
+            mesh.freezeWorldMatrix();
+            mesh.material.emissiveColor = BABYLON.Color3.Red();
+            console.log(mesh.name);
 
     });
 
@@ -455,14 +513,13 @@ var createScene = function(){
                 newPos.y = meshes[i].position.y + -36;
                 newPos.z = meshes[i].position.z - 60;
                 meshes[i].position = newPos
-                console.log(meshes[i].name);
+                //console.log(meshes[i].name);
                 meshes[i].material = myMaterial;
                 meshes[i].freezeWorldMatrix();
             }
             else {
                 scene.meshes.pop(meshes[i]);
             }
-            console.log(i);
         }
     });
 
@@ -595,7 +652,7 @@ var createScene = function(){
     //CREATE CIRCLE OF SPHERE COLLIDERS
     var sphereAmount = 20;
     var radius = 3.5;
-    var sphereDiameter = .8;
+    var sphereDiameter = .5;
     var centerPos = torus.position;
     centerPos.y += 0.5;
     for(var i = 0; i < sphereAmount; i++)
@@ -619,7 +676,7 @@ var createScene = function(){
     //CREATE BACKBOARD COLLIDER
     var backboard = BABYLON.Mesh.CreateBox("backboard", 1 , scene);
 
-    backboard.position = new BABYLON.Vector3(0, -2.6, 11.75);
+    backboard.position = new BABYLON.Vector3(0, -2.6, 12.75);
     backboard.scaling = new BABYLON.Vector3(17.5, 14, 1);
     backboard.physicsImpostor = new BABYLON.PhysicsImpostor(backboard, BABYLON.PhysicsImpostor.BoxImpostor, {mass: 0,
     friction: 1,
@@ -630,8 +687,9 @@ var createScene = function(){
     //CREATE COLLIDERS FOR NET
     var sphereAmount = 10;
     var radius = 3.4;
-    var sphereDiameter = 0.25;
+    var sphereDiameter = .5;
     var centerPos = torus.position;
+    var registered = false;
     centerPos.y -= 4;
     var height = 4;
     for(var j = 0; j < height; j++)
@@ -645,7 +703,7 @@ var createScene = function(){
                 centerPos.z + Math.cos(i * Math.PI * 2 / sphereAmount) * radius * (1- (j/2/height))
             );
 
-            var currentMass = 100.01;
+            var currentMass = 5.01;
             if(j == 0)//top row
             {
                 currentMass = 0;
@@ -655,17 +713,43 @@ var createScene = function(){
                 mass: currentMass
 
             })
-            //scene.meshes.pop(sphere1);
-            sphere1.physicsImpostor.sleep();
+
             netSpheres.push(sphere1);
+
+            if(!registered)
+            {
+                netSpheres[0].physicsImpostor.registerAfterPhysicsStep(function ()
+                {
+                    if(currentNetState == netStates.FREE)
+                    {
+                        for(var k = 0; k < netSpheres.length; k++)
+                        {
+                            if(netSpheres[k].physicsImpostor) {
+                                currentSphereVel = netSpheres[k].physicsImpostor.getLinearVelocity();
+                                currentSphereVel.x *= .996;
+                                currentSphereVel.y *= .996;
+                                currentSphereVel.z *= .996;
+                                netSpheres[k].physicsImpostor.setLinearVelocity(currentSphereVel);
+                            }
+                        }
+                        registered = true;
+                    }
+                });
+            }
         }
     }
 
     netSpheres.forEach(function(point, idx) {
         if (idx >= sphereAmount)
         {
+            //console.log(idx);
+            var vertDistance = 1.75 - .1* Math.floor(idx/sphereAmount);
 
-            createJoint(point.physicsImpostor, netSpheres[idx - sphereAmount].physicsImpostor, 1.5);
+            if (idx >= sphereAmount)
+            {
+                createJoint(point.physicsImpostor, netSpheres[idx - sphereAmount].physicsImpostor, vertDistance);
+            }
+
             var horiDistance = .65*3 - .4* Math.floor(idx/sphereAmount);
             if (idx % sphereAmount > 0)
             {
@@ -676,13 +760,12 @@ var createScene = function(){
                 createJoint(point.physicsImpostor, netSpheres[idx + sphereAmount - 1].physicsImpostor, horiDistance);
             }
         }
-
         scene.meshes.pop(netSpheres[i]);
     });
 
     var scoreTrigger = new BABYLON.Mesh.CreateBox("scoreTrigger", 0.8, scene);
     scoreTrigger.position = torus.position;
-    scoreTrigger.position.y += 2;
+    scoreTrigger.position.y += 3;
     var clearMat = new BABYLON.StandardMaterial("myMaterial", scene);
     clearMat.alpha = 0;
     scoreTrigger.material = clearMat;
@@ -733,6 +816,7 @@ var createScene = function(){
     net.setIndices(indices, indices.length);
 
     var debugPos = [];
+    var currentSphereVel;
     net.registerBeforeRender(function ()
     {
         var positions = [];
@@ -796,27 +880,33 @@ var createScene = function(){
     );
 
     function updateClock() {
-        if (shotClockTextures[0].hasAlpha == false) {
 
-            if (currentGameTime > 10) {
-                var firstDigit = parseInt(currentGameTime.toFixed(2).substr(0, 1));
-                var secondDigit = parseInt(currentGameTime.toFixed(2).substr(1, 1));
-            }
-            else {
-                firstDigit = 0;
-                secondDigit = parseInt(currentGameTime.toFixed(2).substr(0, 1));
-            }
 
-            myMaterialTens.emissiveTexture = shotClockTextures[firstDigit];
-            myMaterialTens.diffuseTexture = shotClockTextures[firstDigit];
-            myMaterialTens.opacityTexture = shotClockTextures[firstDigit];
-            myMaterialTens.emissiveTexture.vScale = -1;
-
-            myMaterialOnes.emissiveTexture = shotClockTextures[secondDigit];
-            myMaterialOnes.diffuseTexture = shotClockTextures[secondDigit];
-            myMaterialOnes.opacityTexture = shotClockTextures[secondDigit];
-            myMaterialOnes.emissiveTexture.vScale = -1;
+        if (currentGameTime > 10) {
+            var firstDigit = parseInt(currentGameTime.toFixed(2).substr(0, 1));
+            var secondDigit = parseInt(currentGameTime.toFixed(2).substr(1, 1));
         }
+        else {
+            firstDigit = 0;
+            secondDigit = parseInt(currentGameTime.toFixed(2).substr(0, 1));
+        }
+
+        myMaterialTens.emissiveTexture = shotClockTextures[firstDigit];
+        myMaterialTens.diffuseTexture = shotClockTextures[firstDigit];
+        myMaterialTens.opacityTexture = shotClockTextures[firstDigit];
+        myMaterialTens.emissiveTexture.vScale = -1;
+
+        myMaterialOnes.emissiveTexture = shotClockTextures[secondDigit];
+        myMaterialOnes.diffuseTexture = shotClockTextures[secondDigit];
+        myMaterialOnes.opacityTexture = shotClockTextures[secondDigit];
+        myMaterialOnes.emissiveTexture.vScale = -1;
+
+        myMaterialOnes.emissiveColor = new BABYLON.Color3(1,0,0);
+        myMaterialOnes.diffuseColor = new BABYLON.Color3(1,0,0);
+        myMaterialOnes.ambientColor = new BABYLON.Color3(1,0,0);
+
+        scene.ambientColor = new BABYLON.Color3(1, 1, 1);
+
     }
 
     function createJoint(imp1, imp2, distance) {
@@ -1003,12 +1093,17 @@ socket.on('reset game', function() {
 
 function addScore()
 {
+    currentNetState = netStates.WAITING;
+    currentNetLerpDelayTime = initNetLerpDelayTime;
+
     if(currentGameState != gameStates.GAMEPLAY && currentGameState != gameStates.RESULTS) return;
     console.log("SCORE ADDED");
     score++;
     var scoreLabel = document.getElementById("scoreLabel");
     scoreLabel.innerHTML = "Score: " + score;
     playerData.score = score;
+
+
 }
 
 function updateUI()

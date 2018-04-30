@@ -33,12 +33,6 @@
     camera.setTarget(initCameraFocus);
     scene.clearColor = BABYLON.Color3.Black();
 
-    var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
-
-      // Our built-in 'ground' shape. Params: name, width, depth, subdivs, scene
-      //
-
-      // Point'n click logic
     var targetVec;
     var targetVecNorm;
     var initVec;
@@ -47,19 +41,17 @@
 
     var ground = BABYLON.Mesh.CreateGround("ground1", 35, 35, 1, scene);
       var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
-      myMaterial.diffuseTexture = new BABYLON.Texture("/babylon/assets/FillrateTexture.png", scene);
+      myMaterial.emissiveTexture = new BABYLON.Texture("/babylon/assets/FillrateTexture.png", scene);
       ground.material = myMaterial;
     var basketball;
-
-    light.intensity = 0.6;
-      //var ball = BABYLON.Mesh.CreateSphere("sphere", 2, 0.5, scene);
-      //ball.isPickable = false;
 
     BABYLON.SceneLoader.ImportMesh("", "/babylon/assets/BBall/", "BBall.babylon", scene, function (mesh)
     {
         var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
-        myMaterial.diffuseTexture = new BABYLON.Texture("/babylon/assets/BBall/BBall_Albedo.png", scene);
-        myMaterial.bumpTexture = new BABYLON.Texture("/babylon/assets/BBall/BBall_Normal.png", scene);
+        myMaterial.emissiveTexture = new BABYLON.Texture("/babylon/assets/BBall/BBall_Albedo_Logo.png", scene);
+        //myMaterial.bumpTexture = new BABYLON.Texture("/babylon/assets/BBall/BBall_Normal.png", scene);
+
+        //myMaterial.emissiveColor = generateTeam().colorRGB;
         mesh[0].material = myMaterial;
         myMaterial.freeze();
 
@@ -75,9 +67,6 @@
 
         scene.registerBeforeRender(function()
         {
-            //console.log(scene.pointerX + " " + scene.pointerY);
-            //console.log(canvas.width);
-
             scene.onPointerDown = function (evt, pickResult)
             {
                 if(currentBallState == ballStates.DRAGGABLE)
