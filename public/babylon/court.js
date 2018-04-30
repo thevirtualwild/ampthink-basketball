@@ -15,7 +15,7 @@ var cameraNames = Object.freeze({"freeThrow": 0, "quarterFar": 1, "close": 2});
 var selectedCameraType = cameraNames.freeThrow;
 
 var netSpheres = [];
-
+var attractShots = [-.12, 1.2, 1.1, .3, 1, -.2, -2.5, 1.8, 0, 3.2]
 var cameraSettings = [];
 var score = 0;
 var initWaitTime = 7;
@@ -25,6 +25,7 @@ var currentGameTime = 30;
 var initResultsTime = 10;
 var currentResultsTime = 10;
 var shotIndex = 0;
+var attractIndex = 0;
 createCameraTypes();
 
 var gameReady = false;
@@ -41,7 +42,7 @@ var playerData;
 var createScene = function(){
     var scene = new BABYLON.Scene(engine);
 
-    var shotClockTextures = [];
+    var shotClockTextures = [10];
 
     engine.enableOfflineSupport = false;
 
@@ -103,55 +104,33 @@ var createScene = function(){
     var shotClockTens =  BABYLON.Mesh.CreatePlane("shotClock", 1.0, scene);
     var shotClockOnes =  BABYLON.Mesh.CreatePlane("shotClock", 1.0, scene);
 
+    var firstDigit;
+    var secondDigit;
+
     shotClockTens.position = new BABYLON.Vector3(-1.3, +3.5, 12);
     shotClockTens.scaling = new BABYLON.Vector3(2.5, 5, .1);
 
     shotClockOnes.position = new BABYLON.Vector3(1.3, +3.5, 12);
     shotClockOnes.scaling = new BABYLON.Vector3(2.5, 5, .1);
 
-    for(var i = 0; i < 10; i++) {
-        var texture = new BABYLON.Texture("./assets/ShotClock/Alphas/Texture" + i + ".png", scene, false, false, 1, function(tex)
+    var myMaterialTens = new BABYLON.StandardMaterial("myMaterial", scene);
+    var myMaterialOnes = new BABYLON.StandardMaterial("myMaterial", scene);
+
+    shotClockTens.material = myMaterialTens;
+    shotClockOnes.material = myMaterialOnes;
+
+    currentGameTime = initGameTime;
+
+    for(var i = 0; i < 10; i++)
+    {
+        shotClockTextures[i] = new BABYLON.Texture("./assets/ShotClock/Alphas/Texture" + i + ".png", scene, false, false, 1, function()
         {
-            var myMaterialTens = new BABYLON.StandardMaterial("myMaterial", scene);
-            var myMaterialOnes = new BABYLON.StandardMaterial("myMaterial", scene);
-
-            //var texture = shotClockTextures[i];
-            //shotClockTextures.push(texture);
-            console.log(texture.name);
-
-            texture.hasAlpha = true;
-
-                myMaterialTens.emissiveTexture = texture;
-                myMaterialOnes.emissiveTexture = texture;
-                myMaterialTens.diffuseTexture = texture;
-                myMaterialOnes.diffuseTexture = texture;
-                myMaterialTens.opacityTexture = texture;
-                myMaterialOnes.opacityTexture = texture;
-
-                myMaterialTens.emissiveTexture.uScale = 1;
-                myMaterialOnes.emissiveTexture.vScale = -1;
-
-                myMaterialTens.specularColor = new BABYLON.Color3(1,0,0);
-                myMaterialTens.backFaceCulling = true;
-                myMaterialTens.diffuseTexture.hasAlpha = true;
-                myMaterialTens.emissiveTexture.hasAlpha = true;
-
-                //myMaterialTens.useAlphaFromDiffuseTexture = true;
-
-                //myMaterialTens.alphaMode = BABYLON.Engine.ALPHA_ONEONE;
-
-                myMaterialOnes.backFaceCulling = true;
-                myMaterialOnes.diffuseTexture.hasAlpha = true;
-
-                shotClockTens.material = myMaterialTens;
-                shotClockOnes.material = myMaterialOnes;
-
-
+            if(shotClockTextures[0].hasAlpha == false)
+            {
+                updateClock();
+            }
         });
     }
-
-
-
 
     changeGameState(gameStates.ATTRACT);
 
@@ -269,8 +248,6 @@ var createScene = function(){
         //light.position = camera.position;
         //camera.setTarget(cameraSettings[0].initFocus);
 
-//UPDATE SHOT CLOCK
-
         if(currentGameState == gameStates.WAITING)
         {
             currentWaitTime -= (engine.getDeltaTime() / 1000);
@@ -300,21 +277,13 @@ var createScene = function(){
             var time = currentGameTime.toFixed(2);
             attractLabel.innerHTML =  time;
 
-            /*
-            //UPDATE SHOT CLOCK
-            var tensTexture = shotClockTextures[ parseInt(time.substr(0,1))];
-            var onesTexture = shotClockTextures[ parseInt(time.substr(1,1))];
-
-            //shotClockTens.material.diffuseTexture.alphaMode = BABYLON.material.alphaMode.ALPHA_ADD;
-            //shotClockOnes.material.diffuseTexture.alphaMode = BABYLON.material.alphaMode.ALPHA_ADD;
-
-            shotClockTens.material.diffuseTexture = tensTexture;
-            shotClockOnes.material.diffuseTexture = onesTexture;
-*/
             if(currentGameTime <= 0)
             {
                 changeGameState(gameStates.RESULTS);
+                currentGameTime = 0;
             }
+
+            updateClock();
         }
         else if(currentGameState == gameStates.RESULTS)
         {
@@ -323,6 +292,8 @@ var createScene = function(){
             if(currentResultsTime <= 0)
             {
                 changeGameState(gameStates.ATTRACT);
+                currentGameTime = initGameTime;
+                updateClock();
                 socket.emit('room reset');
             }
         }
@@ -342,7 +313,7 @@ var createScene = function(){
     var basketball;
     for(var i = 0; i < 10; i++)
     {
-        basketball = BABYLON.Mesh.CreateSphere("basketball", 16, 2.5, scene);
+        basketball = BABYLON.Mesh.CreateSphere("basketball", 16, 3.1, scene);
         basketball.position = torus.position;
         var newPos = new BABYLON.Vector3(0,0,0);
         newPos.x = basketball.position.x + i*3;
@@ -358,9 +329,6 @@ var createScene = function(){
 
         var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
         myMaterial.emissiveTexture = new BABYLON.Texture("./assets/BBall/BBall_Albedo_Logo.png", scene);
-        //myMaterial.diffuseTexture = new BABYLON.Texture("./assets/BBall/BBall_Logo.png", scene);
-        //myMaterial.bumpTexture = new BABYLON.Texture("./assets/BBall/BBall_Normal.png", scene);
-        //myMaterial.freeze();
         var newBasketballs = [];
 
         var newBasketball = mesh[0];
@@ -376,7 +344,7 @@ var createScene = function(){
             var newBasketball = mesh[0].clone("index: " + i);
 
             //newBasketball.position.x =+ i*2;
-            newBasketball.scaling = new BABYLON.Vector3(1.3, 1.4, 1.3);
+            newBasketball.scaling = new BABYLON.Vector3(1.6, 1.6, 1.6);
             newBasketball.material = myMaterial;
 
             newBasketballs.push(newBasketball);
@@ -416,6 +384,8 @@ var createScene = function(){
         //console.log(meshes[i].name);
         mesh.material = myMaterial;
         mesh.freezeWorldMatrix();
+        //mesh.material.emissiveColor = new BABYLON.Color3(1,0,0);
+        console.log(mesh.name);
 
     });
 
@@ -653,7 +623,7 @@ var createScene = function(){
     backboard.scaling = new BABYLON.Vector3(17.5, 14, 1);
     backboard.physicsImpostor = new BABYLON.PhysicsImpostor(backboard, BABYLON.PhysicsImpostor.BoxImpostor, {mass: 0,
     friction: 1,
-    restitution: .8} )
+    restitution: .8} );
     scene.meshes.pop(backboard);
 
 
@@ -825,6 +795,30 @@ var createScene = function(){
         )
     );
 
+    function updateClock() {
+        if (shotClockTextures[0].hasAlpha == false) {
+
+            if (currentGameTime > 10) {
+                var firstDigit = parseInt(currentGameTime.toFixed(2).substr(0, 1));
+                var secondDigit = parseInt(currentGameTime.toFixed(2).substr(1, 1));
+            }
+            else {
+                firstDigit = 0;
+                secondDigit = parseInt(currentGameTime.toFixed(2).substr(0, 1));
+            }
+
+            myMaterialTens.emissiveTexture = shotClockTextures[firstDigit];
+            myMaterialTens.diffuseTexture = shotClockTextures[firstDigit];
+            myMaterialTens.opacityTexture = shotClockTextures[firstDigit];
+            myMaterialTens.emissiveTexture.vScale = -1;
+
+            myMaterialOnes.emissiveTexture = shotClockTextures[secondDigit];
+            myMaterialOnes.diffuseTexture = shotClockTextures[secondDigit];
+            myMaterialOnes.opacityTexture = shotClockTextures[secondDigit];
+            myMaterialOnes.emissiveTexture.vScale = -1;
+        }
+    }
+
     function createJoint(imp1, imp2, distance) {
         var joint = new BABYLON.DistanceJoint({
             maxDistance: distance
@@ -839,7 +833,8 @@ var createScene = function(){
 
             basketballs[shotIndex].physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 0, 0));
             basketballs[shotIndex].physicsImpostor.setAngularVelocity(new BABYLON.Vector3(0, 0, 0));
-            basketballs[shotIndex].physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 18, 12), basketballs[shotIndex].getAbsolutePosition());
+            basketballs[shotIndex].physicsImpostor.applyImpulse(new BABYLON.Vector3(attractShots[attractIndex], 18, 12), basketballs[shotIndex].getAbsolutePosition());
+
         }
         else if(currentGameState == gameStates.GAMEPLAY){
             basketballs[shotIndex].position = new BABYLON.Vector3(0, -9, -14);
@@ -857,6 +852,9 @@ var createScene = function(){
 
         shotIndex++;
         if(shotIndex>=basketballs.length) shotIndex = 0;
+
+        attractIndex++;
+        if(attractIndex >= attractShots.length) attractIndex = 0;
     }
 
     function changeCamera()
@@ -1023,6 +1021,7 @@ function updateUI()
             hasplayer = false;
             scoreLabel.innerHTML = "";
             attractLabel.innerHTML = "COURT CODE: <br /> " + courtName;
+            currentGameTime = initGameTime;
             break;
         case gameStates.WAITING:
             scoreLabel.innerHTML = "COURT CODE: " + courtName;
@@ -1032,7 +1031,6 @@ function updateUI()
         case gameStates.GAMEPLAY:
             scoreLabel.innerHTML = "Score: " + score;
             attractLabel.innerHTML = initGameTime.toString();
-            currentGameTime = initGameTime;
             break;
         case gameStates.RESULTS:
             scoreLabel.innerHTML = "";
