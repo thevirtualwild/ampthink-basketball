@@ -6,7 +6,7 @@ var attractLabel = document.getElementById("attractLabel");
 var scoreLabel = document.getElementById("scoreLabel");
 
 var engine = new BABYLON.Engine(canvas, true, null, false);
-var useCannon = false;
+var useCannon = true;
 
 var gameStates = Object.freeze({"ATTRACT": 0, "WAITING": 1, "GAMEPLAY": 2, "RESULTS": 3, "INACTIVE": 4});
 var currentGameState = gameStates.ATTRACT;
@@ -74,20 +74,21 @@ var createScene = function(){
     var initCameraFocus;
 
     if(useCannon) {
-        var physicsPlugin = new BABYLON.CannonJSPlugin(true, 5);
+        var physicsPlugin = new BABYLON.CannonJSPlugin(true, 1);
         //physicsPlugin.setTimeStep(1/100);
     }
     else
     {
-        var physicsPlugin = new BABYLON.OimoJSPlugin(1);
+        var physicsPlugin = new BABYLON.OimoJSPlugin(5);
         //physicsPlugin.setTimeStep(1/100);
         physicsPlugin.allowSleep = true;
+
     }
 
     var gravityVector = new BABYLON.Vector3(0,-15.81, 0);
     scene.enablePhysics(gravityVector, physicsPlugin);
     scene.getPhysicsEngine().setTimeStep(1/(40 * .6));
-    scene.getPhysicsEngine().getPhysicsPlugin().world.allowSleep = true;
+    //scene.getPhysicsEngine().getPhysicsPlugin().world.allowSleep = true;
     var camera = new BABYLON.FreeCamera("camera1", initCameraPos, scene);
 
     /*
@@ -154,8 +155,12 @@ var createScene = function(){
                 currentGameState = gameState;
                 currentCameraIndex = 0;
                 gameReady = false;
+                console.log(canvas.width);
+                console.log(canvas.height);
+                console.log(canvas.width/canvas.height);
                 animateCamera();
                 updateUI();
+                combo = 0;
                 break;
             case gameStates.WAITING:
                 currentGameState = gameState;
@@ -257,18 +262,18 @@ var createScene = function(){
         newPos.y = torus.position.y + 5;
         newPos.z = torus.position.z - 0;
         camera.setTarget(newPos);
-        camera.fov = 1;
-        //light.position = camera.position;
-        //camera.setTarget(cameraSettings[0].initFocus);
+
+        //dynamically set fov based on screen resolution
+        camera.fov = 1.9 + (-.676 * canvas.width/canvas.height);
+        //console.log(camera.fov);
 
         if(currentGameState == gameStates.WAITING)
         {
             currentWaitTime -= (engine.getDeltaTime() / 1000);
-            if (hasplayer) {
-              attractLabel.innerHTML =  currentWaitTime.toFixed(0) + "<br /> WAITING FOR PLAYERS";
-            }
 
-            if(currentWaitTime <= 0)
+
+
+            if(currentWaitTime <= -5)
             {
               if (hasplayer) {
                 changeGameState(gameStates.GAMEPLAY);
@@ -276,11 +281,25 @@ var createScene = function(){
                 changeGameState(gameStates.INACTIVE);
               }
             }
-            else if(currentWaitTime < 2 && !gameReady)
+            else if(currentWaitTime <= -4 && !gameReady)
             {
                 gameReady = true;
                 if (hasplayer) {
-                  socket.emit("game almost ready", courtName);
+                    socket.emit("game almost ready", courtName);
+                }
+            }
+            else if(currentWaitTime <= -2)
+            {
+                attractLabel.innerHTML = "GAME STARTS IN <br />" +  (5.5 + currentWaitTime).toFixed(0);
+            }
+            else if(currentWaitTime < 0)
+            {
+                attractLabel.innerHTML = "PLAYERS LOCKED IN";
+            }
+            else
+            {
+                if (hasplayer) {
+                    attractLabel.innerHTML =  currentWaitTime.toFixed(0) + "<br /> WAITING FOR PLAYERS";
                 }
             }
         }
@@ -721,15 +740,22 @@ var createScene = function(){
                 centerPos.z + Math.cos(i * Math.PI * 2 / sphereAmount) * radius * (1- (j/2/height))
             );
 
-            var currentMass = 25;
-            if(j == 0)//top row
+            var currentMass;
+
+            if(useCannon)
             {
-                currentMass = 0;
+                currentMass = .1;
             }
             else
             {
                 currentMass = 15000 - j*4000;
             }
+
+            if(j == 0)//top row
+            {
+                currentMass = 0;
+            }
+
             //scene.meshes.pop(sphere);
             sphere1.physicsImpostor = new BABYLON.PhysicsImpostor(sphere1, BABYLON.PhysicsImpostor.SphereImpostor, {
                 mass: currentMass,
@@ -808,9 +834,9 @@ var createScene = function(){
         scene.meshes.pop(netSpheres[i]);
     });
 
-    var scoreTrigger = new BABYLON.Mesh.CreateBox("scoreTrigger", 0.8, scene);
+    var scoreTrigger = new BABYLON.Mesh.CreateBox("scoreTrigger", 2, scene);
     scoreTrigger.position = torus.position;
-    scoreTrigger.position.y += 3;
+    scoreTrigger.position.y += 2;
     var clearMat = new BABYLON.StandardMaterial("myMaterial", scene);
     clearMat.alpha = 0;
     scoreTrigger.material = clearMat;
@@ -828,6 +854,7 @@ var test;
                 },
                 function () {
                     addScore();
+                    //console.log("HIT TRIGGER");
                     if(currentGameState == gameStates.GAMEPLAY || currentGameState == gameStates.RESULTS)
                     {
                         var idx = shotIndex-1;
@@ -1186,7 +1213,7 @@ function updateUI()
             break;
         case gameStates.GAMEPLAY:
             scoreLabel.innerHTML = "Score: " + score;
-            attractLabel.innerHTML = initGameTime.toString();
+            //attractLabel.innerHTML = initGameTime.toString();
             break;
         case gameStates.RESULTS:
             scoreLabel.innerHTML = "";
@@ -1217,9 +1244,7 @@ function createCameraTypes()
 
     var cameraType = {
         cameraNames: cameraNames.freeThrow,
-        //initPos: new BABYLON.Vector3(0, -25, -60),
         initPos: new BABYLON.Vector3(0, -7, -15),
-        //initFocus: new BABYLON.Vector3(0, -12, 11.75),
         initFocus: new BABYLON.Vector3(0, -12, 11.75),
     }
     cameraSettings.push(cameraType);
