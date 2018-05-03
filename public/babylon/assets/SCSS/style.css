@@ -1,0 +1,355 @@
+* {
+  box-sizing: border-box; }
+
+#fpsLabel, #list-top {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  color: #999;
+  cursor: default; }
+
+#list-top, #list-bot {
+  left: 20px;
+  right: initial; }
+
+#fpsLabel-bot, #list-bot {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  color: #999;
+  cursor: default; }
+
+#scoreLabel {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  color: #999;
+  cursor: default; }
+
+#titleTopLeft {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 40%;
+  height: 100%;
+  margin: auto;
+  padding: 0px;
+  border-radius: 3px;
+  cursor: default;
+  overflow: visible; }
+
+#titleTopLeft img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: left;
+  position: relative; }
+
+#titleTopLeft img#titleLights {
+  width: 100%;
+  height: 150%;
+  object-fit: contain;
+  object-position: top left;
+  position: absolute;
+  top: 0;
+  left: 0; }
+
+#permanentGameBranding footer {
+  height: 20%;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: url("assets/UI/D1/BtmBarGround(clean).png");
+  background-size: cover;
+  background-position: top; }
+
+#permanentGameBranding header {
+  height: 25%;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  /*background: rgba(1,1,1,.5);*/ }
+
+#comboBadge {
+  background: url("assets/UI/D3/ComboFlareGround.png") no-repeat center;
+  width: 30%;
+  position: absolute;
+  top: 10%;
+  right: 50px;
+  background-size: contain;
+  transform: rotate(13deg); }
+
+#comboBadge h2 {
+  margin-bottom: 0;
+  line-height: 80px; }
+
+#comboBadge h2#comboNum {
+  font-size: 100px;
+  color: yellow;
+  font-style: italic;
+  text-align: center; }
+
+#comboBadge h2#streak {
+  font-size: 80px;
+  color: yellow;
+  font-style: italic;
+  text-align: center;
+  text-transform: uppercase; }
+
+#playNow {
+  background: url("assets/UI/D1/PlayNowGradient(crop).png") no-repeat right;
+  width: 50%;
+  position: absolute;
+  bottom: 30%;
+  right: 0;
+  background-size: cover; }
+
+#playNow h2 {
+  font-size: 80px;
+  color: yellow;
+  font-style: italic;
+  text-align: right;
+  padding-right: 20px; }
+
+#playNow h2 span.emphasize {
+  font-weight: bold;
+  color: white; }
+
+#footerLeft {
+  width: 43%;
+  height: 100%;
+  /*background-color: cyan;*/
+  background-color: rgba(33, 134, 191, 0.5);
+  display: inline-block;
+  position: relative;
+  float: left; }
+
+#footerLeft h2 {
+  position: absolute; }
+
+#footerLeft h2#attractTopLeft {
+  font-size: 30px;
+  text-transform: uppercase;
+  top: 20%;
+  text-align: center;
+  left: 10%;
+  color: cyan; }
+
+#footerLeft h2#attractBottomLeft {
+  font-size: 100px;
+  top: 28%;
+  text-align: center;
+  left: 12%;
+  color: cyan; }
+
+#footerLeft h2#attractRight {
+  font-size: 50px;
+  text-transform: uppercase;
+  top: 15%;
+  text-align: left;
+  left: 30%;
+  color: yellow; }
+
+#footerCenter {
+  width: 43%;
+  height: 100%;
+  /*background-color: cyan;*/
+  /*background-color: rgba(33,134, 191, .5);*/
+  display: inline-block;
+  position: relative;
+  float: left; }
+
+#footerCenter h2 {
+  position: absolute; }
+
+#footerCenter h2#attractStep2TopLeft {
+  font-size: 30px;
+  text-transform: uppercase;
+  top: 20%;
+  text-align: center;
+  left: 10%;
+  color: cyan; }
+
+#footerCenter h2#attractStep2BottomLeft {
+  font-size: 100px;
+  top: 28%;
+  text-align: center;
+  left: 12%;
+  color: cyan; }
+
+#footerCenter h2#attractStep2Right {
+  font-size: 50px;
+  text-transform: uppercase;
+  top: 15%;
+  text-align: left;
+  left: 30%;
+  color: yellow; }
+
+#footerRight {
+  width: 14%;
+  height: 100%;
+  margin: auto;
+  padding: 0px;
+  border-radius: 3px;
+  cursor: default;
+  overflow: visible;
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+  float: left; }
+
+#footerRight img#sponsorLogo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: right;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 20; }
+
+#footerRight img#sponsorGround {
+  width: 130%;
+  height: 125%;
+  z-index: 5;
+  position: absolute;
+  bottom: 0;
+  right: 0; }
+
+#attractLabel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 800px;
+  height: 500px;
+  overflow: visible;
+  font-size: 64px;
+  margin: auto;
+  padding: 50px;
+  border-radius: 3px;
+  text-align: center;
+  /*background:rgba(0,0,0, 0.2);*/
+  color: #999;
+  cursor: default; }
+
+#timeLabel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 20px;
+  text-align: center;
+  background: red;
+  border: 2px solid #333;
+  border-radius: 3px;
+  color: #fff;
+  cursor: default; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0; }
+
+html {
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased; }
+
+html, input {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; }
+
+ul {
+  list-style: none;
+  word-wrap: break-word;
+  padding: 0; }
+
+canvas {
+  width: 100%;
+  height: 100%; }
+
+/* Pages */
+.pages {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  position: absolute; }
+
+.page {
+  height: 100%;
+  position: absolute;
+  width: 100%; }
+
+/* Login & Roomcange Pages*/
+.login.page, .passcode.page {
+  background-color: #000; }
+
+.login.page .form, .passcode.page .form {
+  height: 100px;
+  margin-top: -100px;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  width: 100%;
+  max-width: 100%; }
+
+.login.page .form .usernameInput, .passcode.page .form .passcodeInput {
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid #fff;
+  outline: none;
+  padding-bottom: 15px;
+  text-align: center;
+  width: 400px;
+  max-width: 100%; }
+
+.login.page .title, .passcode.page .title {
+  font-size: 200%; }
+
+.login.page .usernameInput, .passcode.page .passcodeInput {
+  font-size: 200%;
+  letter-spacing: 3px; }
+
+.login.page .title, .passcode.page .title, .login.page .usernameInput, .passcode.page .passcodeInput {
+  color: #fff;
+  font-weight: 100; }
+
+/**
+ * Canvas
+ */
+/*
+.whiteboard {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+}
+*/
+.colors {
+  position: fixed; }
+
+.color {
+  display: inline-block;
+  height: 48px;
+  width: 48px; }
+
+.color.black {
+  background-color: black; }
+
+.color.red {
+  background-color: red; }
+
+.color.green {
+  background-color: green; }
+
+.color.blue {
+  background-color: blue; }
+
+.color.yellow {
+  background-color: yellow; }
+
+/*# sourceMappingURL=style.css.map */

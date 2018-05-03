@@ -271,6 +271,7 @@ var createScene = function(){
         {
             currentWaitTime -= (engine.getDeltaTime() / 1000);
 
+            UIWaitingUpdateClock(currentWaitTime);
 
 
             if(currentWaitTime <= -5)

@@ -35,57 +35,60 @@
       </div>
     </header>
 
-    <div id="comboBadge">
-      <h2 id="comboNum">
-        3
-      </h2>
-      <h2 id="streak">
-        Streak!
-      </h2>
-    </div>
+    <div id="inner">
+      <div id="container">
+        <div id="comboBadge">
+          <h2 id="comboNum">
+            3
+          </h2>
+          <h2 id="streak">
+            Streak!
+          </h2>
+        </div>
+        <div id="results">
 
-    <div id="results">
-
-    </div>
-
-    <div id="playNow">
-      <h2>
-        PLAY <span class="emphasize">NOW!</span>
-      </h2>
-    </div>
-
-    <footer>
-      <div id="attract">
-
+        </div>
       </div>
+    </div>
+
+    <div id="preFooter">
+      <div id="playNow">
+        <h2>
+          PLAY <span class="emphasize">NOW!</span>
+        </h2>
+      </div>
+    </div>
+    <footer>
       <div id="footerLeft">
-        <!--<img src="assets/UI/D1/BtmBarOverlayColor.png" id="leftInfo">-->
-        <h2 id="attractTopLeft">
-          step
-        </h2>
 
-        <h2 id="attractBottomLeft">
-          1
-        </h2>
+        <div class="attractLeft">
+          <h2>step</h2>
+          <h2 class="stepNum">1</h2>
+        </div>
 
-        <h2 id="attractRight">
-          <i>TEXT <b>'<font color="white">BBALL</font>'</b><br/>TO <b><font color="white">12345</font></b></i>
-        </h2>
+        <div class="attractRight">
+          <h2>TEXT '<span id="textCode">BBALL</span>'</h2>
+          <h2>TO <span id="textNum">12345</span></h2>
+        </div>
+
+        <div id="countdown">30</div>
       </div>
 
       <div id="footerCenter">
-        <h2 id="attractStep2TopLeft">
-          step
-        </h2>
 
-        <h2 id="attractStep2BottomLeft">
-          2
-        </h2>
+          <div class="attractLeft">
+            <h2>
+              step
+            </h2>
+            <h2 class="stepNum">
+              2
+            </h2>
+          </div>
 
-        <h2 id="attractStep2Right">
-          <i>THEN ENTER<br/>CODE '<b><font color="white">ABCDE</font>'</b></i>
-        </h2>
-
+          <div class="attractRight">
+            <h2>THEN ENTER</h2>
+            <h2>CODE '<span id="courtCode">12345</span>'</h2>
+          </div>
       </div>
 
       <div id="footerRight">
@@ -97,11 +100,11 @@
   </div>
 
 
-  <canvas id = "canvas"></canvas>
+  <canvas id="canvas"></canvas>
 
 
-  <table id="list-top"></table>
-  <table id="list-bot"></table>
+  <!--<table id="list-top"></table>-->
+  <!--<table id="list-bot"></table>-->
 
 
 
@@ -113,63 +116,63 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenMax.min.js"></script>
 
 
-  <script>
+  <!--<script>-->
 
 
-    // NOTE: window.RTCPeerConnection is "not a constructor" in FF22/23
-    var RTCPeerConnection = /*window.RTCPeerConnection ||*/ window.webkitRTCPeerConnection || window.mozRTCPeerConnection;
+    <!--// NOTE: window.RTCPeerConnection is "not a constructor" in FF22/23-->
+    <!--var RTCPeerConnection = /*window.RTCPeerConnection ||*/ window.webkitRTCPeerConnection || window.mozRTCPeerConnection;-->
 
-    if (RTCPeerConnection) (function () {
-      var rtc = new RTCPeerConnection({iceServers:[]});
-      if (1 || window.mozRTCPeerConnection) {      // FF [and now Chrome!] needs a channel/stream to proceed
-          rtc.createDataChannel('', {reliable:false});
-      };
+    <!--if (RTCPeerConnection) (function () {-->
+      <!--var rtc = new RTCPeerConnection({iceServers:[]});-->
+      <!--if (1 || window.mozRTCPeerConnection) {      // FF [and now Chrome!] needs a channel/stream to proceed-->
+          <!--rtc.createDataChannel('', {reliable:false});-->
+      <!--};-->
 
-      rtc.onicecandidate = function (evt) {
-          // convert the candidate to SDP so we can run it through our general parser
-          // see https://twitter.com/lancestout/status/525796175425720320 for details
-          if (evt.candidate) grepSDP("a="+evt.candidate.candidate);
-      };
-      rtc.createOffer(function (offerDesc) {
-          grepSDP(offerDesc.sdp);
-          rtc.setLocalDescription(offerDesc);
-      }, function (e) { console.warn("offer failed", e); });
-
-
-      var addrs = Object.create(null);
-      addrs["0.0.0.0"] = false;
-      function updateDisplay(newAddr) {
-          if (newAddr in addrs) return;
-          else addrs[newAddr] = true;
-          var displayAddrs = Object.keys(addrs).filter(function (k) { return addrs[k]; });
-          document.getElementById('list-top').textContent = displayAddrs.join(" or perhaps ") || "n/a";
-          document.getElementById('list-bot').textContent = displayAddrs.join(" or perhaps ") || "n/a";
-      }
-
-      function grepSDP(sdp) {
-          var hosts = [];
-          sdp.split('\r\n').forEach(function (line) { // c.f. http://tools.ietf.org/html/rfc4566#page-39
-              if (~line.indexOf("a=candidate")) {     // http://tools.ietf.org/html/rfc4566#section-5.13
-                  var parts = line.split(' '),        // http://tools.ietf.org/html/rfc5245#section-15.1
-                      addr = parts[4],
-                      type = parts[7];
-                  if (type === 'host') updateDisplay(addr);
-              } else if (~line.indexOf("c=")) {       // http://tools.ietf.org/html/rfc4566#section-5.7
-                  var parts = line.split(' '),
-                      addr = parts[2];
-                  updateDisplay(addr);
-              }
-          });
-      }
-    })(); else {
-      document.getElementById('list').innerHTML = "<code>ifconfig | grep inet | grep -v inet6 | cut -d\" \" -f2 | tail -n1</code>";
-      document.getElementById('list').nextSibling.textContent = "In Chrome and Firefox your IP should display automatically, by the power of WebRTCskull.";
-      document.getElementById('list-top').innerHTML = "<code>ifconfig | grep inet | grep -v inet6 | cut -d\" \" -f2 | tail -n1</code>";
-      document.getElementById('list-bot').nextSibling.textContent = "In Chrome and Firefox your IP should display automatically, by the power of WebRTCskull.";
-    }
+      <!--rtc.onicecandidate = function (evt) {-->
+          <!--// convert the candidate to SDP so we can run it through our general parser-->
+          <!--// see https://twitter.com/lancestout/status/525796175425720320 for details-->
+          <!--if (evt.candidate) grepSDP("a="+evt.candidate.candidate);-->
+      <!--};-->
+      <!--rtc.createOffer(function (offerDesc) {-->
+          <!--grepSDP(offerDesc.sdp);-->
+          <!--rtc.setLocalDescription(offerDesc);-->
+      <!--}, function (e) { console.warn("offer failed", e); });-->
 
 
-  </script>
+      <!--var addrs = Object.create(null);-->
+      <!--addrs["0.0.0.0"] = false;-->
+      <!--function updateDisplay(newAddr) {-->
+          <!--if (newAddr in addrs) return;-->
+          <!--else addrs[newAddr] = true;-->
+          <!--var displayAddrs = Object.keys(addrs).filter(function (k) { return addrs[k]; });-->
+          <!--document.getElementById('list-top').textContent = displayAddrs.join(" or perhaps ") || "n/a";-->
+          <!--document.getElementById('list-bot').textContent = displayAddrs.join(" or perhaps ") || "n/a";-->
+      <!--}-->
+
+      <!--function grepSDP(sdp) {-->
+          <!--var hosts = [];-->
+          <!--sdp.split('\r\n').forEach(function (line) { // c.f. http://tools.ietf.org/html/rfc4566#page-39-->
+              <!--if (~line.indexOf("a=candidate")) {     // http://tools.ietf.org/html/rfc4566#section-5.13-->
+                  <!--var parts = line.split(' '),        // http://tools.ietf.org/html/rfc5245#section-15.1-->
+                      <!--addr = parts[4],-->
+                      <!--type = parts[7];-->
+                  <!--if (type === 'host') updateDisplay(addr);-->
+              <!--} else if (~line.indexOf("c=")) {       // http://tools.ietf.org/html/rfc4566#section-5.7-->
+                  <!--var parts = line.split(' '),-->
+                      <!--addr = parts[2];-->
+                  <!--updateDisplay(addr);-->
+              <!--}-->
+          <!--});-->
+      <!--}-->
+    <!--})(); else {-->
+      <!--document.getElementById('list').innerHTML = "<code>ifconfig | grep inet | grep -v inet6 | cut -d\" \" -f2 | tail -n1</code>";-->
+      <!--document.getElementById('list').nextSibling.textContent = "In Chrome and Firefox your IP should display automatically, by the power of WebRTCskull.";-->
+      <!--document.getElementById('list-top').innerHTML = "<code>ifconfig | grep inet | grep -v inet6 | cut -d\" \" -f2 | tail -n1</code>";-->
+      <!--document.getElementById('list-bot').nextSibling.textContent = "In Chrome and Firefox your IP should display automatically, by the power of WebRTCskull.";-->
+    <!--}-->
+
+
+  <!--</script>-->
 
   <script src="/babylon/babylon.objFileLoader.min.js"></script>
   <script src ="/babylon/shaders/Shaders/babylonjs.materials.js"></script>
