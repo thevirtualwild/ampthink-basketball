@@ -1205,6 +1205,7 @@ function updateUI()
             scoreLabel.innerHTML = "";
             attractLabel.innerHTML = "COURT CODE: <br /> " + courtName;
             currentGameTime = initGameTime;
+            UIAttractAnimateOut();
             break;
         case gameStates.WAITING:
             scoreLabel.innerHTML = "COURT CODE: " + courtName;

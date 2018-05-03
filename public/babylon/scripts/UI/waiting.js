@@ -13,27 +13,38 @@ var attractStep2TopLeft = document.getElementById("attractStep2TopLeft");
 var attractStep2BottomLeft = document.getElementById("attractStep2BottomLeft");
 var attractStep2Right = document.getElementById("attractStep2Right");
 
-
-function UIAttractAnimateIn()
+function UIWaitingAnimateIn()
 {
-    //BBALL Text instructions 1+2 appear in bottom
-    //Show background Graphic 1 and background Graphic 2
-    TweenMax.to(footerLeft, textFadeTime, {width:.43*canvas.width});
-    TweenMax.to(footerCenter, textFadeTime, {width:.43*canvas.width});
+    //set values
+    //Fade in
 
-    TweenMax.to(comboBadge, textFadeTime, {delay: textFadeTime*3,alpha:0});
-    TweenMax.to(attractTopLeft, textFadeTime, {delay: textFadeTime*3,alpha:0});
-    TweenMax.to(attractBottomLeft, textFadeTime, {delay: textFadeTime*3,alpha:0});
-    TweenMax.to(attractRight, textFadeTime, {delay: textFadeTime*3,alpha:0});
-    TweenMax.to(attractStep2TopLeft, textFadeTime, {delay: textFadeTime*3,alpha:0});
-    TweenMax.to(attractStep2BottomLeft, textFadeTime, {delay: textFadeTime*3,alpha:0});
-    TweenMax.to(attractStep2Right, textFadeTime, {delay: textFadeTime*3,alpha:0});
+    attractBottomLeft.innerText = "30";
+    attractBottomLeft.style.color = "yellow";
+
+    attractStep2BottomLeft.innerText = "WAITING FOR OTHER <br>PLAYERS TO JOIN...";
+    attractStep2BottomLeft.style.color = "white";
+    attractStep2BottomLeft.style.cssText = "font-size: = 10";
+    var compStyle = window.getComputedStyle(attractStep2BottomLeft, null);
+
+    /*
+    attractBottomLeft.style.left = canvas.width * .5;
+    attractBottomLeft.style.top = canvas.height * .5;
+    attractBottomLeft.style.textAlign = "center";
+*/
+
+    TweenMax.to(comboBadge, textFadeTime, {alpha:0});
+    TweenMax.to(attractTopLeft, textFadeTime, {alpha:0});
+    TweenMax.to(attractBottomLeft, textFadeTime, {alpha:1});
+    TweenMax.to(attractRight, textFadeTime, {alpha:0});
+    TweenMax.to(attractStep2TopLeft, textFadeTime, {alpha:0});
+    TweenMax.to(attractStep2BottomLeft, textFadeTime, {alpha:1});
+    TweenMax.to(attractStep2Right, textFadeTime, {alpha:0});
 
     TweenMax.to(playNow, textFadeTime, {delay: textFadeTime*3,alpha:1});
 
 }
 
-function UIAttractAnimateOut()
+function UIWaitingAnimateOut()
 {
     //Fade out both bball texts
     //Fade out Play Now!
@@ -48,5 +59,5 @@ function UIAttractAnimateOut()
     TweenMax.to(attractStep2Right, textFadeTime, {alpha:0});
 
     TweenMax.to(footerLeft, textFadeTime, {delay: textFadeTime*3, width:.16*canvas.width});
-    TweenMax.to(footerCenter, textFadeTime, {delay: textFadeTime*3, width:.699*canvas.width, onComplete: UIWaitingAnimateIn});
+    TweenMax.to(footerCenter, textFadeTime, {delay: textFadeTime*3, width:.699*canvas.width});
 }

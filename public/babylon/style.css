@@ -146,6 +146,36 @@
   float:left;
 }
 
+#footerLeft h2{
+  position: absolute;
+}
+
+#footerLeft h2#attractTopLeft{
+  font-size: 30px;
+  text-transform: uppercase;
+  top: 20%;
+  text-align: center;
+  left: 10%;
+  color: cyan;
+}
+
+#footerLeft h2#attractBottomLeft{
+  font-size: 100px;
+  top: 28%;
+  text-align: center;
+  left: 12%;
+  color: cyan;
+}
+
+#footerLeft h2#attractRight{
+  font-size: 50px;
+  text-transform: uppercase;
+  top: 15%;
+  text-align: left;
+  left: 30%;
+  color: yellow;
+}
+
 #footerCenter{
   width: 43%;
   height: 100%;
@@ -155,6 +185,36 @@
   position: relative;
   float:left;
 
+}
+
+#footerCenter h2{
+  position: absolute;
+}
+
+#footerCenter h2#attractStep2TopLeft{
+  font-size: 30px;
+  text-transform: uppercase;
+  top: 20%;
+  text-align: center;
+  left: 10%;
+  color: cyan;
+}
+
+#footerCenter h2#attractStep2BottomLeft{
+  font-size: 100px;
+  top: 28%;
+  text-align: center;
+  left: 12%;
+  color: cyan;
+}
+
+#footerCenter h2#attractStep2Right{
+  font-size: 50px;
+  text-transform: uppercase;
+  top: 15%;
+  text-align: left;
+  left: 30%;
+  color: yellow;
 }
 
 #footerRight{
