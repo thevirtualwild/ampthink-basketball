@@ -2,7 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1c95612d-4678-4af6-a1f9-2ab5baa022a4" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/public/babylon/court.js" afterPath="$PROJECT_DIR$/public/babylon/court.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/babylon/assets/UI/Common/LogoLights.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/babylon/assets/UI/Common/ShotClockLogo.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/babylon/assets/UI/Common/SponsorGround.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/babylon/assets/UI/Common/SponsorLogoExample.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/babylon/assets/UI/D1/BtmBarGround.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/babylon/assets/UI/D1/BtmBarOverlayColor.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/babylon/assets/UI/D1/PlayNowCTA.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/babylon/assets/UI/D1/PlayNowGradient(crop).png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/babylon/assets/UI/D1/PlayNowGradient.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/babylon/assets/UI/D3/ComboFlareGround.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/babylon/assets/UI/D4/LightsOverlay.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/babylon/assets/UI/D4/TeamScoreGround.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/babylon/assets/UI/D4/TopScoreGround.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/babylon/assets/UI/D4/YourScoreGround.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/babylon/scripts/UI/attract.js" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/public/babylon/index.html" afterPath="$PROJECT_DIR$/public/babylon/index.html" />
+      <change beforePath="$PROJECT_DIR$/public/babylon/style.css" afterPath="$PROJECT_DIR$/public/babylon/style.css" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" afterPath="$PROJECT_DIR$/public/index.html" />
+      <change beforePath="$PROJECT_DIR$/public/playerInfo.js" afterPath="$PROJECT_DIR$/public/babylon/scripts/playerInfo.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -29,11 +48,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="court.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="court.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/babylon/court.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="88">
-              <caret line="283" column="41" lean-forward="false" selection-start-line="283" selection-start-column="41" selection-end-line="283" selection-end-column="41" />
+            <state relative-caret-position="275">
+              <caret line="294" column="40" lean-forward="false" selection-start-line="294" selection-start-column="40" selection-end-line="294" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -50,9 +69,9 @@
         </entry>
       </file>
       <file leaf-file-name="playerInfo.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/playerInfo.js">
+        <entry file="file://$PROJECT_DIR$/public/babylon/scripts/playerInfo.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
+            <state relative-caret-position="-119">
               <caret line="23" column="1" lean-forward="false" selection-start-line="23" selection-start-column="1" selection-end-line="23" selection-end-column="1" />
               <folding />
             </state>
@@ -62,18 +81,21 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/babylon/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="278">
-              <caret line="34" column="2" lean-forward="false" selection-start-line="34" selection-start-column="2" selection-end-line="34" selection-end-column="2" />
-              <folding />
+            <state relative-caret-position="173">
+              <caret line="37" column="25" lean-forward="true" selection-start-line="37" selection-start-column="25" selection-end-line="37" selection-end-column="25" />
+              <folding>
+                <element signature="n#header#0;n#div#4;n#body#0;n#html#0;n#!!top" expanded="false" />
+                <element signature="n#footer#0;n#div#4;n#body#0;n#html#0;n#!!top" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
+      <file leaf-file-name="style.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/babylon/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="97" column="0" lean-forward="false" selection-start-line="97" selection-start-column="0" selection-end-line="100" selection-end-column="1" />
+            <state relative-caret-position="256">
+              <caret line="98" column="19" lean-forward="false" selection-start-line="98" selection-start-column="19" selection-end-line="98" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -84,16 +106,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="499">
               <caret line="35" column="1" lean-forward="false" selection-start-line="35" selection-start-column="1" selection-end-line="35" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Layout.babylon" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/babylon/assets/Layout/Layout.babylon">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -112,8 +124,18 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="188">
-              <caret line="15" column="35" lean-forward="false" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="35" />
+            <state relative-caret-position="256">
+              <caret line="19" column="21" lean-forward="false" selection-start-line="19" selection-start-column="21" selection-end-line="19" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="attract.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/babylon/scripts/UI/attract.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="11" column="1" lean-forward="false" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -130,9 +152,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>lerptime</find>
-      <find>LERPING</find>
-      <find>restitution</find>
       <find>clothmat</find>
       <find>netspheres</find>
       <find>createjoint</find>
@@ -160,6 +179,9 @@
       <find>gameready</find>
       <find>waiting</find>
       <find>attractlabel</find>
+      <find>passcodeinput</find>
+      <find>15</find>
+      <find>fotter</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -187,15 +209,16 @@
         <option value="$PROJECT_DIR$/public/babylon/assets/BBall/BBall.obj" />
         <option value="$PROJECT_DIR$/public/style.css" />
         <option value="$PROJECT_DIR$/public/babylon/names.js" />
-        <option value="$PROJECT_DIR$/public/babylon/index.html" />
-        <option value="$PROJECT_DIR$/public/index.html" />
         <option value="$PROJECT_DIR$/index.js" />
         <option value="$PROJECT_DIR$/public/main.js" />
         <option value="$PROJECT_DIR$/public/babylon/main.js" />
-        <option value="$PROJECT_DIR$/public/babylon/style.css" />
         <option value="$PROJECT_DIR$/public/playerInfo.js" />
         <option value="$PROJECT_DIR$/public/player.js" />
         <option value="$PROJECT_DIR$/public/babylon/court.js" />
+        <option value="$PROJECT_DIR$/public/index.html" />
+        <option value="$PROJECT_DIR$/public/babylon/scripts/UI/attract.js" />
+        <option value="$PROJECT_DIR$/public/babylon/index.html" />
+        <option value="$PROJECT_DIR$/public/babylon/style.css" />
       </list>
     </option>
   </component>
@@ -217,8 +240,8 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="9" />
-    <option name="y" value="52" />
+    <option name="x" value="-21" />
+    <option name="y" value="60" />
     <option name="width" value="1912" />
     <option name="height" value="990" />
   </component>
@@ -260,15 +283,15 @@
               <item name="ampthink-basketball" type="462c0819:PsiDirectoryNode" />
               <item name="public" type="462c0819:PsiDirectoryNode" />
               <item name="babylon" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="scripts" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ampthink-basketball" type="b2602c69:ProjectViewProjectNode" />
               <item name="ampthink-basketball" type="462c0819:PsiDirectoryNode" />
               <item name="public" type="462c0819:PsiDirectoryNode" />
               <item name="babylon" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="Alpha Textures" type="462c0819:PsiDirectoryNode" />
+              <item name="scripts" type="462c0819:PsiDirectoryNode" />
+              <item name="UI" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -290,18 +313,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\jimmy\Documents\ampthink-basketball\public\babylon\assets\UI\D1" />
+      <recent name="C:\Users\jimmy\Documents\ampthink-basketball\public\babylon\scripts\UI" />
       <recent name="$PROJECT_DIR$/public/babylon/assets/ShotClock" />
       <recent name="C:\Users\jimmy\Documents\ampthink-basketball\public\babylon\shaders\Shaders" />
       <recent name="C:\Users\jimmy\Documents\ampthink-basketball\public\babylon\assets" />
-      <recent name="C:\Users\jimmy\Documents\ampthink-basketball\public\babylon\assets\shaders\cell" />
-      <recent name="C:\Users\jimmy\Documents\ampthink-basketball\public\babylon" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\jimmy\Documents\ampthink-basketball\public\babylon\assets\UI" />
+      <recent name="C:\Users\jimmy\Documents\ampthink-basketball\public\babylon\scripts" />
       <recent name="$PROJECT_DIR$/public/2dgame" />
       <recent name="$PROJECT_DIR$/public" />
       <recent name="C:\Users\jimmy\Documents\ampthink-basketball\public\babylon\shaders\Shaders" />
-      <recent name="C:\Users\jimmy\Documents\ampthink-basketball\public\babylon" />
-      <recent name="C:\Users\jimmy\Documents\ampthink-basketball\public\babylon\shaders" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -355,7 +378,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="324624000" />
+    <option name="totallyTimeSpent" value="334759000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -367,17 +390,17 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="9" y="52" width="1912" height="990" extended-state="0" />
+    <frame x="-21" y="60" width="1912" height="990" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18196371" sideWeight="0.48690292" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18196371" sideWeight="0.9229584" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32941177" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290398" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32941177" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18196371" sideWeight="0.51309705" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24004684" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18196371" sideWeight="0.0770416" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24004684" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24690694" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33882353" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18508437" sideWeight="0.5047059" order="3" side_tool="true" content_ui="tabs" />
@@ -416,14 +439,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/babylon/assets/Goal_Merged.obj">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/babylon/Football.mtl" />
     <entry file="file://$PROJECT_DIR$/node_modules/gulp/CHANGELOG.md">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -616,14 +631,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/babylon/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="34" column="2" lean-forward="false" selection-start-line="34" selection-start-column="2" selection-end-line="34" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/2dgame/bump.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -637,14 +644,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/main.js" />
-    <entry file="file://$PROJECT_DIR$/public/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="15" column="35" lean-forward="false" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/2dgame/game.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
@@ -679,22 +678,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/babylon/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="97" column="0" lean-forward="false" selection-start-line="97" selection-start-column="0" selection-end-line="100" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/playerInfo.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="23" column="1" lean-forward="false" selection-start-line="23" selection-start-column="1" selection-end-line="23" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/player.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="190">
@@ -703,10 +686,58 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/babylon/assets/BBall/BBall_Albedo_Template.psd">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/babylon/court.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="283" column="41" lean-forward="false" selection-start-line="283" selection-start-column="41" selection-end-line="283" selection-end-column="41" />
+        <state relative-caret-position="275">
+          <caret line="294" column="40" lean-forward="false" selection-start-line="294" selection-start-column="40" selection-end-line="294" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/babylon/scripts/playerInfo.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-119">
+          <caret line="23" column="1" lean-forward="false" selection-start-line="23" selection-start-column="1" selection-end-line="23" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="19" column="21" lean-forward="false" selection-start-line="19" selection-start-column="21" selection-end-line="19" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/babylon/scripts/UI/attract.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="1" lean-forward="false" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/babylon/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="173">
+          <caret line="37" column="25" lean-forward="true" selection-start-line="37" selection-start-column="25" selection-end-line="37" selection-end-column="25" />
+          <folding>
+            <element signature="n#header#0;n#div#4;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#footer#0;n#div#4;n#body#0;n#html#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/babylon/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="98" column="19" lean-forward="false" selection-start-line="98" selection-start-column="19" selection-end-line="98" selection-end-column="19" />
           <folding />
         </state>
       </provider>
