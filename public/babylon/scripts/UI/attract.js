@@ -1,13 +1,13 @@
 var textFadeTime = .25;
 
-//var canvas = document.getElementById("canvas");
+var canvas = document.getElementById("canvas");
 
-/*
+
 var footerLeft = document.getElementById("footerLeft");
 var footerCenter = document.getElementById("footerCenter");
 var playNow= document.getElementById("playNow");
 var comboBadge= document.getElementById("comboBadge");
-*/
+
 //var attractLeft = document.getElementByID("attractTopLeft");
 /*
 var attractBottomLeft = document.getElementById("attractBottomLeft");
@@ -16,7 +16,7 @@ var attractStep2TopLeft = document.getElementById("attractStep2TopLeft");
 var attractStep2BottomLeft = document.getElementById("attractStep2BottomLeft");
 var attractStep2Right = document.getElementById("attractStep2Right");
 */
-//var attractLeftStepNum = document.getElementById("footerLeft").getElementsByClassName("stepNum");
+var attractLeftStepNum = document.getElementById("footerLeft").getElementsByClassName("stepNum");
 
 
 function UIAttractAnimateIn()

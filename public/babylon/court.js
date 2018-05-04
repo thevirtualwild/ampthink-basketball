@@ -111,8 +111,8 @@ var createScene = function(){
 
     camera.position = cameraSettings[currentCameraIndex].initPos;
     camera.setTarget(cameraSettings[currentCameraIndex].initFocus);
-    camera.maxZ = 130;
-    camera.minZ = 1;
+    //camera.maxZ = 130;
+    //camera.minZ = 1;
 
     var shotClockTens =  BABYLON.Mesh.CreatePlane("shotClock", 1.0, scene);
     var shotClockOnes =  BABYLON.Mesh.CreatePlane("shotClock", 1.0, scene);
@@ -384,10 +384,23 @@ var createScene = function(){
         basketballs.push(basketball);
     }
 
-    BABYLON.SceneLoader.ImportMesh("", "./assets/BBall/", "BBall.babylon", scene, function (mesh) {
+    scene.ambientColor = new BABYLON.Color3(1,1,1);
 
-        var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
-        myMaterial.emissiveTexture = new BABYLON.Texture("./assets/BBall/BBall_Albedo_Logo.png", scene);
+    BABYLON.SceneLoader.ImportMesh("", "./assets/BBall_V2/", "BBall_V2.babylon", scene, function (mesh) {
+
+        var baseMaterial = new BABYLON.StandardMaterial("baseMaterial", scene);
+        var overlayMaterial = new BABYLON.StandardMaterial("overlayMaterial", scene);
+        var multimat = new BABYLON.MultiMaterial("multi", scene);
+
+        baseMaterial.emissiveTexture = new BABYLON.Texture("./assets/BBall_V2/BBall_V2_Albedo.png", scene);
+        baseMaterial.diffuseTexture = new BABYLON.Texture("./assets/BBall_V2/BBall_V2_Albedo.png", scene);
+        baseMaterial.diffuseTexture.hasAlpha = true;
+
+        overlayMaterial.ambientColor = new BABYLON.Color3(.5,0,0);
+
+        multimat.subMaterials.push(baseMaterial);
+        multimat.subMaterials.push(overlayMaterial);
+
         var newBasketballs = [];
 
         var newBasketball = mesh[0];
@@ -404,7 +417,7 @@ var createScene = function(){
 
             //newBasketball.position.x =+ i*2;
             newBasketball.scaling = new BABYLON.Vector3(1.6, 1.6, 1.6);
-            newBasketball.material = myMaterial;
+            newBasketball.material = multimat;
 
             newBasketballs.push(newBasketball);
         }
@@ -467,9 +480,11 @@ var createScene = function(){
 
             var mesh = mesh[0];
 
-            myMaterial.emissiveTexture = new BABYLON.Texture("./assets/Alpha Textures/BackboardLight.png", scene);
-            myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Alpha Textures/BackboardLight.png", scene);
-            myMaterial.opacityTexture = new BABYLON.Texture("./assets/Alpha Textures/BackboardLight.png", scene);
+            myMaterial.emissiveTexture = new BABYLON.Texture("./assets/Alpha Textures/LightGradient_Red.png", scene);
+            myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Alpha Textures/LightGradient_Red.png", scene);
+            myMaterial.opacityTexture = new BABYLON.Texture("./assets/Alpha Textures/LightGradient_Red.png", scene);
+
+            myMaterial.diffuseTexture.hasAlpha = true;
 
             myMaterial.alpha = 0;
             var newPos = new BABYLON.Vector3(0, 0, 0);
@@ -477,15 +492,13 @@ var createScene = function(){
             newPos.y = mesh.position.y + -35.75;
             newPos.z = mesh.position.z - 60;
             mesh.position = newPos;
-            console.log(mesh.position);
             mesh.material = myMaterial;
-            console.log(mesh.name);
             //scene.meshes.pop(mesh);
         scene.registerBeforeRender(function()
         {
             if(currentGameState == gameStates.RESULTS)
             {
-                myMaterial.alpha = 1;
+                myMaterial.alpha = .5;
             }
             else
             {
@@ -530,7 +543,7 @@ var createScene = function(){
         mesh.freezeWorldMatrix();
 
     });
-
+/*
     BABYLON.SceneLoader.ImportMesh("", "./assets/Layout/", "Seating_Close.babylon", scene, function (meshes) {
 
         var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
@@ -560,7 +573,7 @@ var createScene = function(){
             }
         }
     });
-
+*/
 /*
     BABYLON.SceneLoader.ImportMesh("", "./assets/Layout/", "Seating_Far.babylon", scene, function (meshes) {
 
@@ -593,7 +606,7 @@ var createScene = function(){
         }
     });
 
-
+*/
     BABYLON.SceneLoader.ImportMesh("", "./assets/Layout/", "Layout.babylon", scene, function (meshes) {
 
         var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
@@ -603,9 +616,11 @@ var createScene = function(){
             if (meshes[i].name != "LightfBeam.004" &&
                 meshes[i].name != "Flfdoor") {
 
-                myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
+                myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Alpha Textures/ArenaLights_Small.png", scene);
+                myMaterial.emissiveTexture = new BABYLON.Texture("./assets/Alpha Textures/ArenaLights_Small.png", scene);
+                myMaterial.opacityTexture = new BABYLON.Texture("./assets/Alpha Textures/ArenaLights_Small.png", scene);
                 myMaterial.diffuseTexture.hasAlpha = true;
-                myMaterial.freeze();
+                //myMaterial.freeze();
                 //myMaterial.bumpTexture = new BABYLON.Texture("./assets/Layout/Layout_Normal.png", scene);
                 //myMaterial.specularTexture = new BABYLON.Texture("./assets/Layout/Layout_Smoothness.png", scene);
 
@@ -616,7 +631,7 @@ var createScene = function(){
                 meshes[i].position = newPos
                 console.log(meshes[i].name);
                 meshes[i].material = myMaterial;
-                meshes[i].freezeWorldMatrix();
+                //meshes[i].freezeWorldMatrix();
             }
             else {
                 scene.meshes.pop(meshes[i]);
@@ -624,7 +639,7 @@ var createScene = function(){
             console.log(i);
         }
     });
-*/
+
 
         var particleSystem = new BABYLON.ParticleSystem("particles", 200, scene);
 
@@ -705,7 +720,7 @@ var createScene = function(){
         //scene.meshes.pop(sphere);
         sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.SphereImpostor, {mass: 0,
             friction: 1,
-            restitution: .8} )
+            restitution:4} )
         scene.meshes.pop(sphere);
     }
 
