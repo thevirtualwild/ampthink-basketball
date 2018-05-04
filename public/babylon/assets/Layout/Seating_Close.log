@@ -11,22 +11,6 @@ Exporter version: 5.6.2, Blender version: 2.79 (sub 0)
 		texture directory:  C:\Users\steve\Documents\GIT Projects\Ampthink Basketball\public\babylon\assets\Layout\
 	Python World class constructor completed
 	WARNING: No active camera has been assigned, or is not in a currently selected Blender layer
-	processing begun of mesh:  ArenaLights_Large
-		processing begun of Standard material:  ArenaLights_Large
-		num positions      :  32
-		num normals        :  32
-		num uvs            :  64
-		num uvs2           :  0
-		num colors         :  0
-		num indices        :  48
-	processing begun of mesh:  ArenaLights_Small
-		processing begun of Standard material:  ArenaLights_Small
-		num positions      :  384
-		num normals        :  384
-		num uvs            :  768
-		num uvs2           :  0
-		num colors         :  0
-		num indices        :  576
 	processing begun of mesh:  SeatGroup_Corner_Low.002
 		processing begun of Standard material:  Layout
 		num positions      :  2620
@@ -126,4 +110,4 @@ Exporter version: 5.6.2, Blender version: 2.79 (sub 0)
 ========= Writing of scene file started =========
 ========= Writing of scene file completed =========
 ========= end of processing =========
-elapsed time:  0 min, 1.5205 secs
+elapsed time:  0 min, 1.6321 secs
