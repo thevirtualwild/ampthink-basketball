@@ -13,12 +13,12 @@ Exporter version: 5.6.2, Blender version: 2.79 (sub 0)
 	WARNING: No active camera has been assigned, or is not in a currently selected Blender layer
 	processing begun of mesh:  ArenaLights_Large
 		processing begun of Standard material:  ArenaLights_Large
-		num positions      :  16
-		num normals        :  16
-		num uvs            :  32
+		num positions      :  32
+		num normals        :  32
+		num uvs            :  64
 		num uvs2           :  0
 		num colors         :  0
-		num indices        :  24
+		num indices        :  48
 	processing begun of mesh:  ArenaLights_Small
 		processing begun of Standard material:  ArenaLights_Small
 		num positions      :  384
@@ -126,4 +126,4 @@ Exporter version: 5.6.2, Blender version: 2.79 (sub 0)
 ========= Writing of scene file started =========
 ========= Writing of scene file completed =========
 ========= end of processing =========
-elapsed time:  0 min, 1.4393 secs
+elapsed time:  0 min, 1.5205 secs
