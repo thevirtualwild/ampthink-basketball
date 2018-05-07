@@ -124,8 +124,20 @@
   position: relative;
 
   margin: 0 auto;
+
+  height:100%;
+  top:0;
+  position:absolute;
+
   #container{
     max-height: 800px;
+    top:50%;
+    transform: translateY(-50%);
+    position: relative;
+    margin: 0 auto;
+    max-width:100%;
+    width: 1080px;
+    padding:0;
 
     #comboBadge{
       background: url("assets/UI/D3/ComboFlareGround.png") no-repeat center;
@@ -157,6 +169,132 @@
           font-weight: bold;
           text-transform: uppercase;
           margin-top: 18px;
+        }
+      }
+    }
+
+    #results {
+      display: block;
+      //border: 1px solid red;
+      z-index: 100;
+      padding: 0 50px;
+      font-size: 80px;
+      color: yellow;
+
+      #playerScores .score {
+        height: 220px;
+        //border: 1px solid yellow;
+
+        .scoreContainer {
+          width: auto;
+          margin-top: 50px;
+
+          .scoreNum, .playerName {
+            width:auto;
+            font-size: 140px;
+            float:left;
+            text-align: right;
+            line-height: 160px;
+            padding-right: 10px;
+          }
+
+          .playerName {
+            text-align: left;
+            font-style: italic;
+            line-height: 70px;
+            padding-right: 0;
+
+            .firstName {
+              font-size: 50px;
+              color: white;
+            }
+            .lastName {
+              font-size: 80px;
+              color: cyan;
+              padding-left: 20px;
+              font-weight: bold;
+            }
+          }
+
+        }
+
+        // specific styles for each score
+        &#topScore {
+          background: url('assets/UI/D4/TopScoreGround.png') no-repeat;
+          background-size: contain;
+          background-position: left center;
+
+          &:after {
+            display:block;
+            content: '';
+            clear:both;
+          }
+
+          .scoreContainer {
+            float:left;
+            padding-left:100px;
+            text-align:left;
+          }
+        }
+        &#yourScore {
+          background: url('assets/UI/D4/YourScoreGround.png') no-repeat;
+          background-size: contain;
+          background-position: right center;
+
+          &:after {
+            display:block;
+            content: '';
+            clear:both;
+          }
+
+          .scoreContainer {
+            float:right;
+            padding-right: 100px;
+            text-align:right;
+          }
+        }
+      }
+
+      #teamScores{
+        width: 75%;
+        margin-top: 50px;
+        height: 250px;
+        padding: 0 50px;
+
+        &:after {
+          display:block;
+          content: '';
+          clear: both;
+        }
+
+        h2 {
+          text-transform: uppercase;
+          text-align: center;
+          font-weight: bold;
+          font-size: 40px;
+          color: white;
+          text-shadow: 0px 0px 10px cyan;
+        }
+
+        .score {
+          width: 33.3%;
+          float: left;
+          text-align: center;
+          border: 1px solid green;
+          margin: 0;
+          display: inline-block;
+
+          .scoreNum {
+            background: url('assets/UI/D4/TeamScoreGround.png') no-repeat top center;
+            background-size: contain;
+            font-size: 80px;
+            padding:30px 20px 50px;
+            font-weight: bold;
+          }
+          .teamName {
+            font-size: 40px;
+            transform: rotate(-10deg);
+          }
         }
       }
     }
@@ -395,7 +533,6 @@ footer{
   //}
 
   #footerRight{
-    width: 20%;
     height: 100%;
     margin: auto;
     padding:0px;
@@ -403,10 +540,14 @@ footer{
     cursor: default;
     overflow: visible;
     display: inline-block;
-    position: relative;
+    position: absolute;
+    bottom:0px;
+    right:0px;
     z-index: 1;
     float:right;
-    max-width: 225px;
+    //width: 20%;
+    width: 170px;
+    //max-width: 225px;
   }
 
   #footerRight img#sponsorLogo{
@@ -497,6 +638,12 @@ ul {
 canvas{
   width:100%;
   height:100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -5;
 }
 
 /* Pages */

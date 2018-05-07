@@ -45,17 +45,26 @@
       ground.material = myMaterial;
     var basketball;
 
-    BABYLON.SceneLoader.ImportMesh("", "/babylon/assets/BBall/", "BBall.babylon", scene, function (mesh)
-    {
-        var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
-        myMaterial.emissiveTexture = new BABYLON.Texture("/babylon/assets/BBall/BBall_Albedo_Logo.png", scene);
-        //myMaterial.bumpTexture = new BABYLON.Texture("/babylon/assets/BBall/BBall_Normal.png", scene);
+    scene.ambientColor = new BABYLON.Color3(1,1,1);
 
-        //myMaterial.emissiveColor = generateTeam().colorRGB;
-        mesh[0].material = myMaterial;
-        myMaterial.freeze();
+    BABYLON.SceneLoader.ImportMesh("", "/babylon/assets/BBall_V2/", "BBall_V2.babylon", scene, function (mesh)
+    {
+        var baseMaterial = new BABYLON.StandardMaterial("baseMaterial", scene);
+        var overlayMaterial = new BABYLON.StandardMaterial("overlayMaterial", scene);
+        var multimat = new BABYLON.MultiMaterial("multi", scene);
+
+        baseMaterial.emissiveTexture = new BABYLON.Texture("babylon/assets/BBall_V2/BBall_V2_Albedo.png", scene);
+        baseMaterial.diffuseTexture = new BABYLON.Texture("babylon/assets/BBall_V2/BBall_V2_Albedo.png", scene);
+        baseMaterial.diffuseTexture.hasAlpha = true;
+
+        overlayMaterial.ambientColor = new BABYLON.Color3(1,.4,.2);
+
+        multimat.subMaterials.push(baseMaterial);
+        multimat.subMaterials.push(overlayMaterial);
 
         basketball = mesh[0];
+        basketball.material = multimat;
+
         basketball.position = new BABYLON.Vector3(-10, 0, 0);
         basketball.isPickable = false;
         basketball.physicsImpostor = new BABYLON.PhysicsImpostor(basketball, BABYLON.PhysicsImpostor.SphereImpostor,
