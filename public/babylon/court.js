@@ -673,65 +673,65 @@ var createScene = function(){
 
     });
 
-        var particleSystem = new BABYLON.ParticleSystem("particles", 200, scene);
+    var particleSystem = new BABYLON.ParticleSystem("particles", 200, scene);
 
-        //Texture of each particle
-        particleSystem.particleTexture = new BABYLON.Texture("./assets/Alpha Textures/LenseFlash_01.png", scene);
+    //Texture of each particle
+    particleSystem.particleTexture = new BABYLON.Texture("./assets/Alpha Textures/LenseFlash_01.png", scene);
 
-        var fountain = BABYLON.Mesh.CreateBox("fountain", 1.0, scene);
-        fountain.scaling = new BABYLON.Vector3(800, 120, 1);
+    var fountain = BABYLON.Mesh.CreateBox("fountain", 1.0, scene);
+    fountain.scaling = new BABYLON.Vector3(800, 120, 1);
 
-        var newPos = new BABYLON.Vector3(0,0,0);
-        newPos.x = fountain.position.x + 0;
-        newPos.y = fountain.position.y + 25;
-        newPos.z = fountain.position.z + 170;
+    var newPos = new BABYLON.Vector3(0,0,0);
+    newPos.x = fountain.position.x + 0;
+    newPos.y = fountain.position.y + 25;
+    newPos.z = fountain.position.z + 170;
 
-        fountain.position = newPos;
-        fountain.rotation = new BABYLON.Vector3(45, 0, 0);
-        //fountain.position
-        // Where the particles come from
-        particleSystem.emitter = fountain; // the starting object, the emitter
-        particleSystem.minEmitBox = new BABYLON.Vector3(-1, -1, 0); // Starting all from
-        particleSystem.maxEmitBox = new BABYLON.Vector3(1, 0, 0); // To...
+    fountain.position = newPos;
+    fountain.rotation = new BABYLON.Vector3(45, 0, 0);
+    //fountain.position
+    // Where the particles come from
+    particleSystem.emitter = fountain; // the starting object, the emitter
+    particleSystem.minEmitBox = new BABYLON.Vector3(-1, -1, 0); // Starting all from
+    particleSystem.maxEmitBox = new BABYLON.Vector3(1, 0, 0); // To...
 
-        // Colors of all particles
-        //particleSystem.color1 = new BABYLON.Color4(0.7, 0.8, 1.0, 1.0);
-        //particleSystem.color2 = new BABYLON.Color4(0.2, 0.5, 1.0, 1.0);
-        //particleSystem.colorDead = new BABYLON.Color4(0, 0, 0.2, 0.0);
+    // Colors of all particles
+    //particleSystem.color1 = new BABYLON.Color4(0.7, 0.8, 1.0, 1.0);
+    //particleSystem.color2 = new BABYLON.Color4(0.2, 0.5, 1.0, 1.0);
+    //particleSystem.colorDead = new BABYLON.Color4(0, 0, 0.2, 0.0);
 
-        // Size of each particle (random between...
-        particleSystem.minSize = 2;
-        particleSystem.maxSize = 4;
+    // Size of each particle (random between...
+    particleSystem.minSize = 2;
+    particleSystem.maxSize = 4;
 
-        // Life time of each particle (random between...
-        particleSystem.minLifeTime = 0.1;
-        particleSystem.maxLifeTime = 0.3;
+    // Life time of each particle (random between...
+    particleSystem.minLifeTime = 0.1;
+    particleSystem.maxLifeTime = 0.3;
 
-        // Emission rate
-        particleSystem.emitRate = 3000;
+    // Emission rate
+    particleSystem.emitRate = 3000;
 
-        // Blend mode : BLENDMODE_ONEONE, or BLENDMODE_STANDARD
-        particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+    // Blend mode : BLENDMODE_ONEONE, or BLENDMODE_STANDARD
+    particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
 
-        // Set the gravity of all particles
-        particleSystem.gravity = new BABYLON.Vector3(0, -9.81, 0);
+    // Set the gravity of all particles
+    particleSystem.gravity = new BABYLON.Vector3(0, -9.81, 0);
 
-        // Direction of each particle after it has been emitted
-        //particleSystem.direction1 = new BABYLON.Vector3(-7, 8, 3);
-        //particleSystem.direction2 = new BABYLON.Vector3(7, 8, -3);
+    // Direction of each particle after it has been emitted
+    //particleSystem.direction1 = new BABYLON.Vector3(-7, 8, 3);
+    //particleSystem.direction2 = new BABYLON.Vector3(7, 8, -3);
 
-        // Angular speed, in radians
-        particleSystem.minAngularSpeed = 0;
-        particleSystem.maxAngularSpeed = Math.PI;
+    // Angular speed, in radians
+    particleSystem.minAngularSpeed = 0;
+    particleSystem.maxAngularSpeed = Math.PI;
 
-        // Speed
-        particleSystem.minEmitPower = 0;
-        particleSystem.maxEmitPower = 0;
-        particleSystem.updateSpeed = 0.005;
+    // Speed
+    particleSystem.minEmitPower = 0;
+    particleSystem.maxEmitPower = 0;
+    particleSystem.updateSpeed = 0.005;
 
-        scene.meshes.pop(fountain);
-        // Start the particle system
-        particleSystem.start();
+    scene.meshes.pop(fountain);
+    // Start the particle system
+    particleSystem.start();
 
 
     //CREATE CIRCLE OF SPHERE COLLIDERS
@@ -1150,9 +1150,55 @@ var thisRoom = '';
 var courtName = '';
 var hasplayer = false;
 
-$passcodeInput.focus();
+// $passcodeInput.focus();
 
-joinRoom();
+var myIP = getMyIP();
+
+function showCourt(someIP) {
+  checkMyDeviceInfo(someIP);
+}
+
+
+function checkMyDeviceInfo(someIP) {
+  // check if Device Knows What Court it should be in
+  socket.emit('get court', someIP);
+
+  //Will return an "on" event from Socket
+}
+
+function getRoomToJoin() {
+
+}
+
+function getMyIP() {
+  window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;//compatibility for Firefox and chrome
+  var pc = new RTCPeerConnection({iceServers:[]}), noop = function(){};
+  pc.createDataChannel('');//create a bogus data channel
+  pc.createOffer(pc.setLocalDescription.bind(pc), noop);// create offer and set local description
+  pc.onicecandidate = function(ice)
+  {
+   if (ice && ice.candidate && ice.candidate.candidate)
+   {
+    myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(ice.candidate.candidate)[1];
+
+    // console.log('my IP: ', myIP);
+
+    showCourt(myIP);
+
+    pc.onicecandidate = noop;
+   }
+  };
+}
+
+
+
+
+
+
+
+
+
+
 
 function joinRoom()
 {
@@ -1215,6 +1261,21 @@ function randomRange (min, max)
     return number;
 }
 
+
+
+socket.on('device knows court', function(data) {
+  // do something with the data
+  console.log('device knows court');
+});
+
+socket.on('device needs court', function() {
+  // find something out
+  console.log('Device doesnt know court');
+});
+
+
+
+
 socket.on('query', function(query) {
   console.log('query received - ' + query);
 
@@ -1242,6 +1303,13 @@ socket.on('player joined court', function(userdata) {
       hasplayer = true;
     }
     scene.actionManager.processTrigger(scene.actionManager.actions[2].trigger, {additionalData: "y"});
+});
+
+
+
+socket.on('join this room', function(data) {
+  console.log('Court and Room Data: ');
+  console.dir(data);
 });
 
 
