@@ -1,5 +1,22 @@
+@font-face {
+  font-family: 'Gobold';
+  src: url("assets/Fonts/GoboldLight.otf"); }
+@font-face {
+  font-family: 'Gobold';
+  src: url("assets/Fonts/GoboldBold.otf");
+  font-weight: bold; }
+@font-face {
+  font-family: 'Gobold';
+  src: url("assets/Fonts/GoboldBoldItalic.otf");
+  font-weight: bold;
+  font-style: italic; }
+@font-face {
+  font-family: 'Gobold';
+  src: url("assets/Fonts/GoboldLightItalic.otf");
+  font-style: italic; }
 * {
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  font-family: "Gobold"; }
 
 #fpsLabel, #list-top {
   position: fixed;
@@ -54,8 +71,14 @@
   top: 0;
   left: 0; }
 
+#permanentGameBranding header {
+  height: 200px;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  /*background: rgba(1,1,1,.5);*/ }
 #permanentGameBranding footer {
-  height: 20%;
+  height: 200px;
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -63,129 +86,120 @@
   background-size: cover;
   background-position: top; }
 
-#permanentGameBranding header {
-  height: 25%;
-  position: absolute;
-  top: 0;
+#inner {
+  max-width: 1920px;
   width: 100%;
-  /*background: rgba(1,1,1,.5);*/ }
+  position: relative;
+  margin: 0 auto; }
+  #inner #container {
+    max-height: 800px; }
+    #inner #container #comboBadge {
+      background: url("assets/UI/D3/ComboFlareGround.png") no-repeat center;
+      width: 350px;
+      height: 350px;
+      position: absolute;
+      top: 0;
+      right: 50px;
+      background-size: contain;
+      transform: rotate(10deg);
+      padding: 40px; }
+      #inner #container #comboBadge h2 {
+        margin-bottom: 0;
+        line-height: 1em;
+        top: 50%;
+        transform: translateY(50%); }
+        #inner #container #comboBadge h2#comboNum {
+          font-size: 80px;
+          color: yellow;
+          font-style: italic;
+          text-align: center;
+          font-weight: bold; }
+        #inner #container #comboBadge h2#streak {
+          font-size: 60px;
+          color: yellow;
+          font-style: italic;
+          text-align: center;
+          font-weight: bold;
+          text-transform: uppercase;
+          margin-top: 15px; }
 
-#comboBadge {
-  background: url("assets/UI/D3/ComboFlareGround.png") no-repeat center;
-  width: 30%;
+#preFooter {
   position: absolute;
-  top: 10%;
-  right: 50px;
-  background-size: contain;
-  transform: rotate(13deg); }
-
-#comboBadge h2 {
-  margin-bottom: 0;
-  line-height: 80px; }
-
-#comboBadge h2#comboNum {
-  font-size: 100px;
-  color: yellow;
-  font-style: italic;
-  text-align: center; }
-
-#comboBadge h2#streak {
-  font-size: 80px;
-  color: yellow;
-  font-style: italic;
-  text-align: center;
-  text-transform: uppercase; }
-
-#playNow {
-  background: url("assets/UI/D1/PlayNowGradient(crop).png") no-repeat right;
-  width: 50%;
-  position: absolute;
-  bottom: 30%;
+  bottom: 300px;
   right: 0;
-  background-size: cover; }
+  width: 100%; }
+  #preFooter #playNow {
+    background: url("assets/UI/D1/PlayNowGradient(crop).png") no-repeat right;
+    width: 50%;
+    background-size: cover;
+    margin-right: 0;
+    margin-left: auto; }
+    #preFooter #playNow h2 {
+      font-size: 80px;
+      color: yellow;
+      font-style: italic;
+      text-align: right;
+      padding-right: 20px; }
+      #preFooter #playNow h2 span.emphasize {
+        font-weight: bold;
+        color: white; }
 
-#playNow h2 {
-  font-size: 80px;
-  color: yellow;
-  font-style: italic;
-  text-align: right;
-  padding-right: 20px; }
-
-#playNow h2 span.emphasize {
-  font-weight: bold;
-  color: white; }
-
-#footerLeft {
-  width: 43%;
+footer #footerLeft, footer #footerCenter {
+  width: 18%;
   height: 100%;
   /*background-color: cyan;*/
   background-color: rgba(33, 134, 191, 0.5);
   display: inline-block;
   position: relative;
-  float: left; }
-
-#footerLeft h2 {
-  position: absolute; }
-
-#footerLeft h2#attractTopLeft {
-  font-size: 30px;
-  text-transform: uppercase;
-  top: 20%;
-  text-align: center;
-  left: 10%;
-  color: cyan; }
-
-#footerLeft h2#attractBottomLeft {
-  font-size: 100px;
-  top: 28%;
-  text-align: center;
-  left: 12%;
-  color: cyan; }
-
-#footerLeft h2#attractRight {
-  font-size: 50px;
-  text-transform: uppercase;
-  top: 15%;
-  text-align: left;
-  left: 30%;
-  color: yellow; }
-
-#footerCenter {
-  width: 43%;
-  height: 100%;
-  /*background-color: cyan;*/
-  /*background-color: rgba(33,134, 191, .5);*/
-  display: inline-block;
-  position: relative;
-  float: left; }
-
-#footerCenter h2 {
-  position: absolute; }
-
-#footerCenter h2#attractStep2TopLeft {
-  font-size: 30px;
-  text-transform: uppercase;
-  top: 20%;
-  text-align: center;
-  left: 10%;
-  color: cyan; }
-
-#footerCenter h2#attractStep2BottomLeft {
-  font-size: 100px;
-  top: 28%;
-  text-align: center;
-  left: 12%;
-  color: cyan; }
-
-#footerCenter h2#attractStep2Right {
-  font-size: 50px;
-  text-transform: uppercase;
-  top: 15%;
-  text-align: left;
-  left: 30%;
-  color: yellow; }
-
-#footerRight {
+  float: left;
+  max-width: 700px;
+  padding-top: 50px;
+  padding-bottom: 40px; }
+  footer #footerLeft .waitingLeft, footer #footerCenter .waitingLeft {
+    width: 30%;
+    float: left; }
+    footer #footerLeft .waitingLeft h2, footer #footerCenter .waitingLeft h2 {
+      font-size: 30px;
+      text-transform: uppercase;
+      text-align: center;
+      color: yellow;
+      position: relative;
+      margin-bottom: 5px;
+      font-weight: normal; }
+  footer #footerLeft .attractLeft, footer #footerCenter .attractLeft, footer #footerLeft .attractRight, footer #footerCenter .attractRight {
+    display: none; }
+  footer #footerLeft .attractLeft, footer #footerCenter .attractLeft {
+    width: 30%;
+    float: left; }
+    footer #footerLeft .attractLeft h2, footer #footerCenter .attractLeft h2 {
+      font-size: 30px;
+      text-transform: uppercase;
+      text-align: center;
+      color: cyan;
+      position: relative;
+      margin-bottom: 5px;
+      font-weight: normal; }
+      footer #footerLeft .attractLeft h2.stepNum, footer #footerCenter .attractLeft h2.stepNum {
+        font-size: 65px;
+        margin-bottom: 0; }
+  footer #footerLeft .attractRight, footer #footerCenter .attractRight {
+    width: 70%;
+    float: left; }
+    footer #footerLeft .attractRight h2, footer #footerCenter .attractRight h2 {
+      font-style: italic;
+      line-height: 1em;
+      font-size: 50px;
+      text-transform: uppercase;
+      text-align: left;
+      color: yellow;
+      position: relative;
+      font-weight: normal; }
+      footer #footerLeft .attractRight h2 span#courtCode, footer #footerCenter .attractRight h2 span#courtCode, footer #footerLeft .attractRight h2 span#textCode, footer #footerCenter .attractRight h2 span#textCode, footer #footerLeft .attractRight h2 span#textNum, footer #footerCenter .attractRight h2 span#textNum {
+        font-weight: bold;
+        color: white; }
+footer #footerCenter {
+  background: none; }
+footer #footerRight {
   width: 14%;
   height: 100%;
   margin: auto;
@@ -196,9 +210,9 @@
   display: inline-block;
   position: relative;
   z-index: 1;
-  float: left; }
-
-#footerRight img#sponsorLogo {
+  float: right;
+  max-width: 225px; }
+footer #footerRight img#sponsorLogo {
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -207,8 +221,7 @@
   bottom: 0;
   right: 0;
   z-index: 20; }
-
-#footerRight img#sponsorGround {
+footer #footerRight img#sponsorGround {
   width: 130%;
   height: 125%;
   z-index: 5;

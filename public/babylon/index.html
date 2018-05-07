@@ -18,6 +18,10 @@
     </li>
   </ul> -->
 
+  <div id="template">
+    <img src="assets/UI/D1template.png" id="templateImg">
+  </div>
+
   <div id="scoreLabel">
   </div>
 
@@ -71,7 +75,15 @@
           <h2>TO <span id="textNum">12345</span></h2>
         </div>
 
-        <div id="countdown">30</div>
+        <div class="waitingLeft">
+          <h2 class="textCountdown">30</h2>
+        </div>
+
+        <div class="gameplayLeft">
+          <h2 class="textScore">7</h2>
+          <h2 class="textScoreLabel">S C O R E</h2>
+        </div>
+
       </div>
 
       <div id="footerCenter">
@@ -84,6 +96,15 @@
               2
             </h2>
           </div>
+
+        <div class="waitingRight">
+          <h2 class="textWaiting">WAITING FOR OTHER PLAYERS TO JOIN...</h2>
+        </div>
+
+        <div class="gameplayRight">
+          <h2 class="textGameplayFirst">SHOOTER</h2>
+          <h2 class="textGameplayLast">MCGEE</h2>
+        </div>
 
           <div class="attractRight">
             <h2>THEN ENTER</h2>
@@ -180,6 +201,7 @@
   <script src ="/babylon/assets/babylon.simpleMaterial.js"></script>
   <script src="/babylon/scripts/UI/attract.js"></script>
   <script src="/babylon/scripts/UI/waiting.js"></script>
+  <script src="/babylon/scripts/UI/gameplay.js"></script>
   <script src="/babylon/court.js"></script>
 
 

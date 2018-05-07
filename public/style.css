@@ -1,5 +1,24 @@
+font-face {
+  font-family: 'Gobold';
+  src: url("babylon/assets/Fonts/GoboldLight.otf"); }
+@font-face {
+  font-family: 'Gobold';
+  src: url("babylon/assets/Fonts/GoboldBold.otf");
+  font-weight: bold; }
+@font-face {
+  font-family: 'Gobold';
+  src: url("babylon/assets/Fonts/GoboldBoldItalic.otf");
+  font-weight: bold;
+  font-style: italic; }
+@font-face {
+  font-family: 'Gobold';
+  /*src: url("babylonassets/Fonts/GoboldLightItalic.otf");*/
+  font-style: italic; }
+
+
 * {
   box-sizing: border-box;
+  font-family: "Gobold"; }
 }
 
 html, body {
@@ -49,13 +68,16 @@ canvas{
   height: 100%;
   position: absolute;
   width: 100%;
+
 }
 
 /* Login & Roomcange Pages*/
 
 .login.page, .passcode.page {
   background-color: #000;
+  background-image: url("/babylon/assets/UI/Mobile/MobileGround.png");
 }
+
 
 .login.page .form, .passcode.page .form {
   height: 100px;
@@ -71,7 +93,6 @@ canvas{
 .login.page .form .usernameInput, .passcode.page .form .passcodeInput {
   background-color: transparent;
   border: none;
-  border-bottom: 2px solid #fff;
   outline: none;
   padding-bottom: 15px;
   text-align: center;
@@ -86,12 +107,26 @@ canvas{
 .login.page .usernameInput, .passcode.page .passcodeInput {
   font-size: 200%;
   letter-spacing: 3px;
+  color:white;
+  font-weight: bold;
 }
 
 .login.page .title, .passcode.page .title, .login.page .usernameInput, .passcode.page .passcodeInput {
   color: #fff;
   font-weight: 100;
+  color: yellow;
 }
+
+.passcode.page .passcodeInput{
+  color: white;
+  font-weight: bold;
+  font-size: 600%;
+}
+
+.passcode.page img{
+  width:50%;
+}
+
 
 /**
  * Canvas

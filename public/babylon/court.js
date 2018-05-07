@@ -17,6 +17,7 @@ var currentNetState = netStates.FREE;
 var cameraNames = Object.freeze({"freeThrow": 0, "quarterFar": 1, "close": 2});
 var selectedCameraType = cameraNames.freeThrow;
 
+var totalTime = 0;
 var netSpheres = [];
 var attractShots = [-.12, 1.2, 1.1, .3, 1, -.2, -2.5, 1.8, 0, 3.2]
 var cameraSettings = [];
@@ -36,6 +37,8 @@ var initNetLerpTime = 0.25;
 
 var basketballStates = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
+var pulseAmbientColor = false;
+
 createCameraTypes();
 
 var gameReady = false;
@@ -48,7 +51,8 @@ var prevAnimation;
 var playerData;
 
 var combo = 0;
-
+var newBasketballs = [];
+var newBasketballOutlines = [];
 
 var createScene = function(){
     var scene = new BABYLON.Scene(engine);
@@ -65,7 +69,6 @@ var createScene = function(){
     scene.fogStart = 30;
     scene.fogEnd = 100;
     scene.fogColor =  BABYLON.Color3.Black();
-
 
     //scene.autoClear = false; // Color buffer
     //scene.autoClearDepthAndStencil = false; // Depth and stencil, obviously
@@ -161,6 +164,7 @@ var createScene = function(){
                 animateCamera();
                 updateUI();
                 combo = 0;
+                changeBallFX(false);
                 break;
             case gameStates.WAITING:
                 currentGameState = gameState;
@@ -173,6 +177,7 @@ var createScene = function(){
                 currentGameState = gameState;
                 currentCameraIndex = 1;
                 updateUI();
+                updateBallColor();
                 break;
             case gameStates.RESULTS:
                 currentGameState = gameState;
@@ -259,7 +264,7 @@ var createScene = function(){
 
         var newPos = new BABYLON.Vector3(0,0,0);
         newPos.x = torus.position.x + 0;
-        newPos.y = torus.position.y + 5;
+        newPos.y = torus.position.y + 4;
         newPos.z = torus.position.z - 0;
         camera.setTarget(newPos);
 
@@ -292,15 +297,18 @@ var createScene = function(){
             else if(currentWaitTime <= -2)
             {
                 attractLabel.innerHTML = "GAME STARTS IN <br />" +  (5.5 + currentWaitTime).toFixed(0);
+                //attractLabel.innerHTML = "";
             }
             else if(currentWaitTime < 0)
             {
-                attractLabel.innerHTML = "PLAYERS LOCKED IN";
+                //attractLabel.innerHTML = "PLAYERS LOCKED IN";
+                attractLabel.innerHTML = "";
             }
             else
             {
                 if (hasplayer) {
-                    attractLabel.innerHTML =  currentWaitTime.toFixed(0) + "<br /> WAITING FOR PLAYERS";
+                    //attractLabel.innerHTML =  currentWaitTime.toFixed(0) + "<br /> WAITING FOR PLAYERS";
+                    attractLabel.innerHTML =  "";
                 }
             }
         }
@@ -355,6 +363,16 @@ var createScene = function(){
             }
         }
 
+        totalTime += engine.getDeltaTime()/50;
+
+        if(pulseAmbientColor)
+        {
+            scene.ambientColor = new BABYLON.Color3(
+                Math.abs(Math.sin(totalTime)),
+                Math.abs(Math.sin(totalTime)),
+                Math.abs(Math.sin(totalTime)));
+        }
+
     });
 
     //var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
@@ -396,12 +414,10 @@ var createScene = function(){
         baseMaterial.diffuseTexture = new BABYLON.Texture("./assets/BBall_V2/BBall_V2_Albedo.png", scene);
         baseMaterial.diffuseTexture.hasAlpha = true;
 
-        overlayMaterial.ambientColor = new BABYLON.Color3(.5,0,0);
+        overlayMaterial.ambientColor = new BABYLON.Color3(1,.4,.2);
 
         multimat.subMaterials.push(baseMaterial);
         multimat.subMaterials.push(overlayMaterial);
-
-        var newBasketballs = [];
 
         var newBasketball = mesh[0];
         scene.meshes.pop(mesh[0]);
@@ -443,12 +459,48 @@ var createScene = function(){
                         basketballStates[i] == 1)
                     {
                         combo = 0;
-                        console.log("COMBO BREAKER " + i);
+                        //console.log("COMBO BREAKER " + i);
+                        UIGameplayAnimateBadgeOff();
+
+                        changeBallFX(false);
                         basketballStates[i] = 0;
                     }
                 }
             }
 
+        });
+    });
+
+    BABYLON.SceneLoader.ImportMesh("", "./assets/BBall/", "Bball_Outline.babylon", scene, function (mesh) {
+
+        var baseMaterial = new BABYLON.StandardMaterial("baseMaterial", scene);
+
+        //baseMaterial.emissiveTexture = new BABYLON.Texture("./assets/BBall/BBall_Outline.png", scene);
+        //baseMaterial.diffuseTexture = new BABYLON.Texture("./assets/BBall_V2/BBall_V2_Albedo.png", scene);
+        //baseMaterial.diffuseTexture.hasAlpha = true;
+
+        //baseMaterial.ambientColor = new BABYLON.Color3(1,1,1);
+        baseMaterial.ambientColor = new BABYLON.Color3(1, 0, 0);
+        baseMaterial.alpha = 0;
+        //var newBasketballOutline = mesh[0];
+        scene.meshes.pop(mesh[0]);
+
+        for (var i= 0; i< basketballs.length; i++)
+        {
+            var newBasketballOutline = mesh[0].clone("index: " + i);
+
+            //newBasketball.position.x =+ i*2;
+            newBasketballOutline.scaling = new BABYLON.Vector3(1.6, 1.6, 1.6);
+            newBasketballOutline.material = baseMaterial;
+
+            newBasketballOutlines.push(newBasketballOutline);
+        }
+        scene.registerBeforeRender(function()
+        {
+            for(var i = 0 ; i < basketballs.length; i++)
+            {
+                newBasketballOutlines[i].parent = basketballs[i];
+            }
         });
     });
 
@@ -498,7 +550,7 @@ var createScene = function(){
         {
             if(currentGameState == gameStates.RESULTS)
             {
-                myMaterial.alpha = .5;
+                myMaterial.alpha = 1;
             }
             else
             {
@@ -543,83 +595,19 @@ var createScene = function(){
         mesh.freezeWorldMatrix();
 
     });
-/*
+
     BABYLON.SceneLoader.ImportMesh("", "./assets/Layout/", "Seating_Close.babylon", scene, function (meshes) {
 
         var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
 
         for (var i = 0; i < meshes.length; i++) {
 
-            if (meshes[i].name != "LightfBeam.004" &&
+            if (meshes[i].name != "ArenaLights_Large" &&
+                meshes[i].name != "ArenaLights_Small" &&
                 meshes[i].name != "Floor") {
 
                 myMaterial.emissiveTexture = new BABYLON.Texture("./assets/Colors.png", scene);
                 //myMaterial.diffuseTexture.hasAlpha = true;
-                myMaterial.freeze();
-                //myMaterial.bumpTexture = new BABYLON.Texture("./assets/Layout/Layout_Normal.png", scene);
-                //myMaterial.specularTexture = new BABYLON.Texture("./assets/Layout/Layout_Smoothness.png", scene);
-
-                var newPos = new BABYLON.Vector3(0, 0, 0);
-                newPos.x = meshes[i].position.x + 0;
-                newPos.y = meshes[i].position.y + -36;
-                newPos.z = meshes[i].position.z - 60;
-                meshes[i].position = newPos
-                //console.log(meshes[i].name);
-                meshes[i].material = myMaterial;
-                meshes[i].freezeWorldMatrix();
-            }
-            else {
-                scene.meshes.pop(meshes[i]);
-            }
-        }
-    });
-*/
-/*
-    BABYLON.SceneLoader.ImportMesh("", "./assets/Layout/", "Seating_Far.babylon", scene, function (meshes) {
-
-        var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
-
-        for (var i = 0; i < meshes.length; i++) {
-
-            if (meshes[i].name != "LightfBeam.004" &&
-                meshes[i].name != "Floor") {
-
-                myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
-                myMaterial.diffuseTexture.hasAlpha = true;
-                myMaterial.freeze();
-                //myMaterial.bumpTexture = new BABYLON.Texture("./assets/Layout/Layout_Normal.png", scene);
-                //myMaterial.specularTexture = new BABYLON.Texture("./assets/Layout/Layout_Smoothness.png", scene);
-
-                var newPos = new BABYLON.Vector3(0, 0, 0);
-                newPos.x = meshes[i].position.x + 0;
-                newPos.y = meshes[i].position.y + -36;
-                newPos.z = meshes[i].position.z - 60;
-                meshes[i].position = newPos
-                console.log(meshes[i].name);
-                meshes[i].material = myMaterial;
-                meshes[i].freezeWorldMatrix();
-            }
-            else {
-                scene.meshes.pop(meshes[i]);
-            }
-            console.log(i);
-        }
-    });
-
-*/
-    BABYLON.SceneLoader.ImportMesh("", "./assets/Layout/", "Layout.babylon", scene, function (meshes) {
-
-        var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
-
-        for (var i = 0; i < meshes.length; i++) {
-
-            if (meshes[i].name != "LightfBeam.004" &&
-                meshes[i].name != "Flfdoor") {
-
-                myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Alpha Textures/ArenaLights_Small.png", scene);
-                myMaterial.emissiveTexture = new BABYLON.Texture("./assets/Alpha Textures/ArenaLights_Small.png", scene);
-                myMaterial.opacityTexture = new BABYLON.Texture("./assets/Alpha Textures/ArenaLights_Small.png", scene);
-                myMaterial.diffuseTexture.hasAlpha = true;
                 //myMaterial.freeze();
                 //myMaterial.bumpTexture = new BABYLON.Texture("./assets/Layout/Layout_Normal.png", scene);
                 //myMaterial.specularTexture = new BABYLON.Texture("./assets/Layout/Layout_Smoothness.png", scene);
@@ -631,15 +619,59 @@ var createScene = function(){
                 meshes[i].position = newPos
                 console.log(meshes[i].name);
                 meshes[i].material = myMaterial;
-                //meshes[i].freezeWorldMatrix();
+                meshes[i].freezeWorldMatrix();
             }
             else {
                 scene.meshes.pop(meshes[i]);
             }
-            console.log(i);
         }
     });
 
+    BABYLON.SceneLoader.ImportMesh("ArenaLights_Small", "./assets/Layout/", "ArenaLights.babylon", scene, function (mesh) {
+
+        var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
+
+        var mesh = mesh[0];
+
+        myMaterial.emissiveTexture = new BABYLON.Texture("./assets/Alpha Textures/ArenaLights_Small.png", scene);
+        myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Alpha Textures/ArenaLights_Small.png", scene);
+        myMaterial.opacityTexture = new BABYLON.Texture("./assets/Alpha Textures/ArenaLights_Small.png", scene);
+        myMaterial.diffuseTexture.hasAlpha = true;
+
+        var newPos = new BABYLON.Vector3(0, 0, 0);
+        newPos.x = mesh.position.x + 0;
+        newPos.y = mesh.position.y + -35.75;
+        newPos.z = mesh.position.z - 60;
+        mesh.position = newPos;
+        //mesh.scaling = new BABYLON.Vector3(.8, 1, 1.1);
+        //console.log(meshes[i].name);
+        mesh.material = myMaterial;
+        //console.log(mesh[0].name);
+
+    });
+
+    BABYLON.SceneLoader.ImportMesh("ArenaLights_Large", "./assets/Layout/", "ArenaLights.babylon", scene, function (mesh) {
+
+        var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
+
+        var mesh = mesh[0];
+
+        myMaterial.emissiveTexture = new BABYLON.Texture("./assets/Alpha Textures/ArenaLights_Large.png", scene);
+        myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Alpha Textures/ArenaLights_Large.png", scene);
+        myMaterial.opacityTexture = new BABYLON.Texture("./assets/Alpha Textures/ArenaLights_Large.png", scene);
+        myMaterial.diffuseTexture.hasAlpha = true;
+
+        var newPos = new BABYLON.Vector3(0, 0, 0);
+        newPos.x = mesh.position.x + 0;
+        newPos.y = mesh.position.y + -35.75;
+        newPos.z = mesh.position.z - 60;
+        mesh.position = newPos;
+        //mesh.scaling = new BABYLON.Vector3(.8, 1, 1.1);
+        //console.log(meshes[i].name);
+        mesh.material = myMaterial;
+        //console.log(mesh[0].name);
+
+    });
 
         var particleSystem = new BABYLON.ParticleSystem("particles", 200, scene);
 
@@ -651,7 +683,7 @@ var createScene = function(){
 
         var newPos = new BABYLON.Vector3(0,0,0);
         newPos.x = fountain.position.x + 0;
-        newPos.y = fountain.position.y + 55;
+        newPos.y = fountain.position.y + 25;
         newPos.z = fountain.position.z + 170;
 
         fountain.position = newPos;
@@ -869,21 +901,34 @@ var test;
                     parameter: basketballs[i]
                 },
                 function () {
-                    addScore();
+
                     //console.log("HIT TRIGGER");
                     if(currentGameState == gameStates.GAMEPLAY || currentGameState == gameStates.RESULTS)
                     {
                         var idx = shotIndex-1;
                         if(idx < 0) idx = 9;
-                        basketballStates[idx] = 0;
-                        console.log("disabled " +idx);
+
+                        if(basketballStates[idx] != 0) {
+                            basketballStates[idx] = 0;
+                            console.log("disabled " + idx);
+                            addScore();
+
+                            if(combo >= 2)
+                            {
+                                UIGameplayAnimateBadgeOn(combo);
+                            }
+
+                            if(combo >= 3)
+                            {
+                                changeBallFX(true);
+                            }
+                        }
                     }
                 }
             )
         );
     }
 
-    scoreTrigger.actionManager.geta
 
     var clothMat = new BABYLON.StandardMaterial("netMat", scene);
     //var testMat = new BABYLON.standr
@@ -977,8 +1022,6 @@ var test;
     );
 
     function updateClock() {
-
-
         if (currentGameTime + 1 > 10) {
             var firstDigit = Math.ceil(parseInt((currentGameTime+1).toFixed(2).substr(0, 1)));
             var secondDigit = Math.ceil(parseInt((currentGameTime+1).toFixed(2).substr(1, 1)));
@@ -1015,6 +1058,25 @@ var test;
         imp1.addJoint(imp2, joint);
     }
 
+    function changeBallFX(toggle)
+    {
+        if(toggle == true) {
+            pulseAmbientColor = true;
+            for(var i = 0; i < newBasketballOutlines.length; i++)
+            {
+                newBasketballOutlines[i].material.alpha = 1;
+            }
+        }
+        else {
+            pulseAmbientColor = false;
+            scene.ambientColor = new BABYLON.Color3(1,1,1);
+            for(var i = 0; i < newBasketballOutlines.length; i++)
+            {
+                newBasketballOutlines[i].material.alpha = 0;
+            }
+        }
+    }
+
     function takeShot()
     {
         if(currentGameState == gameStates.ATTRACT) {
@@ -1049,6 +1111,15 @@ var test;
         if(attractIndex >= attractShots.length) attractIndex = 0;
     }
 
+    function updateBallColor()
+    {
+        for(var i = 0; i < basketballs.length; i++)
+        {
+            newBasketballs[i].material.subMaterials[1].ambientColor = playerData.team.colorRGB;
+            newBasketballOutlines[i].material.ambientColor = playerData.team.colorRGB;
+        }
+    }
+
     function changeCamera()
     {
         currentCameraIndex++;
@@ -1058,7 +1129,6 @@ var test;
 }
 
 var scene = createScene();
-
 engine.runRenderLoop(function() {
 
     scene.render();
@@ -1165,6 +1235,8 @@ socket.on('take shot', function(info) {
 
 socket.on('player joined court', function(userdata) {
     console.log('Player ' + userdata.username + ' - Joined Court - ' + userdata.court);
+    UIGameplayUpdateName(userdata.username);
+
     playerData = userdata;
     if (userdata.court == courtName) {
       hasplayer = true;
@@ -1201,6 +1273,7 @@ function addScore()
     if(currentGameState != gameStates.GAMEPLAY && currentGameState != gameStates.RESULTS) return;
     //console.log("SCORE ADDED");
     score++;
+    UIGameplayUpdateScore(score);
     var scoreLabel = document.getElementById("scoreLabel");
     scoreLabel.innerHTML = "Score: " + score;
     playerData.score = score;
@@ -1219,20 +1292,26 @@ function updateUI()
             currentWaitTime = initWaitTime;
             hasplayer = false;
             scoreLabel.innerHTML = "";
-            attractLabel.innerHTML = "COURT CODE: <br /> " + courtName;
+            //attractLabel.innerHTML = "COURT CODE: <br /> " + courtName;
+            UIAttractUpdateCourtName(courtName);
+            attractLabel.innerHTML = "";
             currentGameTime = initGameTime;
-            UIAttractAnimateOut();
+            UIGameplayUpdateScore(0);
+            UIAttractAnimateIn();
             break;
         case gameStates.WAITING:
             scoreLabel.innerHTML = "COURT CODE: " + courtName;
             // attractLabel.innerHTML = "COURT CODE: " + courtName; + " <br/>" + initWaitTime.toString();
+            attractLabel.innerHTML = "";
             currentWaitTime = initWaitTime;
+            UIAttractAnimateOut();
             break;
         case gameStates.GAMEPLAY:
             scoreLabel.innerHTML = "Score: " + score;
             //attractLabel.innerHTML = initGameTime.toString();
             break;
         case gameStates.RESULTS:
+            UIGameplayAnimateOut();
             scoreLabel.innerHTML = "";
             attractLabel.innerHTML = "Score: " + score;
             currentResultsTime = initResultsTime;
@@ -1261,7 +1340,7 @@ function createCameraTypes()
 
     var cameraType = {
         cameraNames: cameraNames.freeThrow,
-        initPos: new BABYLON.Vector3(0, -7, -15),
+        initPos: new BABYLON.Vector3(0, -7, -18),
         initFocus: new BABYLON.Vector3(0, -12, 11.75),
     }
     cameraSettings.push(cameraType);

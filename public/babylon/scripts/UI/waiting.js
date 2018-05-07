@@ -1,52 +1,50 @@
-var textFadeTime = .25;
+var textFadeTime = .5;
 
-//var canvas = document.getElementById("canvas");
-/*
+var canvas = document.getElementById("canvas");
+var transitioned = false;
+
 var footerLeft = document.getElementById("footerLeft");
 var footerCenter = document.getElementById("footerCenter");
 var playNow= document.getElementById("playNow");
 var comboBadge= document.getElementById("comboBadge");
-var attractTopLeft = document.getElementById("attractTopLeft");
-var attractBottomLeft = document.getElementById("attractBottomLeft");
-var attractRight = document.getElementById("attractRight");
-var attractStep2TopLeft = document.getElementById("attractStep2TopLeft");
-var attractStep2BottomLeft = document.getElementById("attractStep2BottomLeft");
-var attractStep2Right = document.getElementById("attractStep2Right");
-*/
+
+var attractLeftStep1 = document.getElementById("footerLeft").getElementsByClassName("attractLeft")[0];
+var attractRightStep1 = document.getElementById("footerLeft").getElementsByClassName("attractRight")[0];
+
+var attractLeftStep2 = document.getElementById("footerCenter").getElementsByClassName("attractLeft")[0];
+var attractRightStep2 = document.getElementById("footerCenter").getElementsByClassName("attractRight")[0];
+
+var waitingLeft = document.getElementById("footerLeft").getElementsByClassName("waitingLeft")[0];
+var waitingRight = document.getElementById("footerCenter").getElementsByClassName("waitingRight")[0];
+var countdown = waitingLeft.getElementsByClassName("textCountdown")[0];
+var textWaiting = waitingRight.getElementsByClassName("textWaiting")[0];
+
 function UIWaitingAnimateIn()
 {
     //set values
     //Fade in
-/*
-    attractBottomLeft.innerText = "30";
-    attractBottomLeft.style.color = "yellow";
+    //footerLeft.style.maxWidth = 200;
+    transitioned = false;
+    attractLeftStep1.style.display = "none";
+    attractLeftStep2.style.display = "none";
+    attractRightStep1.style.display = "none";
+    attractRightStep2.style.display = "none";
 
-    attractStep2BottomLeft.innerHTML = "WAITING FOR OTHER <br />PLAYERS TO JOIN...";
-    attractStep2BottomLeft.style.color = "white";
-    attractStep2BottomLeft.style.cssText = "font-size: = 10";
-    attractStep2BottomLeft.style.fontSize = "x-large";
-    var compStyle = window.getComputedStyle(attractStep2BottomLeft, null);
-*/
-    /*
-    attractBottomLeft.style.left = canvas.width * .5;
-    attractBottomLeft.style.top = canvas.height * .5;
-    attractBottomLeft.style.textAlign = "center";
-*/
-/*
-    TweenMax.to(comboBadge, textFadeTime, {alpha:0});
-    TweenMax.to(attractTopLeft, textFadeTime, {alpha:0});
-    TweenMax.to(attractBottomLeft, textFadeTime, {alpha:1});
-    TweenMax.to(attractRight, textFadeTime, {alpha:0});
-    TweenMax.to(attractStep2TopLeft, textFadeTime, {alpha:0});
-    TweenMax.to(attractStep2BottomLeft, textFadeTime, {alpha:1});
-    TweenMax.to(attractStep2Right, textFadeTime, {alpha:0});
+    waitingLeft.style.display = "inline";
+    waitingRight.style.display = "inline"
+    countdown.style.opacity = 0;
+    textWaiting.style.opacity = 0;
+    TweenMax.to(countdown, textFadeTime, {opacity:1});
+    TweenMax.to(textWaiting, textFadeTime, {opacity:1});
 
-    TweenMax.to(playNow, textFadeTime, {delay: textFadeTime*3,alpha:1});
-*/
 }
 
 function UIWaitingAnimateOut()
 {
+
+    TweenMax.to(countdown, textFadeTime, {opacity:0, delay: textFadeTime, onComplete: UIGameplayAnimateIn});
+    TweenMax.to(textWaiting, textFadeTime, {opacity:0, delay: textFadeTime,});
+
     //Fade out both bball texts
     //Fade out Play Now!
     //Call Waitings animateIn
@@ -67,12 +65,17 @@ function UIWaitingAnimateOut()
 
 function UIWaitingUpdateClock(time)
 {
-    /*
-    attractBottomLeft.innerText = Math.ceil(time.toFixed(2)).toString();
+    countdown.innerHTML = (Math.ceil(time.toFixed(2)) + 1).toString();
 
-    if(time<0)
+    if(time+1  <= 0 && transitioned == false)
     {
-        attractBottomLeft.innerText = "";
+        transitioned=  true;
+        countdown.innerHTML = "0";
+        UIWaitingAnimateOut();
+        console.log("TRIGGERED");
     }
-    */
+    else if(time+1<0)
+    {
+        countdown.innerHTML = "0";
+    }
 }

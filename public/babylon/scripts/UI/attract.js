@@ -1,4 +1,4 @@
-var textFadeTime = .25;
+var textFadeTime = 0.25;
 
 var canvas = document.getElementById("canvas");
 
@@ -7,7 +7,11 @@ var footerLeft = document.getElementById("footerLeft");
 var footerCenter = document.getElementById("footerCenter");
 var playNow= document.getElementById("playNow");
 var comboBadge= document.getElementById("comboBadge");
+var attractLeftStep1 = document.getElementById("footerLeft").getElementsByClassName("attractLeft");
+var attractRightStep1 = document.getElementById("footerLeft").getElementsByClassName("attractRight");
 
+var attractLeftStep2 = document.getElementById("footerCenter").getElementsByClassName("attractLeft");
+var attractRightStep2 = document.getElementById("footerCenter").getElementsByClassName("attractRight");
 //var attractLeft = document.getElementByID("attractTopLeft");
 /*
 var attractBottomLeft = document.getElementById("attractBottomLeft");
@@ -21,40 +25,45 @@ var attractLeftStepNum = document.getElementById("footerLeft").getElementsByClas
 
 function UIAttractAnimateIn()
 {
-    //BBALL Text instructions 1+2 appear in bottom
-    //Show background Graphic 1 and background Graphic 2
-    /*
-    TweenMax.to(footerLeft, textFadeTime, {width:.43*canvas.width});
-    TweenMax.to(footerCenter, textFadeTime, {width:.43*canvas.width});
+    attractLeftStep1.style.display = "inline";
+    attractLeftStep2.style.display = "inline";
+    attractRightStep1.style.display = "inline";
+    attractRightStep2.style.display = "inline";
 
-    TweenMax.to(comboBadge, textFadeTime, {delay: textFadeTime*3,alpha:0});
-    TweenMax.to(attractTopLeft, textFadeTime, {delay: textFadeTime*3,alpha:0});
-    TweenMax.to(attractBottomLeft, textFadeTime, {delay: textFadeTime*3,alpha:0});
-    TweenMax.to(attractRight, textFadeTime, {delay: textFadeTime*3,alpha:0});
-    TweenMax.to(attractStep2TopLeft, textFadeTime, {delay: textFadeTime*3,alpha:0});
-    TweenMax.to(attractStep2BottomLeft, textFadeTime, {delay: textFadeTime*3,alpha:0});
-    TweenMax.to(attractStep2Right, textFadeTime, {delay: textFadeTime*3,alpha:0});
+    footer.style.height = 0;
+    TweenMax.to(footer, textFadeTime, {height:170});
 
-    TweenMax.to(playNow, textFadeTime, {delay: textFadeTime*3,alpha:1});
-    */
+    TweenMax.to(playNow, textFadeTime * 3, {alpha: 0, repeat: -1,  ease:Power2.easeIn, yoyo:true});
+    comboBadge.style.opacity = 0;
+
+    attractLeftStep1.style.opacity = 0;
+    attractRightStep1.style.opacity = 0;
+    attractLeftStep2.style.opacity = 0;
+    attractRightStep2.style.opacity = 0;
+
+    TweenMax.to(attractLeftStep1, textFadeTime, {delay: 3*textFadeTime, alpha:1});
+    TweenMax.to(attractRightStep1, textFadeTime, {delay: 3*textFadeTime, alpha:1});
+    TweenMax.to(attractLeftStep2, textFadeTime, {delay: 3*textFadeTime, alpha:1});
+    TweenMax.to(attractRightStep2, textFadeTime, {delay: 3*textFadeTime, alpha:1});
+
+    console.log("ANIMATED BACK IN");
 }
 
 function UIAttractAnimateOut()
 {
-    //Fade out both bball texts
-    //Fade out Play Now!
-    //Call Waitings animateIn
-    /*
+    TweenMax.to(attractLeftStep1, textFadeTime, {alpha:0});
+    TweenMax.to(attractRightStep1, textFadeTime, {alpha:0});
+    TweenMax.to(attractLeftStep2, textFadeTime, {alpha:0});
+    TweenMax.to(attractRightStep2, textFadeTime, {alpha:0});
+
     TweenMax.to(playNow, textFadeTime, {alpha:0});
     TweenMax.to(comboBadge, textFadeTime, {alpha:0});
-    TweenMax.to(attractTopLeft, textFadeTime, {alpha:0});
-    TweenMax.to(attractBottomLeft, textFadeTime, {alpha:0});
-    TweenMax.to(attractRight, textFadeTime, {alpha:0});
-    TweenMax.to(attractStep2TopLeft, textFadeTime, {alpha:0});
-    TweenMax.to(attractStep2BottomLeft, textFadeTime, {alpha:0});
-    TweenMax.to(attractStep2Right, textFadeTime, {alpha:0});
 
-    TweenMax.to(footerLeft, textFadeTime, {delay: textFadeTime*3, width:.16*canvas.width});
-    TweenMax.to(footerCenter, textFadeTime, {delay: textFadeTime*3, width:.699*canvas.width/*, onComplete: UIWaitingAnimateIn*///});
+    TweenMax.to(footerLeft, textFadeTime, {delay: textFadeTime*2, width:.22*canvas.width});
+    TweenMax.to(footerCenter, textFadeTime, {delay: textFadeTime*2, width:.22*canvas.width, onComplete: UIWaitingAnimateIn});
+}
 
+function UIAttractUpdateCourtName(name)
+{
+    attractRightStep2.innerHTML = "<h2>THEN ENTER</h2><h2>CODE '<span id=\"courtCode\">" + name + "</span>'</h2>";
 }

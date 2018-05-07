@@ -1,56 +1,60 @@
 @font-face {
   font-family: 'Gobold';
-  src: url("assets/Fonts/GoboldLight.otf");
-}
+  src: url("assets/Fonts/GoboldLight.otf"); }
 @font-face {
   font-family: 'Gobold';
   src: url("assets/Fonts/GoboldBold.otf");
-  font-weight: bold;
-}
+  font-weight: bold; }
 @font-face {
   font-family: 'Gobold';
   src: url("assets/Fonts/GoboldBoldItalic.otf");
   font-weight: bold;
-  font-style: italic;
-}
+  font-style: italic; }
 @font-face {
   font-family: 'Gobold';
   src: url("assets/Fonts/GoboldLightItalic.otf");
-  font-style: italic;
-}
+  font-style: italic; }
 * {
   box-sizing: border-box;
-  font-family: "Gobold";
-}
+  font-family: "Gobold"; }
+
+#template {
+  margin: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  display: none; }
+
+#template img {
+  max-width: 100%;
+  max-height: 100%;
+  opacity: 0.5; }
 
 #fpsLabel, #list-top {
   position: fixed;
   right: 20px;
   top: 20px;
   color: #999;
-  cursor: default;
-}
+  cursor: default; }
 
 #list-top, #list-bot {
   left: 20px;
-  right: initial;
-}
+  right: initial; }
 
 #fpsLabel-bot, #list-bot {
   position: fixed;
   right: 20px;
   bottom: 20px;
   color: #999;
-  cursor: default;
-}
+  cursor: default; }
 
 #scoreLabel {
   position: absolute;
   left: 20px;
   top: 20px;
   color: #999;
-  cursor: default;
-}
+  cursor: default; }
 
 #titleTopLeft {
   position: absolute;
@@ -62,170 +66,218 @@
   padding: 0px;
   border-radius: 3px;
   cursor: default;
-  overflow: visible;
-}
+  overflow: visible; }
 
 #titleTopLeft img {
   width: 100%;
   height: 100%;
   object-fit: contain;
   object-position: left;
-  position: relative;
-}
+  position: relative; }
 
 #titleTopLeft img#titleLights {
-  width: 100%;
-  height: 150%;
+  width: 200%;
+  height: 200%;
   object-fit: contain;
   object-position: top left;
   position: absolute;
-  top: 0;
-  left: 0;
-}
+  top: -20px;
+  left: -100px; }
 
 #permanentGameBranding header {
   height: 200px;
   position: absolute;
   top: 0;
   width: 100%;
-  /*background: rgba(1,1,1,.5);*/
-}
+  /*background: rgba(1,1,1,.5);*/ }
 #permanentGameBranding footer {
-  height: 200px;
+  height: 170px;
   position: absolute;
   bottom: 0;
   width: 100%;
   background: url("assets/UI/D1/BtmBarGround(clean).png");
   background-size: cover;
-  background-position: top;
-}
+  background-position: top; }
 
 #inner {
   max-width: 1920px;
   width: 100%;
   position: relative;
-  margin: 0 auto;
-}
-#inner #container {
-  max-height: 800px;
-}
-#inner #container #comboBadge {
-  background: url("assets/UI/D3/ComboFlareGround.png") no-repeat center;
-  width: 350px;
-  height: 350px;
-  position: absolute;
-  top: 0;
-  right: 50px;
-  background-size: contain;
-  transform: rotate(10deg);
-  padding: 40px;
-}
-#inner #container #comboBadge h2 {
-  margin-bottom: 0;
-  line-height: 1em;
-  top: 50%;
-  transform: translateY(50%);
-}
-#inner #container #comboBadge h2#comboNum {
-  font-size: 80px;
-  color: yellow;
-  font-style: italic;
-  text-align: center;
-  font-weight: bold;
-}
-#inner #container #comboBadge h2#streak {
-  font-size: 60px;
-  color: yellow;
-  font-style: italic;
-  text-align: center;
-  font-weight: bold;
-  text-transform: uppercase;
-  margin-top: 15px;
-}
+  margin: 0 auto; }
+  #inner #container {
+    max-height: 800px; }
+    #inner #container #comboBadge {
+      background: url("assets/UI/D3/ComboFlareGround.png") no-repeat center;
+      width: 350px;
+      height: 350px;
+      position: absolute;
+      top: 0;
+      right: 0px;
+      background-size: contain;
+      transform: rotate(6deg);
+      padding: 40px; }
+      #inner #container #comboBadge h2 {
+        margin-bottom: 0;
+        line-height: 1em;
+        top: 50%;
+        transform: translateY(50%); }
+        #inner #container #comboBadge h2#comboNum {
+          font-size: 80px;
+          color: yellow;
+          text-align: center;
+          font-weight: bold; }
+        #inner #container #comboBadge h2#streak {
+          font-size: 60px;
+          color: yellow;
+          font-style: italic;
+          text-align: center;
+          font-weight: bold;
+          text-transform: uppercase;
+          margin-top: 18px; }
 
 #preFooter {
   position: absolute;
-  bottom: 300px;
+  bottom: 250px;
   right: 0;
-  width: 100%;
-}
-#preFooter #playNow {
-  background: url("assets/UI/D1/PlayNowGradient(crop).png") no-repeat right;
-  width: 50%;
-  background-size: cover;
-  margin-right: 0;
-  margin-left: auto;
-}
-#preFooter #playNow h2 {
-  font-size: 80px;
-  color: yellow;
-  font-style: italic;
-  text-align: right;
-  padding-right: 20px;
-}
-#preFooter #playNow h2 span.emphasize {
-  font-weight: bold;
-  color: white;
-}
+  width: 100%; }
+  #preFooter #playNow {
+    background: url("assets/UI/D1/PlayNowGradient(crop).png") no-repeat right;
+    width: 50%;
+    background-size: cover;
+    margin-right: 0;
+    margin-left: auto; }
+    #preFooter #playNow h2 {
+      font-size: 70px;
+      color: yellow;
+      font-style: italic;
+      text-align: right;
+      padding-right: 40px; }
+      #preFooter #playNow h2 span.emphasize {
+        font-weight: bold;
+        color: white; }
 
 footer #footerLeft, footer #footerCenter {
-  width: 18%;
+  width: 40%;
+  max-width: 700px;
   height: 100%;
   /*background-color: cyan;*/
   background-color: rgba(33, 134, 191, 0.5);
   display: inline-block;
   position: relative;
   float: left;
-  max-width: 700px;
-  padding-top: 50px;
-  padding-bottom: 40px;
-}
-footer #footerLeft #countdown, footer #footerCenter #countdown {
-  display: none;
-}
-footer #footerLeft .attractLeft, footer #footerCenter .attractLeft, footer #footerLeft .attractRight, footer #footerCenter .attractRight {
-  display: none;
-}
-footer #footerLeft .attractLeft, footer #footerCenter .attractLeft {
-  width: 30%;
-  float: left;
-}
-footer #footerLeft .attractLeft h2, footer #footerCenter .attractLeft h2 {
-  font-size: 30px;
-  text-transform: uppercase;
-  text-align: center;
-  color: cyan;
-  position: relative;
-  margin-bottom: 5px;
-  font-weight: normal;
-}
-footer #footerLeft .attractLeft h2.stepNum, footer #footerCenter .attractLeft h2.stepNum {
-  font-size: 65px;
-  margin-bottom: 0;
-}
-footer #footerLeft .attractRight, footer #footerCenter .attractRight {
-  width: 70%;
-  float: left;
-}
-footer #footerLeft .attractRight h2, footer #footerCenter .attractRight h2 {
-  font-style: italic;
-  line-height: 1em;
-  font-size: 50px;
-  text-transform: uppercase;
-  text-align: left;
-  color: yellow;
-  position: relative;
-  font-weight: normal;
-}
-footer #footerLeft .attractRight h2 span#courtCode, footer #footerCenter .attractRight h2 span#courtCode, footer #footerLeft .attractRight h2 span#textCode, footer #footerCenter .attractRight h2 span#textCode, footer #footerLeft .attractRight h2 span#textNum, footer #footerCenter .attractRight h2 span#textNum {
-  font-weight: bold;
-  color: white;
-}
+  padding-top: 40px;
+  padding-bottom: 40px; }
+  footer #footerLeft .waitingLeft, footer #footerCenter .waitingLeft {
+    width: 50%;
+    float: none; }
+    footer #footerLeft .waitingLeft h2, footer #footerCenter .waitingLeft h2 {
+      font-size: 90px;
+      text-transform: uppercase;
+      text-align: center;
+      color: yellow;
+      position: relative;
+      margin-bottom: 0px;
+      font-weight: normal;
+      font-weight: bold;
+      bottom: 10px;
+      left: 0%; }
+  footer #footerLeft .gameplayLeft, footer #footerCenter .gameplayLeft {
+    width: 100%;
+    float: none; }
+    footer #footerLeft .gameplayLeft h2, footer #footerCenter .gameplayLeft h2 {
+      font-size: 90px;
+      text-transform: uppercase;
+      text-align: center;
+      color: yellow;
+      position: relative;
+      margin-bottom: 2px;
+      font-weight: normal;
+      font-weight: bold;
+      bottom: 25px;
+      left: 0; }
+      footer #footerLeft .gameplayLeft h2.textScoreLabel, footer #footerCenter .gameplayLeft h2.textScoreLabel {
+        font-size: 24px;
+        bottom: 20px;
+        line-height: 40px;
+        font-weight: bold;
+        color: darkblue;
+        background-color: white; }
+  footer #footerLeft .waitingRight, footer #footerCenter .waitingRight {
+    width: 225%;
+    float: left; }
+    footer #footerLeft .waitingRight h2, footer #footerCenter .waitingRight h2 {
+      left: 9%;
+      margin-top: -4px;
+      font-style: italic;
+      line-height: 50px;
+      font-size: 42px;
+      text-transform: uppercase;
+      text-align: left;
+      color: white;
+      position: relative;
+      font-weight: normal;
+      font-weight: bold; }
+  footer #footerLeft .gameplayRight, footer #footerCenter .gameplayRight {
+    width: 225%;
+    float: left; }
+    footer #footerLeft .gameplayRight h2, footer #footerCenter .gameplayRight h2 {
+      left: 9%;
+      font-style: italic;
+      line-height: 50px;
+      text-transform: uppercase;
+      text-align: left;
+      position: relative; }
+      footer #footerLeft .gameplayRight h2.textGameplayFirst, footer #footerCenter .gameplayRight h2.textGameplayFirst {
+        font-weight: normal;
+        color: white;
+        margin-top: -16px;
+        font-size: 40px; }
+      footer #footerLeft .gameplayRight h2.textGameplayLast, footer #footerCenter .gameplayRight h2.textGameplayLast {
+        color: cyan;
+        font-weight: bold;
+        font-size: 56px;
+        margin-top: 16px;
+        margin-left: 10px; }
+  footer #footerLeft .waitingLeft, footer #footerCenter .waitingLeft, footer #footerLeft .waitingRight, footer #footerCenter .waitingRight {
+    display: none; }
+  footer #footerLeft .gameplayLeft, footer #footerCenter .gameplayLeft, footer #footerLeft .gameplayRight, footer #footerCenter .gameplayRight {
+    display: none; }
+  footer #footerLeft .attractLeft, footer #footerCenter .attractLeft {
+    width: 30%;
+    float: left; }
+    footer #footerLeft .attractLeft h2, footer #footerCenter .attractLeft h2 {
+      margin-left: 10px;
+      font-size: 24px;
+      text-transform: uppercase;
+      text-align: center;
+      color: cyan;
+      position: relative;
+      margin-bottom: 2px;
+      font-weight: normal; }
+      footer #footerLeft .attractLeft h2.stepNum, footer #footerCenter .attractLeft h2.stepNum {
+        font-size: 52px;
+        margin-bottom: 0; }
+  footer #footerLeft .attractRight, footer #footerCenter .attractRight {
+    width: 70%;
+    float: left; }
+    footer #footerLeft .attractRight h2, footer #footerCenter .attractRight h2 {
+      margin-left: -5px;
+      margin-top: 2px;
+      font-style: italic;
+      line-height: 1em;
+      font-size: 38px;
+      text-transform: uppercase;
+      text-align: left;
+      color: yellow;
+      position: relative;
+      font-weight: normal; }
+      footer #footerLeft .attractRight h2 span#courtCode, footer #footerCenter .attractRight h2 span#courtCode, footer #footerLeft .attractRight h2 span#textCode, footer #footerCenter .attractRight h2 span#textCode, footer #footerLeft .attractRight h2 span#textNum, footer #footerCenter .attractRight h2 span#textNum {
+        font-weight: bold;
+        color: white; }
 footer #footerCenter {
-  background: none;
-}
+  background: none; }
 footer #footerRight {
-  width: 14%;
+  width: 20%;
   height: 100%;
   margin: auto;
   padding: 0px;
@@ -236,26 +288,23 @@ footer #footerRight {
   position: relative;
   z-index: 1;
   float: right;
-  max-width: 225px;
-}
+  max-width: 225px; }
 footer #footerRight img#sponsorLogo {
   width: 100%;
   height: 100%;
   object-fit: contain;
   object-position: right;
   position: absolute;
-  bottom: 0;
+  bottom: 0px;
   right: 0;
-  z-index: 20;
-}
+  z-index: 20; }
 footer #footerRight img#sponsorGround {
-  width: 130%;
+  width: 125%;
   height: 125%;
   z-index: 5;
   position: absolute;
   bottom: 0;
-  right: 0;
-}
+  right: 0; }
 
 #attractLabel {
   position: absolute;
@@ -274,8 +323,7 @@ footer #footerRight img#sponsorGround {
   text-align: center;
   /*background:rgba(0,0,0, 0.2);*/
   color: #999;
-  cursor: default;
-}
+  cursor: default; }
 
 #timeLabel {
   position: absolute;
@@ -287,34 +335,28 @@ footer #footerRight img#sponsorGround {
   border: 2px solid #333;
   border-radius: 3px;
   color: #fff;
-  cursor: default;
-}
+  cursor: default; }
 
 html, body {
   height: 100%;
   margin: 0;
-  padding: 0;
-}
+  padding: 0; }
 
 html {
   font-weight: 300;
-  -webkit-font-smoothing: antialiased;
-}
+  -webkit-font-smoothing: antialiased; }
 
 html, input {
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-}
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; }
 
 ul {
   list-style: none;
   word-wrap: break-word;
-  padding: 0;
-}
+  padding: 0; }
 
 canvas {
   width: 100%;
-  height: 100%;
-}
+  height: 100%; }
 
 /* Pages */
 .pages {
@@ -322,19 +364,16 @@ canvas {
   margin: 0;
   padding: 0;
   width: 100%;
-  position: absolute;
-}
+  position: absolute; }
 
 .page {
   height: 100%;
   position: absolute;
-  width: 100%;
-}
+  width: 100%; }
 
 /* Login & Roomcange Pages*/
 .login.page, .passcode.page {
-  background-color: #000;
-}
+  background-color: #000; }
 
 .login.page .form, .passcode.page .form {
   height: 100px;
@@ -343,8 +382,7 @@ canvas {
   text-align: center;
   top: 50%;
   width: 100%;
-  max-width: 100%;
-}
+  max-width: 100%; }
 
 .login.page .form .usernameInput, .passcode.page .form .passcodeInput {
   background-color: transparent;
@@ -354,22 +392,18 @@ canvas {
   padding-bottom: 15px;
   text-align: center;
   width: 400px;
-  max-width: 100%;
-}
+  max-width: 100%; }
 
 .login.page .title, .passcode.page .title {
-  font-size: 200%;
-}
+  font-size: 200%; }
 
 .login.page .usernameInput, .passcode.page .passcodeInput {
   font-size: 200%;
-  letter-spacing: 3px;
-}
+  letter-spacing: 3px; }
 
 .login.page .title, .passcode.page .title, .login.page .usernameInput, .passcode.page .passcodeInput {
   color: #fff;
-  font-weight: 100;
-}
+  font-weight: 100; }
 
 /**
  * Canvas
@@ -386,33 +420,26 @@ canvas {
 }
 */
 .colors {
-  position: fixed;
-}
+  position: fixed; }
 
 .color {
   display: inline-block;
   height: 48px;
-  width: 48px;
-}
+  width: 48px; }
 
 .color.black {
-  background-color: black;
-}
+  background-color: black; }
 
 .color.red {
-  background-color: red;
-}
+  background-color: red; }
 
 .color.green {
-  background-color: green;
-}
+  background-color: green; }
 
 .color.blue {
-  background-color: blue;
-}
+  background-color: blue; }
 
 .color.yellow {
-  background-color: yellow;
-}
+  background-color: yellow; }
 
 /*# sourceMappingURL=style.css.map */
