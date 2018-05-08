@@ -16,7 +16,6 @@ var firstName = gameplayRight.getElementsByClassName("textGameplayFirst")[0];
 var lastName = gameplayRight.getElementsByClassName("textGameplayLast")[0];
 var comboNumText = document.getElementById("comboNum");
 
-
 function UIGameplayAnimateIn()
 {
     waitingLeft.style.display = "none";
@@ -37,7 +36,13 @@ function UIGameplayAnimateIn()
 
 function UIGameplayAnimateOut()
 {
-    TweenMax.to(footer, textFadeTime, {height:0, onComplete: turnOffDisplay});
+    footer.style.backgroundPositionY = "0";
+    footerLeft.style.top = "0";
+    footerCenter.style.top = "0";
+
+    TweenMax.to(footer, textFadeTime, {backgroundPositionY:200});
+    TweenMax.to(footerLeft, textFadeTime, {top:200});
+    TweenMax.to(footerCenter, textFadeTime, {top:200, onComplete: turnOffDisplay});
 }
 
 function UIGameplayUpdateScore(scoreInput)
@@ -74,5 +79,7 @@ function turnOffDisplay()
 {
     gameplayLeft.style.display = "none";
     gameplayRight.style.display = "none";
+
+    UIResultsAnimateIn();
 }
 

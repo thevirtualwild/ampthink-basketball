@@ -111,8 +111,9 @@
   bottom: 0;
   width: 100%;
   background: url("assets/UI/D1/BtmBarGround(clean).png");
-  background-size: cover;
+  background-size: auto 200px;
   background-position: top;
+  background-repeat: repeat-x;
 }
 
 #inner {
@@ -123,6 +124,7 @@
   height: 100%;
   top: 0;
   position: absolute;
+  background: rgba(0, 0, 0, 0.4);
 }
 #inner #container {
   max-height: 800px;
@@ -257,8 +259,6 @@
   width: 33.3%;
   float: left;
   text-align: center;
-  border: 1px solid green;
-  margin: 0;
   display: inline-block;
 }
 #inner #container #results #teamScores .score .scoreNum {
@@ -270,7 +270,8 @@
 }
 #inner #container #results #teamScores .score .teamName {
   font-size: 40px;
-  transform: rotate(-10deg);
+  transform: rotate(-12deg);
+  margin-top: -10px;
 }
 
 #preFooter {

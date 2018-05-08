@@ -330,13 +330,21 @@ var createScene = function(){
         {
             currentResultsTime -= (engine.getDeltaTime() / 1000);
             attractLabel.innerHTML = "Score: " + score;
-            if(currentResultsTime <= 0)
+
+            if(currentResultsTime <= -2)
             {
                 changeGameState(gameStates.ATTRACT);
                 currentGameTime = initGameTime;
                 updateClock();
                 socket.emit('room reset');
             }
+            else if(currentResultsTime <= 0)
+            {
+                UIResultsAnimateOut();
+                currentGameTime = initGameTime;
+                updateClock();
+            }
+
         }
 
         if(currentNetState ==  netStates.FREE)
@@ -1236,6 +1244,7 @@ socket.on('take shot', function(info) {
 socket.on('player joined court', function(userdata) {
     console.log('Player ' + userdata.username + ' - Joined Court - ' + userdata.court);
     UIGameplayUpdateName(userdata.username);
+    UIResultsUpdateName(userdata.username);
 
     playerData = userdata;
     if (userdata.court == courtName) {
@@ -1274,6 +1283,7 @@ function addScore()
     //console.log("SCORE ADDED");
     score++;
     UIGameplayUpdateScore(score);
+    UIResultsUpdateScore(score);
     var scoreLabel = document.getElementById("scoreLabel");
     scoreLabel.innerHTML = "Score: " + score;
     playerData.score = score;

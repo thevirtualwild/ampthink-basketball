@@ -7,6 +7,8 @@ var footerLeft = document.getElementById("footerLeft");
 var footerCenter = document.getElementById("footerCenter");
 var playNow= document.getElementById("playNow");
 var comboBadge= document.getElementById("comboBadge");
+var results = document.getElementById("results");
+var inner = document.getElementById("inner");
 var attractLeftStep1 = document.getElementById("footerLeft").getElementsByClassName("attractLeft");
 var attractRightStep1 = document.getElementById("footerLeft").getElementsByClassName("attractRight");
 
@@ -30,11 +32,18 @@ function UIAttractAnimateIn()
     attractRightStep1.style.display = "inline";
     attractRightStep2.style.display = "inline";
 
-    footer.style.height = 0;
-    TweenMax.to(footer, textFadeTime, {height:170});
+    inner.style.backgroundColor = "transparent";
+    results.style.display = "none";
+    footer.style.backgroundPositionY = "200";
+    footerLeft.style.top = "200";
+    footerCenter.style.top = "200";
 
-    playNow.style.opacity = 0;
-    //TweenMax.to(playNow, textFadeTime * 3, {alpha: 0, repeat: -1,  ease:Power2.easeIn, yoyo:true});
+    TweenMax.to(footer, textFadeTime, {backgroundPositionY:0});
+    TweenMax.to(footerLeft, textFadeTime, {top:0});
+    TweenMax.to(footerCenter, textFadeTime, {top:0});
+
+    playNow.style.opacity = 1;
+    TweenMax.to(playNow, textFadeTime * 3, {alpha: 0, repeat: -1,  ease:Power2.easeIn, yoyo:true});
     comboBadge.style.opacity = 0;
 
     attractLeftStep1.style.opacity = 0;
