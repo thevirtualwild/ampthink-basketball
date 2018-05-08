@@ -41,14 +41,12 @@ function UICustomizeAnimateIn()
     refreshLogo.style.opacity = 0;
     //customizeForm.style.opacity = 0;
 
-    /*
     name = userdata.username;
     firstName.innerHTML = name.substr(0, name.indexOf(' '));
     lastName.innerHTML = name.substr(name.indexOf(' ') + 1);
 
     teamName.innerHTML = userdata.team.name;
     teamName.style.color = userdata.team.colorHex;
-    */
 
     TweenMax.to(firstName, customizeFadeTime, {delay:customizeFadeTime, opacity:1});
     TweenMax.to(lastName, customizeFadeTime, {delay:customizeFadeTime*2, opacity:1});
@@ -86,6 +84,9 @@ function getName()
 
     TweenMax.to(firstName, customizeFadeTime, {opacity: 1});
     TweenMax.to(lastName, customizeFadeTime, {opacity: 1, onComplete: stopAnimating});
+
+    userdata.username = name;
+    socket.emit("change player name", userdata);
 }
 
 function stopAnimating()

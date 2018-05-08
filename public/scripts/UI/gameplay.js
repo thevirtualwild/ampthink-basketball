@@ -37,8 +37,8 @@ function UIGameplayAnimateIn()
 
 function UIGameplayAnimateOut()
 {
-    //TweenMax.to(inputForm, customizeFadeTime*3.5, {delay:customizeFadeTime*5, alpha:0});
-    //TweenMax.to(inputForm, customizeFadeTime*3, {delay:customizeFadeTime*5, top:0, ease:Back.easeIn, onComplete: UICustomizeAnimateIn});
+    TweenMax.to(headerInstructions, customizeFadeTime, {delay:customizeFadeTime, top:0});
+    TweenMax.to(headerInstructions, customizeFadeTime, {delay:customizeFadeTime*2, opacity:0, onComplete: UIGameoverAnimateIn});
 }
 
 
