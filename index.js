@@ -19,6 +19,7 @@ var allrooms = {};
 var allzones = {};
 var allcourts = {};
 var allconfigs = {};
+var courtnames = {};
 
 function getDataFromAirtable() {
 
@@ -50,7 +51,7 @@ function getDataFromAirtable() {
   function getRooms() {
     config_base('Rooms').select({}).eachPage(function page(records, fetchNextPage) {
       records.forEach(function(record) {
-        roomname = record.get('Name');
+        name = record.get('Name');
         // console.log('Retrieved', roomname);
 
         zones = record.get('Zones');
@@ -58,7 +59,7 @@ function getDataFromAirtable() {
 
         allrooms[record.id] = {
           id: record.id,
-          roomname: roomname,
+          name: name,
           zones: zones,
           courts: courts
         };
@@ -120,6 +121,16 @@ function getDataFromAirtable() {
           room: room,
           devices: devices
         };
+
+        courtnames[courtname] = {
+          id: record.id,
+          name: courtname,
+          zone: zone,
+          stadium: stadium,
+          order: order,
+          room: room,
+          devices: devices
+        }
       });
       fetchNextPage();
     }, function done(err) {
@@ -190,6 +201,16 @@ app.get('/about', function(req, res) {
   res.render('pages/about');
 });
 
+function randomCode(howLong) {
+  var randomname = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+  for (var i = 0; i < howLong; i++)
+    randomname += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return randomname;
+}
+
 
 var numUsers = 0;
 var currentHighScore = 0;
@@ -212,6 +233,8 @@ function onConnection(socket) {
 
     if (thiszone.rooms) {
       roomid = thiszone.rooms[0];
+      console.log('findaroom assign');
+      console.dir(somecourt);
       assignCourtToRoom(somecourt, roomid);
     } else {
       somecourt.room = createRoom(somecourt);
@@ -221,32 +244,36 @@ function onConnection(socket) {
 
   function findACourt(mydevice, myzone) {
     //if device is not a part of a court
-    console.log('Please add device: ' + mydevice.name + ' to a court');
-    console.dir(mydevice);
+    console.log('Please add device: ' + mydevice.ipaddress + ' to a court');
+    // console.dir(mydevice);
 
     //check zone of device for list of currently configured courts, and add to court based on location
-    console.log('device in zone: ' + myzone.name);
-    console.dir(myzone);
+    // console.log('device in zone: ' + myzone.name);
+    // console.dir(myzone);
 
     zoneconfig = allconfigs[myzone.configuration];
-
-    console.log('config data');
-    console.dir(zoneconfig);
+    //
+    // console.log('config data');
+    // console.dir(zoneconfig);
 
     courtnum = zoneconfig[mydevice.location];
 
     if (courtnum) {
       console.log('I should be in court #' + courtnum);
       var index = courtnum - 1;
-      mycourt = myzone[index];
+      mycourt = allcourts[myzone.courts[index]];
       if (mycourt) {
         console.log('try court - ' + mycourt);
+        findARoom(mycourt,mydevice);
       } else {
         console.log('no court yet');
         createCourt(mydevice,myzone);
       }
     } else {
       console.log('no zone config for that location');
+      // console.dir(myzone);
+      mycourt = allcourts[myzone.courts[0]];
+      findARoom(mycourt,mydevice);
     }
   }
   function unknownDevice(deviceIP) {
@@ -254,6 +281,7 @@ function onConnection(socket) {
     console.log('Unknown device: ' + deviceIP + ' trying to set up a court');
 
     var newdevice = {
+      ipaddress: deviceIP,
       location: 'UNKNOWN LOCATION',
       zone: 'recrPqr6a1f7Nxal8'
     };
@@ -261,14 +289,32 @@ function onConnection(socket) {
     // add device to list of devices
     alldevices[deviceIP] = newdevice;
     var devicezone = allzones[newdevice.zone];
-    myzone.devices.push(newdevice);
+
+    allzones[newdevice.zone] = devicezone;
+    devicezone.devices.push(newdevice);
     //update record in allzones
-    allzones[newdevice.zone] = myzone;
 
     // PUSH TO AIRTABLE HERE
+    config_base('Devices').create({
+      "IP Address": newdevice.ipaddress,
+      "Zone": [newdevice.zone],
+      "Location in Zone": newdevice.location
+    }, function(err, record) {
+        if (err) { console.error(err); return; }
 
-    //use a random court
-    findACourt(newdevice, devicezone);
+        //Callback from API push
+        newdeviceid = record.getId();
+        console.log('NewDevice - ' + newdeviceid);
+
+        newdevice['id'] = newdeviceid;
+
+        // do something to update local storage
+        alldevices[newdevice.ipaddress] = newdevice;
+
+
+        //use a random court
+        findACourt(newdevice, devicezone);
+    });
   }
 
   function createCourt(somedevice,somezone) {
@@ -303,6 +349,7 @@ function onConnection(socket) {
             devices: [somedevice.id]
         }
         allcourts[newcourtid] = newcourt;
+        courtnames[newcourtname] = newcourt;
 
         console.log('find a room court: ' + newcourt.name + ' device: ' + somedevice.ipaddress);
         findARoom(newcourt,somedevice);
@@ -325,48 +372,86 @@ function onConnection(socket) {
             name: newroomname
         }
         allrooms[newroomid] = newroom;
-
+        console.log('create a room assign');
         assignCourtToRoom(somecourt, newroomid);
     });
 
   }
 
-  function assignCourtToRoom(somecourt, someroom) {
-    console.log('telling device in court: ' + somecourt.name + ' to join room: ' + someroom);
+  function assignCourtToRoom(somecourt, someroomid) {
+    fullroomdata = allrooms[someroomid];
+
+    console.log('telling device in court: ' + somecourt.name + ' to join room: ' + fullroomdata.name);
+    // console.dir(fullroomdata);
+
     data = {
       court: somecourt,
-      room: someroom
+      room: fullroomdata
     }
 
-    console.log('room: ');
-    console.dir(allrooms[someroom]);
+    // console.log('room: ');
+    // console.dir(allrooms[someroom]);
 
     if (somecourt.room) {
-      console.log('assigning court to room - ');
-      console.dir(somecourt.room);
+      // console.log('assigning court to room - ');
+      // console.dir(somecourt.room);
     } else {
-      console.log('trying to update court info as - ' + someroom);
-      config_base('Courts').update(somecourt.id, {
-        "Room": [someroom]
-      }, function(err, record) {
-          if (err) { console.error(err); return; }
-      });
+      console.log('trying to update court info as - ');
+      // console.dir(fullroomdata);
+      // config_base('Courts').update(somecourt.id, {
+      //   "Room": [fullroomdata.id]
+      // }, function(err, record) {
+      //     if (err) { console.error(err); return; }
+      // });
     }
 
     //need to update court list
     socket.emit('join this room', data);
   }
 
-  function randomCode(howLong) {
-    var randomname = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    for (var i = 0; i < howLong; i++)
-      randomname += possible.charAt(Math.floor(Math.random() * possible.length));
+  function joinCourt(somecourtname) {
+    console.log('player needs to join court: ' + somecourtname);
+    // console.log('courtnames - ');
+    // console.dir(courtnames);
+    var courttojoin = courtnames[somecourtname];
+    // console.log('full court info: ');
+    // console.dir(courttojoin);
 
-    return randomname;
+    if (courttojoin) {
+      var roomtojoin = allrooms[courttojoin.room].name;
+
+      console.log('roomtojoin - ' + roomtojoin);
+
+      socket.roomname = roomtojoin;
+
+      console.log('joining room? - ' + socket.roomname);
+
+      socket.join(socket.roomname);
+
+      var data = {
+        username: socket.username,
+        team: socket.team,
+        court: socket.court
+      }
+      console.log('tell everyone player joined the court: ');
+      console.dir(data);
+
+      // console.log('socket data?');
+      // console.dir(socket);
+
+      socket.broadcast.to(socket.roomname).emit('player joined court', data);
+
+      socket.emit('you joined court');
+
+    } else {
+      console.log('court not found');
+      socket.emit('court not found');
+    }
+    // console.log(courttojoin);
+    // console.log('courtnames');
+    // console.dir(courtnames);
   }
-
 
   // when the client emits 'add user', this listens and executes
   socket.on('add user', function(data) {
@@ -419,18 +504,6 @@ function onConnection(socket) {
     });
   });
 
-  socket.on('add court', function(courtdata) {
-    console.log('adding court');
-    // var newCourt = {
-    //   name: data.courtname,
-    //   room: socket.roomname
-    // };
-    courts[courtdata.name] = socket.roomname;
-    console.log('court name - ' + courtdata.name);
-    console.log('socket room - ' + socket.roomname);
-    // console.log('Courts: ');
-    // console.dir(courts);
-  });
 
   socket.on('update court', function(courtdata) {
     console.log('updating court');
@@ -445,25 +518,50 @@ function onConnection(socket) {
     // console.dir(courts);
   });
 
-  socket.on('join room', function(userdata) {
-    room = userdata.room;
-    socket.join(room);
+  socket.on('join room', function(data) { //court does this
+    roomname = data.roomname;
+    courtname = data.courtname;
 
-    socket.roomname = room;
-    console.log('index.js: joining room - ' + socket.roomname);
-    socket.broadcast.to(socket.roomname).emit('joined room', userdata);
+    socket.join(roomname);
+    socket.roomname = roomname;
+    socket.courtname = data.courtname;
+
+    console.log('index.js: court: ' + socket.courtname + ' joining room - ' + socket.roomname);
+    // socket.broadcast.to(socket.roomname).emit('court joined room', data);
+    socket.emit('court joined room', data);
   });
 
-  socket.on('join court', function(userdata) {
-    socket.username = userdata.username;
-    socket.team = userdata.team;
-    socket.court = userdata.court;
+  socket.on('join court', function(playerdata) { //player does this
+    socket.username = playerdata.username;
+    socket.team = playerdata.team;
+    socket.court = playerdata.court;
 
-    socket.roomname = courts[userdata.court];
-    console.log('joining room? - ' + socket.roomname);
-    socket.join(socket.roomname);
-    socket.broadcast.to(socket.roomname).emit('player joined court', userdata);
+    joinCourt(socket.court);
   });
+  socket.on('change player name', function(playerdata) {
+    oldplayer = {
+      username: socket.username,
+      team: socket.team,
+      court: socket.court
+    };
+    newplayer = {
+      username: playerdata.username,
+      team: playerdata.team,
+      court: playerdata.court
+    };
+
+    console.log('player: ' + oldplayer.username + ' changed name to: ' + newplayer.username);
+    console.log('new team: ' + newplayer.team);
+    socket.username = newplayer.username;
+    socket.team = newplayer.team;
+    socket.court = newplayer.court;
+
+    data = {
+      oldplayer: oldplayer,
+      newplayer: newplayer
+    }
+    socket.broadcast.to(socket.roomname).emit('player changed name', data);
+  })
 
 
   socket.on('get court', function(deviceIP) {
@@ -471,18 +569,24 @@ function onConnection(socket) {
 
     // first check to see if device is in list of devices
     if (deviceIP in alldevices) {
-      //if we know the device already, check its court and zone,
+      //if we know the devi ce already, check its court and zone,
       mydevice = alldevices[deviceIP];
       mycourt = allcourts[mydevice.court];
       myzone = allzones[mydevice.zone];
-      console.log('court: ');
-      console.dir(mycourt);
+
+      if (!myzone) {
+        myzone = 'UNKNOWN ZONE';
+      }
+      // console.log('court: ');
+      // console.dir(mycourt);
       if (mycourt) {
         //if we know the court the device should be in, check if we know the room
         myroom = mycourt.room;
+        myroomid = myroom;
         if (myroom) {
           //if mycourt already knows what room it is supposed to be a part of
-          assignCourtToRoom(mycourt,myroom);
+          console.log('myroom assign');
+          assignCourtToRoom(mycourt,myroomid);
         } else { //find a room
           console.log('court: ' + mycourt.name + ' and device: ' + mydevice.ipaddress + ' need a room');
           findARoom(mycourt,mydevice);
@@ -515,9 +619,7 @@ function onConnection(socket) {
   socket.on('game almost ready', function(courtName) {
 
       console.log('game almost ready - ' + courtName);
-      console.log('court room - ' + courts[courtName]);
-      socket.roomname = courts[courtName];
-      console.log('socket.room - ' + socket.roomname);
+      console.log('court room? - ' + socket.roomname);
       socket.broadcast.to(socket.roomname).emit('game almost ready', courtName);
   });
 
@@ -573,6 +675,24 @@ function onConnection(socket) {
 }
 
 
+
+
+// To Delete, seems redundant or not needAlphaBlending
+
+    // socket.on('add court', function(courtdata) {
+    //   console.log('adding court');
+    //   // var newCourt = {
+    //   //   name: data.courtname,
+    //   //   room: socket.roomname
+    //   // };
+    //   courts[courtdata.name] = socket.roomname;
+    //   console.log('court name - ' + courtdata.name);
+    //   console.log('socket room - ' + socket.roomname);
+    //   // console.log('Courts: ');
+    //   // console.dir(courts);
+    // });
+
+// Ready to delete finished
 
 
 
