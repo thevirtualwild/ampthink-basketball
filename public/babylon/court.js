@@ -1,4 +1,6 @@
 // Main Controller Code
+
+//Variables (Folded below)
 var socket = io();
 
 var canvas = document.getElementById("canvas");
@@ -17,11 +19,16 @@ var currentNetState = netStates.FREE;
 var cameraNames = Object.freeze({"freeThrow": 0, "quarterFar": 1, "close": 2});
 var selectedCameraType = cameraNames.freeThrow;
 
+var basketballStates = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+var pulseAmbientColor = false;
+
+//Game Variables?
 var totalTime = 0;
 var netSpheres = [];
 var attractShots = [-.12, 1.2, 1.1, .3, 1, -.2, -2.5, 1.8, 0, 3.2]
 var cameraSettings = [];
-var score = 0;
+
 var initWaitTime = 7;
 var currentWaitTime = 7;
 var initGameTime = 30;
@@ -35,12 +42,6 @@ var initNetLerpDelayTime = 2;
 var currentNetLerpTime = 0.25;
 var initNetLerpTime = 0.25;
 
-var basketballStates = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-
-var pulseAmbientColor = false;
-
-createCameraTypes();
-
 var gameReady = false;
 
 var currentCameraIndex = 0;
@@ -50,9 +51,15 @@ var prevAnimation;
 
 var playerData;
 
+var score = 0;
 var combo = 0;
 var newBasketballs = [];
 var newBasketballOutlines = [];
+
+
+createCameraTypes();
+
+
 
 var createScene = function(){
     var scene = new BABYLON.Scene(engine);
@@ -182,7 +189,8 @@ var createScene = function(){
             case gameStates.RESULTS:
                 currentGameState = gameState;
                 currentCameraIndex = 1;
-                socket.emit("game over", playerData);
+                gameOver();
+
                 updateUI();
                 break;
             case gameStates.INACTIVE:
@@ -194,8 +202,7 @@ var createScene = function(){
         }
     }
 
-    function animateCamera()
-    {
+    function animateCamera() {
         var initPosition;
         var finalPosition;
 
@@ -258,128 +265,127 @@ var createScene = function(){
         }
     }
 
-    scene.registerBeforeRender(function()
-    {
-        var i = 0;
+    scene.registerBeforeRender(function() {
+      var i = 0;
 
-        var newPos = new BABYLON.Vector3(0,0,0);
-        newPos.x = torus.position.x + 0;
-        newPos.y = torus.position.y + 4;
-        newPos.z = torus.position.z - 0;
-        camera.setTarget(newPos);
+      var newPos = new BABYLON.Vector3(0,0,0);
+      newPos.x = torus.position.x + 0;
+      newPos.y = torus.position.y + 4;
+      newPos.z = torus.position.z - 0;
+      camera.setTarget(newPos);
 
-        //dynamically set fov based on screen resolution
-        camera.fov = 1.9 + (-.676 * canvas.width/canvas.height);
-        //console.log(camera.fov);
+      //dynamically set fov based on screen resolution
+      camera.fov = 1.9 + (-.676 * canvas.width/canvas.height);
+      //console.log(camera.fov);
 
-        if(currentGameState == gameStates.WAITING)
-        {
-            currentWaitTime -= (engine.getDeltaTime() / 1000);
+      if(currentGameState == gameStates.WAITING)
+      {
+          currentWaitTime -= (engine.getDeltaTime() / 1000);
 
-            UIWaitingUpdateClock(currentWaitTime);
+          UIWaitingUpdateClock(currentWaitTime);
 
 
-            if(currentWaitTime <= -5)
-            {
+          if(currentWaitTime <= -5)
+          {
+            if (hasplayer) {
+              changeGameState(gameStates.GAMEPLAY);
+            } else {
+              changeGameState(gameStates.INACTIVE);
+            }
+          }
+          else if(currentWaitTime <= -4 && !gameReady)
+          {
+              gameReady = true;
               if (hasplayer) {
-                changeGameState(gameStates.GAMEPLAY);
-              } else {
-                changeGameState(gameStates.INACTIVE);
+                  socket.emit("game almost ready", courtName);
               }
-            }
-            else if(currentWaitTime <= -4 && !gameReady)
-            {
-                gameReady = true;
-                if (hasplayer) {
-                    socket.emit("game almost ready", courtName);
-                }
-            }
-            else if(currentWaitTime <= -2)
-            {
-                attractLabel.innerHTML = "GAME STARTS IN <br />" +  (5.5 + currentWaitTime).toFixed(0);
-                //attractLabel.innerHTML = "";
-            }
-            else if(currentWaitTime < 0)
-            {
-                //attractLabel.innerHTML = "PLAYERS LOCKED IN";
-                attractLabel.innerHTML = "";
-            }
-            else
-            {
-                if (hasplayer) {
-                    //attractLabel.innerHTML =  currentWaitTime.toFixed(0) + "<br /> WAITING FOR PLAYERS";
-                    attractLabel.innerHTML =  "";
-                }
-            }
-        }
-        else if(currentGameState == gameStates.GAMEPLAY)
-        {
-            currentGameTime -= (engine.getDeltaTime() / 1000);
-            var time = currentGameTime.toFixed(2);
-            attractLabel.innerHTML =  "";
+          }
+          else if(currentWaitTime <= -2)
+          {
+              attractLabel.innerHTML = "GAME STARTS IN <br />" +  (5.5 + currentWaitTime).toFixed(0);
+              //attractLabel.innerHTML = "";
+          }
+          else if(currentWaitTime < 0)
+          {
+              //attractLabel.innerHTML = "PLAYERS LOCKED IN";
+              attractLabel.innerHTML = "";
+          }
+          else
+          {
+              if (hasplayer) {
+                  //attractLabel.innerHTML =  currentWaitTime.toFixed(0) + "<br /> WAITING FOR PLAYERS";
+                  attractLabel.innerHTML =  "";
+              }
+          }
+      }
+      else if(currentGameState == gameStates.GAMEPLAY)
+      {
+          currentGameTime -= (engine.getDeltaTime() / 1000);
+          var time = currentGameTime.toFixed(2);
+          attractLabel.innerHTML =  "";
 
-            if(currentGameTime <= 0)
-            {
-                changeGameState(gameStates.RESULTS);
-                currentGameTime = 0;
-            }
+          if(currentGameTime <= 0)
+          {
+              changeGameState(gameStates.RESULTS);
+              currentGameTime = 0;
+          }
 
-            updateClock();
-        }
-        else if(currentGameState == gameStates.RESULTS)
-        {
-            currentResultsTime -= (engine.getDeltaTime() / 1000);
-            attractLabel.innerHTML = "Score: " + score;
+          updateClock();
+      }
+      else if(currentGameState == gameStates.RESULTS)
+      {
+          currentResultsTime -= (engine.getDeltaTime() / 1000);
+          attractLabel.innerHTML = "Score: " + score;
 
-            if(currentResultsTime <= -2)
-            {
-                changeGameState(gameStates.ATTRACT);
-                currentGameTime = initGameTime;
-                updateClock();
-                socket.emit('room reset');
-            }
-            else if(currentResultsTime <= 0)
-            {
-                UIResultsAnimateOut();
-                currentGameTime = initGameTime;
-                updateClock();
-            }
+          if(currentResultsTime <= -2)
+          {
+              changeGameState(gameStates.ATTRACT);
+              currentGameTime = initGameTime;
+              updateClock();
+              socket.emit('room reset');
+          }
+          else if(currentResultsTime <= 0)
+          {
+              UIResultsAnimateOut();
+              currentGameTime = initGameTime;
+              updateClock();
+          }
 
-        }
+      }
 
-        if(currentNetState ==  netStates.FREE)
-        {
-            currentNetLerpDelayTime = initNetLerpDelayTime;
-            currentNetLerpTime = initNetLerpTime;
-        }
-        else if(currentNetState == netStates.WAITING)
-        {
-            currentNetLerpTime = initNetLerpTime;
-            //console.log(currentNetLerpDelayTime);
-            currentNetLerpDelayTime -= (engine.getDeltaTime() / 1000);
-            if(currentNetLerpDelayTime <= 0)
-            {
-                currentNetState = netStates.FREE;
-            }
-        }
-        else if(currentNetState == netStates.LERPING)
-        {
-            currentNetLerpTime -= (engine.getDeltaTime() / 1000);
-            if(currentNetLerpTime <= 0)
-            {
-                currentNetState = netStates.FREE;
-            }
-        }
+      if(currentNetState ==  netStates.FREE)
+      {
+          currentNetLerpDelayTime = initNetLerpDelayTime;
+          currentNetLerpTime = initNetLerpTime;
+      }
+      else if(currentNetState == netStates.WAITING)
+      {
+          currentNetLerpTime = initNetLerpTime;
+          //console.log(currentNetLerpDelayTime);
+          currentNetLerpDelayTime -= (engine.getDeltaTime() / 1000);
+          if(currentNetLerpDelayTime <= 0)
+          {
+              currentNetState = netStates.FREE;
+          }
+      }
+      else if(currentNetState == netStates.LERPING)
+      {
+          currentNetLerpTime -= (engine.getDeltaTime() / 1000);
+          if(currentNetLerpTime <= 0)
+          {
+              currentNetState = netStates.FREE;
+          }
+      }
 
-        totalTime += engine.getDeltaTime()/50;
+      totalTime += engine.getDeltaTime()/50;
 
-        if(pulseAmbientColor)
-        {
-            scene.ambientColor = new BABYLON.Color3(
-                Math.abs(Math.sin(totalTime)),
-                Math.abs(Math.sin(totalTime)),
-                Math.abs(Math.sin(totalTime)));
-        }
+      if(pulseAmbientColor)
+      {
+          scene.ambientColor = new BABYLON.Color3(
+              Math.abs(Math.sin(totalTime)),
+              Math.abs(Math.sin(totalTime)),
+              Math.abs(Math.sin(totalTime)));
+      }
 
     });
 
@@ -1162,22 +1168,6 @@ var hasplayer = false;
 
 var myIP = getMyIP();
 
-function showCourt(someIP) {
-  checkMyDeviceInfo(someIP);
-}
-
-
-function checkMyDeviceInfo(someIP) {
-  // check if Device Knows What Court it should be in
-  socket.emit('get court', someIP);
-
-  //Will return an "on" event from Socket
-}
-
-function getRoomToJoin() {
-
-}
-
 function getMyIP() {
   window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;//compatibility for Firefox and chrome
   var pc = new RTCPeerConnection({iceServers:[]}), noop = function(){};
@@ -1198,7 +1188,13 @@ function getMyIP() {
   };
 }
 
-
+function showCourt(someIP) {
+  checkMyDeviceInfo(someIP);
+}
+function checkMyDeviceInfo(someIP) {
+  // check if Device Knows What Court it should be in
+  socket.emit('get court', someIP);
+}
 function haveCourtJoinRoom(courtname, roomnametojoin) {
   var data = {
     courtname: courtname,
@@ -1213,9 +1209,8 @@ function haveCourtJoinRoom(courtname, roomnametojoin) {
   updateUI();
 }
 
-function nameCourt() {
-  return randomCode(5);
-}
+
+
 function randomCode(howLong) {
   var randomname = "";
   var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -1225,147 +1220,10 @@ function randomCode(howLong) {
 
   return randomname;
 }
-
 function randomRange (min, max) {
     var number = (Math.random() * (min - max) + max);
     return number;
 }
-
-
-
-socket.on('device knows court', function(data) {
-  // do something with the data
-  console.log('device knows court');
-});
-socket.on('device needs court', function() {
-  // find something out
-  console.log('Device doesnt know court');
-});
-
-
-socket.on('join this room', function(data) {
-  console.log('Court and Room Data: ');
-  console.dir(data);
-
-  var courtname = data.court.name;
-  var roomname = data.room.name;
-
-  console.log('told to join ' + courtname + ' in ' + roomname);
-
-  haveCourtJoinRoom(courtname,roomname);
-});
-
-socket.on('court joined room', function(data) {
-  console.log('Congrats ' + courtName +'(' + data.courtname + ')' + ', you joined room: ' + data.roomname);
-})
-
-
-
-
-socket.on('player joined court', function(userdata) {
-    console.log('Player ' + userdata.username + ' - Joined Court - ' + userdata.court);
-    UIGameplayUpdateName(userdata.username);
-    UIResultsUpdateName(userdata.username);
-
-    playerData = userdata;
-    if (userdata.court == courtName) {
-      hasplayer = true;
-    }
-    scene.actionManager.processTrigger(scene.actionManager.actions[2].trigger, {additionalData: "y"});
-});
-
-socket.on('player changed name', function(data) {
-  console.log('Player ' + playerData.username + ' - Change Name - ' + data.newplayer.username);
-
-  playerData = userdata;
-
-  UIGameplayUpdateName(playerData.username);
-  UIResultsUpdateName(playerData.username);
-});
-
-socket.on('take shot', function(info) {
-
-    shotInfo = info;
-    //var trigger = scene.actionManager.actions[0].trigger;
-    console.log(shotInfo);
-    var ae = BABYLON.ActionEvent.CreateNewFromScene(scene, {additionalData: "r"});
-    //console.log(ae);
-    scene.actionManager.processTrigger(scene.actionManager.actions[0].trigger,  ae);
-
-    //console.log(scene.actionManager.actions.length);
-});
-
-socket.on('shot sent', function() {
-  // console.log('We got a message back!');
-})
-
-socket.on('reset game', function() {
-  scene.actionManager.processTrigger(scene.actionManager.actions[1].trigger, {additionalData: "t"});
-});
-
-
-//To Delete Soon I think? (not needed?)
-
-function joinRoom() {
-  var roomtojoin = randomCode(7);
-
-  var courtdata = {
-    name: nameCourt(),
-    room: roomtojoin
-  };
-
-  thisRoom = courtdata.room;
-  courtName = courtdata.name;
-
-  socket.emit('query request');
-  socket.emit('join room', courtdata);
-  socket.emit('add court', courtdata);
-  console.log('COURT ' + courtdata.name + ' - joining room - ' + courtdata.room);
-
-  updateUI();
-  // $pages.fadeOut();
-  // Tell the server your new room to connect to
-  //socket.emit('room', roomname);
-  //socket.emit('add user', jsonstring);
-}
-function joinQueryRoom(query) {
-  roomcode = query;
-
-  $('.insertRoomCode').text(roomcode);
-  $(document).prop('title', roomcode);
-
-  roomcode = roomcode.toUpperCase();
-
-  courtData = {
-    name: courtName,
-    room: roomcode
-  }
-
-  console.log('joining room - ' + roomcode);
-  socket.emit('room', roomcode);
-  socket.emit('update court', courtData );
-}
-
-socket.on('query', function(query) {
-  console.log('query received - ' + query);
-
-  joinQueryRoom(query);
-});
-socket.on('use random query', function() {
-  console.log('no query received starting random');
-
-  var query = randomCode(7);
-
-  joinQueryRoom(query);
-});
-
-//End of to delete soon I think
-
-
-
-
-
-
 
 
 function addScore() {
@@ -1453,3 +1311,166 @@ function createCameraTypes() {
     }
     cameraSettings.push(cameraType);
 }
+
+function gameOver() {
+  // the game is finished, submit the score and do stuff
+
+  var gamedata = {
+    player: playerData,
+    score: score,
+    combo: combo
+  }
+
+  socket.emit('game over', gamedata);
+
+  //Show Results page
+}
+
+
+
+
+
+
+
+socket.on('device knows court', function(data) {
+  // do something with the data
+  console.log('device knows court');
+});
+socket.on('device needs court', function() {
+  // find something out
+  console.log('Device doesnt know court');
+});
+
+
+socket.on('join this room', function(data) {
+  console.log('Court and Room Data: ');
+  console.dir(data);
+
+  var courtname = data.court.name;
+  var roomname = data.room.name;
+
+  console.log('told to join ' + courtname + ' in ' + roomname);
+
+  haveCourtJoinRoom(courtname,roomname);
+});
+socket.on('court joined room', function(data) {
+  console.log('Congrats ' + courtName +'(' + data.courtname + ')' + ', you joined room: ' + data.roomname);
+})
+
+socket.on('player joined court', function(userdata) {
+    console.log('Player ' + userdata.username + ' - Joined Court - ' + userdata.court);
+    UIGameplayUpdateName(userdata.username);
+    UIResultsUpdateName(userdata.username);
+
+    playerData = userdata;
+    if (userdata.court == courtName) {
+      hasplayer = true;
+    }
+
+    scene.actionManager.processTrigger(scene.actionManager.actions[2].trigger, {additionalData: "y"});
+});
+socket.on('player changed name', function(data) {
+  console.log('Player ' + playerData.username + ' - Change Name - ' + data.newplayer.username);
+
+  playerData = userdata;
+
+  UIGameplayUpdateName(playerData.username);
+  UIResultsUpdateName(playerData.username);
+});
+
+socket.on('take shot', function(info) {
+
+    shotInfo = info;
+    //var trigger = scene.actionManager.actions[0].trigger;
+    console.log(shotInfo);
+    var ae = BABYLON.ActionEvent.CreateNewFromScene(scene, {additionalData: "r"});
+    //console.log(ae);
+    scene.actionManager.processTrigger(scene.actionManager.actions[0].trigger,  ae);
+
+    //console.log(scene.actionManager.actions.length);
+});
+socket.on('shot sent', function() {
+  // console.log('We got a message back!');
+})
+
+
+socket.on('end all games', function(courtthatfinished) {
+  console.log('court that finished - ' + courtthatfinished);
+
+  //now end everything and send results
+  gameOver();
+});
+socket.on('show results', function(resultsdata) {
+  console.log('Results!');
+  console.dir(resultsdata);
+});
+socket.on('reset game', function() {
+  scene.actionManager.processTrigger(scene.actionManager.actions[1].trigger, {additionalData: "t"});
+});
+
+
+
+
+
+
+//To Delete Soon I think? (not needed?)
+
+  function joinRoom() {
+    var roomtojoin = randomCode(7);
+
+    var courtdata = {
+      name: nameCourt(),
+      room: roomtojoin
+    };
+
+    thisRoom = courtdata.room;
+    courtName = courtdata.name;
+
+    socket.emit('query request');
+    socket.emit('join room', courtdata);
+    socket.emit('add court', courtdata);
+    console.log('COURT ' + courtdata.name + ' - joining room - ' + courtdata.room);
+
+    updateUI();
+    // $pages.fadeOut();
+    // Tell the server your new room to connect to
+    //socket.emit('room', roomname);
+    //socket.emit('add user', jsonstring);
+  }
+
+  function nameCourt() {
+    return randomCode(5);
+  }
+
+  function joinQueryRoom(query) {
+    roomcode = query;
+
+    $('.insertRoomCode').text(roomcode);
+    $(document).prop('title', roomcode);
+
+    roomcode = roomcode.toUpperCase();
+
+    courtData = {
+      name: courtName,
+      room: roomcode
+    }
+
+    console.log('joining room - ' + roomcode);
+    socket.emit('room', roomcode);
+    socket.emit('update court', courtData );
+  }
+
+  socket.on('query', function(query) {
+    console.log('query received - ' + query);
+
+    joinQueryRoom(query);
+  });
+  socket.on('use random query', function() {
+    console.log('no query received starting random');
+
+    var query = randomCode(7);
+
+    joinQueryRoom(query);
+  });
+
+//End of to delete soon I think

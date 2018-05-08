@@ -215,17 +215,21 @@ function randomCode(howLong) {
 var numUsers = 0;
 var currentHighScore = 0;
 
-
 var courts = {};
 
 
 
 // Web Socket (Socket.io)
 function onConnection(socket) {
+  var currentHighScore = {
+    player: 'none',
+    score: 0,
+    combo: 0
+  };
 
   var addedUser = false;
+  var gamesrunning;
   console.log('a user connected');
-
 
   function findARoom(somecourt, somedevice) {
     zoneid = somedevice.zone;
@@ -246,7 +250,6 @@ function onConnection(socket) {
       // console.log(somecourt);
     }
   }
-
   function findACourt(mydevice, myzone) {
     //if device is not a part of a court
     console.log('Please add device: ' + mydevice.ipaddress + ' to a court');
@@ -320,6 +323,49 @@ function onConnection(socket) {
         //use a random court
         findACourt(newdevice, devicezone);
     });
+  }
+
+  function joinCourt(somecourtname) {
+    console.log('player needs to join court: ' + somecourtname);
+    console.log('courtnames - ');
+    console.dir(courtnames);
+    var courttojoin = courtnames[somecourtname];
+    console.log('full court info: ');
+    console.dir(courttojoin);
+
+    if (courttojoin) {
+      var roomtojoin = allrooms[courttojoin.room].name;
+
+      console.log('roomtojoin - ' + roomtojoin);
+
+      socket.roomname = roomtojoin;
+
+      console.log('joining room? - ' + socket.roomname);
+
+      socket.join(socket.roomname);
+
+      var data = {
+        username: socket.username,
+        team: socket.team,
+        court: socket.court
+      }
+      console.log('tell everyone player joined the court: ');
+      console.dir(data);
+
+      // console.log('socket data?');
+      // console.dir(socket);
+
+      socket.broadcast.to(socket.roomname).emit('player joined court', data);
+
+      socket.emit('you joined court');
+
+    } else {
+      console.log('court not found');
+      socket.emit('court not found');
+    }
+    // console.log(courttojoin);
+    // console.log('courtnames');
+    // console.dir(courtnames);
   }
 
   function createCourt(somedevice,somezone) {
@@ -418,112 +464,55 @@ function onConnection(socket) {
     socket.emit('join this room', data);
   }
 
-  function havePlayerJoinRoom( ) {
 
-  }
-  function joinCourt(somecourtname) {
-    console.log('player needs to join court: ' + somecourtname);
-    console.log('courtnames - ');
-    console.dir(courtnames);
-    var courttojoin = courtnames[somecourtname];
-    console.log('full court info: ');
-    console.dir(courttojoin);
+  //court stuff I think
+  socket.on('get court', function(deviceIP) {
+    // find out if the device knows what court it should be a part of
 
-    if (courttojoin) {
-      var roomtojoin = allrooms[courttojoin.room].name;
+    // first check to see if device is in list of devices
+    if (deviceIP in alldevices) {
+      //if we know the device already, check its court and zone,
+      mydevice = alldevices[deviceIP];
+      mycourt = allcourts[mydevice.court];
+      myzone = allzones[mydevice.zone];
 
-      console.log('roomtojoin - ' + roomtojoin);
-
-      socket.roomname = roomtojoin;
-
-      console.log('joining room? - ' + socket.roomname);
-
-      socket.join(socket.roomname);
-
-      var data = {
-        username: socket.username,
-        team: socket.team,
-        court: socket.court
+      if (!myzone) {
+        myzone = 'UNKNOWN ZONE';
       }
-      console.log('tell everyone player joined the court: ');
-      console.dir(data);
 
-      // console.log('socket data?');
-      // console.dir(socket);
-
-      socket.broadcast.to(socket.roomname).emit('player joined court', data);
-
-      socket.emit('you joined court');
-
-    } else {
-      console.log('court not found');
-      socket.emit('court not found');
+      // console.log('court: ');
+      // console.dir(mycourt);
+      if (mycourt) {
+        //if we know the court the device should be in, check if we know the room
+        myroom = mycourt.room;
+        myroomid = myroom;
+        if (myroom) {
+          //if mycourt already knows what room it is supposed to be a part of
+          console.log('myroom assign');
+          assignCourtToRoom(mycourt,myroomid);
+        } else { //find a room
+          console.log('court: ' + mycourt.name + ' and device: ' + mydevice.ipaddress + ' need a room');
+          findARoom(mycourt,mydevice);
+        }
+      } else { //find a court
+        console.log('No court found for device: ' + mydevice.ipaddress + ' in zone: ' + myzone.name);
+        findACourt(mydevice, myzone);
+      }
+    } else { //unknown device
+      console.log('device: ' + deviceIP + ' not in alldevices list');
+      unknownDevice(deviceIP);
     }
-    // console.log(courttojoin);
-    // console.log('courtnames');
-    // console.dir(courtnames);
-  }
-
-  // when the client emits 'add user', this listens and executes
-  socket.on('add user', function(data) {
-    // dont add the user twice, just return if this is called again.
-    if (addedUser) return;
-
-    console.log('add user called - ' + data);
-    var userdata = '';
-
-    // if not valid json object, parse
-    try {
-        userdata = JSON.parse(data);
-        console.log('userdata' - userdata);
-    } catch (e) {
-        userdata = data;
-    }
-
-    // we store the username in the socket session for this client
-    socket.username = userdata.username;
-    ++numUsers;
-    addedUser = true;
-
-    if (numUsers == 1 ) {
-      socket.team = 'red';
-      socket.emit('change team', socket.team);
-    } else if (numUsers == 2) {
-      socket.team = 'blue';
-      socket.emit('change team', socket.team);
-    } else {
-      socket.team = userdata.team;
-    }
-
-    // fake for now
-    // socket.roomname = 'GAME';
-
-    console.log("|New User: " + socket.username + "\n - Chosen team: " + socket.team);
-
-    // socket.emit('login', {
-    //   numUsers: numUsers,
-    //   roomname: socket.roomname
-    // });
-
-    console.log(' - Joined Room: ' + socket.roomname);
-
-    // echo globally (all clients) that a person has connected
-    socket.broadcast.to(socket.roomname).emit('user joined', {
-      username: socket.username,
-      team: socket.team,
-      numUsers: numUsers
-    });
   });
 
-
-  socket.on('update court', function(courtdata) {
+  socket.on('update court', function(courtdata) { //court joins new room
     console.log('updating court');
     // var newCourt = {
     //   name: data.courtname,
     //   room: socket.roomname
     // };
-    var newroom = courtdata.room;
-    courts[courtdata.name] = newroom;
+    var newroomid = courtdata.room;
+    courtnames[courtdata.name].room = newroomid;
+    var newroom = allrooms[newroomid];
     socket.join(newroom);
     // console.log('Courts: ');
     // console.dir(courts);
@@ -542,6 +531,8 @@ function onConnection(socket) {
     socket.emit('court joined room', data);
   });
 
+
+  //player stuff I think
   socket.on('join court', function(playerdata) { //player does this
     socket.username = playerdata.username;
     socket.team = playerdata.team;
@@ -575,69 +566,23 @@ function onConnection(socket) {
   })
 
 
-  socket.on('get court', function(deviceIP) {
-    // find out if the device knows what court it should be a part of
-
-    // first check to see if device is in list of devices
-    if (deviceIP in alldevices) {
-      //if we know the devi ce already, check its court and zone,
-      mydevice = alldevices[deviceIP];
-      mycourt = allcourts[mydevice.court];
-      myzone = allzones[mydevice.zone];
-
-      if (!myzone) {
-        myzone = 'UNKNOWN ZONE';
-      }
-      // console.log('court: ');
-      // console.dir(mycourt);
-      if (mycourt) {
-        //if we know the court the device should be in, check if we know the room
-        myroom = mycourt.room;
-        myroomid = myroom;
-        if (myroom) {
-          //if mycourt already knows what room it is supposed to be a part of
-          console.log('myroom assign');
-          assignCourtToRoom(mycourt,myroomid);
-        } else { //find a room
-          console.log('court: ' + mycourt.name + ' and device: ' + mydevice.ipaddress + ' need a room');
-          findARoom(mycourt,mydevice);
-        }
-      } else { //find a court
-        console.log('No court found for device: ' + mydevice.ipaddress + ' in zone: ' + myzone.name);
-        findACourt(mydevice, myzone);
-      }
-    } else { //unknown device
-      console.log('device: ' + deviceIP + ' not in alldevices list');
-      unknownDevice(deviceIP);
-    }
-  });
-
-  socket.on('game over', function(playerdata) {
-
-    // Submit Player Data To Database
-    // Check Database for High Score (of room)
-
-    var highscorer = {
-      name: 'wouldnt you like to know',
-      team: 'something',
-      score: 99
-    }
-
-    socket.broadcast.to(socket.roomname).emit('show results', highscorer);
-
-  });
-
+  //game stuff
+  // socket.on('start countdown', function(courtName) {
+  //   if (!gamesrunning) {
+  //    gamesrunning = true;
+  //    console.log('countdown started by - ' + courtName);
+  //    socket.broadcast.to(socket.roomname).emit('start countdown', courtName);
+  //   } else {
+  //    console.log('countdown already running')
+  //   }
+  // });
   socket.on('game almost ready', function(courtName) {
-
-      console.log('game almost ready - ' + courtName);
-      console.log('court room? - ' + socket.roomname);
-      socket.broadcast.to(socket.roomname).emit('game almost ready', courtName);
+    // console.log('game almost ready - ' + courtName);
+    // console.log('court room? - ' + socket.roomname);
+    gamesrunning = true;
+    console.log('game almost ready by - ' + courtName);
+    socket.broadcast.to(socket.roomname).emit('game almost ready', courtName);
   });
-
-  socket.on('room reset', function() {
-    socket.broadcast.to(socket.roomname).emit('reset game');
-  });
-
   socket.on('throw ball', function(data) {
     // console.log('Full Data - ' + data);
 
@@ -665,13 +610,53 @@ function onConnection(socket) {
     socket.broadcast.to(socket.roomname).emit('take shot', shotInfo);
 
   });
+  socket.on('game over', function(gamedata) {
 
+    // Submit Player Data To Database
+    console.log('game over');
+    console.dir(gamedata);
+
+    // Check Database for High Score (of room)
+    var teamscores = {
+
+    };
+
+    if (gamedata.score > currentHighScore.score) {
+      currentHighScore = gamedata;
+    } else {
+      console.log('Sorry not the best');
+    }
+
+    var resultsdata = {
+      highscorer: currentHighScore,
+      yourscore: gamedata,
+      teamscores: teamscores
+    }
+    socket.emit('show results', resultsdata);
+
+    if (socket.gamesrunning) {
+      socket.broadcast.to(socket.roomname).emit('end all games', socket.court);
+      socket.gamesrunning = false;
+    } else {
+      console.log(socket.court + ': Games already over');
+    }
+    // socket.emit('show results', highscorer);
+
+  });
+  socket.on('room reset', function() {
+    socket.broadcast.to(socket.roomname).emit('reset game');
+  });
+
+
+
+
+  //server stuff
   socket.on('disconnect', function() {
-    console.log('user disconnected');
+    console.log('user from: ' + socket.roomname + ' disconnected');
   })
 
 
-
+  //might not need
   socket.on('query request', function() {
     console.log('query request received');
     if (query) {
@@ -689,6 +674,56 @@ function onConnection(socket) {
 
 
 // To Delete, seems redundant or not needAlphaBlending
+    // // when the client emits 'add user', this listens and executes
+    // socket.on('add user', function(data) {
+    //   // dont add the user twice, just return if this is called again.
+    //   if (addedUser) return;
+    //
+    //   console.log('add user called - ' + data);
+    //   var userdata = '';
+    //
+    //   // if not valid json object, parse
+    //   try {
+    //       userdata = JSON.parse(data);
+    //       console.log('userdata' - userdata);
+    //   } catch (e) {
+    //       userdata = data;
+    //   }
+    //
+    //   // we store the username in the socket session for this client
+    //   socket.username = userdata.username;
+    //   ++numUsers;
+    //   addedUser = true;
+    //
+    //   if (numUsers == 1 ) {
+    //     socket.team = 'red';
+    //     socket.emit('change team', socket.team);
+    //   } else if (numUsers == 2) {
+    //     socket.team = 'blue';
+    //     socket.emit('change team', socket.team);
+    //   } else {
+    //     socket.team = userdata.team;
+    //   }
+    //
+    //   // fake for now
+    //   // socket.roomname = 'GAME';
+    //
+    //   console.log("|New User: " + socket.username + "\n - Chosen team: " + socket.team);
+    //
+    //   // socket.emit('login', {
+    //   //   numUsers: numUsers,
+    //   //   roomname: socket.roomname
+    //   // });
+    //
+    //   console.log(' - Joined Room: ' + socket.roomname);
+    //
+    //   // echo globally (all clients) that a person has connected
+    //   socket.broadcast.to(socket.roomname).emit('user joined', {
+    //     username: socket.username,
+    //     team: socket.team,
+    //     numUsers: numUsers
+    //   });
+    // });
 
     // socket.on('add court', function(courtdata) {
     //   console.log('adding court');
