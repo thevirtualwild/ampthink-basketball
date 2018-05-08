@@ -246,6 +246,7 @@ function createScene() {
           function ()
           {
               resetBall();
+              UICustomizeAnimateOut();
           }
       )
   );
