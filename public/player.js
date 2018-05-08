@@ -11,6 +11,9 @@
   var thrown = true;
   var countdownStarted = true;
 
+  var username;
+  var team;
+
   var initCameraPos;
 
   var ballStates = Object.freeze({"WAITING": 0, "DRAGGABLE": 1, "DRAGGING": 2, "SHOT": 3});
@@ -325,10 +328,32 @@ socket.on('end player game', function()
     //scene.actionManager.processTrigger(scene.actionManager.actions[1].trigger, {additionalData: "t"});
 });
 
+socket.on('end player game', function()
+{
+  console.log('Player Game Ended');
+  //show this players score
+  $gameover.fadeIn();
+  var ae = BABYLON.ActionEvent.CreateNewFromScene(scene, {additionalData: "t"});
+  //console.log(ae);
+  scene.actionManager.processTrigger(scene.actionManager.actions[1].trigger,  ae);
+  //$passcodeInput.text = "";
+  //scene.actionManager.processTrigger(scene.actionManager.actions[1].trigger, {additionalData: "t"});
+});
+
+  socket.on('you joined court', function()
+  {
+      UIInputAnimateOut();
+  });
+
+  socket.on('court not found', function()
+  {
+      console.log("COURT NOT FOUND");
+  });
+
 function joinCourt(someCourt)
 {
-  var username = generateName();
-  var team = generateTeam();
+  username = generateName();
+  team = generateTeam();
   // if (username) {
   //   username = username.toUpperCase();
   // } else {

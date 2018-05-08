@@ -18,7 +18,7 @@ font-face {
 
 * {
   box-sizing: border-box;
-  font-family: "Gobold"; }
+  font-family: "Gobold";
 }
 
 html, body {
@@ -52,6 +52,7 @@ ul {
 canvas{
   width:100%;
   height:100%;
+  max-width: 100%;
 }
 
 /* Pages */
@@ -68,18 +69,17 @@ canvas{
   height: 100%;
   position: absolute;
   width: 100%;
-
+  background-image: url("/babylon/assets/UI/Mobile/MobileGround.png");
 }
 
 /* Login & Roomcange Pages*/
 
 .login.page, .passcode.page {
   background-color: #000;
-  background-image: url("/babylon/assets/UI/Mobile/MobileGround.png");
 }
 
 
-.login.page .form, .passcode.page .form {
+.login.page .form, .passcode.page .form , .player.page .form, .gameplay.page .form, .gameover.page .form{
   height: 100px;
   margin-top: -100px;
   position: absolute;
@@ -90,7 +90,7 @@ canvas{
   max-width: 100%;
 }
 
-.login.page .form .usernameInput, .passcode.page .form .passcodeInput {
+.login.page .form .usernameInput, .passcode.page .form .passcodeInput{
   background-color: transparent;
   border: none;
   outline: none;
@@ -98,6 +98,9 @@ canvas{
   text-align: center;
   width: 400px;
   max-width: 100%;
+  display: block;
+  margin:auto;
+
 }
 
 .login.page .title, .passcode.page .title {
@@ -121,12 +124,130 @@ canvas{
   color: white;
   font-weight: bold;
   font-size: 600%;
+  background:none;
+  border:none;
+  text-align: center;
 }
 
 .passcode.page img{
   width:50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -60px;
 }
 
+#footerLogo{
+  text-align: center;
+}
+
+#footerLogo img{
+  position:absolute;
+  bottom: 0;
+  z-index: 100;
+  left:0;
+  right:0;
+  width: 100%;
+  height: 200px;
+  object-fit:contain;
+}
+
+.player.page .form{
+  top:30%;
+}
+
+.player.page .form .firstName{
+  color:white;
+  font-size:80px;
+}
+
+.player.page .form .lastName{
+  color:rgb(77, 196, 249);
+  font-size:120px;
+}
+
+.player.page .form img{
+  width:50%;
+  margin-top:-20px;
+}
+
+.player.page .form .teamColor{
+  color:red;
+  font-style:italic;
+  font-size:140px;
+  transform: rotate(-12deg);
+}
+
+.player.page .form .teamLabel{
+  color:white;
+  font-weight: bold;
+  font-style: normal;
+  font-size:70px;
+  margin-top: 30px;
+  letter-spacing: 10px;
+}
+
+#refreshLogo img{
+  position:absolute;
+  right:0px;
+}
+
+.gameplay.page .form{
+  top:8%;
+}
+
+.gameplay.page .form .instructions{
+  color:yellow;
+  margin-top: -20px;
+  font-size: 40px;
+}
+
+.gameover.page .form{
+  top:33%;
+}
+
+.gameover.page .form .thank{
+   color:white;
+   font-size: 80px;
+   font-weight:bold;
+ }
+
+.gameover.page .form .you{
+  color:white;
+  font-size: 80px;
+  font-weight:bold;
+}
+
+.gameover.page .form #dash{
+  width: 50%;
+  display:block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.gameover.page .form #button{
+  width: 40%;
+  display:block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
+}
+
+.passcode.page{
+  display: block;
+}
+
+.player.page{
+  display: none;
+}
+
+.gameplay.page{
+  display: none;
+}
+
+.gameover.page{
+  display: none;
+}
 
 /**
  * Canvas

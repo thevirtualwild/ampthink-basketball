@@ -20,11 +20,43 @@
       <div class="form">
         <h3 class="title"><i>ENTER CODE ON SCREEN</i></h3>
         <input class="passcodeInput" type="text" maxlength="14" style="text-transform:uppercase" />
+        <img src="/babylon/assets/UI/Mobile/MobileDash.png">
+      </div>
+    </li>
+    <li class="player page">
+      <div id="refreshLogo">
+        <img src="/babylon/assets/UI/Mobile/MobileRefreshBtnIcon.png">
+      </div>
+      <div class="form">
+        <h2 class="firstName"><i>SHOOTER</i></h2>
+        <h2 class="lastName"><i>MCGEE</i></h2>
+        <img class = "playerDash" src="/babylon/assets/UI/Mobile/MobileDash.png">
+        <!--<input class="passcodeInput" type="text" maxlength="14" style="text-transform:uppercase" />-->
+        <h2 class="teamColor"><i>RED</i></h2>
+        <h2 class="teamLabel">TEAM</h2>
+      </div>
+    </li>
+    <li class="gameplay page">
+      <div class="form">
+        <img src = "/babylon/assets/UI/Mobile/MobileArrowIcon.png">
+        <h2 class="instructions"><i>SWIPE UP TO SHOOT</i></h2>
+      </div>
+    </li>
+    <li class="gameover page">
+      <div class="form">
+        <h2 class="thank">THANK</h2>
+        <h2 class="you">YOU!</h2>
+        <img id = "dash" src="/babylon/assets/UI/Mobile/MobileDash.png">
+        <img id = "button" src="/babylon/assets/UI/Mobile/MobilePlayAgainBtn.png">
       </div>
     </li>
   </ul>
   <div id="gameover">
     <h2> GAME OVER </h2>
+  </div>
+
+  <div id="footerLogo">
+    <img src="/babylon/assets/UI/Common/ShotClockLogo.png">
   </div>
 
   <canvas id = "canvas"></canvas>
@@ -34,7 +66,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenMax.min.js"></script>
   <script src="/babylon/babylon.custom.js"></script>
   <script src="/babylon/scripts/playerInfo.js"></script>
+  <script src="/scripts/UI/customize.js"></script>
+  <script src="/scripts/UI/input.js"></script>
   <script src="/player.js"></script>
 
 </body>
+
 </html>
