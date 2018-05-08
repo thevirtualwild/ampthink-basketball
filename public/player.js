@@ -366,7 +366,7 @@ function joinCourt(someCourt)
       courttojoin = 'GAME';
   }
   // fade out input page
-  $pages.fadeOut();
+  //$pages.fadeOut();
 
   userdata = {
       'username': username,
