@@ -13,6 +13,8 @@ Airtable.configure({
   apiKey: airtable_apiKey
 });
 var config_base = Airtable.base('appjnwB9vqNtd1ore');
+var score_base = Airtable.base('apprHXHRMQgbi5WBV');
+
 
 var alldevices = {};
 var allrooms = {};
@@ -161,6 +163,26 @@ function getDataFromAirtable() {
 }
 
 getDataFromAirtable();
+
+var allteams = {};
+var teamindex = {};
+
+function getScoresFromAirtable() {
+  score_base('Teams').select({}).eachPage(function page(records, fetchNextPage) {
+    records.forEach(function(record) {
+      allteams[record.id] = record.fields;
+      teamindex[record.get('Name')] = record.id;
+    });
+    fetchNextPage();
+  }, function done(err) {
+    if (err) { console.error(err); return; }
+
+    console.dir(allteams);
+  });
+}
+
+getScoresFromAirtable();
+
 
 var query;
 // Routing
@@ -465,6 +487,28 @@ function onConnection(socket) {
   }
 
 
+  function addScoreToDatabase(data) {
+    console.log('Adding Score:');
+    console.dir(data);
+
+    playername = data.player.username;
+    playerteam = teamindex[data.player.team];
+    console.log(playerteam);
+    playerscore = data.player.score;
+
+    score_base('Players').create({
+      "Name": playername,
+      "Team": playerteam,
+      "Score": playerscore
+    }, function(err, record) {
+        if (err) { console.error(err); return; }
+
+        //Callback from API push
+        newplayerid = record.getId();
+        console.log('NewPlayer - ' + newplayerid);
+    });
+  }
+
   //court stuff I think
   socket.on('get court', function(deviceIP) {
     // find out if the device knows what court it should be a part of
@@ -579,7 +623,7 @@ function onConnection(socket) {
   socket.on('game almost ready', function(courtName) {
     // console.log('game almost ready - ' + courtName);
     // console.log('court room? - ' + socket.roomname);
-    gamesrunning = true;
+    socket.gamesrunning = true;
     console.log('game almost ready by - ' + courtName);
     socket.broadcast.to(socket.roomname).emit('game almost ready', courtName);
   });
@@ -617,9 +661,7 @@ function onConnection(socket) {
     console.dir(gamedata);
 
     // Check Database for High Score (of room)
-    var teamscores = {
-
-    };
+    addScoreToDatabase(gamedata);
 
     if (gamedata.score > currentHighScore.score) {
       currentHighScore = gamedata;
@@ -630,7 +672,7 @@ function onConnection(socket) {
     var resultsdata = {
       highscorer: currentHighScore,
       yourscore: gamedata,
-      teamscores: teamscores
+      teamscores: allteams
     }
     socket.emit('show results', resultsdata);
 
