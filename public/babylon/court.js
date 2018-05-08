@@ -1199,17 +1199,113 @@ function getMyIP() {
 }
 
 
+function haveCourtJoinRoom(courtname, roomnametojoin) {
+  var data = {
+    courtname: courtname,
+    roomname: roomnametojoin
+  }
+
+  thisRoom = data.roomname;
+  courtName = data.courtname;
+
+  socket.emit('join room', data);
+
+  updateUI();
+}
+
+function nameCourt() {
+  return randomCode(5);
+}
+function randomCode(howLong) {
+  var randomname = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+  for (var i = 0; i < howLong; i++)
+    randomname += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return randomname;
+}
+
+function randomRange (min, max) {
+    var number = (Math.random() * (min - max) + max);
+    return number;
+}
+
+
+
+socket.on('device knows court', function(data) {
+  // do something with the data
+  console.log('device knows court');
+});
+socket.on('device needs court', function() {
+  // find something out
+  console.log('Device doesnt know court');
+});
+
+
+socket.on('join this room', function(data) {
+  console.log('Court and Room Data: ');
+  console.dir(data);
+
+  var courtname = data.court.name;
+  var roomname = data.room.name;
+
+  console.log('told to join ' + courtname + ' in ' + roomname);
+
+  haveCourtJoinRoom(courtname,roomname);
+});
+
+socket.on('court joined room', function(data) {
+  console.log('Congrats ' + courtName +'(' + data.courtname + ')' + ', you joined room: ' + data.roomname);
+})
 
 
 
 
+socket.on('player joined court', function(userdata) {
+    console.log('Player ' + userdata.username + ' - Joined Court - ' + userdata.court);
+    UIGameplayUpdateName(userdata.username);
+    UIResultsUpdateName(userdata.username);
+
+    playerData = userdata;
+    if (userdata.court == courtName) {
+      hasplayer = true;
+    }
+    scene.actionManager.processTrigger(scene.actionManager.actions[2].trigger, {additionalData: "y"});
+});
+socket.on('player changed name', function(data) {
+  console.log('Player ' + playerData.username + ' - Change Name - ' + data.newplayer.username);
+
+  playerData = userdata;
+
+  UIGameplayUpdateName(playerData.username);
+  UIResultsUpdateName(playerData.username);
+});
+
+socket.on('take shot', function(info) {
+
+    shotInfo = info;
+    //var trigger = scene.actionManager.actions[0].trigger;
+    console.log(shotInfo);
+    var ae = BABYLON.ActionEvent.CreateNewFromScene(scene, {additionalData: "r"});
+    //console.log(ae);
+    scene.actionManager.processTrigger(scene.actionManager.actions[0].trigger,  ae);
+
+    //console.log(scene.actionManager.actions.length);
+});
+
+socket.on('shot sent', function() {
+  // console.log('We got a message back!');
+})
+
+socket.on('reset game', function() {
+  scene.actionManager.processTrigger(scene.actionManager.actions[1].trigger, {additionalData: "t"});
+});
 
 
+//To Delete Soon I think? (not needed?)
 
-
-
-function joinRoom()
-{
+function joinRoom() {
   var roomtojoin = randomCode(7);
 
   var courtdata = {
@@ -1231,7 +1327,6 @@ function joinRoom()
   //socket.emit('room', roomname);
   //socket.emit('add user', jsonstring);
 }
-
 function joinQueryRoom(query) {
   roomcode = query;
 
@@ -1250,83 +1345,11 @@ function joinQueryRoom(query) {
   socket.emit('update court', courtData );
 }
 
-function nameCourt() {
-  return randomCode(5);
-}
-function randomCode(howLong) {
-  var randomname = "";
-  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-  for (var i = 0; i < howLong; i++)
-    randomname += possible.charAt(Math.floor(Math.random() * possible.length));
-
-  return randomname;
-}
-
-function randomRange (min, max)
-{
-    var number = (Math.random() * (min - max) + max);
-    return number;
-}
-
-
-
-socket.on('device knows court', function(data) {
-  // do something with the data
-  console.log('device knows court');
-});
-
-socket.on('device needs court', function() {
-  // find something out
-  console.log('Device doesnt know court');
-});
-
-
-
-
 socket.on('query', function(query) {
   console.log('query received - ' + query);
 
   joinQueryRoom(query);
 });
-
-socket.on('take shot', function(info) {
-
-    shotInfo = info;
-    //var trigger = scene.actionManager.actions[0].trigger;
-    console.log(shotInfo);
-    var ae = BABYLON.ActionEvent.CreateNewFromScene(scene, {additionalData: "r"});
-    //console.log(ae);
-    scene.actionManager.processTrigger(scene.actionManager.actions[0].trigger,  ae);
-
-    //console.log(scene.actionManager.actions.length);
-});
-
-socket.on('player joined court', function(userdata) {
-    console.log('Player ' + userdata.username + ' - Joined Court - ' + userdata.court);
-    UIGameplayUpdateName(userdata.username);
-    UIResultsUpdateName(userdata.username);
-
-    playerData = userdata;
-    if (userdata.court == courtName) {
-      hasplayer = true;
-    }
-    scene.actionManager.processTrigger(scene.actionManager.actions[2].trigger, {additionalData: "y"});
-});
-
-
-
-socket.on('join this room', function(data) {
-  console.log('Court and Room Data: ');
-  console.dir(data);
-});
-
-
-
-socket.on('shot sent', function() {
-  // console.log('We got a message back!');
-})
-
 socket.on('use random query', function() {
   console.log('no query received starting random');
 
@@ -1335,10 +1358,12 @@ socket.on('use random query', function() {
   joinQueryRoom(query);
 });
 
+//End of to delete soon I think
 
-socket.on('reset game', function() {
-  scene.actionManager.processTrigger(scene.actionManager.actions[1].trigger, {additionalData: "t"});
-});
+
+
+
+
 
 
 

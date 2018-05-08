@@ -19,6 +19,7 @@ var allrooms = {};
 var allzones = {};
 var allcourts = {};
 var allconfigs = {};
+var courtnames = {};
 
 function getDataFromAirtable() {
 
@@ -50,7 +51,7 @@ function getDataFromAirtable() {
   function getRooms() {
     config_base('Rooms').select({}).eachPage(function page(records, fetchNextPage) {
       records.forEach(function(record) {
-        roomname = record.get('Name');
+        name = record.get('Name');
         // console.log('Retrieved', roomname);
 
         zones = record.get('Zones');
@@ -58,7 +59,7 @@ function getDataFromAirtable() {
 
         allrooms[record.id] = {
           id: record.id,
-          roomname: roomname,
+          name: name,
           zones: zones,
           courts: courts
         };
@@ -120,6 +121,16 @@ function getDataFromAirtable() {
           room: room,
           devices: devices
         };
+
+        courtnames[courtname] = {
+          id: record.id,
+          name: courtname,
+          zone: zone,
+          stadium: stadium,
+          order: order,
+          room: room,
+          devices: devices
+        }
       });
       fetchNextPage();
     }, function done(err) {
@@ -189,6 +200,16 @@ app.set('view engine', 'ejs');
 app.get('/about', function(req, res) {
   res.render('pages/about');
 });
+
+function randomCode(howLong) {
+  var randomname = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+  for (var i = 0; i < howLong; i++)
+    randomname += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return randomname;
+}
 
 
 var numUsers = 0;
@@ -303,6 +324,7 @@ function onConnection(socket) {
             devices: [somedevice.id]
         }
         allcourts[newcourtid] = newcourt;
+        courtnames[newcourtname] = newcourt;
 
         console.log('find a room court: ' + newcourt.name + ' device: ' + somedevice.ipaddress);
         findARoom(newcourt,somedevice);
@@ -331,21 +353,25 @@ function onConnection(socket) {
 
   }
 
-  function assignCourtToRoom(somecourt, someroom) {
-    console.log('telling device in court: ' + somecourt.name + ' to join room: ' + someroom);
+  function assignCourtToRoom(somecourt, someroomid) {
+    fullroomdata = allrooms[someroomid];
+
+    console.log('telling device in court: ' + somecourt.name + ' to join room: ' + fullroomdata.name);
+    console.dir(fullroomdata);
+
     data = {
       court: somecourt,
-      room: someroom
+      room: fullroomdata
     }
 
-    console.log('room: ');
-    console.dir(allrooms[someroom]);
+    // console.log('room: ');
+    // console.dir(allrooms[someroom]);
 
     if (somecourt.room) {
-      console.log('assigning court to room - ');
-      console.dir(somecourt.room);
+      // console.log('assigning court to room - ');
+      // console.dir(somecourt.room);
     } else {
-      console.log('trying to update court info as - ' + someroom);
+      // console.log('trying to update court info as - ' + someroom);
       config_base('Courts').update(somecourt.id, {
         "Room": [someroom]
       }, function(err, record) {
@@ -355,16 +381,6 @@ function onConnection(socket) {
 
     //need to update court list
     socket.emit('join this room', data);
-  }
-
-  function randomCode(howLong) {
-    var randomname = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-    for (var i = 0; i < howLong; i++)
-      randomname += possible.charAt(Math.floor(Math.random() * possible.length));
-
-    return randomname;
   }
 
 
@@ -419,18 +435,18 @@ function onConnection(socket) {
     });
   });
 
-  socket.on('add court', function(courtdata) {
-    console.log('adding court');
-    // var newCourt = {
-    //   name: data.courtname,
-    //   room: socket.roomname
-    // };
-    courts[courtdata.name] = socket.roomname;
-    console.log('court name - ' + courtdata.name);
-    console.log('socket room - ' + socket.roomname);
-    // console.log('Courts: ');
-    // console.dir(courts);
-  });
+  // socket.on('add court', function(courtdata) {
+  //   console.log('adding court');
+  //   // var newCourt = {
+  //   //   name: data.courtname,
+  //   //   room: socket.roomname
+  //   // };
+  //   courts[courtdata.name] = socket.roomname;
+  //   console.log('court name - ' + courtdata.name);
+  //   console.log('socket room - ' + socket.roomname);
+  //   // console.log('Courts: ');
+  //   // console.dir(courts);
+  // });
 
   socket.on('update court', function(courtdata) {
     console.log('updating court');
@@ -445,25 +461,57 @@ function onConnection(socket) {
     // console.dir(courts);
   });
 
-  socket.on('join room', function(userdata) {
-    room = userdata.room;
-    socket.join(room);
+  socket.on('join room', function(data) { //court does this
+    roomname = data.roomname;
+    courtname = data.courtname;
 
-    socket.roomname = room;
-    console.log('index.js: joining room - ' + socket.roomname);
-    socket.broadcast.to(socket.roomname).emit('joined room', userdata);
+    socket.join(roomname);
+    socket.roomname = roomname;
+    socket.courtname = data.courtname;
+
+    console.log('index.js: court: ' + socket.courtname + ' joining room - ' + socket.roomname);
+    // socket.broadcast.to(socket.roomname).emit('court joined room', data);
+    socket.emit('court joined room', data);
   });
 
-  socket.on('join court', function(userdata) {
-    socket.username = userdata.username;
-    socket.team = userdata.team;
-    socket.court = userdata.court;
+  socket.on('join court', function(playerdata) { //player does this
+    socket.username = playerdata.username;
+    socket.team = playerdata.team;
+    socket.court = playerdata.court;
 
-    socket.roomname = courts[userdata.court];
+    console.log('playerdata court ' + socket.court);
+    console.log('courtnames - ');
+    console.dir(courtnames);
+    courttojoin = courtnames[playerdata.court];
+    socket.roomname = allrooms[courttojoin.room].name;
     console.log('joining room? - ' + socket.roomname);
     socket.join(socket.roomname);
-    socket.broadcast.to(socket.roomname).emit('player joined court', userdata);
+    socket.broadcast.to(socket.roomname).emit('player joined court', playerdata);
   });
+  socket.on('change player name', function(playerdata) {
+    oldplayer = {
+      username: socket.username,
+      team: socket.team,
+      court: socket.court
+    };
+    newplayer = {
+      username: playerdata.username,
+      team: playerdata.team,
+      court: playerdata.court
+    };
+
+    console.log('player: ' + oldplayer.username + ' changed name to: ' + newplayer.username);
+    console.log('new team: ' + newplayer.team);
+    socket.username = newplayer.username;
+    socket.team = newplayer.team;
+    socket.court = newplayer.court;
+
+    data = {
+      oldplayer: oldplayer,
+      newplayer: newplayer
+    }
+    socket.broadcast.to(socket.roomname).emit('player changed name', data);
+  })
 
 
   socket.on('get court', function(deviceIP) {
@@ -471,7 +519,7 @@ function onConnection(socket) {
 
     // first check to see if device is in list of devices
     if (deviceIP in alldevices) {
-      //if we know the device already, check its court and zone,
+      //if we know the devi ce already, check its court and zone,
       mydevice = alldevices[deviceIP];
       mycourt = allcourts[mydevice.court];
       myzone = allzones[mydevice.zone];
@@ -480,9 +528,10 @@ function onConnection(socket) {
       if (mycourt) {
         //if we know the court the device should be in, check if we know the room
         myroom = mycourt.room;
+        myroomid = myroom;
         if (myroom) {
           //if mycourt already knows what room it is supposed to be a part of
-          assignCourtToRoom(mycourt,myroom);
+          assignCourtToRoom(mycourt,myroomid);
         } else { //find a room
           console.log('court: ' + mycourt.name + ' and device: ' + mydevice.ipaddress + ' need a room');
           findARoom(mycourt,mydevice);
@@ -515,9 +564,7 @@ function onConnection(socket) {
   socket.on('game almost ready', function(courtName) {
 
       console.log('game almost ready - ' + courtName);
-      console.log('court room - ' + courts[courtName]);
-      socket.roomname = courts[courtName];
-      console.log('socket.room - ' + socket.roomname);
+      console.log('court room? - ' + socket.roomname);
       socket.broadcast.to(socket.roomname).emit('game almost ready', courtName);
   });
 
