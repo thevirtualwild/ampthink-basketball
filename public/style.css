@@ -174,8 +174,9 @@ canvas{
   object-fit:contain;
 }
 
-#headerInstructions img{
 
+#headerInstructions h2{
+color:yellow;
 }
 
 .player.page .form{
