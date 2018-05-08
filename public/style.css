@@ -53,6 +53,7 @@ canvas{
   width:100%;
   height:100%;
   max-width: 100%;
+  z-index:200;
 }
 
 /* Pages */
@@ -69,13 +70,21 @@ canvas{
   height: 100%;
   position: absolute;
   width: 100%;
-  background-image: url("/babylon/assets/UI/Mobile/MobileGround.png");
+  /*background-image: url("/babylon/assets/UI/Mobile/MobileGround.png");*/
+
+  background:none;
 }
 
+#background img{
+  position:absolute;
+  width:100%;
+  z-index:-10;
+  object-fit: cover;
+}
 /* Login & Roomcange Pages*/
 
 .login.page, .passcode.page {
-  background-color: #000;
+
 }
 
 
@@ -141,6 +150,7 @@ canvas{
   text-align: center;
 }
 
+
 #footerLogo img{
   position:absolute;
   bottom: 0;
@@ -150,6 +160,22 @@ canvas{
   width: 100%;
   height: 200px;
   object-fit:contain;
+}
+
+#headerInstructions{
+  text-align: center;
+  position:absolute;
+  top: 0;
+  z-index: 0;
+  left:0;
+  right:0;
+  width: 100%;
+  height: 200px;
+  object-fit:contain;
+}
+
+#headerInstructions img{
+
 }
 
 .player.page .form{
@@ -190,6 +216,7 @@ canvas{
 #refreshLogo img{
   position:absolute;
   right:0px;
+  transform-origin: center;
 }
 
 .gameplay.page .form{
@@ -235,18 +262,22 @@ canvas{
 
 .passcode.page{
   display: block;
+
 }
 
 .player.page{
   display: none;
+
 }
 
 .gameplay.page{
   display: none;
+  z-index: -100;
 }
 
 .gameover.page{
   display: none;
+
 }
 
 /**

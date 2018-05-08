@@ -2,18 +2,19 @@ var inputFadeTime = 0.25;
 
 var canvas = document.getElementById("canvas");
 var inputForm = document.getElementsByClassName("form")[0];
-
-//UIInputAnimateOut();
+var errorMessage = inputForm.getElementsByClassName("errorMessage")[0];
+errorMessage.style.opacity = 0;
 
 function UIInputAnimateIn()
 {
-
+    errorMessage.style.opacity = 0;
 }
 
 function UIInputAnimateOut()
 {
-    TweenMax.to(inputForm, inputFadeTime*3.5, {delay:inputFadeTime*5, opacity:0});
-    TweenMax.to(inputForm, inputFadeTime*3, {delay:inputFadeTime*5, top:0, ease:Back.easeIn, onComplete: UICustomizeAnimateIn});
+    errorMessage.style.opacity = 0;
+    TweenMax.to(inputForm, inputFadeTime*3.5, {delay:inputFadeTime, opacity:0});
+    TweenMax.to(inputForm, inputFadeTime*3, {delay:inputFadeTime, top:0, ease:Back.easeIn, onComplete: UICustomizeAnimateIn});
 }
 
 /*
@@ -36,3 +37,10 @@ function UIAttractUpdateCourtName(name)
     attractRightStep2.innerHTML = "<h2>THEN ENTER</h2><h2>CODE '<span id=\"courtCode\">" + name + "</span>'</h2>";
 }
 */
+
+function UIInputErrorMessage(message)
+{
+    errorMessage.style.opacity = 1;
+    errorMessage.style.color = "red";
+    errorMessage.innerHTML = message;
+}

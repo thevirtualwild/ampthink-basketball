@@ -10,10 +10,13 @@
 </head>
 <body>
 
-  <div background>
-    <!--<img src="/babylon/assets/UI/Mobile/MobileGround.png">-->
+  <div id="background">
+    <img src="/babylon/assets/UI/Mobile/MobileGround.png">
   </div>
-
+  <div id="headerInstructions">
+    <img id = triangle src = "/babylon/assets/UI/Mobile/MobileArrowIcon.png">
+    <h2 class="instructions"><i>SWIPE UP TO SHOOT</i></h2>
+  </div>
   <ul class="pages">
     <li class="passcode page">
 
@@ -21,11 +24,12 @@
         <h3 class="title"><i>ENTER CODE ON SCREEN</i></h3>
         <input class="passcodeInput" type="text" maxlength="14" style="text-transform:uppercase" />
         <img src="/babylon/assets/UI/Mobile/MobileDash.png">
+        <h2 class="errorMessage">TEST</h2>
       </div>
     </li>
     <li class="player page">
       <div id="refreshLogo">
-        <img src="/babylon/assets/UI/Mobile/MobileRefreshBtnIcon.png">
+        <img id ="refresh" src="/babylon/assets/UI/Mobile/MobileRefreshBtnIcon.png">
       </div>
       <div class="form">
         <h2 class="firstName"><i>SHOOTER</i></h2>
@@ -38,8 +42,7 @@
     </li>
     <li class="gameplay page">
       <div class="form">
-        <img src = "/babylon/assets/UI/Mobile/MobileArrowIcon.png">
-        <h2 class="instructions"><i>SWIPE UP TO SHOOT</i></h2>
+
       </div>
     </li>
     <li class="gameover page">
@@ -66,6 +69,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenMax.min.js"></script>
   <script src="/babylon/babylon.custom.js"></script>
   <script src="/babylon/scripts/playerInfo.js"></script>
+  <script src="/scripts/UI/gameplay.js"></script>
   <script src="/scripts/UI/customize.js"></script>
   <script src="/scripts/UI/input.js"></script>
   <script src="/player.js"></script>

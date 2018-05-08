@@ -6,7 +6,7 @@ var customizeForm = document.getElementsByClassName("form")[1];
 var gameplayForm = document.getElementsByClassName("form")[2];
 var gameoverForm = document.getElementsByClassName("form")[3];
 var refreshLogo = document.getElementById("refreshLogo");
-
+var refreshImg = document.getElementById("refresh");
 var inputPage = document.getElementsByClassName("passcode page")[0];
 var customizePage = document.getElementsByClassName("player page")[0];
 var gameplayPage = document.getElementsByClassName("gameplay page")[0];
@@ -19,6 +19,11 @@ var teamName = customizeForm.getElementsByClassName("teamColor")[0];
 var teamLabel = customizeForm.getElementsByClassName("teamLabel")[0];
 
 //UIInputAnimateOut();
+var name;
+var animating;
+refreshLogo.addEventListener('click', function (e) {
+    changeName();
+});
 
 function UICustomizeAnimateIn()
 {
@@ -36,44 +41,59 @@ function UICustomizeAnimateIn()
     refreshLogo.style.opacity = 0;
     //customizeForm.style.opacity = 0;
 
-    var name = userdata.username;
+    /*
+    name = userdata.username;
     firstName.innerHTML = name.substr(0, name.indexOf(' '));
     lastName.innerHTML = name.substr(name.indexOf(' ') + 1);
 
     teamName.innerHTML = userdata.team.name;
     teamName.style.color = userdata.team.colorHex;
+    */
 
     TweenMax.to(firstName, customizeFadeTime, {delay:customizeFadeTime, opacity:1});
     TweenMax.to(lastName, customizeFadeTime, {delay:customizeFadeTime*2, opacity:1});
     TweenMax.to(dashImage, customizeFadeTime, {delay:customizeFadeTime*3, opacity:1, width:400, ease:Back.easeOut});
     TweenMax.to(teamName, customizeFadeTime, {delay:customizeFadeTime*4, opacity:1});
     TweenMax.to(teamLabel, customizeFadeTime, {delay:customizeFadeTime*4, opacity:1});
-    //TweenMax.to(customizeForm, inputFadeTime*3, {delay:inputFadeTime, top: canvas.height*.3, ease:Back.easeOut});
 
     TweenMax.to(refreshLogo, customizeFadeTime, {delay:customizeFadeTime*6, opacity:1});
 }
 
 function UICustomizeAnimateOut()
 {
-    TweenMax.to(inputForm, customizeFadeTime*3.5, {delay:customizeFadeTime*5, alpha:0});
-    TweenMax.to(inputForm, customizeFadeTime*3, {delay:customizeFadeTime*5, top:0, ease:Back.easeIn, onComplete: UICustomizeAnimateIn});
+    TweenMax.to(customizeForm, customizeFadeTime*1.5, {opacity:0, onComplete:UIGameplayAnimateIn});
+    TweenMax.to(customizeForm, customizeFadeTime*1, {top:0, ease:Back.easeIn});
+}
+
+function changeName()
+{
+    if(animating) return;
+
+    TweenMax.to(firstName, customizeFadeTime, {opacity: 0});
+    TweenMax.to(lastName, customizeFadeTime, {opacity: 0, onComplete: getName});
+
+    TweenMax.to(refreshImg, customizeFadeTime/5, {scaleX: 1.1, scaleY: 1.1, repeat:1, yoyo:true});
+
+    animating = true;
+}
+
+function getName()
+{
+    name = generateName();
+
+    firstName.innerHTML = name.substr(0, name.indexOf(' '));
+    lastName.innerHTML = name.substr(name.indexOf(' ') + 1);
+
+    TweenMax.to(firstName, customizeFadeTime, {opacity: 1});
+    TweenMax.to(lastName, customizeFadeTime, {opacity: 1, onComplete: stopAnimating});
+}
+
+function stopAnimating()
+{
+    animating = false;
 }
 
 /*
-function UIAttractAnimateOut()
-{
-    TweenMax.to(attractLeftStep1, textFadeTime, {alpha:0});
-    TweenMax.to(attractRightStep1, textFadeTime, {alpha:0});
-    TweenMax.to(attractLeftStep2, textFadeTime, {alpha:0});
-    TweenMax.to(attractRightStep2, textFadeTime, {alpha:0});
-
-    TweenMax.to(playNow, textFadeTime, {alpha:0});
-    TweenMax.to(comboBadge, textFadeTime, {alpha:0});
-
-    TweenMax.to(footerLeft, textFadeTime, {delay: textFadeTime*2, width:.22*canvas.width});
-    TweenMax.to(footerCenter, textFadeTime, {delay: textFadeTime*2, width:.22*canvas.width, onComplete: UIWaitingAnimateIn});
-}
-
 function UIAttractUpdateCourtName(name)
 {
     attractRightStep2.innerHTML = "<h2>THEN ENTER</h2><h2>CODE '<span id=\"courtCode\">" + name + "</span>'</h2>";

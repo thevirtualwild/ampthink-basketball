@@ -34,7 +34,7 @@
     //camera.attachControl(canvas, true);
 
     camera.setTarget(initCameraFocus);
-    scene.clearColor = BABYLON.Color3.Black();
+    scene.clearColor = new BABYLON.Color4(0,0,0,0);
 
     var targetVec;
     var targetVecNorm;
@@ -42,10 +42,13 @@
 
     var distVec;
 
+
     var ground = BABYLON.Mesh.CreateGround("ground1", 35, 35, 1, scene);
-      var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
-      myMaterial.emissiveTexture = new BABYLON.Texture("/babylon/assets/FillrateTexture.png", scene);
-      ground.material = myMaterial;
+    var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
+    myMaterial.emissiveTexture = new BABYLON.Texture("/babylon/assets/UI/Mobile/MobileGround.png", scene);
+    myMaterial.alpha = 0;
+    ground.material = myMaterial;
+
     var basketball;
 
     scene.ambientColor = new BABYLON.Color3(1,1,1);
@@ -239,6 +242,7 @@
 
               function ()
               {
+                  UICustomizeAnimateOut();
                   resetBall();
               }
           )
@@ -347,7 +351,7 @@ socket.on('end player game', function()
 
   socket.on('court not found', function()
   {
-      console.log("COURT NOT FOUND");
+      UIInputErrorMessage("Court not found");
   });
 
 function joinCourt(someCourt)
