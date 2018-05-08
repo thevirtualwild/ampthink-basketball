@@ -901,69 +901,70 @@ var createScene = function(){
     var manager = new BABYLON.ActionManager(scene);
     scoreTrigger.actionManager = manager;
 var test;
-    for(var i = 0; i < basketballs.length; i++) {
-        scoreTrigger.actionManager.registerAction(
-            new BABYLON.ExecuteCodeAction(
+
+for(var i = 0; i < basketballs.length; i++) {
+    scoreTrigger.actionManager.registerAction(
+        new BABYLON.ExecuteCodeAction(
+            {
+                trigger: BABYLON.ActionManager.OnIntersectionEnterTrigger,
+                parameter: basketballs[i]
+            },
+            function () {
+
+                //console.log("HIT TRIGGER");
+                if(currentGameState == gameStates.GAMEPLAY || currentGameState == gameStates.RESULTS)
                 {
-                    trigger: BABYLON.ActionManager.OnIntersectionEnterTrigger,
-                    parameter: basketballs[i]
-                },
-                function () {
+                    var idx = shotIndex-1;
+                    if(idx < 0) idx = 9;
 
-                    //console.log("HIT TRIGGER");
-                    if(currentGameState == gameStates.GAMEPLAY || currentGameState == gameStates.RESULTS)
-                    {
-                        var idx = shotIndex-1;
-                        if(idx < 0) idx = 9;
+                    if(basketballStates[idx] != 0) {
+                        basketballStates[idx] = 0;
+                        console.log("disabled " + idx);
+                        addScore();
 
-                        if(basketballStates[idx] != 0) {
-                            basketballStates[idx] = 0;
-                            console.log("disabled " + idx);
-                            addScore();
+                        if(combo >= 2)
+                        {
+                            UIGameplayAnimateBadgeOn(combo);
+                        }
 
-                            if(combo >= 2)
-                            {
-                                UIGameplayAnimateBadgeOn(combo);
-                            }
-
-                            if(combo >= 3)
-                            {
-                                changeBallFX(true);
-                            }
+                        if(combo >= 3)
+                        {
+                            changeBallFX(true);
                         }
                     }
                 }
-            )
-        );
-    }
+            }
+        )
+    );
+}
 
 
-    var clothMat = new BABYLON.StandardMaterial("netMat", scene);
-    //var testMat = new BABYLON.standr
-    clothMat.diffuseTexture = new BABYLON.Texture("./assets/Layout/Net.png", scene);
-    //clothMat.diffuseColor = new BABYLON.Color3(1,1,1);
-    //clothMat.diffuseTexture.vOffset = 0.;
-    clothMat.emissiveTexture = new BABYLON.Texture("./assets/Layout/Net.png", scene);
-    clothMat.diffuseTexture.vScale = 4;
-    clothMat.diffuseTexture.uScale = 4;
-    clothMat.backFaceCulling = false;
-    clothMat.diffuseTexture.hasAlpha = true;
+var clothMat = new BABYLON.StandardMaterial("netMat", scene);
+//var testMat = new BABYLON.standr
+clothMat.diffuseTexture = new BABYLON.Texture("./assets/Layout/Net.png", scene);
+//clothMat.diffuseColor = new BABYLON.Color3(1,1,1);
+//clothMat.diffuseTexture.vOffset = 0.;
+clothMat.emissiveTexture = new BABYLON.Texture("./assets/Layout/Net.png", scene);
+clothMat.diffuseTexture.vScale = 4;
+clothMat.diffuseTexture.uScale = 4;
+clothMat.backFaceCulling = false;
+clothMat.diffuseTexture.hasAlpha = true;
 
 
-    var net = BABYLON.Mesh.CreateGround("ground1", 1, 1, sphereAmount, scene, true);
+var net = BABYLON.Mesh.CreateGround("ground1", 1, 1, sphereAmount, scene, true);
 
-    //net.needAlphaBlending = true;
-    //net.needAlphaTesting = true;
+//net.needAlphaBlending = true;
+//net.needAlphaTesting = true;
 
-    var positions = net.getVerticesData(BABYLON.VertexBuffer.PositionKind);
+var positions = net.getVerticesData(BABYLON.VertexBuffer.PositionKind);
 
-    net.material = clothMat;
+net.material = clothMat;
 
-    var indices = net.getIndices();
-    //524
-    indices.splice(182, indices.length);
+var indices = net.getIndices();
+//524
+indices.splice(182, indices.length);
 
-    net.setIndices(indices, indices.length);
+net.setIndices(indices, indices.length);
 
     var debugPos = [];
     var currentSphereVel;
@@ -1128,8 +1129,7 @@ var test;
         }
     }
 
-    function changeCamera()
-    {
+    function changeCamera() {
         currentCameraIndex++;
     }
 
@@ -1273,6 +1273,7 @@ socket.on('player joined court', function(userdata) {
     }
     scene.actionManager.processTrigger(scene.actionManager.actions[2].trigger, {additionalData: "y"});
 });
+
 socket.on('player changed name', function(data) {
   console.log('Player ' + playerData.username + ' - Change Name - ' + data.newplayer.username);
 
@@ -1367,8 +1368,7 @@ socket.on('use random query', function() {
 
 
 
-function addScore()
-{
+function addScore() {
     currentNetState = netStates.WAITING;
     currentNetLerpDelayTime = initNetLerpDelayTime;
 
@@ -1386,8 +1386,7 @@ function addScore()
 
 }
 
-function updateUI()
-{
+function updateUI() {
     switch(currentGameState)
     {
         case gameStates.ATTRACT:
@@ -1430,8 +1429,7 @@ function updateUI()
     }
 }
 
-function createCameraTypes()
-{
+function createCameraTypes() {
     var cameraType = {
         cameraNames: cameraNames.quarterFar,
         initPos: new BABYLON.Vector3(20, 0, -15),

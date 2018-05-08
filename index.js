@@ -235,6 +235,11 @@ function onConnection(socket) {
       roomid = thiszone.rooms[0];
       console.log('findaroom assign');
       console.dir(somecourt);
+
+      somecourt['room'] = [roomid];
+      allcourts[somecourt.id] = somecourt;
+      courtnames[somecourt.name] = somecourt;
+
       assignCourtToRoom(somecourt, roomid);
     } else {
       somecourt.room = createRoom(somecourt);
@@ -372,6 +377,10 @@ function onConnection(socket) {
             name: newroomname
         }
         allrooms[newroomid] = newroom;
+
+        somecourt['room'] = [roomid];
+        allcourts[somecourt.id] = somecourt;
+        courtnames[somecourt.name] = somecourt;
         console.log('create a room assign');
         assignCourtToRoom(somecourt, newroomid);
     });
@@ -409,14 +418,16 @@ function onConnection(socket) {
     socket.emit('join this room', data);
   }
 
+  function havePlayerJoinRoom( ) {
 
+  }
   function joinCourt(somecourtname) {
     console.log('player needs to join court: ' + somecourtname);
-    // console.log('courtnames - ');
-    // console.dir(courtnames);
+    console.log('courtnames - ');
+    console.dir(courtnames);
     var courttojoin = courtnames[somecourtname];
-    // console.log('full court info: ');
-    // console.dir(courttojoin);
+    console.log('full court info: ');
+    console.dir(courttojoin);
 
     if (courttojoin) {
       var roomtojoin = allrooms[courttojoin.room].name;
