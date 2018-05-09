@@ -20,6 +20,7 @@ font-face {
 }
 
 * {
+  pointer-events: none;
   box-sizing: border-box;
   font-family: "Gobold";
 }
@@ -86,6 +87,9 @@ canvas{
   background:none;
 }
 
+#background {
+  pointer-events: none !important;
+}
 #background img{
   position:absolute;
   width:100%;
@@ -123,7 +127,7 @@ canvas{
   max-width: 100%;
   display: block;
   margin:auto;
-
+  pointer-events: initial;
 }
 
 .login.page .title, .passcode.page .title {
@@ -259,7 +263,7 @@ color:yellow;
   height:80px;
   transform-origin: center;
   max-width:100%;
-
+  pointer-events: initial;
 }
 
 .gameplay.page .form{
