@@ -95,9 +95,8 @@ function createScene() {
           {
               if(currentBallState == ballStates.DRAGGABLE)
               {
-                  currentBallState = ballStates.DRAGGING;
                   console.log("Touch Data: " + scene.pointerX + ", " + scene.pointerY);
-
+                  currentBallState = ballStates.DRAGGING;
                   socket.emit("touch event", "DOWN");
               }
           };
@@ -194,8 +193,9 @@ function createScene() {
               currentBallState = ballStates.DRAGGABLE;
               if(basketball.position.x > -4)
               {
-                  currentBallState = ballStates.DRAGGABLE;
               }
+          
+              currentBallState = ballStates.DRAGGABLE;
           }
       });
 
