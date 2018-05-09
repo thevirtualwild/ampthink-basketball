@@ -166,20 +166,26 @@ getDataFromAirtable();
 
 var allteams = {};
 var teamindex = {};
+var teamscores = {};
 
 function getScoresFromAirtable() {
   score_base('Teams').select({}).eachPage(function page(records, fetchNextPage) {
     records.forEach(function(record) {
       allteams[record.id] = record.fields;
       teamindex[record.get('Name')] = record.id;
+      teamscores[record.get('Name')] = {
+        id: record.id,
+        name: record.get('Name'),
+        score: record.get('Cumulative Score')
+      };
     });
     fetchNextPage();
   }, function done(err) {
     if (err) { console.error(err); return; }
 
     // console.dir(allteams);
-    console.log('teamindex:');
-    console.dir(teamindex);
+    // console.log('teamindex:');
+    // console.dir(teamindex);
   });
 }
 
@@ -675,7 +681,7 @@ function onConnection(socket) {
     var resultsdata = {
       highscorer: currentHighScore,
       yourscore: gamedata,
-      teamscores: allteams
+      teamscores: teamscores
     }
     socket.emit('show results', resultsdata);
 
