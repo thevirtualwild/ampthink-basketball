@@ -31,6 +31,10 @@ html, body {
   overflow: hidden;
 }
 
+body {
+  position:relative;
+}
+
 html {
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
