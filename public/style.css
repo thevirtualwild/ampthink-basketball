@@ -12,9 +12,12 @@ font-face {
   font-style: italic; }
 @font-face {
   font-family: 'Gobold';
-  /*src: url("babylonassets/Fonts/GoboldLightItalic.otf");*/
+  src: url("babylon/assets/Fonts/GoboldLightItalic.otf");
   font-style: italic; }
-
+@font-face {
+ font-family: 'XScale';
+ src: url('babylon/assets/Fonts/X-SCALE_.TTF');
+}
 
 * {
   box-sizing: border-box;
@@ -92,11 +95,12 @@ canvas{
 
 .login.page .form, .passcode.page .form , .player.page .form, .gameplay.page .form, .gameover.page .form{
   height: 100px;
-  margin-top: -100px;
+  /* margin-top: -100px; */
+  transform: translateY(-50%);
   position: absolute;
 
   text-align: center;
-  top: 50%;
+  top: 40%;
   width: 100%;
   max-width: 100%;
 }
@@ -123,29 +127,47 @@ canvas{
   letter-spacing: 3px;
   color:white;
   font-weight: bold;
+  text-shadow: 1px 4px 2px rgba(0,0,0,.2);
 }
 
 .login.page .title, .passcode.page .title, .login.page .usernameInput, .passcode.page .passcodeInput {
   color: #fff;
   font-weight: 100;
-  color: yellow;
+  color: #F6E14C; /*yellow*/
+  text-shadow: 1px 4px 2px rgba(0,0,0,.2);
 }
 
 .passcode.page .passcodeInput{
+  text-shadow: 1px 4px 2px rgba(0,0,0,.2);
   color: white;
   font-weight: bold;
-  font-size: 600%;
+  font-size: 400%;
   background:none;
   border:none;
   text-align: center;
+  transform: scale(1, 2);
+  -webkit-transform: scale(1, 1.5); /* Safari and Chrome */
+  -moz-transform: scale(1, 1.5); /* Firefox */
+  -ms-transform: scale(1, 1.5); /* IE 9+ */
+  -o-transform: scale(1, 1.5);
 }
 
 .passcode.page img{
-  width:50%;
+  width:90%;
   display: block;
   margin-left: auto;
   margin-right: auto;
-  margin-top: -60px;
+  margin-top: -20px;
+  max-width:100%;
+}
+.gameover.page .form .dash{
+  width: 90%;
+  display:block;
+  margin-left: auto;
+  margin-right: auto;
+  display:block;
+  float:none;
+  max-width:100%;
 }
 
 #footerLogo{
@@ -160,8 +182,9 @@ canvas{
   left:0;
   right:0;
   width: 100%;
-  height: 200px;
+  height: 150px;
   object-fit:contain;
+  max-width:100%;
 }
 
 #headerInstructions{
@@ -188,39 +211,47 @@ color:yellow;
 
 .player.page .form .firstName{
   color:white;
-  font-size:80px;
+  font-size:40px;
 }
 
 .player.page .form .lastName{
   color:rgb(77, 196, 249);
-  font-size:120px;
+  font-size:60px;
 }
 
 .player.page .form img{
   width:50%;
   margin-top:-20px;
+  max-width: 100%;
 }
 
 .player.page .form .teamColor{
   color:red;
   font-style:italic;
-  font-size:140px;
-  transform: rotate(-12deg);
+  font-size:70px;
+  transform: translateX(-10px) rotate(-12deg);
+  text-shadow:  1px 4px 2px rgba(0,0,0,.2);
 }
 
 .player.page .form .teamLabel{
+  font-family: 'XScale';
   color:white;
   font-weight: bold;
   font-style: normal;
-  font-size:70px;
-  margin-top: 30px;
+  font-size:60px;
+  margin-top: 0;
   letter-spacing: 10px;
+  text-shadow:  1px 4px 2px rgba(0,0,0,.2);
 }
 
 #refreshLogo img{
   position:absolute;
   right:0px;
+  top:0px;
+  height:80px;
   transform-origin: center;
+  max-width:100%;
+
 }
 
 .gameplay.page .form{
@@ -237,33 +268,29 @@ color:yellow;
   top:33%;
 }
 
-.gameover.page .form .thank{
-   color:white;
-   font-size: 80px;
-   font-weight:bold;
- }
-
-.gameover.page .form .you{
+.gameover.page .form .thank, .gameover.page .form .you{
   color:white;
   font-size: 80px;
   font-weight:bold;
+  text-shadow: 1px 4px 2px rgba(0,0,0,.2);
 }
 
 .gameover.page .form .dash{
-  width: 50%;
+  width: 90%;
   display:block;
   margin-left: auto;
   margin-right: auto;
-    display:block;
-    float:none;
+  display:block;
+  float:none;
+  max-width:100%;
 }
 
 .gameover.page .form .button{
-  width: 40%;
+  width: 70%;
   display:block;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 40px;
+  margin-top: 10px;
     display:block;
     float:none;
 
