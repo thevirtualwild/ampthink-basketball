@@ -177,7 +177,9 @@ function getScoresFromAirtable() {
   }, function done(err) {
     if (err) { console.error(err); return; }
 
-    console.dir(allteams);
+    // console.dir(allteams);
+    console.log('teamindex:');
+    console.dir(teamindex);
   });
 }
 
@@ -492,13 +494,14 @@ function onConnection(socket) {
     console.dir(data);
 
     playername = data.player.username;
-    playerteam = teamindex[data.player.team];
+
+    playerteam = teamindex[data.player.team.name];
     console.log(playerteam);
     playerscore = data.player.score;
 
     score_base('Players').create({
       "Name": playername,
-      "Team": playerteam,
+      "Team": [playerteam],
       "Score": playerscore
     }, function(err, record) {
         if (err) { console.error(err); return; }
