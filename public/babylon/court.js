@@ -97,7 +97,7 @@ var createScene = function(){
 
     var gravityVector = new BABYLON.Vector3(0,-15.81, 0);
     scene.enablePhysics(gravityVector, physicsPlugin);
-    scene.getPhysicsEngine().setTimeStep(1/(40 * .6));
+    scene.getPhysicsEngine().setTimeStep(1/(30 * .6));
     //scene.getPhysicsEngine().getPhysicsPlugin().world.allowSleep = true;
     var camera = new BABYLON.FreeCamera("camera1", initCameraPos, scene);
 
@@ -165,9 +165,7 @@ var createScene = function(){
                 currentGameState = gameState;
                 currentCameraIndex = 0;
                 gameReady = false;
-                console.log(canvas.width);
-                console.log(canvas.height);
-                console.log(canvas.width/canvas.height);
+                console.log("Aspect Ratio: " + canvas.width/canvas.height);
                 animateCamera();
                 updateUI();
                 combo = 0;
