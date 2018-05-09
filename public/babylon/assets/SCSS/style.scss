@@ -19,6 +19,11 @@
   font-style: italic;
 }
 
+@font-face {
+  font-family: 'XScale';
+  src: url('assets/Fonts/X-SCALE_.TTF');
+}
+
 * {
   box-sizing: border-box;
   font-family: "Gobold";
@@ -142,7 +147,7 @@
     padding:0;
 
     #comboBadge{
-      background: url("assets/UI/D3/ComboFlareGround.png") no-repeat center;
+      //background: url("assets/UI/D3/ComboFlareGround.png") no-repeat center;
       width:350px;
       height:350px;
       position: absolute;
@@ -152,16 +157,25 @@
       transform: rotate(6deg);
       padding: 40px;
 
+      img {
+        width: 100%;
+        transform-origin: center;
+        transform:scale(0,0);
+      }
       h2{
         margin-bottom: 0;
         line-height: 1em;
         top: 50%;
         transform: translateY(50%);
         &#comboNum {
-          font-size: 80px;
+          font-size: 180px;
           color: yellow;
           text-align: center;
           font-weight: bold;
+          position:absolute;
+          top:-20%;
+          left: 35%;
+          font-family:"XScale";
         }
         &#streak{
           font-size: 60px;
@@ -171,6 +185,9 @@
           font-weight: bold;
           text-transform: uppercase;
           margin-top: 18px;
+          position:absolute;
+          top:40%;
+          left:20%;
         }
       }
     }
@@ -259,7 +276,7 @@
 
       #teamScores{
         width: 75%;
-        margin-top: 50px;
+        margin-top: 0px;
         height: 250px;
         padding: 0 50px;
 
@@ -273,9 +290,10 @@
           text-transform: uppercase;
           text-align: center;
           font-weight: bold;
-          font-size: 40px;
+          font-size: 60px;
           color: white;
           text-shadow: 0px 0px 10px cyan;
+          font-family:"Xscale";
         }
 
         .score {
@@ -311,7 +329,6 @@
   #playNow{
     background: url("assets/UI/D1/PlayNowGradient(crop).png") no-repeat right;
     width:50%;
-    background-size: cover;
     margin-right: 0;
     margin-left: auto;
     h2{
@@ -381,12 +398,13 @@ footer{
         bottom: 25px;
         left: 0;
         &.textScoreLabel{
-          font-size: 24px;
-          bottom: 20px;
-          line-height: 40px;
+          font-size: 50px;
+          bottom: 40px;
+          line-height: 60px;
           font-weight: bold;
           color:darkblue;
           background-color: white;
+          font-family: XScale;
         }
       }
 
@@ -466,6 +484,7 @@ footer{
         &.stepNum{
           font-size: 52px;
           margin-bottom: 0;
+          font-weight: bold;
         }
       }
     }

@@ -27,6 +27,10 @@ var team1Name = document.getElementById("team1").getElementsByClassName("teamNam
 var team2Name = document.getElementById("team2").getElementsByClassName("teamName")[0];
 var team3Name = document.getElementById("team3").getElementsByClassName("teamName")[0];
 
+var team1Score = document.getElementById("team1").getElementsByClassName("scoreNum")[0];
+var team2Score = document.getElementById("team2").getElementsByClassName("scoreNum")[0];
+var team3Score = document.getElementById("team3").getElementsByClassName("scoreNum")[0];
+
 var teamScores = document.getElementById("teamScores");
 
 var team1 = document.getElementById("team1");
@@ -41,8 +45,12 @@ var winner = false;
 var widthTweenDistance;
 var heightTweenDistance;
 
+
+
 yourFirstName.innerHTML = "JIMMY";
 yourLastName.innerHTML = "DELANEY";
+
+
 
 topFirstName.innerHTML = "BOB";
 topLastName.innerHTML = "WINKLEBURG";
@@ -88,7 +96,7 @@ function UIResultsAnimateIn()
 
     inner.style.backgroundColor = "transparent";
 
-    TweenMax.to(inner, textFadeTime, {backgroundColor: "rgba(0,0,0,0.4)"});
+    TweenMax.to(inner, textFadeTime, {backgroundColor: "rgba(0,0,0,0.8)"});
 
     if(winner)
     {
@@ -132,7 +140,7 @@ function UIResultsAnimateOut()
     TweenMax.to(team2, textFadeTimeResults, {delay: textFadeTimeResults, opacity: 0});
 
     TweenMax.to(team3, textFadeTimeResults, {delay: textFadeTimeResults, marginTop: heightTweenDistance, ease:Back.easeOut});
-    TweenMax.to(team3, textFadeTimeResults, {delay: textFadeTimeResults, opacity: 0, onComplete:UIAttractAnimateIn});
+    TweenMax.to(team3, textFadeTimeResults, {delay: textFadeTimeResults, opacity: 0});
 
     TweenMax.to(inner, textFadeTimeResults, {backgroundColor: "rgba(0,0,0,0.0)"});
 
@@ -141,11 +149,36 @@ function UIResultsAnimateOut()
 
 function UIResultsUpdateName(name)
 {
-    firstName.innerHTML = name.substr(0, name.indexOf(' '));
-    lastName.innerHTML = name.substr(name.indexOf(' ') + 1);
+    yourFirstName.innerHTML = name.substr(0, name.indexOf(' '));
+    yourLastName.innerHTML = name.substr(name.indexOf(' ') + 1);
 }
 
 function UIResultsUpdateScore(playerScore)
 {
     yourScoreText.innerHTML = playerScore.toString();
+}
+
+function UIResultsSetData(data)
+{
+    topScore.innerHTML = data.highscorer.player.score;
+    var name = data.highscorer.player.username;
+    topFirstName.innerHTML = name.substr(0, name.indexOf(' '));
+    topLastName.innerHTML = name.substr(name.indexOf(' ') + 1);
+
+
+console.log(data);
+console.log(data.teamscores);
+console.log(data.teamscores[0]);
+console.log(data.teamscores[0].name);
+console.log(data.teamscores[0].Name);
+console.log(data.teamscores[0].CumulativeScore);
+console.log(data.teamscores[0].cumulativescore);
+
+    for(var i= 0; i < data.teamscores.length; i++)
+    {
+        if(data.teamscores[i].name.toUpperCase() == team1Name.innerHTML)
+        {
+            team1Score.innerHTML = data.teamscores[i].cumulateScore;
+        }
+    }
 }

@@ -7,6 +7,9 @@ var footerLeft = document.getElementById("footerLeft");
 var footerCenter = document.getElementById("footerCenter");
 var playNow= document.getElementById("playNow");
 var comboBadge= document.getElementById("comboBadge");
+var comboNumText = document.getElementById("comboNum");
+var streak = document.getElementById("streak");
+var sparkle = comboBadge.getElementsByClassName("sparkle")[0];
 
 var gameplayLeft = document.getElementById("footerLeft").getElementsByClassName("gameplayLeft")[0];
 var gameplayRight = document.getElementById("footerCenter").getElementsByClassName("gameplayRight")[0];
@@ -14,10 +17,12 @@ var scoreText = gameplayLeft.getElementsByClassName("textScore")[0];
 var scoreLabel = gameplayLeft.getElementsByClassName("textScoreLabel")[0];
 var firstName = gameplayRight.getElementsByClassName("textGameplayFirst")[0];
 var lastName = gameplayRight.getElementsByClassName("textGameplayLast")[0];
-var comboNumText = document.getElementById("comboNum");
-
+var footerWidth;
 function UIGameplayAnimateIn()
 {
+    footerWidth = parseInt(footerCenter.style.width.substr(0, footerCenter.style.width.length-2));
+    footerWidth = canvas.width * .09 + "px";
+
     waitingLeft.style.display = "none";
     waitingRight.style.display = "none";
 
@@ -27,11 +32,13 @@ function UIGameplayAnimateIn()
     gameplayLeft.opacity = 0;
     firstName.style.opacity = 0;
     lastName.style.opacity = 0;
+    firstName.style.left = "0px";
+    lastName.style.left = "0px";
+
 
     TweenMax.to(gameplayLeft, textFadeTime, {opacity:1, delay: textFadeTime});
-    TweenMax.to(firstName, textFadeTime, {opacity:1, delay: textFadeTime});
-    TweenMax.to(lastName, textFadeTime, {opacity:1, delay: textFadeTime});
-    console.log("TWEEN IN GAMEPLAY");
+    TweenMax.to(firstName, textFadeTime, {opacity:1, delay: textFadeTime, left:footerWidth});
+    TweenMax.to(lastName, textFadeTime, {opacity:1, delay: textFadeTime, left: footerWidth});
 }
 
 function UIGameplayAnimateOut()
@@ -43,6 +50,8 @@ function UIGameplayAnimateOut()
     TweenMax.to(footer, textFadeTime, {backgroundPositionY:200});
     TweenMax.to(footerLeft, textFadeTime, {top:200});
     TweenMax.to(footerCenter, textFadeTime, {top:200, onComplete: turnOffDisplay});
+    TweenMax.to(firstName, textFadeTime, {opacity:1, delay: .1, left:footerWidth + 300});
+    TweenMax.to(lastName, textFadeTime, {opacity:1, delay: .2, left: footerWidth + 300});
 }
 
 function UIGameplayUpdateScore(scoreInput)
@@ -61,18 +70,24 @@ function UIGameplayAnimateBadgeOn(comboNum)
 {
     comboNumText.innerHTML = comboNum.toString();
 
+
     if(comboNum == 2)
     {
+        TweenMax.to(comboNumText, 0.1, {opacity: 1});
         TweenMax.to(comboBadge, 0.1, {opacity: 1});
     }
 
-    TweenMax.to(comboBadge, 0.1, {scaleX:1.2, scaleY:1.2, repeat: 1, yoyo:true});
+    TweenMax.to(comboNumText, 0.1, {scaleX:1.2, scaleY:1.2, repeat: 1, yoyo:true});
+
+    TweenMax.to(sparkle, 0.01, {rotation:0});
+    TweenMax.to(sparkle, 0.3, {scaleX:1, scaleY:1, ease:Back.easeOut});
+    TweenMax.to(sparkle, .7, {delay: 0.1, rotation:180, ease:Power2.easeNone});
+    TweenMax.to(sparkle, 0.3, {delay: 0.5, scaleX:0, scaleY:0});
 }
 
 function UIGameplayAnimateBadgeOff()
 {
     TweenMax.to(comboBadge, 0.1, {opacity: 0});
-
 }
 
 function turnOffDisplay()

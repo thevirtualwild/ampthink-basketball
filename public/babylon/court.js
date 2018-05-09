@@ -31,7 +31,7 @@ var cameraSettings = [];
 
 var initWaitTime = 7;
 var currentWaitTime = 7;
-var initGameTime = 30;
+var initGameTime = 10;
 var currentGameTime = 30;
 var initResultsTime = 10;
 var currentResultsTime = 10;
@@ -302,19 +302,19 @@ var createScene = function(){
           }
           else if(currentWaitTime <= -2)
           {
-              attractLabel.innerHTML = "GAME STARTS IN <br />" +  (5.5 + currentWaitTime).toFixed(0);
+              //attractLabel.innerHTML = "GAME STARTS IN <br />" +  (5.5 + currentWaitTime).toFixed(0);
               //attractLabel.innerHTML = "";
           }
           else if(currentWaitTime < 0)
           {
               //attractLabel.innerHTML = "PLAYERS LOCKED IN";
-              attractLabel.innerHTML = "";
+              //attractLabel.innerHTML = "";
           }
           else
           {
               if (hasplayer) {
                   //attractLabel.innerHTML =  currentWaitTime.toFixed(0) + "<br /> WAITING FOR PLAYERS";
-                  attractLabel.innerHTML =  "";
+                  //attractLabel.innerHTML =  "";
               }
           }
       }
@@ -335,18 +335,18 @@ var createScene = function(){
       else if(currentGameState == gameStates.RESULTS)
       {
           currentResultsTime -= (engine.getDeltaTime() / 1000);
-          attractLabel.innerHTML = "Score: " + score;
+          //attractLabel.innerHTML = "Score: " + score;
 
           if(currentResultsTime <= -2)
           {
-              changeGameState(gameStates.ATTRACT);
+              //changeGameState(gameStates.ATTRACT);
               currentGameTime = initGameTime;
               updateClock();
               socket.emit('room reset');
           }
           else if(currentResultsTime <= 0)
           {
-              UIResultsAnimateOut();
+              //UIResultsAnimateOut();
               currentGameTime = initGameTime;
               updateClock();
           }
@@ -1273,7 +1273,7 @@ function updateUI() {
         case gameStates.RESULTS:
             UIGameplayAnimateOut();
             scoreLabel.innerHTML = "";
-            attractLabel.innerHTML = "Score: " + score;
+            //attractLabel.innerHTML = "Score: " + score;
             currentResultsTime = initResultsTime;
             break;
         case gameStates.INACTIVE:
@@ -1403,6 +1403,7 @@ socket.on('end all games', function(courtthatfinished) {
 socket.on('show results', function(resultsdata) {
   console.log('Results!');
   console.dir(resultsdata);
+  UIResultsSetData(resultsdata);
 });
 socket.on('reset game', function() {
   scene.actionManager.processTrigger(scene.actionManager.actions[1].trigger, {additionalData: "t"});

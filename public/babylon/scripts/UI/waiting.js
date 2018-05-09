@@ -19,9 +19,14 @@ var waitingRight = document.getElementById("footerCenter").getElementsByClassNam
 var countdown = waitingLeft.getElementsByClassName("textCountdown")[0];
 var textWaiting = waitingRight.getElementsByClassName("textWaiting")[0];
 
+var footerWidth;
+
 function UIWaitingAnimateIn()
 {
-    //set values
+    footerWidth = parseInt(footerCenter.style.width.substr(0, footerCenter.style.width.length-2));
+    footerWidth = canvas.width * .09;
+    console.log(waitingRight.style.width);
+    console.log(footerWidth);
     //Fade in
     //footerLeft.style.maxWidth = 200;
     transitioned = false;
@@ -34,33 +39,19 @@ function UIWaitingAnimateIn()
     waitingRight.style.display = "inline"
     countdown.style.opacity = 0;
     textWaiting.style.opacity = 0;
+    textWaiting.style.left = footerWidth + "px";
+    console.log(textWaiting.style.left);
     TweenMax.to(countdown, textFadeTime, {opacity:1});
     TweenMax.to(textWaiting, textFadeTime, {opacity:1});
-
 }
 
 function UIWaitingAnimateOut()
 {
 
     TweenMax.to(countdown, textFadeTime, {opacity:0, delay: textFadeTime, onComplete: UIGameplayAnimateIn});
-    TweenMax.to(textWaiting, textFadeTime, {opacity:0, delay: textFadeTime,});
+    TweenMax.to(textWaiting, textFadeTime/2, {opacity:0, delay: textFadeTime});
+    TweenMax.to(textWaiting, textFadeTime, {left: footerWidth + 300 , delay: textFadeTime})
 
-    //Fade out both bball texts
-    //Fade out Play Now!
-    //Call Waitings animateIn
-    /*
-    TweenMax.to(playNow, textFadeTime, {alpha:0});
-    TweenMax.to(comboBadge, textFadeTime, {alpha:0});
-    TweenMax.to(attractTopLeft, textFadeTime, {alpha:0});
-    TweenMax.to(attractBottomLeft, textFadeTime, {alpha:0});
-    TweenMax.to(attractRight, textFadeTime, {alpha:0});
-    TweenMax.to(attractStep2TopLeft, textFadeTime, {alpha:0});
-    TweenMax.to(attractStep2BottomLeft, textFadeTime, {alpha:0});
-    TweenMax.to(attractStep2Right, textFadeTime, {alpha:0});
-
-    TweenMax.to(footerLeft, textFadeTime, {delay: textFadeTime*3, width:.16*canvas.width});
-    TweenMax.to(footerCenter, textFadeTime, {delay: textFadeTime*3, width:.699*canvas.width});
-    */
 }
 
 function UIWaitingUpdateClock(time)
