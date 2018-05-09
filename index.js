@@ -508,7 +508,8 @@ function onConnection(socket) {
     score_base('Players').create({
       "Name": playername,
       "Team": [playerteam],
-      "Score": playerscore
+      "Score": playerscore,
+      "Submission Date": new Date()
     }, function(err, record) {
         if (err) { console.error(err); return; }
 
