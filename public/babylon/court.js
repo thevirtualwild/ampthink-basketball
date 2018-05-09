@@ -339,14 +339,14 @@ var createScene = function(){
 
           if(currentResultsTime <= -2)
           {
-              //changeGameState(gameStates.ATTRACT);
+              changeGameState(gameStates.ATTRACT);
               currentGameTime = initGameTime;
               updateClock();
               socket.emit('room reset');
           }
           else if(currentResultsTime <= 0)
           {
-              //UIResultsAnimateOut();
+              UIResultsAnimateOut();
               currentGameTime = initGameTime;
               updateClock();
           }
@@ -1372,7 +1372,7 @@ socket.on('player joined court', function(userdata) {
 socket.on('player changed name', function(data) {
   console.log('Player ' + playerData.username + ' - Change Name - ' + data.newplayer.username);
 
-  playerData = userdata;
+  playerData = data.newplayer;
 
   UIGameplayUpdateName(playerData.username);
   UIResultsUpdateName(playerData.username);
@@ -1409,7 +1409,12 @@ socket.on('reset game', function() {
   scene.actionManager.processTrigger(scene.actionManager.actions[1].trigger, {additionalData: "t"});
 });
 
+socket.on('change player name', function(data) {
 
+    UIGameplayUpdateName(data.name);
+    console.log("CHANGE PLAYER NAME");
+    console.log(data);
+});
 
 
 

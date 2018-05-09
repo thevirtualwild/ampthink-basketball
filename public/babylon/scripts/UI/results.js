@@ -67,7 +67,10 @@ function UIResultsAnimateIn()
     topScore.style.opacity = 0;
     playNow.style.opacity = 0;
     comboBadge.style.opacity = 0;
-
+/*
+    footerLeft.style.display = "none";
+    footerCenter.style.display = "none";
+    */
     //Get Score List
     team1Name.style.color = primaryTeam.colorHex;
     team2Name.style.color = secondaryTeam.colorHex;
@@ -159,32 +162,25 @@ function UIResultsUpdateScore(playerScore)
 }
 
 function UIResultsSetData(data) {
-    topScore.innerHTML = data.highscorer.player.score;
+
+    topScoreText.innerHTML = data.highscorer.player.score;
     var name = data.highscorer.player.username;
     topFirstName.innerHTML = name.substr(0, name.indexOf(' '));
     topLastName.innerHTML = name.substr(name.indexOf(' ') + 1);
 
-
-    console.log(data);
-    console.log(data.teamscores);
-    console.log(data.teamscores.length);
-    console.log(data.teamscores[0]);//UNDEFINED WHY
-    console.log(data.teamscores.recLog2eI9U5litsT);
-    console.log(data.teamscores.recLog2eI9U5litsT.Name);//WHITE
-    /*
-        team1Score.innerHTML = data.teamscores.recmeh5AGMnROs1sE.CumulativeScore;
-        team1Name.innerHTML = data.teamscores.recmeh5AGMnROs1sE.Name;
-
-        team2Score.innerHTML = data.teamscores.recLog2eI9U5litsT.CumulativeScore;
-        team2Name.innerHTML = data.teamscores.recLog2eI9U5litsT.Name;
-
-        team3Score.innerHTML = data.teamscores.recwT4kbErHEqznQs.CumulativeScore;
-        team3Name.innerHTML = data.teamscores.recwT4kbErHEqznQs.Name;
-        */
-
-    if (data.teamscores.index.[])
-        if (data.teamscores[i].name.toUpperCase() == team1Name.innerHTML) {
-            team1Score.innerHTML = data.teamscores[i].cumulateScore;
+    for (ateam in data.teamscores) {
+        if(primaryTeam.name == data.teamscores[ateam].name) {
+            team1Name.innerHTML = data.teamscores[ateam].name;
+            team1Score.innerHTML = data.teamscores[ateam].score;
+        }
+        else if(secondaryTeam.name == data.teamscores[ateam].name) {
+            team2Name.innerHTML = data.teamscores[ateam].name;
+            team2Score.innerHTML = data.teamscores[ateam].score;
+        }
+        else if(tertiaryTeam.name == data.teamscores[ateam].name) {
+            team3Name.innerHTML = data.teamscores[ateam].name;
+            team3Score.innerHTML = data.teamscores[ateam].score;
         }
     }
+
 }

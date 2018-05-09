@@ -21,6 +21,8 @@ var countdownStarted = true;
 var username;
 var team;
 
+var userdata;
+
 var initCameraPos;
 
 var ballStates = Object.freeze({"WAITING": 0, "DRAGGABLE": 1, "DRAGGING": 2, "SHOT": 3});

@@ -85,8 +85,13 @@ function getName()
     TweenMax.to(firstName, customizeFadeTime, {opacity: 1});
     TweenMax.to(lastName, customizeFadeTime, {opacity: 1, onComplete: stopAnimating});
 
+    console.log(userdata);
+    console.log(userdata.username);
+    console.log(name);
     userdata.username = name;
+
     socket.emit("change player name", userdata);
+
 }
 
 function stopAnimating()
