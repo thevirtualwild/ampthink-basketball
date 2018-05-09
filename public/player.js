@@ -190,6 +190,8 @@ function createScene() {
           }
           else if(currentBallState == ballStates.WAITING)
           {
+              console.log("CHECKING FOR DRAGGABLE");
+              currentBallState = ballStates.DRAGGABLE;
               if(basketball.position.x > -4)
               {
                   currentBallState = ballStates.DRAGGABLE;
@@ -232,6 +234,7 @@ function createScene() {
       convertedRot.x = velocity.z;
       convertedRot.z = -velocity.x;
       basketball.physicsImpostor.setAngularVelocity(convertedRot);
+
   }
 
   function resetGame() {

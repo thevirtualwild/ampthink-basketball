@@ -24,7 +24,7 @@ var basketballStates = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 var pulseAmbientColor = false;
 
 var ISMASTER = false;
-
+var masterData;
 //Game Variables?
 var totalTime = 0;
 var netSpheres = [];
@@ -43,6 +43,10 @@ var currentNetLerpDelayTime = 2;
 var initNetLerpDelayTime = 2;
 var currentNetLerpTime = 0.25;
 var initNetLerpTime = 0.25;
+
+var initEmitTime = 0.5;
+var currentEmitTime = 0.5;
+
 
 var gameReady = false;
 
@@ -279,29 +283,12 @@ var createScene = function(){
       //dynamically set fov based on screen resolution
       camera.fov = 1.9 + (-.676 * canvas.width/canvas.height);
       //console.log(camera.fov);
-/*
-        if(ISMASTER)
-        {
-            var syncData;
-            syncData.basketballs = new[];
 
-            var syncData = {
-                //courtname: courtname,
-                //roomname: roomnametojoin
-                basketballs: "basketballs{
 
-                }
-                bball1position: basketballs[0].position,
-                bball2position: basketballs[0].position,
-                bball3position: basketballs[0].position,
-                bball4position: basketballs[0].position,
-                bball5position: basketballs[0].position,
-                bball6position: basketballs[0].position,
-                bball7position: basketballs[0].position,
-                bball8position: basketballs[0].position,
-            }
-        }
-*/
+
+
+
+
       if(currentGameState == gameStates.WAITING)
       {
           currentWaitTime -= (engine.getDeltaTime() / 1000);
@@ -502,6 +489,68 @@ var createScene = function(){
 
                         changeBallFX(false);
                         basketballStates[i] = 0;
+                    }
+                }
+            }
+            currentEmitTime -= (engine.getDeltaTime() / 1000);
+            if(currentEmitTime <= 0)
+            {
+                currentEmitTime = initEmitTime;
+
+                if(ISMASTER)
+                {
+                    var syncData = {
+                        cameraPosition: camera.position,
+                        gameTime: currentGameTime,
+                        waitTime: currentWaitTime,
+                        resultsTime: currentResultsTime,
+                        basketballs: []
+                    }
+
+                    for(var i = 0; i < basketballs.length; i++) {
+                        var newbasketballvar = {
+                            posx: basketballs[i].position.x,
+                            posy: basketballs[i].position.y,
+                            posz: basketballs[i].position.z,
+                            rotx: basketballs[i].rotation.x,
+                            roty: basketballs[i].rotation.y,
+                            rotz: basketballs[i].rotation.z,
+                            velx: basketballs[i].physicsImpostor.getLinearVelocity().x,
+                            vely: basketballs[i].physicsImpostor.getLinearVelocity().y,
+                            velz: basketballs[i].physicsImpostor.getLinearVelocity().z,
+                            angx: basketballs[i].physicsImpostor.getAngularVelocity().x,
+                            angy: basketballs[i].physicsImpostor.getAngularVelocity().y,
+                            angz: basketballs[i].physicsImpostor.getAngularVelocity().z
+                        }
+
+                        syncData['basketballs'].push(newbasketballvar);
+                    }
+
+                    socket.emit("sync screens ", syncData);
+                    console.log(syncData);
+                }
+                else
+                {
+                    if(masterData == "undefined") return;
+
+                    camera.position = masterData.cameraPosition;
+                    currentWaitTime = masterData.waitTime;
+                    currentGameTime = masterData.gameTime;
+                    currentResultsTime = masterData.resultsTime;
+
+                    for(var i = 0; i < basketballs.length; i++)
+                    {
+
+                        var newPos = BABYLON.Vector3(masterData.basketballs[i].posx,masterData.basketballs[i].posy, masterData.basketballs[i].posz);
+                        var newRot = BABYLON.Vector3(masterData.basketballs[i].rotx,masterData.basketballs[i].roty, masterData.basketballs[i].rotz);
+                        var newVel = BABYLON.Vector3(masterData.basketballs[i].velx,masterData.basketballs[i].vely, masterData.basketballs[i].velz);
+                        var newAng = BABYLON.Vector3(masterData.basketballs[i].angx,masterData.basketballs[i].angy, masterData.basketballs[i].angz);
+
+                        basketballs[i].position = newPos;
+                        basketballs[i].rotation = newRot;
+                        basketballs[i].physicsImpostor.setLinearVelocity(newVel);
+                        basketballs[i].physicsImpostor.setAngularVelocity(newAng);
+
                     }
                 }
             }
@@ -1355,6 +1404,9 @@ function gameOver() {
 
 
 
+socket.on('set master', function(){
+    ISMASTER = true;
+});
 
 socket.on('device knows court', function(data) {
   // do something with the data
@@ -1363,6 +1415,10 @@ socket.on('device knows court', function(data) {
 socket.on('device needs court', function() {
   // find something out
   console.log('Device doesnt know court');
+});
+socket.on('sync with master', function(syncData){
+    masterData = syncData;
+    console.log(masterData);
 });
 
 
