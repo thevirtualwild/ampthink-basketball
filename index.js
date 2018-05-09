@@ -681,6 +681,9 @@ function onConnection(socket) {
     console.log('user from: ' + socket.roomname + ' disconnected');
   })
 
+  socket.on('touch event', function() {
+    console.log('Some Touch Event');
+  });
 }
 
 
