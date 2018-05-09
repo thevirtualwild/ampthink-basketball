@@ -96,6 +96,7 @@ function createScene() {
               if(currentBallState == ballStates.DRAGGABLE)
               {
                   currentBallState = ballStates.DRAGGING;
+                  console.log("Touch Data: " + scene.pointerX + ", " + scene.pointerY);
               }
           };
 

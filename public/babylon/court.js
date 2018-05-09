@@ -23,6 +23,8 @@ var basketballStates = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 var pulseAmbientColor = false;
 
+var ISMASTER = FALSE;
+
 //Game Variables?
 var totalTime = 0;
 var netSpheres = [];
@@ -56,6 +58,8 @@ var combo = 0;
 var newBasketballs = [];
 var newBasketballOutlines = [];
 
+var emitInitTime = .5;
+var emitCurrentTime = .5;
 
 createCameraTypes();
 
@@ -275,6 +279,11 @@ var createScene = function(){
       //dynamically set fov based on screen resolution
       camera.fov = 1.9 + (-.676 * canvas.width/canvas.height);
       //console.log(camera.fov);
+
+        if(ISMASTER)
+        {
+
+        }
 
       if(currentGameState == gameStates.WAITING)
       {
