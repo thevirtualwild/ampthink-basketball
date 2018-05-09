@@ -23,7 +23,7 @@ var basketballStates = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 var pulseAmbientColor = false;
 
-var ISMASTER = FALSE;
+var ISMASTER = false;
 
 //Game Variables?
 var totalTime = 0;
@@ -279,12 +279,16 @@ var createScene = function(){
       //dynamically set fov based on screen resolution
       camera.fov = 1.9 + (-.676 * canvas.width/canvas.height);
       //console.log(camera.fov);
-
+/*
         if(ISMASTER)
         {
-
+            var syncData = {
+                //courtname: courtname,
+                //roomname: roomnametojoin
+                basketballs[0].position
+            }
         }
-
+*/
       if(currentGameState == gameStates.WAITING)
       {
           currentWaitTime -= (engine.getDeltaTime() / 1000);
