@@ -249,21 +249,24 @@ color:yellow;
   font-weight:bold;
 }
 
-.gameover.page .form #dash{
+.gameover.page .form .dash{
   width: 50%;
   display:block;
   margin-left: auto;
   margin-right: auto;
     display:block;
+    float:none;
 }
 
-.gameover.page .form #button{
+.gameover.page .form .button{
   width: 40%;
   display:block;
   margin-left: auto;
   margin-right: auto;
   margin-top: 40px;
     display:block;
+    float:none;
+
 
 }
 
