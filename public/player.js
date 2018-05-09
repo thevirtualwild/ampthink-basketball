@@ -26,6 +26,7 @@ var initCameraPos;
 var ballStates = Object.freeze({"WAITING": 0, "DRAGGABLE": 1, "DRAGGING": 2, "SHOT": 3});
 var currentBallState = ballStates.WAITING;
 
+var overlayMaterial;
 // Create Scene
 var scene = createScene();
 function createScene() {
@@ -62,7 +63,7 @@ function createScene() {
 
   BABYLON.SceneLoader.ImportMesh("", "/babylon/assets/BBall_V2/", "BBall_V2.babylon", scene, function (mesh) {
       var baseMaterial = new BABYLON.StandardMaterial("baseMaterial", scene);
-      var overlayMaterial = new BABYLON.StandardMaterial("overlayMaterial", scene);
+      overlayMaterial = new BABYLON.StandardMaterial("overlayMaterial", scene);
       var multimat = new BABYLON.MultiMaterial("multi", scene);
 
       baseMaterial.emissiveTexture = new BABYLON.Texture("babylon/assets/BBall_V2/BBall_V2_Albedo.png", scene);
@@ -306,6 +307,8 @@ function joinCourt(someCourt) {
   }
   // fade out input page
   //$pages.fadeOut();
+
+    overlayMaterial.ambientColor = team.colorRGB;
 
   userdata = {
       'username': username,

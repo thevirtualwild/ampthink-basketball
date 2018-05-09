@@ -158,26 +158,32 @@ function UIResultsUpdateScore(playerScore)
     yourScoreText.innerHTML = playerScore.toString();
 }
 
-function UIResultsSetData(data)
-{
+function UIResultsSetData(data) {
     topScore.innerHTML = data.highscorer.player.score;
     var name = data.highscorer.player.username;
     topFirstName.innerHTML = name.substr(0, name.indexOf(' '));
     topLastName.innerHTML = name.substr(name.indexOf(' ') + 1);
 
 
-console.log(data);
-console.log(data.teamscores);
-console.log(data.teamscores[0]);
-console.log(data.teamscores[0].name);
-console.log(data.teamscores[0].Name);
-console.log(data.teamscores[0].CumulativeScore);
-console.log(data.teamscores[0].cumulativescore);
+    console.log(data);
+    console.log(data.teamscores);
+    console.log(data.teamscores.length);
+    console.log(data.teamscores[0]);//UNDEFINED WHY
+    console.log(data.teamscores.recLog2eI9U5litsT);
+    console.log(data.teamscores.recLog2eI9U5litsT.Name);//WHITE
+    /*
+        team1Score.innerHTML = data.teamscores.recmeh5AGMnROs1sE.CumulativeScore;
+        team1Name.innerHTML = data.teamscores.recmeh5AGMnROs1sE.Name;
 
-    for(var i= 0; i < data.teamscores.length; i++)
-    {
-        if(data.teamscores[i].name.toUpperCase() == team1Name.innerHTML)
-        {
+        team2Score.innerHTML = data.teamscores.recLog2eI9U5litsT.CumulativeScore;
+        team2Name.innerHTML = data.teamscores.recLog2eI9U5litsT.Name;
+
+        team3Score.innerHTML = data.teamscores.recwT4kbErHEqznQs.CumulativeScore;
+        team3Name.innerHTML = data.teamscores.recwT4kbErHEqznQs.Name;
+        */
+
+    if (data.teamscores.index.[])
+        if (data.teamscores[i].name.toUpperCase() == team1Name.innerHTML) {
             team1Score.innerHTML = data.teamscores[i].cumulateScore;
         }
     }
