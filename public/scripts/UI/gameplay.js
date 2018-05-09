@@ -14,7 +14,7 @@ var gameplayPage = document.getElementsByClassName("gameplay page")[0];
 var gameoverPage = document.getElementsByClassName("gameover page")[0];
 
 var headerInstructions = document.getElementById("headerInstructions");
-
+var background = document.getElementById("background");
 function UIGameplayAnimateIn()
 {
     inputPage.style.display = "none";
@@ -28,6 +28,9 @@ function UIGameplayAnimateIn()
     $pages.fadeOut();
     var $background = $('#background');
     $background.fadeOut();
+
+    pages.style.pointerEvents = "none";
+    background.style.pointerEvents = "none";
     /*
     gameplayForm.style.opacity = 0;
     gameplayForm.style.top = "-100px";
