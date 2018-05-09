@@ -98,7 +98,7 @@ function createScene() {
                   currentBallState = ballStates.DRAGGING;
                   console.log("Touch Data: " + scene.pointerX + ", " + scene.pointerY);
 
-                  socket.emit("touch event");
+                  socket.emit("touch event", "DOWN");
               }
           };
 
@@ -114,7 +114,9 @@ function createScene() {
                   {
                       currentBallState = ballStates.DRAGGABLE;
                   }
+                  socket.emit("touch event", "UP AND DRAGGING");
               }
+              socket.emit("touch event", "UP");
           };
 
           if(currentBallState == ballStates.DRAGGABLE)

@@ -282,10 +282,23 @@ var createScene = function(){
 /*
         if(ISMASTER)
         {
+            var syncData;
+            syncData.basketballs = new[];
+
             var syncData = {
                 //courtname: courtname,
                 //roomname: roomnametojoin
-                basketballs[0].position
+                basketballs: "basketballs{
+
+                }
+                bball1position: basketballs[0].position,
+                bball2position: basketballs[0].position,
+                bball3position: basketballs[0].position,
+                bball4position: basketballs[0].position,
+                bball5position: basketballs[0].position,
+                bball6position: basketballs[0].position,
+                bball7position: basketballs[0].position,
+                bball8position: basketballs[0].position,
             }
         }
 */
