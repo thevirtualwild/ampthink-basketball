@@ -15,7 +15,6 @@ Airtable.configure({
 var config_base = Airtable.base('appjnwB9vqNtd1ore');
 var score_base = Airtable.base('apprHXHRMQgbi5WBV');
 
-
 var alldevices = {};
 var allrooms = {};
 var allzones = {};
@@ -191,44 +190,12 @@ function getScoresFromAirtable() {
 
 getScoresFromAirtable();
 
-
-var query;
 // Routing
-
-app.get('/rebabylon', function(req, res) {
-  var randquery = randomCode(7);
-  console.log('redirecting');
-  res.redirect('/babylon/?roomId=' + randquery);
-  query = randquery;
-  console.log('query - ' + query);
-});
-
-app.get('/babylon', function(req, res) {
-    console.log('babylon loaded');
-    res.sendFile(path.join(__dirname + '/public/babylon/index.html'));
-    query = req.query.roomId;
-    console.log('feed routing bab - ' + query);
-});
-
 app.use(express.static(path.join(__dirname, 'public')), function(req, res) {
-  if (req.query.roomId) {
-    query = req.query.roomId;
-    console.log('feed routing use - ' + query);
-  }
-});
-// app.use(express.static(path.join(__dirname, 'babylon')));
-//
-app.get('/game', function(req, res) {
-    res.sendFile(path.join(__dirname + '/public/game.html'));
-    query = req.query.room;
-    console.log('webapp routing - ' + query);
-});
-
-
-app.set('view engine', 'ejs');
-
-app.get('/about', function(req, res) {
-  res.render('pages/about');
+  // if (req.query.roomId) {
+  //   // query = req.query.roomId;
+  //   // console.log('feed routing use - ' + query);
+  // }
 });
 
 function randomCode(howLong) {
@@ -505,18 +472,21 @@ function onConnection(socket) {
     console.log(playerteam);
     playerscore = data.player.score;
 
-    score_base('Players').create({
-      "Name": playername,
-      "Team": [playerteam],
-      "Score": playerscore,
-      "Submission Date": new Date()
-    }, function(err, record) {
-        if (err) { console.error(err); return; }
+    if (playerscore > 0) {
 
-        //Callback from API push
-        newplayerid = record.getId();
-        console.log('NewPlayer - ' + newplayerid);
-    });
+      score_base('Players').create({
+        "Name": playername,
+        "Team": [playerteam],
+        "Score": playerscore,
+        "Submission Date": new Date()
+      }, function(err, record) {
+          if (err) { console.error(err); return; }
+
+          //Callback from API push
+          newplayerid = record.getId();
+          console.log('NewPlayer - ' + newplayerid);
+      });
+    }
   }
 
   //court stuff I think
@@ -707,19 +677,6 @@ function onConnection(socket) {
     console.log('user from: ' + socket.roomname + ' disconnected');
   })
 
-
-  //might not need
-  socket.on('query request', function() {
-    console.log('query request received');
-    if (query) {
-      console.log('there is a query - ' + query);
-      socket.emit('query', query);
-    } else {
-      console.log('no query found');
-      socket.emit('use random query');
-    }
-  });
-
 }
 
 
@@ -788,6 +745,47 @@ function onConnection(socket) {
     //   console.log('socket room - ' + socket.roomname);
     //   // console.log('Courts: ');
     //   // console.dir(courts);
+    // });
+    // var query;
+    //might not need
+    // socket.on('query request', function() {
+    //   console.log('query request received');
+    //   if (query) {
+    //     console.log('there is a query - ' + query);
+    //     socket.emit('query', query);
+    //   } else {
+    //     console.log('no query found');
+    //     socket.emit('use random query');
+    //   }
+    // });
+    // // app.use(express.static(path.join(__dirname, 'babylon')));
+    // //
+    // app.get('/game', function(req, res) {
+    //     res.sendFile(path.join(__dirname + '/public/game.html'));
+    //     query = req.query.room;
+    //     console.log('webapp routing - ' + query);
+    // });
+    //
+    // // app.get('/rebabylon', function(req, res) {
+    // //   var randquery = randomCode(7);
+    // //   console.log('redirecting');
+    // //   res.redirect('/babylon/?roomId=' + randquery);
+    // //   // query = randquery;
+    // //   // console.log('query - ' + query);
+    // // });
+    //
+    // // app.get('/babylon', function(req, res) {
+    // //     console.log('babylon loaded');
+    // //     res.sendFile(path.join(__dirname + '/public/babylon/index.html'));
+    // //     // query = req.query.roomId;
+    // //     // console.log('feed routing bab - ' + query);
+    // // });
+    //
+    //
+    // app.set('view engine', 'ejs');
+    //
+    // app.get('/about', function(req, res) {
+    //   res.render('pages/about');
     // });
 
 // Ready to delete finished
