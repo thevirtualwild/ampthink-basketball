@@ -5,7 +5,7 @@ var inputForm = document.getElementsByClassName("form")[0];
 var errorMessage = inputForm.getElementsByClassName("errorMessage")[0];
 errorMessage.style.opacity = 0;
 
-
+/*
 var fixed = document.getElementById('background');
 
 fixed.addEventListener('touchmove', function(e) {
@@ -13,7 +13,7 @@ fixed.addEventListener('touchmove', function(e) {
     e.preventDefault();
 
 }, false);
-
+*/
 function UIInputAnimateIn()
 {
     errorMessage.style.opacity = 0;
