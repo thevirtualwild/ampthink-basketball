@@ -670,6 +670,10 @@ function onConnection(socket) {
   });
 
 
+  socket.on('sync screens', function(data) {
+    console.log('Sync Data');
+    console.dir(data);
+  });
 
 
   //server stuff
