@@ -531,6 +531,11 @@ var createScene = function(){
                 }
             }
 
+
+        });
+
+        scene.registerAfterPhysicsStep(function()
+        {
             if(readyToSync && !ISMASTER)
             {
                 if(masterData === undefined) return;
@@ -556,7 +561,7 @@ var createScene = function(){
                 }
                 readyToSync =false;
             }
-        });
+        })
     });
 
     BABYLON.SceneLoader.ImportMesh("", "./assets/BBall/", "Bball_Outline.babylon", scene, function (mesh) {
