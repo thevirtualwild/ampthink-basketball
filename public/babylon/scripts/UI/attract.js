@@ -29,7 +29,7 @@ function UIAttractAnimateIn()
     footerLeft.style.width =  .4*canvas.width+ "px";
     footerCenter.style.width =  .4*canvas.width+ "px";
 
-    console.log(.4*canvas.width+ "px");
+    //console.log(.4*canvas.width+ "px");
     attractLeftStep1.style.display = "inline";
     attractLeftStep2.style.display = "inline";
     attractRightStep1.style.display = "inline";

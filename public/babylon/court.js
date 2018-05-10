@@ -549,7 +549,7 @@ var createScene = function(){
                     if(hasCourt)
                     {
                         socket.emit("sync screens", syncData);
-                        console.log(syncData);
+                        //console.log(syncData);
                     }
 
                 }
@@ -1505,7 +1505,7 @@ socket.on('join this room', function(data) {
   haveCourtJoinRoom(courtname,roomname);
 });
 socket.on('court joined room', function(data) {
-  console.log('Congrats ' + courtName +'(' + data.courtname + ')' + ', you joined room: ' + data.roomname);
+  //console.log('Congrats ' + courtName +'(' + data.courtname + ')' + ', you joined room: ' + data.roomname);
   hasCourt = true;
 })
 
