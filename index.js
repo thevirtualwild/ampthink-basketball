@@ -248,8 +248,8 @@ function onConnection(socket) {
 
       }
     }
-    if (masters[socket.court]) {
-      socket.master = masters[socket.court];
+    if (masters[socket.court.id]) {
+      socket.master = masters[socket.court.id];
     } else {
       socket.master = socket.id;
       masters[socket.court] = socket.id;
