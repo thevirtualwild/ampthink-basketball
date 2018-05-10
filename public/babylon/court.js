@@ -502,12 +502,12 @@ var createScene = function(){
                 if(ISMASTER)
                 {
                     var syncData = {
+                        deviceIP: myIP,
                         cameraPosition: camera.position,
                         gameTime: currentGameTime,
                         waitTime: currentWaitTime,
                         resultsTime: currentResultsTime,
-                        basketballs: [],
-                        deviceIP: myIP
+                        basketballs: []
                     }
 
                     for(var i = 0; i < basketballs.length; i++) {
