@@ -870,9 +870,10 @@ var createScene = function(){
 
             var currentMass;
             var currentRestitution;
+
             if(useCannon)
             {
-                currentMass = .1;
+                currentMass = .2;
                 currentRestitution = 20 - j*6;
             }
             else
