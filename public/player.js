@@ -90,6 +90,7 @@ function createScene() {
           ignoreParent: true
       });
 
+      console.log("V2 BALL");
       document.addEventListener('pointerdown', function(ev){
           socket.emit("touch event", "DOWN");
 
