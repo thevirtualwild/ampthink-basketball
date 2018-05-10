@@ -281,7 +281,7 @@ var createScene = function(){
       camera.setTarget(newPos);
 
       //dynamically set fov based on screen resolution
-      camera.fov = 1.9 + (-.676 * canvas.width/canvas.height);
+      camera.fov = 1.8 + (-.676 * canvas.width/canvas.height);
       //console.log(camera.fov);
 
 
