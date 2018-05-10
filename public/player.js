@@ -143,8 +143,8 @@ function createScene() {
           pageScaleFactorY = screen.height/height;
           if(currentBallState == ballStates.DRAGGABLE) {
               currentBallState = ballStates.DRAGGING;
-              targetX = ev.targetTouches[0].screenX;
-              targetY = ev.targetTouches[0].screenY;
+              targetX = ev.targetTouches[0].clientX;
+              targetY = ev.targetTouches[0].clientY;
           }
       });
 
@@ -161,8 +161,8 @@ function createScene() {
           console.log(ev);
            // console.log("SCALE FACTOR: " + pageScaleFactorY);
           if(currentBallState != ballStates.DRAGGING) return;
-          targetX = ev.targetTouches[0].screenX;
-          targetY = ev.targetTouches[0].screenY;
+          targetX = ev.targetTouches[0].clientX;
+          targetY = ev.targetTouches[0].clientY;
 
       });
 
