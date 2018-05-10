@@ -787,11 +787,13 @@ function onConnection(socket) {
       if (courtmaster == socket.id) {
         // console.log('this screen is master - ' + socket.id);
           var testData = {
-            court:socket.court.name,
+            courtname:socket.court.name,
               syncdata:data
           };
 
-        socket.broadcast.to(socket.roomname).emit('sync with master', data);
+          console.log("Court name in index: " + socket.court.name);
+
+        socket.broadcast.to(socket.roomname).emit('sync with master', testData);
       } else {
         // console.log('someone else is master - ' + courtmaster);
       }
