@@ -105,7 +105,7 @@ var createScene = function(){
 
     var gravityVector = new BABYLON.Vector3(0,-15.81, 0);
     scene.enablePhysics(gravityVector, physicsPlugin);
-    scene.getPhysicsEngine().setTimeStep(1/(40 * .6));
+    scene.getPhysicsEngine().setTimeStep(1/(25 * .6));
     //scene.getPhysicsEngine().getPhysicsPlugin().world.allowSleep = true;
     var camera = new BABYLON.FreeCamera("camera1", initCameraPos, scene);
 
