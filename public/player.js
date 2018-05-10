@@ -175,7 +175,7 @@ function createScene() {
           }
       });
 
-      document.addEventListener('mousemove', function(ev){
+      document.addEventListener('touchmove', function(ev){
 
           if(currentBallState != ballStates.DRAGGING) return;
           console.log("MouseMove");
