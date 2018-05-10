@@ -615,7 +615,7 @@ function onConnection(socket) {
 
     socket.join(roomname);
     socket.roomname = roomname;
-    socket.courtname = data.courtname;
+    socket.court = courtnames[data.courtname];
 
     // console.log('index.js: court: ' + socket.courtname + ' joining room - ' + socket.roomname);
     // socket.broadcast.to(socket.roomname).emit('court joined room', data);
@@ -738,15 +738,21 @@ function onConnection(socket) {
 
   socket.on('sync screens', function(data) {
     console.log('Sync Data');
-    console.dir(data);
+    // console.dir(data);
+
     var thiscourt = courtsandmaster[socket.court];
-    console.log('court master' + thiscourt.master);
-    if (thiscourt.master == socket.id) {
-      console.log('this screen is master - ' + socket.id);
-      socket.broadcast.to(socket.roomname).emit('sync with master', data);
-    } else {
-      console.log('someone else is master - ' + thiscourt.master);
+
+    if (!thiscourt) {
+      setSocketMaster();
     }
+    console.dir(thiscourt);
+    // console.log('court master' + thiscourt.master);
+    // if (thiscourt.master == socket.id) {
+    //   console.log('this screen is master - ' + socket.id);
+    //   socket.broadcast.to(socket.roomname).emit('sync with master', data);
+    // } else {
+    //   console.log('someone else is master - ' + thiscourt.master);
+    // }
   });
 
   //server stuff
