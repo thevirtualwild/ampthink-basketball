@@ -506,7 +506,8 @@ var createScene = function(){
                         gameTime: currentGameTime,
                         waitTime: currentWaitTime,
                         resultsTime: currentResultsTime,
-                        basketballs: []
+                        basketballs: [],
+                        deviceIP: myIP
                     }
 
                     for(var i = 0; i < basketballs.length; i++) {
