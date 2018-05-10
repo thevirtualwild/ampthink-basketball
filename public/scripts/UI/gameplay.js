@@ -23,10 +23,10 @@ function UIGameplayAnimateIn()
     //pages.style.display = "none";
 
     //pages.style.pointerEvents = "none";
-    //background.style.pointerEvents = "none";
-    //inputPage.style.pointerEvents = "none";
+    background.style.pointerEvents = "none";
+    inputPage.style.pointerEvents = "none";
     customizePage.style.pointerEvents = "none";
-    //gameoverPage.style.pointerEvents = "none";
+    gameoverPage.style.pointerEvents = "none";
 
     /*
     gameplayForm.style.opacity = 0;

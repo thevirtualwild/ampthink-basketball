@@ -185,6 +185,7 @@ canvas{
 
 #footerLogo{
   text-align: center;
+  pointer-events: none;
 }
 
 
@@ -211,6 +212,7 @@ canvas{
   height: 200px;
   object-fit:contain;
     opacity:0;
+  pointer-events: none;
 }
 
 

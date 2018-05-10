@@ -125,7 +125,7 @@ function createScene() {
 
       document.addEventListener('mousemove', function(ev){
 
-          console.log("mousemove");
+          //console.log("mousemove");
           if(currentBallState != ballStates.DRAGGING) return;
           targetX = ev.pageX * pageScaleFactorX;
           targetY = ev.pageY * pageScaleFactorY;
