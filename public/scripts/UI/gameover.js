@@ -10,7 +10,6 @@ var refreshLogo = document.getElementById("refreshLogo");
 var refreshImg = document.getElementById("refresh");
 var inputPage = document.getElementsByClassName("passcode page")[0];
 var customizePage = document.getElementsByClassName("player page")[0];
-var gameplayPage = document.getElementsByClassName("gameplay page")[0];
 var gameoverPage = document.getElementsByClassName("gameover page")[0];
 
 var thank = document.getElementsByClassName("thank")[0];
@@ -24,7 +23,6 @@ function UIGameoverAnimateIn()
 {
     inputPage.style.display = "none";
     customizePage.style.display = "none";
-    gameplayPage.style.display = "none";
     gameoverPage.style.display = "block";
     pages.style.display = "block";
 

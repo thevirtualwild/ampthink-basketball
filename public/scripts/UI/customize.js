@@ -9,7 +9,6 @@ var refreshLogo = document.getElementById("refreshLogo");
 var refreshImg = document.getElementById("refresh");
 var inputPage = document.getElementsByClassName("passcode page")[0];
 var customizePage = document.getElementsByClassName("player page")[0];
-var gameplayPage = document.getElementsByClassName("gameplay page")[0];
 var gameoverPage = document.getElementsByClassName("gameover page")[0];
 
 var firstName = customizeForm.getElementsByClassName("firstName")[0];
@@ -29,7 +28,6 @@ function UICustomizeAnimateIn()
 {
     inputPage.style.display = "none";
     customizePage.style.display = "block";
-    gameplayPage.style.display = "none";
     gameoverPage.style.display = "none";
 
     firstName.style.opacity = 0;

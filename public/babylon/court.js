@@ -531,7 +531,8 @@ var createScene = function(){
                 }
                 else
                 {
-                    if(masterData == "undefined") return;
+                    //console.log(masterData);
+                    if(masterData === undefined) return;
 
                     camera.position = masterData.cameraPosition;
                     currentWaitTime = masterData.waitTime;

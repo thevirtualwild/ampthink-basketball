@@ -19,22 +19,14 @@ function UIGameplayAnimateIn()
 {
     inputPage.style.display = "none";
     customizePage.style.display = "none";
-    gameplayPage.style.display = "none";
     gameoverPage.style.display = "none";
     pages.style.display = "none";
-
-
-    var $pages = $('.pages');
-    $pages.fadeOut();
-    var $background = $('#background');
-    $background.fadeOut();
 
     pages.style.pointerEvents = "none";
     background.style.pointerEvents = "none";
     inputPage.style.pointerEvents = "none";
     customizePage.style.pointerEvents = "none";
     gameoverPage.style.pointerEvents = "none";
-    gameplayPage.style.pointerEvents = "none";
 
     /*
     gameplayForm.style.opacity = 0;
