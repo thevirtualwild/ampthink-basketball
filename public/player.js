@@ -181,7 +181,7 @@ function createScene() {
           console.log("MouseMove");
           //console.log(info.pickInfo);
           basketball.position.y = 0;
-          var objectPicked = scene.pick(ev.clientX, ev.clientY);
+          var objectPicked = scene.pick(ev.pageX, ev.pageY);
           var pickedPoint = objectPicked.pickedPoint;
           if (objectPicked.pickedMesh == ground) {
 
