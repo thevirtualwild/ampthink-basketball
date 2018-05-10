@@ -27,7 +27,8 @@ var initCameraPos;
 
 var ballStates = Object.freeze({"WAITING": 0, "DRAGGABLE": 1, "DRAGGING": 2, "SHOT": 3});
 var currentBallState = ballStates.WAITING;
-
+var targetX = 0;
+var targetY = 0;
 var overlayMaterial;
 // Create Scene
 var scene = createScene();
@@ -102,6 +103,8 @@ function createScene() {
               currentBallState = ballStates.DRAGGING;
               console.log(ev);
               socket.emit("touch event", "DOWN AND DRAGGING");
+              targetX = ev.pageX;
+              targetY = ev.pageY;
           }
       });
 
@@ -127,41 +130,9 @@ function createScene() {
           if(currentBallState != ballStates.DRAGGING) return;
           console.log("MouseMove");
           //console.log(info.pickInfo);
-          basketball.position.y = 0;
-          var objectPicked = scene.pick(ev.pageX, ev.pageY);
-          var pickedPoint = objectPicked.pickedPoint;
-          if (objectPicked.pickedMesh == ground) {
+          targetX = ev.pageX;
+          targetY = ev.pageY;
 
-              targetVec = pickedPoint;
-              initVec = basketball.position.clone();
-
-              distVec = BABYLON.Vector3.Distance(targetVec, initVec);
-              if(distVec < .5)
-              {
-                  basketball.physicsImpostor.setLinearVelocity(
-                      basketball.physicsImpostor.getLinearVelocity.x/2,
-                      0,
-                      basketball.physicsImpostor.setLinearVelocity.z/2);
-
-                  basketball.physicsImpostor.setAngularVelocity(
-                      basketball.physicsImpostor.getLinearVelocity.x/2,
-                      0,
-                      basketball.physicsImpostor.setLinearVelocity.z/2);
-                  return;
-              }
-              targetVec = targetVec.subtract(initVec);
-              targetVecNorm = BABYLON.Vector3.Normalize(targetVec);
-              basketball.physicsImpostor.setLinearVelocity(0,0,0);
-              targetVecNorm.x *=10;
-              targetVecNorm.z *=10;
-              var convertedRot = new BABYLON.Vector3(0,0,0);
-              var pushPos = basketball.position;
-              basketball.applyImpulse(targetVecNorm, pushPos);
-              var velocity = basketball.physicsImpostor.getLinearVelocity();
-              convertedRot.x = velocity.z;
-              convertedRot.z = -velocity.x;
-              basketball.physicsImpostor.setAngularVelocity(convertedRot);
-          }
       });
 
       document.addEventListener('touchstart', function(ev){
@@ -172,6 +143,8 @@ function createScene() {
               console.log(scene.pointerX);
               console.log(ev);
               socket.emit("touch event", "DOWN AND DRAGGING");
+              targetX = ev.pageX;
+              targetY = ev.pageY;
           }
       });
 
@@ -180,41 +153,9 @@ function createScene() {
           if(currentBallState != ballStates.DRAGGING) return;
           console.log("MouseMove");
           //console.log(info.pickInfo);
-          basketball.position.y = 0;
-          var objectPicked = scene.pick(ev.pageX, ev.pageY);
-          var pickedPoint = objectPicked.pickedPoint;
-          if (objectPicked.pickedMesh == ground) {
+          targetX = ev.pageX;
+          targetY = ev.pageY;
 
-              targetVec = pickedPoint;
-              initVec = basketball.position.clone();
-
-              distVec = BABYLON.Vector3.Distance(targetVec, initVec);
-              if(distVec < .5)
-              {
-                  basketball.physicsImpostor.setLinearVelocity(
-                      basketball.physicsImpostor.getLinearVelocity.x/2,
-                      0,
-                      basketball.physicsImpostor.setLinearVelocity.z/2);
-
-                  basketball.physicsImpostor.setAngularVelocity(
-                      basketball.physicsImpostor.getLinearVelocity.x/2,
-                      0,
-                      basketball.physicsImpostor.setLinearVelocity.z/2);
-                  return;
-              }
-              targetVec = targetVec.subtract(initVec);
-              targetVecNorm = BABYLON.Vector3.Normalize(targetVec);
-              basketball.physicsImpostor.setLinearVelocity(0,0,0);
-              targetVecNorm.x *=10;
-              targetVecNorm.z *=10;
-              var convertedRot = new BABYLON.Vector3(0,0,0);
-              var pushPos = basketball.position;
-              basketball.applyImpulse(targetVecNorm, pushPos);
-              var velocity = basketball.physicsImpostor.getLinearVelocity();
-              convertedRot.x = velocity.z;
-              convertedRot.z = -velocity.x;
-              basketball.physicsImpostor.setAngularVelocity(convertedRot);
-          }
       });
 
       document.addEventListener('touchend', function(ev){
@@ -252,42 +193,42 @@ function createScene() {
           }
           else if(currentBallState == ballStates.DRAGGING)
           {
-              // //console.log(info.pickInfo);
-              // basketball.position.y = 0;
-              // var objectPicked = scene.pick(scene.pointerX, scene.pointerY);
-              // var pickedPoint = objectPicked.pickedPoint;
-              // if (objectPicked.pickedMesh == ground) {
-              //
-              //     targetVec = pickedPoint;
-              //     initVec = basketball.position.clone();
-              //
-              //     distVec = BABYLON.Vector3.Distance(targetVec, initVec);
-              //     if(distVec < .5)
-              //     {
-              //         basketball.physicsImpostor.setLinearVelocity(
-              //             basketball.physicsImpostor.getLinearVelocity.x/2,
-              //             0,
-              //             basketball.physicsImpostor.setLinearVelocity.z/2);
-              //
-              //         basketball.physicsImpostor.setAngularVelocity(
-              //             basketball.physicsImpostor.getLinearVelocity.x/2,
-              //             0,
-              //             basketball.physicsImpostor.setLinearVelocity.z/2);
-              //         return;
-              //     }
-              //     targetVec = targetVec.subtract(initVec);
-              //     targetVecNorm = BABYLON.Vector3.Normalize(targetVec);
-              //     basketball.physicsImpostor.setLinearVelocity(0,0,0);
-              //     targetVecNorm.x *=10;
-              //     targetVecNorm.z *=10;
-              //     var convertedRot = new BABYLON.Vector3(0,0,0);
-              //     var pushPos = basketball.position;
-              //     basketball.applyImpulse(targetVecNorm, pushPos);
-              //     var velocity = basketball.physicsImpostor.getLinearVelocity();
-              //     convertedRot.x = velocity.z;
-              //     convertedRot.z = -velocity.x;
-              //     basketball.physicsImpostor.setAngularVelocity(convertedRot);
-              // }
+              //console.log(info.pickInfo);
+              basketball.position.y = 0;
+              var objectPicked = scene.pick(targetX, targetY);
+              var pickedPoint = objectPicked.pickedPoint;
+              if (objectPicked.pickedMesh == ground) {
+
+                  targetVec = pickedPoint;
+                  initVec = basketball.position.clone();
+
+                  distVec = BABYLON.Vector3.Distance(targetVec, initVec);
+                  if(distVec < .5)
+                  {
+                      basketball.physicsImpostor.setLinearVelocity(
+                          basketball.physicsImpostor.getLinearVelocity.x/2,
+                          0,
+                          basketball.physicsImpostor.setLinearVelocity.z/2);
+
+                      basketball.physicsImpostor.setAngularVelocity(
+                          basketball.physicsImpostor.getLinearVelocity.x/2,
+                          0,
+                          basketball.physicsImpostor.setLinearVelocity.z/2);
+                      return;
+                  }
+                  targetVec = targetVec.subtract(initVec);
+                  targetVecNorm = BABYLON.Vector3.Normalize(targetVec);
+                  basketball.physicsImpostor.setLinearVelocity(0,0,0);
+                  targetVecNorm.x *=10;
+                  targetVecNorm.z *=10;
+                  var convertedRot = new BABYLON.Vector3(0,0,0);
+                  var pushPos = basketball.position;
+                  basketball.applyImpulse(targetVecNorm, pushPos);
+                  var velocity = basketball.physicsImpostor.getLinearVelocity();
+                  convertedRot.x = velocity.z;
+                  convertedRot.z = -velocity.x;
+                  basketball.physicsImpostor.setAngularVelocity(convertedRot);
+              }
 
           }
           else if(currentBallState == ballStates.SHOT)
