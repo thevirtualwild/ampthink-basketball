@@ -433,6 +433,7 @@ var createScene = function(){
 
     BABYLON.SceneLoader.ImportMesh("", "./assets/BBall_V2/", "BBall_V2.babylon", scene, function (mesh) {
 
+        console.log("first import");
         var baseMaterial = new BABYLON.StandardMaterial("baseMaterial", scene);
         var overlayMaterial = new BABYLON.StandardMaterial("overlayMaterial", scene);
         var multimat = new BABYLON.MultiMaterial("multi", scene);
@@ -464,8 +465,10 @@ var createScene = function(){
 
             newBasketballs.push(newBasketball);
         }
+        console.log("second import");
         scene.registerBeforeRender(function()
         {
+
             for(var i = 0 ; i < basketballs.length; i++)
             {
                 newBasketballs[i].parent = basketballs[i];
@@ -494,10 +497,12 @@ var createScene = function(){
                     }
                 }
             }
+
             currentEmitTime -= (engine.getDeltaTime() / 1000);
             if(currentEmitTime <= 0)
             {
                 currentEmitTime = initEmitTime;
+
 
                 if(ISMASTER)
                 {
@@ -541,34 +546,44 @@ var createScene = function(){
 
         });
 
-        scene.registerAfterPhysicsStep(function()
+        //console.log("after registerbeforerender");
+
+        for(var i = 0; i < basketballs.length; i++)
         {
-            if(readyToSync && !ISMASTER)
+            basketballs[i].physicsImpostor.registerAfterPhysicsStep(function()
             {
-                if(masterData === undefined) return;
 
-                camera.position = masterData.cameraPosition;
-                currentWaitTime = masterData.waitTime;
-                currentGameTime = masterData.gameTime;
-                currentResultsTime = masterData.resultsTime;
-
-                for(var i = 0; i < basketballs.length; i++)
+                //console.log("PHYSICS");
+                if(readyToSync && !ISMASTER)
                 {
+                    if(masterData === undefined) return;
 
-                    var newPos = BABYLON.Vector3(masterData.basketballs[i].posx,masterData.basketballs[i].posy, masterData.basketballs[i].posz);
-                    var newRot = BABYLON.Vector3(masterData.basketballs[i].rotx,masterData.basketballs[i].roty, masterData.basketballs[i].rotz);
-                    var newVel = BABYLON.Vector3(masterData.basketballs[i].velx,masterData.basketballs[i].vely, masterData.basketballs[i].velz);
-                    var newAng = BABYLON.Vector3(masterData.basketballs[i].angx,masterData.basketballs[i].angy, masterData.basketballs[i].angz);
+                    camera.position = masterData.cameraPosition;
+                    currentWaitTime = masterData.waitTime;
+                    currentGameTime = masterData.gameTime;
+                    currentResultsTime = masterData.resultsTime;
 
-                    basketballs[i].position = newPos;
-                    basketballs[i].rotation = newRot;
-                    basketballs[i].physicsImpostor.setLinearVelocity(newVel);
-                    basketballs[i].physicsImpostor.setAngularVelocity(newAng);
+                    console.log("AFTER TIME");
+                    for(var i = 0; i < basketballs.length; i++)
+                    {
 
+                        var newPos = new BABYLON.Vector3(masterData.basketballs[i].posx,masterData.basketballs[i].posy, masterData.basketballs[i].posz);
+                        var newPos = new BABYLON.Vector3(masterData.basketballs[i].posx,masterData.basketballs[i].posy, masterData.basketballs[i].posz);
+                        var newRot = new BABYLON.Vector3(masterData.basketballs[i].rotx,masterData.basketballs[i].roty, masterData.basketballs[i].rotz);
+                        var newVel = new BABYLON.Vector3(masterData.basketballs[i].velx,masterData.basketballs[i].vely, masterData.basketballs[i].velz);
+                        var newAng = new BABYLON.Vector3(masterData.basketballs[i].angx,masterData.basketballs[i].angy, masterData.basketballs[i].angz);
+
+                        basketballs[i].position = newPos;
+                        basketballs[i].rotation = newRot;
+                        basketballs[i].physicsImpostor.setLinearVelocity(newVel);
+                        basketballs[i].physicsImpostor.setAngularVelocity(newAng);
+
+                    }
+                    readyToSync =false;
                 }
-                readyToSync =false;
-            }
-        })
+            });
+        };
+
     });
 
     BABYLON.SceneLoader.ImportMesh("", "./assets/BBall/", "Bball_Outline.babylon", scene, function (mesh) {
