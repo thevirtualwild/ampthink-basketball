@@ -234,7 +234,9 @@ function onConnection(socket) {
   console.log('a user connected');
 
   function setSocketMaster() {
-    var thiscourt = courtsandmaster[socket.court];
+    var thiscourt = courtsandmaster[socket.court.id];
+    console.log('socket.court:');
+    console.dir(socket.court.id);
 
     if (thiscourt) {
       console.log('court is listed');
@@ -246,8 +248,8 @@ function onConnection(socket) {
 
       }
     }
-    if (masters[socket.court]) {
-      socket.master = masters[socket.court];
+    if (masters[socket.court.id]) {
+      socket.master = masters[socket.court.id];
     } else {
       socket.master = socket.id;
       masters[socket.court] = socket.id;
@@ -468,6 +470,9 @@ function onConnection(socket) {
       room: fullroomdata
     }
 
+
+    socket.court = somecourt;
+    console.log('socket room: '+ socket.room);
     // console.log('room: ');
     // console.dir(allrooms[someroom]);
 
