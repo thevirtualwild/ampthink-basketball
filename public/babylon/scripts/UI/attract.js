@@ -72,6 +72,7 @@ function UIAttractAnimateOut()
 
     TweenMax.to(footerLeft, textFadeTime, {delay: textFadeTime*2, width:.22*canvas.width});
     TweenMax.to(footerCenter, textFadeTime, {delay: textFadeTime*2, width:.22*canvas.width, onComplete: UIWaitingAnimateIn});
+    console.log("ANIMATE OUT");
 }
 
 function UIAttractUpdateCourtName(name)

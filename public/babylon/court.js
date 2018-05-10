@@ -289,12 +289,6 @@ var createScene = function(){
 
       //dynamically set fov based on screen resolution
       camera.fov = 1.8 + (-.676 * canvas.width/canvas.height);
-      //console.log(camera.fov);
-
-
-
-
-
 
       if(currentGameState == gameStates.WAITING)
       {
@@ -1338,6 +1332,7 @@ function haveCourtJoinRoom(courtname, roomnametojoin) {
 
   socket.emit('join room', data);
 
+  console.log("HAVE COURT TO JOIN");
   updateUI();
 }
 
