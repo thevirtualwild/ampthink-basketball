@@ -91,7 +91,7 @@ function createScene() {
       });
 
       console.log("V2 BALL");
-      document.addEventListener('pointerdown', function(ev){
+      document.addEventListener('click', function(ev){
           socket.emit("touch event", "DOWN");
 
           if(currentBallState == ballStates.DRAGGABLE) {
@@ -103,7 +103,7 @@ function createScene() {
       });
 
       document.addEventListener('pointerup', function(ev){
-          console.log("TYPE " +ev.pointerType);
+          //console.log("TYPE " +ev.pointerType);
           if(currentBallState == ballStates.DRAGGING)
           {
               if (basketball.physicsImpostor.getLinearVelocity().z > 5)
