@@ -143,26 +143,26 @@ function createScene() {
           pageScaleFactorY = screen.height/height;
           if(currentBallState == ballStates.DRAGGABLE) {
               currentBallState = ballStates.DRAGGING;
-              targetX = ev.pageX * pageScaleFactorX;
-              targetY = ev.pageY * pageScaleFactorY;
+              targetX = ev.targetTouches[0].screenX;
+              targetY = ev.targetTouches[0].screenY;
           }
       });
 
       document.addEventListener('touchmove', function(ev){
 
-          var body = document.body,
-              html = document.documentElement;
-
-          var height = Math.max( body.scrollHeight, body.offsetHeight,
-              html.clientHeight, html.scrollHeight, html.offsetHeight );
-
-          pageScaleFactorX = 1;
-          pageScaleFactorY = screen.height/height;
+          // var body = document.body,
+          //     html = document.documentElement;
+          //
+          // var height = Math.max( body.scrollHeight, body.offsetHeight,
+          //     html.clientHeight, html.scrollHeight, html.offsetHeight );
+          //
+          // pageScaleFactorX = 1;
+          // pageScaleFactorY = screen.height/height;
           console.log(ev);
            // console.log("SCALE FACTOR: " + pageScaleFactorY);
           if(currentBallState != ballStates.DRAGGING) return;
-          targetX = ev.pageX * pageScaleFactorX;
-          targetY = ev.pageY * pageScaleFactorY;
+          targetX = ev.targetTouches[0].screenX;
+          targetY = ev.targetTouches[0].screenY;
 
       });
 
