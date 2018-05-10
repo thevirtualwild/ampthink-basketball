@@ -32,6 +32,8 @@ var targetY = 0;
 var overlayMaterial;
 // Create Scene
 var scene = createScene();
+var pageScaleFactorX;
+var pageScaleFactorY;
 
 function createScene() {
   var scene = new BABYLON.Scene(engine);
@@ -92,11 +94,18 @@ function createScene() {
       });
 
       document.addEventListener('mousedown', function(ev){
-          socket.emit("touch event", "MouseDOWN");
+          var body = document.body,
+              html = document.documentElement;
+
+          var height = Math.max( body.scrollHeight, body.offsetHeight,
+              html.clientHeight, html.scrollHeight, html.offsetHeight );
+
+          pageScaleFactorX = 1;
+          pageScaleFactorY = screen.height/height;
           if(currentBallState == ballStates.DRAGGABLE) {
               currentBallState = ballStates.DRAGGING;
-              targetX = ev.pageX;
-              targetY = ev.pageY;
+              targetX = ev.pageX * pageScaleFactorX;
+              targetY = ev.pageY * pageScaleFactorY;
           }
       });
 
@@ -114,19 +123,28 @@ function createScene() {
           }
       });
 
-      document.addEventListener('mousemove', function(ev){
+      document.addEventListener('pointermove', function(ev){
 
+          console.log("mousemove");
           if(currentBallState != ballStates.DRAGGING) return;
-          targetX = ev.pageX;
-          targetY = ev.pageY;
+          targetX = ev.pageX * pageScaleFactorX;
+          targetY = ev.pageY * pageScaleFactorY;
 
       });
 
       document.addEventListener('touchstart', function(ev){
+          var body = document.body,
+              html = document.documentElement;
+
+          var height = Math.max( body.scrollHeight, body.offsetHeight,
+              html.clientHeight, html.scrollHeight, html.offsetHeight );
+
+          pageScaleFactorX = 1;
+          pageScaleFactorY = screen.height/height;
           if(currentBallState == ballStates.DRAGGABLE) {
               currentBallState = ballStates.DRAGGING;
-              targetX = ev.pageX;
-              targetY = ev.pageY;
+              targetX = ev.pageX * pageScaleFactorX;
+              targetY = ev.pageY * pageScaleFactorY;
           }
       });
 
@@ -172,6 +190,7 @@ function createScene() {
               //console.log(info.pickInfo);
               basketball.position.y = 0;
               var objectPicked = scene.pick(targetX, targetY);
+              console.log(targetX, targetY);
               var pickedPoint = objectPicked.pickedPoint;
               if (objectPicked.pickedMesh == ground) {
 
