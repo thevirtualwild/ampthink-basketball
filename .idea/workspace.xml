@@ -82,8 +82,8 @@
       <file leaf-file-name="player.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/player.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="503">
-              <caret line="164" column="48" lean-forward="true" selection-start-line="164" selection-start-column="48" selection-end-line="164" selection-end-column="48" />
+            <state relative-caret-position="401">
+              <caret line="158" column="26" lean-forward="false" selection-start-line="158" selection-start-column="26" selection-end-line="158" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -403,7 +403,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="502311000" />
+    <option name="totallyTimeSpent" value="502395000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -792,8 +792,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/player.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="503">
-          <caret line="164" column="48" lean-forward="true" selection-start-line="164" selection-start-column="48" selection-end-line="164" selection-end-column="48" />
+        <state relative-caret-position="401">
+          <caret line="158" column="26" lean-forward="false" selection-start-line="158" selection-start-column="26" selection-end-line="158" selection-end-column="26" />
           <folding />
         </state>
       </provider>
