@@ -31,6 +31,7 @@ var currentBallState = ballStates.WAITING;
 var overlayMaterial;
 // Create Scene
 var scene = createScene();
+
 function createScene() {
   var scene = new BABYLON.Scene(engine);
   engine.enableOfflineSupport = false;
@@ -89,8 +90,45 @@ function createScene() {
           ignoreParent: true
       });
 
+      document.addEventListener('pointerdown', function(ev){
+          if(currentBallState == ballStates.DRAGGABLE) {
+              currentBallState = ballStates.DRAGGING;
+              console.log(scene.pointerX);
+              console.log(ev);
+          }
+      });
+
+      document.addEventListener('pointerup', function(ev){
+          if(currentBallState == ballStates.DRAGGING)
+          {
+              if (basketball.physicsImpostor.getLinearVelocity().z > 5)
+              {
+                  takeShot();
+              }
+              else
+              {
+                  currentBallState = ballStates.DRAGGABLE;
+              }
+              socket.emit("touch event", "UP AND DRAGGING");
+          }
+          socket.emit("touch event", "UP");
+      });
+
       scene.registerBeforeRender(function()
       {
+          /*
+          document.addEventListener('pointerdown', function(ev){
+          if(currentBallState == ballStates.DRAGGABLE)
+          {
+              console.log(ev);
+              console.log("Touch Data: " + scene.pointerX + ", " + scene.pointerY);
+              currentBallState = ballStates.DRAGGING;
+              socket.emit("touch event", "DOWN");
+          }
+          */
+
+
+            /*
           scene.onPointerDown = function (evt, pickResult)
           {
               if(currentBallState == ballStates.DRAGGABLE)
@@ -100,7 +138,8 @@ function createScene() {
                   socket.emit("touch event", "DOWN");
               }
           };
-
+            */
+            /*
           scene.onPointerUp = function (evt, pickResult)
           {
               if(currentBallState == ballStates.DRAGGING)
@@ -117,7 +156,7 @@ function createScene() {
               }
               socket.emit("touch event", "UP");
           };
-
+*/
           if(currentBallState == ballStates.DRAGGABLE)
           {
               var vel = basketball.physicsImpostor.getLinearVelocity();
