@@ -254,7 +254,7 @@ function onConnection(socket) {
     } else {
       console.log('add court to list and set master to this socket');
       courtsandmaster[courtid] = {
-        id: court.id
+        id: court.id,
         master: socket.id
       };
       socket.master = socket.id;
