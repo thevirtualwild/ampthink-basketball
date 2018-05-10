@@ -123,7 +123,7 @@ function createScene() {
           }
       });
 
-      document.addEventListener('pointermove', function(ev){
+      document.addEventListener('mousemove', function(ev){
 
           console.log("mousemove");
           if(currentBallState != ballStates.DRAGGING) return;
@@ -151,8 +151,8 @@ function createScene() {
       document.addEventListener('touchmove', function(ev){
 
           if(currentBallState != ballStates.DRAGGING) return;
-          targetX = ev.pageX;
-          targetY = ev.pageY;
+          targetX = ev.pageX * pageScaleFactorX;
+          targetY = ev.pageY * pageScaleFactorY;
 
       });
 
