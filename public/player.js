@@ -158,7 +158,8 @@ function createScene() {
 
           pageScaleFactorX = 1;
           pageScaleFactorY = screen.height/height;
-            console.log("SCALE FACTOR: " + pageScaleFactorY);
+          consoel.log(ev);
+           // console.log("SCALE FACTOR: " + pageScaleFactorY);
           if(currentBallState != ballStates.DRAGGING) return;
           targetX = ev.pageX * pageScaleFactorX;
           targetY = ev.pageY * pageScaleFactorY;
