@@ -1479,9 +1479,14 @@ socket.on('device needs court', function() {
   console.log('Device doesnt know court');
 });
 socket.on('sync with master', function(syncData){
-    masterData = syncData;
-    readyToSync = true;
-    console.log(masterData);
+
+    if(courtName == syncData.court)
+    {
+        masterData = syncData.syncdata;
+        readyToSync = true;
+        console.log(masterData);
+    }
+
 });
 
 
