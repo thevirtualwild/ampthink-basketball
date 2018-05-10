@@ -102,6 +102,7 @@ function createScene() {
       });
 
       document.addEventListener('pointerup', function(ev){
+          console.log("TYPE " +ev.pointerType);
           if(currentBallState == ballStates.DRAGGING)
           {
               if (basketball.physicsImpostor.getLinearVelocity().z > 5)
@@ -119,47 +120,6 @@ function createScene() {
 
       scene.registerBeforeRender(function()
       {
-          /*
-          document.addEventListener('pointerdown', function(ev){
-          if(currentBallState == ballStates.DRAGGABLE)
-          {
-              console.log(ev);
-              console.log("Touch Data: " + scene.pointerX + ", " + scene.pointerY);
-              currentBallState = ballStates.DRAGGING;
-              socket.emit("touch event", "DOWN");
-          }
-          */
-
-
-            /*
-          scene.onPointerDown = function (evt, pickResult)
-          {
-              if(currentBallState == ballStates.DRAGGABLE)
-              {
-                  console.log("Touch Data: " + scene.pointerX + ", " + scene.pointerY);
-                  currentBallState = ballStates.DRAGGING;
-                  socket.emit("touch event", "DOWN");
-              }
-          };
-            */
-            /*
-          scene.onPointerUp = function (evt, pickResult)
-          {
-              if(currentBallState == ballStates.DRAGGING)
-              {
-                  if (basketball.physicsImpostor.getLinearVelocity().z > 5)
-                  {
-                      takeShot();
-                  }
-                  else
-                  {
-                      currentBallState = ballStates.DRAGGABLE;
-                  }
-                  socket.emit("touch event", "UP AND DRAGGING");
-              }
-              socket.emit("touch event", "UP");
-          };
-*/
           if(currentBallState == ballStates.DRAGGABLE)
           {
               var vel = basketball.physicsImpostor.getLinearVelocity();
@@ -375,7 +335,6 @@ function joinCourt(someCourt) {
 function cleanInput(input) {
   return $('<div/>').text(input).html();
 }
-
 
 socket.on('you joined court', function() {
     UIInputAnimateOut();
