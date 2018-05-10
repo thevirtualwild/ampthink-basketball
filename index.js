@@ -214,10 +214,15 @@ var currentHighScore = 0;
 
 var courts = {};
 
+var masters = {};
+
+var courtsandmaster {};
 
 
 // Web Socket (Socket.io)
 function onConnection(socket) {
+
+  console.dir(socket.id);
   var currentHighScore = {
     player: 'none',
     score: 0,
@@ -227,6 +232,28 @@ function onConnection(socket) {
   var addedUser = false;
   var gamesrunning;
   console.log('a user connected');
+
+  function setSocketMaster() {
+    var thiscourt = courtsandmaster[socket.court];
+
+    if (thiscourt) {
+      console.log('court is listed');
+
+      if (thiscourt.master) {
+        console.log('court has master');
+        socket.master = thiscourt['master'];
+      } else {
+
+      }
+    }
+    if (masters[socket.court]) {
+      socket.master = masters[socket.court];
+    } else {
+      socket.master = socket.id;
+      masters[socket.court] = socket.id;
+      socket.emit('set master');
+    }
+  }
 
   function findARoom(somecourt, somedevice) {
     zoneid = somedevice.zone;
@@ -444,6 +471,11 @@ function onConnection(socket) {
     // console.log('room: ');
     // console.dir(allrooms[someroom]);
 
+    if (!socket.hasmaster) {
+      socket.hasmaster = true;
+      setSocketMaster();
+    }
+
     if (somecourt.room) {
       // console.log('assigning court to room - ');
       // console.dir(somecourt.room);
@@ -492,6 +524,7 @@ function onConnection(socket) {
   //court stuff I think
   socket.on('get court', function(deviceIP) {
     // find out if the device knows what court it should be a part of
+
 
     // first check to see if device is in list of devices
     if (deviceIP in alldevices) {
@@ -669,16 +702,23 @@ function onConnection(socket) {
     socket.broadcast.to(socket.roomname).emit('reset game');
   });
 
-
   socket.on('sync screens', function(data) {
     console.log('Sync Data');
     console.dir(data);
+    if (masters[socket.court] == socket.id) {
+      console.log('am master');
+      socket.broadcast.to(socket.roomname).emit('sync with master', data);
+    } else {
+      console.log('someone else is master');
+    }
   });
-
 
   //server stuff
   socket.on('disconnect', function() {
     console.log('user from: ' + socket.roomname + ' disconnected');
+    if (masters[socket.court] == socket.id) {
+      findNewMaster();
+    }
   })
 
   socket.on('touch event', function(data) {
