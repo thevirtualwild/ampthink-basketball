@@ -1481,26 +1481,26 @@ socket.on('device needs court', function() {
 socket.on('sync with master', function(syncData){
 
     //console.log("COURT NAME: " + courtName);
-    console.log(syncData);
+    //console.log(syncData);
     //console.log("syncDataCourtName: " + syncData.courtname);
     if(courtName == syncData.courtname)
     {
         masterData = syncData.syncdata;
         readyToSync = true;
-        console.log(masterData);
+        //console.log(masterData);
     }
 
 });
 
 
 socket.on('join this room', function(data) {
-  console.log('Court and Room Data: ');
-  console.dir(data);
+  //console.log('Court and Room Data: ');
+  //console.dir(data);
 
   var courtname = data.court.name;
   var roomname = data.room.name;
 
-  console.log('told to join ' + courtname + ' in ' + roomname);
+  //console.log('told to join ' + courtname + ' in ' + roomname);
 
   haveCourtJoinRoom(courtname,roomname);
 });
