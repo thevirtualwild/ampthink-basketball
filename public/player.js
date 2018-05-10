@@ -94,18 +94,10 @@ function createScene() {
       });
 
       document.addEventListener('mousedown', function(ev){
-          var body = document.body,
-              html = document.documentElement;
-
-          var height = Math.max( body.scrollHeight, body.offsetHeight,
-              html.clientHeight, html.scrollHeight, html.offsetHeight );
-
-          pageScaleFactorX = 1;
-          pageScaleFactorY = screen.height/height;
           if(currentBallState == ballStates.DRAGGABLE) {
               currentBallState = ballStates.DRAGGING;
-              targetX = ev.pageX * pageScaleFactorX;
-              targetY = ev.pageY * pageScaleFactorY;
+              targetX = ev.pageX;
+              targetY = ev.pageY;
           }
       });
 
@@ -127,20 +119,12 @@ function createScene() {
 
           //console.log("mousemove");
           if(currentBallState != ballStates.DRAGGING) return;
-          targetX = ev.pageX * pageScaleFactorX;
-          targetY = ev.pageY * pageScaleFactorY;
+          targetX = ev.pageX;
+          targetY = ev.pageY;
 
       });
 
       document.addEventListener('touchstart', function(ev){
-          var body = document.body,
-              html = document.documentElement;
-
-          var height = Math.max( body.scrollHeight, body.offsetHeight,
-              html.clientHeight, html.scrollHeight, html.offsetHeight );
-
-          pageScaleFactorX = 1;
-          pageScaleFactorY = screen.height/height;
           if(currentBallState == ballStates.DRAGGABLE) {
               currentBallState = ballStates.DRAGGING;
               targetX = ev.targetTouches[0].clientX;
@@ -150,16 +134,6 @@ function createScene() {
 
       document.addEventListener('touchmove', function(ev){
 
-          // var body = document.body,
-          //     html = document.documentElement;
-          //
-          // var height = Math.max( body.scrollHeight, body.offsetHeight,
-          //     html.clientHeight, html.scrollHeight, html.offsetHeight );
-          //
-          // pageScaleFactorX = 1;
-          // pageScaleFactorY = screen.height/height;
-          console.log(ev);
-           // console.log("SCALE FACTOR: " + pageScaleFactorY);
           if(currentBallState != ballStates.DRAGGING) return;
           targetX = ev.targetTouches[0].clientX;
           targetY = ev.targetTouches[0].clientY;
@@ -200,7 +174,6 @@ function createScene() {
               //console.log(info.pickInfo);
               basketball.position.y = 0;
               var objectPicked = scene.pick(targetX, targetY);
-              console.log(targetX, targetY);
               var pickedPoint = objectPicked.pickedPoint;
               if (objectPicked.pickedMesh == ground) {
 

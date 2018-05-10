@@ -58,6 +58,7 @@ function UICustomizeAnimateIn()
 function UICustomizeAnimateOut()
 {
     TweenMax.to(customizeForm, customizeFadeTime*1.5, {opacity:0, onComplete:UIGameplayAnimateIn});
+    TweenMax.to(refreshLogo, customizeFadeTime*1.5, {opacity:0});
     TweenMax.to(customizeForm, customizeFadeTime*1, {top:0, ease:Back.easeIn});
 }
 

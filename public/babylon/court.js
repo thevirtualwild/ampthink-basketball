@@ -24,6 +24,7 @@ var basketballStates = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 var pulseAmbientColor = false;
 
 var ISMASTER = false;
+var readyToSync = false;
 var masterData;
 //Game Variables?
 var totalTime = 0;
@@ -33,7 +34,7 @@ var cameraSettings = [];
 
 var initWaitTime = 7;
 var currentWaitTime = 7;
-var initGameTime = 300000;
+var initGameTime = 30;
 var currentGameTime = 30;
 var initResultsTime = 10;
 var currentResultsTime = 10;
@@ -104,7 +105,7 @@ var createScene = function(){
 
     var gravityVector = new BABYLON.Vector3(0,-15.81, 0);
     scene.enablePhysics(gravityVector, physicsPlugin);
-    scene.getPhysicsEngine().setTimeStep(1/(30 * .6));
+    scene.getPhysicsEngine().setTimeStep(1/(40 * .6));
     //scene.getPhysicsEngine().getPhysicsPlugin().world.allowSleep = true;
     var camera = new BABYLON.FreeCamera("camera1", initCameraPos, scene);
 
@@ -528,33 +529,33 @@ var createScene = function(){
                     socket.emit("sync screens ", syncData);
                     console.log(syncData);
                 }
-                else
-                {
-                    //console.log(masterData);
-                    if(masterData === undefined) return;
-
-                    camera.position = masterData.cameraPosition;
-                    currentWaitTime = masterData.waitTime;
-                    currentGameTime = masterData.gameTime;
-                    currentResultsTime = masterData.resultsTime;
-
-                    for(var i = 0; i < basketballs.length; i++)
-                    {
-
-                        var newPos = BABYLON.Vector3(masterData.basketballs[i].posx,masterData.basketballs[i].posy, masterData.basketballs[i].posz);
-                        var newRot = BABYLON.Vector3(masterData.basketballs[i].rotx,masterData.basketballs[i].roty, masterData.basketballs[i].rotz);
-                        var newVel = BABYLON.Vector3(masterData.basketballs[i].velx,masterData.basketballs[i].vely, masterData.basketballs[i].velz);
-                        var newAng = BABYLON.Vector3(masterData.basketballs[i].angx,masterData.basketballs[i].angy, masterData.basketballs[i].angz);
-
-                        basketballs[i].position = newPos;
-                        basketballs[i].rotation = newRot;
-                        basketballs[i].physicsImpostor.setLinearVelocity(newVel);
-                        basketballs[i].physicsImpostor.setAngularVelocity(newAng);
-
-                    }
-                }
             }
 
+            if(readyToSync && !ISMASTER)
+            {
+                if(masterData === undefined) return;
+
+                camera.position = masterData.cameraPosition;
+                currentWaitTime = masterData.waitTime;
+                currentGameTime = masterData.gameTime;
+                currentResultsTime = masterData.resultsTime;
+
+                for(var i = 0; i < basketballs.length; i++)
+                {
+
+                    var newPos = BABYLON.Vector3(masterData.basketballs[i].posx,masterData.basketballs[i].posy, masterData.basketballs[i].posz);
+                    var newRot = BABYLON.Vector3(masterData.basketballs[i].rotx,masterData.basketballs[i].roty, masterData.basketballs[i].rotz);
+                    var newVel = BABYLON.Vector3(masterData.basketballs[i].velx,masterData.basketballs[i].vely, masterData.basketballs[i].velz);
+                    var newAng = BABYLON.Vector3(masterData.basketballs[i].angx,masterData.basketballs[i].angy, masterData.basketballs[i].angz);
+
+                    basketballs[i].position = newPos;
+                    basketballs[i].rotation = newRot;
+                    basketballs[i].physicsImpostor.setLinearVelocity(newVel);
+                    basketballs[i].physicsImpostor.setAngularVelocity(newAng);
+
+                }
+                readyToSync =false;
+            }
         });
     });
 
@@ -562,14 +563,8 @@ var createScene = function(){
 
         var baseMaterial = new BABYLON.StandardMaterial("baseMaterial", scene);
 
-        //baseMaterial.emissiveTexture = new BABYLON.Texture("./assets/BBall/BBall_Outline.png", scene);
-        //baseMaterial.diffuseTexture = new BABYLON.Texture("./assets/BBall_V2/BBall_V2_Albedo.png", scene);
-        //baseMaterial.diffuseTexture.hasAlpha = true;
-
-        //baseMaterial.ambientColor = new BABYLON.Color3(1,1,1);
         baseMaterial.ambientColor = new BABYLON.Color3(1, 0, 0);
         baseMaterial.alpha = 0;
-        //var newBasketballOutline = mesh[0];
         scene.meshes.pop(mesh[0]);
 
         for (var i= 0; i< basketballs.length; i++)
@@ -604,11 +599,8 @@ var createScene = function(){
         newPos.y = mesh.position.y + -35.75;
         newPos.z = mesh.position.z - 60;
         mesh.position = newPos;
-        console.log(mesh.position);
         mesh.material = myMaterial;
         mesh.freezeWorldMatrix();
-        //mesh.material.emissiveColor = BABYLON.Color3.Red();
-        //console.log(mesh.name);
 
         var h1 = new BABYLON.HighlightLayer("hl1", scene);
     });
@@ -669,15 +661,12 @@ var createScene = function(){
         var mesh = mesh[0];
 
         myMaterial.emissiveTexture = new BABYLON.Texture("./assets/Colors.png", scene);
-        //myMaterial.diffuseTexture = new BABYLON.Texture("./assets/Layout/Layout_Albedo.png", scene);
 
         var newPos = new BABYLON.Vector3(0, 0, 0);
         newPos.x = mesh.position.x + 0;
         newPos.y = mesh.position.y + -35.75;
         newPos.z = mesh.position.z - 60;
         mesh.position = newPos;
-        //mesh.scaling = new BABYLON.Vector3(.8, 1, 1.1);
-        //console.log(meshes[i].name);
         mesh.material = myMaterial;
         mesh.freezeWorldMatrix();
 
@@ -704,7 +693,6 @@ var createScene = function(){
                 newPos.y = meshes[i].position.y + -36;
                 newPos.z = meshes[i].position.z - 60;
                 meshes[i].position = newPos
-                console.log(meshes[i].name);
                 meshes[i].material = myMaterial;
                 meshes[i].freezeWorldMatrix();
             }
@@ -876,14 +864,16 @@ var createScene = function(){
             );
 
             var currentMass;
-
+            var currentRestitution;
             if(useCannon)
             {
                 currentMass = .1;
+                currentRestitution = 20 - j*6;
             }
             else
             {
                 currentMass = 15000 - j*4000;
+                //currentMass = 55000 - j*4000;
             }
 
             if(j == 0)//top row
@@ -894,7 +884,7 @@ var createScene = function(){
             //scene.meshes.pop(sphere);
             sphere1.physicsImpostor = new BABYLON.PhysicsImpostor(sphere1, BABYLON.PhysicsImpostor.SphereImpostor, {
                 mass: currentMass,
-                restitution: 10
+                restitution: currentRestitution
 
             })
 
@@ -1141,7 +1131,10 @@ net.setIndices(indices, indices.length);
 
     function createJoint(imp1, imp2, distance) {
         var joint = new BABYLON.DistanceJoint({
-            maxDistance: distance
+            maxDistance: distance,
+            nativeParams:{
+                collision:false
+            }
         })
         imp1.addJoint(imp2, joint);
     }
@@ -1418,6 +1411,7 @@ socket.on('device needs court', function() {
 });
 socket.on('sync with master', function(syncData){
     masterData = syncData;
+    readyToSync = true;
     console.log(masterData);
 });
 

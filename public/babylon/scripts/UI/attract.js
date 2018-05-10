@@ -58,8 +58,6 @@ function UIAttractAnimateIn()
     TweenMax.to(attractRightStep1, textFadeTime, {delay: 3*textFadeTime, alpha:1});
     TweenMax.to(attractLeftStep2, textFadeTime, {delay: 3*textFadeTime, alpha:1});
     TweenMax.to(attractRightStep2, textFadeTime, {delay: 3*textFadeTime, alpha:1});
-
-    console.log("ANIMATED BACK IN");
 }
 
 function UIAttractAnimateOut()

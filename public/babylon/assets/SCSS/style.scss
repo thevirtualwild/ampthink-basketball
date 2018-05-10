@@ -173,8 +173,10 @@
           text-align: center;
           font-weight: bold;
           position:absolute;
+          width: 96%;
+          max-width: 100%;
           top:-20%;
-          left: 35%;
+          left: 0;
           font-family:"XScale";
         }
         &#streak{
@@ -187,7 +189,9 @@
           margin-top: 18px;
           position:absolute;
           top:40%;
-          left:20%;
+          left:0;
+          width: 90%;
+          max-width: 100%;
         }
       }
     }
@@ -399,8 +403,8 @@ footer{
         left: 0;
         &.textScoreLabel{
           font-size: 50px;
-          bottom: 40px;
-          line-height: 60px;
+          bottom: 20px;
+          line-height: 20px;
           font-weight: bold;
           color:darkblue;
           background-color: white;
