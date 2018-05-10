@@ -234,20 +234,32 @@ function onConnection(socket) {
   console.log('a user connected');
 
   function setSocketMaster() {
-    var thiscourt = courtsandmaster[socket.court.id];
-    console.log('socket.court:');
-    console.dir(socket.court.id);
+    var courtid = socket.court.id;
+    console.log('socket.court: ' + courtid);
+    var thiscourt = courtsandmaster[courtid];
+    console.log('this court - ' + thiscourt);
 
     if (thiscourt) {
       console.log('court is listed');
 
       if (thiscourt.master) {
         console.log('court has master');
-        socket.master = thiscourt['master'];
+        socket.master = thiscourt.master;
       } else {
-
+        thiscourt.master = socket.id;
+        socket.master = socket.id;
+        courtsandmaster[courtid] = thiscourt;
+        socket.emit('set master');
       }
+    } else {
+      console.log('add court to list and set master to this socket');
+      courtsandmaster[courtid] = {
+        master: socket.id
+      };
+      socket.master = socket.id;
+      socket.emit('set master');
     }
+
     if (masters[socket.court.id]) {
       socket.master = masters[socket.court.id];
     } else {
