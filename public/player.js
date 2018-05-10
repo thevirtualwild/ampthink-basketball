@@ -95,7 +95,7 @@ function createScene() {
 
       document.addEventListener('mousedown', function(ev){
           socket.emit("touch event", "MouseDOWN");
-          console.log(ev.clientX);
+          console.log(ev);
           console.log(scene.pointerX);
           console.log("CLICK");
           if(currentBallState == ballStates.DRAGGABLE) {
@@ -128,7 +128,7 @@ function createScene() {
           console.log("MouseMove");
           //console.log(info.pickInfo);
           basketball.position.y = 0;
-          var objectPicked = scene.pick(ev.clientX, ev.clientY);
+          var objectPicked = scene.pick(ev.pageX, ev.pageY);
           var pickedPoint = objectPicked.pickedPoint;
           if (objectPicked.pickedMesh == ground) {
 
