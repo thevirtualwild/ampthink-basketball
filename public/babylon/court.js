@@ -1213,7 +1213,8 @@ engine.runRenderLoop(function() {
 
     scene.render();
     var fpsLabel = document.getElementById("fpsLabel");
-    fpsLabel.innerHTML = engine.getFps().toFixed()+ " fps";
+    //fpsLabel.innerHTML = engine.getFps().toFixed()+ " fps";
+    fpsLabel.innerHTML = ISMASTER.toString();
 
     //scene.getPhysicsEngine().setTimeStep(1/(engine.getFps() * .75));
 });
@@ -1399,6 +1400,7 @@ function gameOver() {
 
 socket.on('set master', function(){
     ISMASTER = true;
+    console.log(ISMASTER);
 });
 
 socket.on('device knows court', function(data) {
