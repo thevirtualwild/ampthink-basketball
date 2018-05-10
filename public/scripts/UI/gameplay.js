@@ -17,17 +17,17 @@ var headerInstructions = document.getElementById("headerInstructions");
 var background = document.getElementById("background");
 function UIGameplayAnimateIn()
 {
-    inputPage.style.display = "none";
-    customizePage.style.display = "none";
-    gameoverPage.style.display = "none";
-    pages.style.display = "none";
-
+    //inputPage.style.display = "none";
+    //customizePage.style.display = "none";
+    //gameoverPage.style.display = "none";
+    //pages.style.display = "none";
+/*
     pages.style.pointerEvents = "none";
     background.style.pointerEvents = "none";
     inputPage.style.pointerEvents = "none";
     customizePage.style.pointerEvents = "none";
     gameoverPage.style.pointerEvents = "none";
-
+*/
     /*
     gameplayForm.style.opacity = 0;
     gameplayForm.style.top = "-100px";
