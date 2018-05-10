@@ -42,8 +42,8 @@
       <file leaf-file-name="court.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/babylon/court.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="177">
-              <caret line="287" column="0" lean-forward="true" selection-start-line="287" selection-start-column="0" selection-end-line="287" selection-end-column="0" />
+            <state relative-caret-position="282">
+              <caret line="539" column="13" lean-forward="true" selection-start-line="539" selection-start-column="13" selection-end-line="539" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -158,8 +158,8 @@
       <find>registerafterphysicsstep</find>
       <find>restitution</find>
       <find>sync with master</find>
-      <find>sync screens</find>
       <find>readytosync</find>
+      <find>sync screens</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -379,7 +379,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="510971000" />
+    <option name="totallyTimeSpent" value="511690000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -763,8 +763,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/babylon/court.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="287" column="0" lean-forward="true" selection-start-line="287" selection-start-column="0" selection-end-line="287" selection-end-column="0" />
+        <state relative-caret-position="282">
+          <caret line="539" column="13" lean-forward="true" selection-start-line="539" selection-start-column="13" selection-end-line="539" selection-end-column="13" />
           <folding />
         </state>
       </provider>

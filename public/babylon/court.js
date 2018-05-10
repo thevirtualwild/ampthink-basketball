@@ -526,7 +526,7 @@ var createScene = function(){
                         syncData['basketballs'].push(newbasketballvar);
                     }
 
-                    socket.emit("sync screens ", syncData);
+                    socket.emit("sync screens", syncData);
                     console.log(syncData);
                 }
             }
