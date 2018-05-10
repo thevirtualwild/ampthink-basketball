@@ -91,10 +91,13 @@ function createScene() {
       });
 
       document.addEventListener('pointerdown', function(ev){
+          socket.emit("touch event", "DOWN");
+
           if(currentBallState == ballStates.DRAGGABLE) {
               currentBallState = ballStates.DRAGGING;
               console.log(scene.pointerX);
               console.log(ev);
+              socket.emit("touch event", "DOWN AND DRAGGING");
           }
       });
 
