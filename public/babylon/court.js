@@ -1213,8 +1213,13 @@ engine.runRenderLoop(function() {
 
     scene.render();
     var fpsLabel = document.getElementById("fpsLabel");
-    //fpsLabel.innerHTML = engine.getFps().toFixed()+ " fps";
-    fpsLabel.innerHTML = ISMASTER.toString();
+    fpsLabel.innerHTML = engine.getFps().toFixed()+ " fps";
+    //fpsLabel.innerHTML = ISMASTER.toString();
+    if(ISMASTER)
+    {
+        fpsLabel.style.background = "red";
+        fpsLabel.style.height = "100%";
+    }
 
     //scene.getPhysicsEngine().setTimeStep(1/(engine.getFps() * .75));
 });
