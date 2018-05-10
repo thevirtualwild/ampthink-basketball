@@ -23,6 +23,8 @@ var basketballStates = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 var pulseAmbientColor = false;
 
+
+var hasCourt = false;
 var ISMASTER = false;
 var readyToSync = false;
 var masterData;
@@ -526,8 +528,12 @@ var createScene = function(){
                         syncData['basketballs'].push(newbasketballvar);
                     }
 
-                    socket.emit("sync screens", syncData);
-                    console.log(syncData);
+                    if(hasCourt)
+                    {
+                        socket.emit("sync screens", syncData);
+                        console.log(syncData);
+                    }
+
                 }
             }
 
@@ -1442,6 +1448,7 @@ socket.on('join this room', function(data) {
 });
 socket.on('court joined room', function(data) {
   console.log('Congrats ' + courtName +'(' + data.courtname + ')' + ', you joined room: ' + data.roomname);
+  hasCourt = true;
 })
 
 socket.on('player joined court', function(userdata) {
