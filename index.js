@@ -216,7 +216,7 @@ var courts = {};
 
 var masters = {};
 
-var courtsandmaster {};
+var courtsandmaster = {};
 
 
 // Web Socket (Socket.io)
