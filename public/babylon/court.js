@@ -33,7 +33,7 @@ var cameraSettings = [];
 
 var initWaitTime = 7;
 var currentWaitTime = 7;
-var initGameTime = 10000;
+var initGameTime = 30;
 var currentGameTime = 30;
 var initResultsTime = 10;
 var currentResultsTime = 10;

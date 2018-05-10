@@ -91,25 +91,16 @@ function createScene() {
           ignoreParent: true
       });
 
-      console.log("V2 BALL");
-
-
       document.addEventListener('mousedown', function(ev){
           socket.emit("touch event", "MouseDOWN");
-          console.log(ev);
-          console.log(scene.pointerX);
-          console.log("CLICK");
           if(currentBallState == ballStates.DRAGGABLE) {
               currentBallState = ballStates.DRAGGING;
-              console.log(ev);
-              socket.emit("touch event", "DOWN AND DRAGGING");
               targetX = ev.pageX;
               targetY = ev.pageY;
           }
       });
 
       document.addEventListener('mouseup', function(ev){
-          console.log("MouseUP");
           if(currentBallState == ballStates.DRAGGING)
           {
               if (basketball.physicsImpostor.getLinearVelocity().z > 5)
@@ -120,29 +111,20 @@ function createScene() {
               {
                   currentBallState = ballStates.DRAGGABLE;
               }
-              socket.emit("touch event", "UP AND DRAGGING");
           }
-          socket.emit("touch event", "UP");
       });
 
       document.addEventListener('mousemove', function(ev){
 
           if(currentBallState != ballStates.DRAGGING) return;
-          console.log("MouseMove");
-          //console.log(info.pickInfo);
           targetX = ev.pageX;
           targetY = ev.pageY;
 
       });
 
       document.addEventListener('touchstart', function(ev){
-          socket.emit("touch event", "DOWN");
-          console.log("CLICK");
           if(currentBallState == ballStates.DRAGGABLE) {
               currentBallState = ballStates.DRAGGING;
-              console.log(scene.pointerX);
-              console.log(ev);
-              socket.emit("touch event", "DOWN AND DRAGGING");
               targetX = ev.pageX;
               targetY = ev.pageY;
           }
@@ -151,16 +133,12 @@ function createScene() {
       document.addEventListener('touchmove', function(ev){
 
           if(currentBallState != ballStates.DRAGGING) return;
-          console.log("MouseMove");
-          //console.log(info.pickInfo);
           targetX = ev.pageX;
           targetY = ev.pageY;
 
       });
 
       document.addEventListener('touchend', function(ev){
-          //console.log("TYPE " +ev.pointerType);
-          console.log("touchup");
           if(currentBallState == ballStates.DRAGGING)
           {
               if (basketball.physicsImpostor.getLinearVelocity().z > 5)
@@ -171,9 +149,7 @@ function createScene() {
               {
                   currentBallState = ballStates.DRAGGABLE;
               }
-              socket.emit("touch event", "UP AND DRAGGING");
           }
-          socket.emit("touch event", "UP");
       });
 
       scene.registerBeforeRender(function()
