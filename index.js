@@ -240,10 +240,10 @@ function onConnection(socket) {
     console.log('this court - ' + thiscourt);
 
     if (thiscourt) {
-      console.log('court is listed');
+      console.log('court is listed - ' + thiscourt.id);
 
       if (thiscourt.master) {
-        console.log('court has master');
+        console.log('court has master: ' - thiscourt.master);
         socket.master = thiscourt.master;
       } else {
         thiscourt.master = socket.id;
@@ -254,19 +254,20 @@ function onConnection(socket) {
     } else {
       console.log('add court to list and set master to this socket');
       courtsandmaster[courtid] = {
+        id: court.id,
         master: socket.id
       };
       socket.master = socket.id;
       socket.emit('set master');
     }
 
-    if (masters[socket.court.id]) {
-      socket.master = masters[socket.court.id];
-    } else {
-      socket.master = socket.id;
-      masters[socket.court] = socket.id;
-      socket.emit('set master');
-    }
+    // if (masters[socket.court.id]) {
+    //   socket.master = masters[socket.court.id];
+    // } else {
+    //   socket.master = socket.id;
+    //   masters[socket.court] = socket.id;
+    //   socket.emit('set master');
+    // }
   }
 
   function findARoom(somecourt, somedevice) {
