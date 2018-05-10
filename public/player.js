@@ -150,6 +150,15 @@ function createScene() {
 
       document.addEventListener('touchmove', function(ev){
 
+          var body = document.body,
+              html = document.documentElement;
+
+          var height = Math.max( body.scrollHeight, body.offsetHeight,
+              html.clientHeight, html.scrollHeight, html.offsetHeight );
+
+          pageScaleFactorX = 1;
+          pageScaleFactorY = screen.height/height;
+
           if(currentBallState != ballStates.DRAGGING) return;
           targetX = ev.pageX * pageScaleFactorX;
           targetY = ev.pageY * pageScaleFactorY;
