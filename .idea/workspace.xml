@@ -42,8 +42,8 @@
       <file leaf-file-name="court.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/babylon/court.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="196">
-              <caret line="555" column="18" lean-forward="false" selection-start-line="555" selection-start-column="18" selection-end-line="555" selection-end-column="18" />
+            <state relative-caret-position="271">
+              <caret line="583" column="0" lean-forward="true" selection-start-line="583" selection-start-column="0" selection-end-line="583" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -130,36 +130,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>usecannon</find>
-      <find>settimestep</find>
-      <find>console.log</find>
-      <find>uiattractanimatein</find>
-      <find>updateui</find>
-      <find>changegamestate</find>
-      <find>gameplaypage</find>
-      <find>n</find>
-      <find>net</find>
-      <find>createjoint</find>
       <find>combonum</find>
       <find>initgametime</find>
       <find>fpsl</find>
       <find>fpslabel</find>
       <find>fpslabe</find>
       <find>takeshot</find>
-      <find>ismaster</find>
       <find>registerafterphysicsstep</find>
       <find>restitution</find>
       <find>sync with master</find>
-      <find>readytosync</find>
       <find>sync screens</find>
-      <find>masterdata</find>
-      <find>syncdata</find>
       <find>hascourt</find>
       <find>camera</find>
       <find>scene.registerafterphysicsstep</find>
       <find>registerafter</find>
       <find>physics</find>
       <find>PHYSICS</find>
+      <find>camera.position</find>
+      <find>initemittime</find>
+      <find>initloadtime</find>
+      <find>currentloadtime</find>
+      <find>sceneloaded</find>
+      <find>after time</find>
+      <find>readytosync</find>
+      <find>ismaster</find>
+      <find>actionmanager</find>
+      <find>cameraanimation</find>
+      <find>animatecamera</find>
+      <find>shotindex</find>
+      <find>syncdata</find>
+      <find>masterdata</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -230,7 +230,8 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="136" />
+    <option name="x" value="8" />
+    <option name="y" value="227" />
     <option name="width" value="1440" />
     <option name="height" value="877" />
   </component>
@@ -379,7 +380,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="514295000" />
+    <option name="totallyTimeSpent" value="517348000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -391,7 +392,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="136" width="1440" height="877" extended-state="0" />
+    <frame x="8" y="227" width="1440" height="877" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13883016" sideWeight="0.49294117" order="0" side_tool="false" content_ui="combo" />
@@ -763,8 +764,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/babylon/court.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="555" column="18" lean-forward="false" selection-start-line="555" selection-start-column="18" selection-end-line="555" selection-end-column="18" />
+        <state relative-caret-position="271">
+          <caret line="583" column="0" lean-forward="true" selection-start-line="583" selection-start-column="0" selection-end-line="583" selection-end-column="0" />
           <folding />
         </state>
       </provider>
