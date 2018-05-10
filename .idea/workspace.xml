@@ -42,8 +42,8 @@
       <file leaf-file-name="court.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/babylon/court.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="185">
-              <caret line="1171" column="78" lean-forward="true" selection-start-line="1171" selection-start-column="78" selection-end-line="1171" selection-end-column="78" />
+            <state relative-caret-position="207">
+              <caret line="872" column="16" lean-forward="true" selection-start-line="872" selection-start-column="16" selection-end-line="872" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -152,14 +152,14 @@
       <find>n</find>
       <find>net</find>
       <find>createjoint</find>
-      <find>restitution</find>
       <find>combonum</find>
       <find>initgametime</find>
-      <find>ismaster</find>
       <find>fpsl</find>
       <find>fpslabel</find>
       <find>fpslabe</find>
       <find>takeshot</find>
+      <find>ismaster</find>
+      <find>restitution</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -379,7 +379,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="509568000" />
+    <option name="totallyTimeSpent" value="510002000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -763,8 +763,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/babylon/court.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="1171" column="78" lean-forward="true" selection-start-line="1171" selection-start-column="78" selection-end-line="1171" selection-end-column="78" />
+        <state relative-caret-position="207">
+          <caret line="872" column="16" lean-forward="true" selection-start-line="872" selection-start-column="16" selection-end-line="872" selection-end-column="16" />
           <folding />
         </state>
       </provider>
