@@ -194,7 +194,7 @@ var createScene = function(){
                 updateUI();
                 break;
             case gameStates.GAMEPLAY:
-                initEmitTime = 0.5;
+                initEmitTime = 0.25;
                 currentGameState = gameState;
                 currentCameraIndex = 1;
                 updateUI();
