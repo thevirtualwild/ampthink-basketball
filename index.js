@@ -219,8 +219,12 @@ var masters = {};
 var courtsandmaster = {};
 
 
+var gamesplayed = {};
+
 // Web Socket (Socket.io)
 function onConnection(socket) {
+
+  var gamenum = 1;
 
   // // console.log('socket connected: ' + socket.id);
   var currentHighScore = {
@@ -773,9 +777,17 @@ function onConnection(socket) {
     addScoreToDatabase(gamedata);
 
     // Check Database for High Score (of room)
+    socket.game = socket.court.name + gamenum;
+    gamenum += 1;
 
+    if (gamesplayed[socket.game]) {
+      var updategame = gamesplayed[socket.game].push(gamedata.score);
+      gamesplayed[socket.game] = updategame;
+    } else {
+      gamesplayed[socket.game] = [gamedata.score];
+    }
 
-    if (gamedata.score > currentHighScore.score) {
+    if (gamedata.score > gamesplayed[socket.game][0]) {
       currentHighScore = gamedata;
     } else {
       // // // console.log('Sorry not the best');
@@ -785,8 +797,17 @@ function onConnection(socket) {
       highscorer: currentHighScore,
       yourscore: gamedata,
       teamscores: teamscores
-    }
-    socket.emit('show results', resultsdata);
+    };
+
+    console.log('court - ' + socket.court);
+    console.log('game - ' + socket.game);
+    var emitData = {
+      court: socket.court.name,
+      game: socket.game,
+      resultsdata: resultsdata
+    };
+
+    socket.broadcast.to(socket.roomname).emit('show results', emitData);
 
     if (socket.gamesrunning) {
       socket.broadcast.to(socket.roomname).emit('end all games', socket.court);
