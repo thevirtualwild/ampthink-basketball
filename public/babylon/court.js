@@ -1501,6 +1501,10 @@ socket.on('sync with master', function(syncData){
         masterData = syncData.syncdata;
         readyToSync = true;
         //console.log(masterData);
+        console.log("RECEIVED SYNC DATA");
+    }
+    else {
+        console.log("COURT NAMES DON't MATCH");
     }
 
 });
