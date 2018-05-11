@@ -853,7 +853,7 @@ function onConnection(socket) {
     if (socket.devicetype == 'court') {
       console.log('court disconnected');
       courtDisconnected(socket);
-    } elseif (socket.devicetype == 'player') {
+    } else if (socket.devicetype == 'player') {
       console.log('player disconnected');
       playerDisconnected(socket);
     } else {
