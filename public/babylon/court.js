@@ -507,6 +507,7 @@ var createScene = function(){
             if(currentLoadTime <= 0)
             {
                 sceneLoaded = true;
+                console.log("SCENE LOADED, READY TO SYNC");
             }
             if(currentEmitTime <= 0)
             {
