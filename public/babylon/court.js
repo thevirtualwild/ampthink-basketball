@@ -1548,7 +1548,7 @@ socket.on('player changed name', function(data) {
 socket.on('take shot', function(data) {
 
   var shotmadeincourt = data.court;
-  var shotInfo = data.shotInfo;
+  shotInfo = data.shotInfo;
   if (shotmadeincourt == courtName) {
     //var trigger = scene.actionManager.actions[0].trigger;
     console.log(shotInfo);
