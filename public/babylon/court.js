@@ -563,9 +563,6 @@ var createScene = function(){
                 {
                     if(masterData === undefined) return;
 
-                    //console.log("Cam Pos: " + camera.position);
-                    //console.log("data cam Pos: " + masterData.cameraPosition);
-                    //console.dir(masterData.cameraPosition);
                     var camPos = new BABYLON.Vector3(masterData.cameraPosition.x, masterData.cameraPosition.y, masterData.cameraPosition.z);
 
                     camera.position = camPos;
