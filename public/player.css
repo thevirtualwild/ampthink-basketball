@@ -1,49 +1,60 @@
 @font-face {
   font-family: 'Gobold';
-  src: url("babylon/assets/Fonts/GoboldLight.otf"); }
+  src: url("babylon/assets/Fonts/GoboldLight.otf");
+}
 @font-face {
   font-family: 'Gobold';
   src: url("babylon/assets/Fonts/GoboldBold.otf");
-  font-weight: bold; }
+  font-weight: bold;
+}
 @font-face {
   font-family: 'Gobold';
   src: url("babylon/assets/Fonts/GoboldBoldItalic.otf");
   font-weight: bold;
-  font-style: italic; }
+  font-style: italic;
+}
 @font-face {
   font-family: 'Gobold';
   src: url("babylon/assets/Fonts/GoboldLightItalic.otf");
-  font-style: italic; }
+  font-style: italic;
+}
 @font-face {
   font-family: 'XScale';
-  src: url("babylon/assets/Fonts/X-SCALE_.TTF"); }
+  src: url("babylon/assets/Fonts/X-SCALE_.TTF");
+}
 * {
   /*pointer-events: none;*/
   box-sizing: border-box;
-  font-family: "Gobold"; }
+  font-family: "Gobold";
+}
 
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden; }
+  overflow: hidden;
+}
 
 body {
   position: fixed;
   width: 100%;
-  height: 100%; }
+  height: 100%;
+}
 
 html {
   font-weight: 300;
-  -webkit-font-smoothing: antialiased; }
+  -webkit-font-smoothing: antialiased;
+}
 
 html, input {
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; }
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
 
 ul {
   list-style: none;
   word-wrap: break-word;
-  padding: 0; }
+  padding: 0;
+}
 
 canvas {
   width: 100%;
@@ -51,7 +62,8 @@ canvas {
   max-width: 100%;
   max-height: 100%;
   z-index: 200;
-  pointer-events: initial; }
+  pointer-events: initial;
+}
 
 /* Pages */
 .pages, #gameover {
@@ -59,24 +71,28 @@ canvas {
   margin: 0;
   padding: 0;
   width: 100%;
-  position: absolute; }
+  position: absolute;
+}
 
 .page {
   height: 100%;
   position: absolute;
   width: 100%;
   /*background-image: url("/babylon/assets/UI/Mobile/MobileGround.png");*/
-  background: none; }
+  background: none;
+}
 
 #background {
-  pointer-events: none !important; }
+  pointer-events: none !important;
+}
 
 #background img {
   position: absolute;
   width: 100%;
   z-index: -10;
   object-fit: cover;
-  height: 100%; }
+  height: 100%;
+}
 
 /* Login & Roomcange Pages*/
 .login.page .form, .passcode.page .form, .player.page .form, .gameplay.page .form, .gameover.page .form {
@@ -87,7 +103,8 @@ canvas {
   text-align: center;
   top: 40%;
   width: 100%;
-  max-width: 100%; }
+  max-width: 100%;
+}
 
 .login.page .form .usernameInput, .passcode.page .form .passcodeInput {
   background-color: transparent;
@@ -100,24 +117,28 @@ canvas {
   max-width: 100%;
   display: block;
   margin: auto;
-  pointer-events: initial; }
+  pointer-events: initial;
+}
 
 .login.page .title, .passcode.page .title {
-  font-size: 200%; }
+  font-size: 200%;
+}
 
 .login.page .usernameInput, .passcode.page .passcodeInput {
   font-size: 200%;
   letter-spacing: 3px;
   color: white;
   font-weight: bold;
-  text-shadow: 1px 4px 2px rgba(0, 0, 0, 0.2); }
+  text-shadow: 1px 4px 2px rgba(0, 0, 0, 0.2);
+}
 
 .login.page .title, .passcode.page .title, .login.page .usernameInput, .passcode.page .passcodeInput {
   color: #fff;
   font-weight: 100;
   color: #F6E14C;
   /*yellow*/
-  text-shadow: 1px 4px 2px rgba(0, 0, 0, 0.2); }
+  text-shadow: 1px 4px 2px rgba(0, 0, 0, 0.2);
+}
 
 .passcode.page .passcodeInput {
   text-shadow: 1px 4px 2px rgba(0, 0, 0, 0.2);
@@ -134,7 +155,8 @@ canvas {
   /* Firefox */
   -ms-transform: scale(1, 1.5);
   /* IE 9+ */
-  -o-transform: scale(1, 1.5); }
+  -o-transform: scale(1, 1.5);
+}
 
 .passcode.page img {
   width: 90%;
@@ -142,7 +164,8 @@ canvas {
   margin-left: auto;
   margin-right: auto;
   margin-top: -20px;
-  max-width: 100%; }
+  max-width: 100%;
+}
 
 .gameover.page .form .dash {
   width: 90%;
@@ -151,11 +174,13 @@ canvas {
   margin-right: auto;
   display: block;
   float: none;
-  max-width: 100%; }
+  max-width: 100%;
+}
 
 #footerLogo {
   text-align: center;
-  pointer-events: none; }
+  pointer-events: none;
+}
 
 #footerLogo img {
   position: absolute;
@@ -166,7 +191,8 @@ canvas {
   width: 100%;
   height: 100px;
   object-fit: contain;
-  max-width: 100%; }
+  max-width: 100%;
+}
 
 #headerInstructions {
   text-align: center;
@@ -179,33 +205,40 @@ canvas {
   height: 200px;
   object-fit: contain;
   opacity: 0;
-  pointer-events: none; }
+  pointer-events: none;
+}
 
 #headerInstructions h2 {
-  color: yellow; }
+  color: yellow;
+}
 
 .player.page .form {
-  top: 30%; }
+  top: 30%;
+}
 
 .player.page .form .firstName {
   color: white;
-  font-size: 40px; }
+  font-size: 40px;
+}
 
 .player.page .form .lastName {
   color: #4dc4f9;
-  font-size: 60px; }
+  font-size: 60px;
+}
 
 .player.page .form img {
   width: 50%;
   margin-top: -20px;
-  max-width: 100%; }
+  max-width: 100%;
+}
 
 .player.page .form .teamColor {
   color: red;
   font-style: italic;
   font-size: 70px;
   transform: translateX(-10px) rotate(-12deg);
-  text-shadow: 1px 4px 2px rgba(0, 0, 0, 0.2); }
+  text-shadow: 1px 4px 2px rgba(0, 0, 0, 0.2);
+}
 
 .player.page .form .teamLabel {
   font-family: 'XScale';
@@ -215,7 +248,8 @@ canvas {
   font-size: 60px;
   margin-top: 0;
   letter-spacing: 10px;
-  text-shadow: 1px 4px 2px rgba(0, 0, 0, 0.2); }
+  text-shadow: 1px 4px 2px rgba(0, 0, 0, 0.2);
+}
 
 #refreshLogo img {
   position: absolute;
@@ -224,24 +258,29 @@ canvas {
   height: 80px;
   transform-origin: center;
   max-width: 100%;
-  pointer-events: initial; }
+  pointer-events: initial;
+}
 
 .gameplay.page .form {
-  top: 8%; }
+  top: 8%;
+}
 
 .gameplay.page .form .instructions {
   color: yellow;
   margin-top: -20px;
-  font-size: 40px; }
+  font-size: 40px;
+}
 
 .gameover.page .form {
-  top: 33%; }
+  top: 33%;
+}
 
 .gameover.page .form .thank, .gameover.page .form .you {
   color: white;
   font-size: 80px;
   font-weight: bold;
-  text-shadow: 1px 4px 2px rgba(0, 0, 0, 0.2); }
+  text-shadow: 1px 4px 2px rgba(0, 0, 0, 0.2);
+}
 
 .gameover.page .form .dash {
   width: 90%;
@@ -250,7 +289,8 @@ canvas {
   margin-right: auto;
   display: block;
   float: none;
-  max-width: 100%; }
+  max-width: 100%;
+}
 
 .gameover.page .form .button {
   width: 70%;
@@ -259,20 +299,25 @@ canvas {
   margin-right: auto;
   margin-top: 10px;
   display: block;
-  float: none; }
+  float: none;
+}
 
 .passcode.page {
-  display: block; }
+  display: block;
+}
 
 .player.page {
-  display: none; }
+  display: none;
+}
 
 .gameplay.page {
   display: none;
-  z-index: -100; }
+  z-index: -100;
+}
 
 .gameover.page {
-  display: none; }
+  display: none;
+}
 
 /**
  * Canvas
@@ -289,26 +334,33 @@ canvas {
 }
 */
 .colors {
-  position: fixed; }
+  position: fixed;
+}
 
 .color {
   display: inline-block;
   height: 48px;
-  width: 48px; }
+  width: 48px;
+}
 
 .color.black {
-  background-color: black; }
+  background-color: black;
+}
 
 .color.red {
-  background-color: red; }
+  background-color: red;
+}
 
 .color.green {
-  background-color: green; }
+  background-color: green;
+}
 
 .color.blue {
-  background-color: blue; }
+  background-color: blue;
+}
 
 .color.yellow {
-  background-color: yellow; }
+  background-color: yellow;
+}
 
 /*# sourceMappingURL=player.css.map */

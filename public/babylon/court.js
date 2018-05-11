@@ -1325,8 +1325,10 @@ function showCourt(someIP) {
 }
 function checkMyDeviceInfo(someIP) {
   // check if Device Knows What Court it should be in
-  socket.emit('get court', someIP);
+  socket.emit('get court to show', someIP);
 }
+
+
 function haveCourtJoinRoom(courtname, roomnametojoin) {
   var data = {
     courtname: courtname,

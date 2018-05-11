@@ -363,7 +363,7 @@ function joinCourt(someCourt) {
 
   console.log('Court name - ' + courttojoin);
   // Tell the server your new room to connect to
-  socket.emit('join court', userdata);
+  socket.emit('player wants to join court', userdata);
   // socket.emit('add user', userdata);
 }
 function cleanInput(input) {

@@ -610,9 +610,11 @@ function onConnection(socket) {
   }
 
   //court stuff I think
-  socket.on('get court', function(deviceIP) {
-    // find out if the device knows what court it should be a part of
+  socket.on('get court to show', function(deviceIP) {
+    // we know this is a court, so tell the Socket
+    socket.devicetype = 'court';
 
+    // find out if the device knows what court it should be a part of
 
     // first check to see if device is in list of devices
     if (deviceIP in alldevices) {
@@ -678,7 +680,10 @@ function onConnection(socket) {
 
 
   //player stuff I think
-  socket.on('join court', function(playerdata) { //player does this
+  socket.on('player wants to join court', function(playerdata) { //player does this
+    // we know this a player, so tell the Socket
+    socket.devicetype = 'player';
+
     socket.username = playerdata.username;
     socket.team = playerdata.team;
     socket.court = playerdata.court;
@@ -815,11 +820,10 @@ function onConnection(socket) {
     }
   });
 
-  //server stuff
-  socket.on('disconnect', function() {
-    // // // console.log('user from: ' + socket.roomname + ' disconnected');
+  function courtDisconnected(somesocket) {
     if (socket.court) {
-      var courtid = socket.court.id;
+      var somecourtid = somesocket.court.id;
+      var courtid = somecourtid;
       var court = courtsandmaster[courtid];
       if (court.master == socket.id) {
         // console.log('need to find new master - ');
@@ -837,6 +841,24 @@ function onConnection(socket) {
           // console.log('current courtsandmaster');
           // console.dir(courtsandmaster);
       }
+    }
+  }
+  function playerDisconnected(somesocket) {
+  }
+  //server stuff
+  socket.on('disconnect', function() {
+    // console.log('user from: ' + socket.roomname + ' disconnected');
+
+    // if socket is a court socket
+    if (socket.devicetype == 'court') {
+      console.log('court disconnected');
+      courtDisconnected(socket);
+    } elseif (socket.devicetype == 'player') {
+      console.log('player disconnected');
+      playerDisconnected(socket);
+    } else {
+      //seems like device disconnected before it was set up
+      console.log('unknown device type disconnected');
     }
   })
 
