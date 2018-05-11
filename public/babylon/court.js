@@ -72,7 +72,7 @@ var emitCurrentTime = .5;
 
 createCameraTypes();
 
-
+var initRun = true;
 
 var createScene = function(){
     var scene = new BABYLON.Scene(engine);
@@ -182,6 +182,7 @@ var createScene = function(){
                 if(ISMASTER) {
                     animateCamera();
                 }
+                console.log("SWITCHED TO ATTRACT");
                 updateUI();
                 combo = 0;
                 changeBallFX(false);
@@ -209,6 +210,7 @@ var createScene = function(){
                 gameOver();
 
                 updateUI();
+                initRun = false;
                 break;
             case gameStates.INACTIVE:
                 currentGameState = gameState;
@@ -1337,6 +1339,7 @@ function haveCourtJoinRoom(courtname, roomnametojoin) {
   socket.emit('join room', data);
 
   console.log("HAVE COURT TO JOIN");
+  initRun = false;
   updateUI();
 }
 
@@ -1388,7 +1391,9 @@ function updateUI() {
             attractLabel.innerHTML = "";
             currentGameTime = initGameTime;
             UIGameplayUpdateScore(0);
-            UIAttractAnimateIn();
+            if(!initRun){
+                UIAttractAnimateIn();
+            }
             break;
         case gameStates.WAITING:
             scoreLabel.innerHTML = "COURT CODE: " + courtName;

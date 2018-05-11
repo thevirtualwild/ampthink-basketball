@@ -46,7 +46,8 @@ function UIAttractAnimateIn()
     TweenMax.to(footerCenter, textFadeTime, {top:0});
 
     playNow.style.opacity = 1;
-    TweenMax.to(playNow, textFadeTime * 3, {alpha: 0, repeat: -1,  ease:Power2.easeIn, yoyo:true});
+    console.log("AnimateIn");
+    TweenMax.to(playNow, textFadeTime * 3, {opacity: 0, repeat: -1,  ease:Power2.easeIn, yoyo:true});
     comboBadge.style.opacity = 0;
 
     attractLeftStep1.style.opacity = 0;
