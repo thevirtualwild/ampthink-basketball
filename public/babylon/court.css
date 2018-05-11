@@ -27,6 +27,50 @@
   font-family: "Gobold";
 }
 
+/**
+ * Canvas
+ */
+/*
+.whiteboard {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+}
+*/
+.colors {
+  position: fixed;
+}
+
+.color {
+  display: inline-block;
+  height: 48px;
+  width: 48px;
+}
+
+.color.black {
+  background-color: black;
+}
+
+.color.red {
+  background-color: red;
+}
+
+.color.green {
+  background-color: green;
+}
+
+.color.blue {
+  background-color: blue;
+}
+
+.color.yellow {
+  background-color: yellow;
+}
+
 #template {
   margin: 0;
   position: absolute;
@@ -192,15 +236,15 @@
   padding: 0 50px;
   font-size: 80px;
   color: yellow;
-  /*
-        #leftLight{
-          background-image: url("assets/UI/D4/LightsOverlay.png");
-        }
-  
-        #rightLight{
-          background-image: url("assets/UI/D4/LightsOverlay.png");
-        }
-  */
+    /*
+          #leftLight{
+            background-image: url("assets/UI/D4/LightsOverlay.png");
+          }
+
+          #rightLight{
+            background-image: url("assets/UI/D4/LightsOverlay.png");
+          }
+    */
 }
 #inner #container #results #playerScores .score {
   height: 220px;
@@ -316,6 +360,7 @@
   width: 50%;
   margin-right: 0;
   margin-left: auto;
+  padding: 30px 0;
 }
 #preFooter #playNow h2 {
   font-size: 70px;
@@ -323,15 +368,45 @@
   font-style: italic;
   text-align: right;
   padding-right: 40px;
+  margin-bottom: 0;
 }
 #preFooter #playNow h2 span.emphasize {
   font-weight: bold;
   color: white;
 }
 
+footer #attractLabel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 800px;
+  height: 500px;
+  overflow: visible;
+  font-size: 64px;
+  margin: auto;
+  padding: 50px;
+  border-radius: 3px;
+  text-align: center;
+  /*background:rgba(0,0,0, 0.2);*/
+  color: #999;
+  cursor: default;
+}
+footer #timeLabel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 20px;
+  text-align: center;
+  background: red;
+  border: 2px solid #333;
+  border-radius: 3px;
+  color: #fff;
+  cursor: default;
+}
 footer #footerLeft, footer #footerCenter {
-  width: 40%;
-  max-width: 700px;
   height: 100%;
   /*background-color: cyan;*/
   background-color: rgba(33, 134, 191, 0.5);
@@ -433,11 +508,11 @@ footer #footerLeft .gameplayLeft, footer #footerCenter .gameplayLeft, footer #fo
   display: none;
 }
 footer #footerLeft .attractLeft, footer #footerCenter .attractLeft {
-  width: 30%;
+  width: auto;
+  padding: 0 60px;
   float: left;
 }
 footer #footerLeft .attractLeft h2, footer #footerCenter .attractLeft h2 {
-  margin-left: 10px;
   font-size: 24px;
   text-transform: uppercase;
   text-align: center;
@@ -452,7 +527,8 @@ footer #footerLeft .attractLeft h2.stepNum, footer #footerCenter .attractLeft h2
   font-weight: bold;
 }
 footer #footerLeft .attractRight, footer #footerCenter .attractRight {
-  width: 70%;
+  width: auto;
+  padding-right: 60px;
   float: left;
 }
 footer #footerLeft .attractRight h2, footer #footerCenter .attractRight h2 {
@@ -487,58 +563,26 @@ footer #footerRight {
   right: 0px;
   z-index: 1;
   float: right;
-  width: 170px;
+  width: auto;
+  text-align: center;
 }
 footer #footerRight img#sponsorLogo {
-  width: 100%;
   height: 100%;
   object-fit: contain;
   object-position: right;
-  position: absolute;
+  position: relative;
   bottom: 0px;
   right: 0;
   z-index: 20;
+  padding: 0 20px;
 }
 footer #footerRight img#sponsorGround {
-  width: 125%;
+  width: 140%;
   height: 125%;
   z-index: 5;
   position: absolute;
   bottom: 0;
   right: 0;
-}
-
-#attractLabel {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-  max-width: 800px;
-  height: 500px;
-  overflow: visible;
-  font-size: 64px;
-  margin: auto;
-  padding: 50px;
-  border-radius: 3px;
-  text-align: center;
-  /*background:rgba(0,0,0, 0.2);*/
-  color: #999;
-  cursor: default;
-}
-
-#timeLabel {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 20px;
-  text-align: center;
-  background: red;
-  border: 2px solid #333;
-  border-radius: 3px;
-  color: #fff;
-  cursor: default;
 }
 
 html, body {
@@ -626,50 +670,6 @@ canvas {
 .login.page .title, .passcode.page .title, .login.page .usernameInput, .passcode.page .passcodeInput {
   color: #fff;
   font-weight: 100;
-}
-
-/**
- * Canvas
- */
-/*
-.whiteboard {
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  top: 0;
-}
-*/
-.colors {
-  position: fixed;
-}
-
-.color {
-  display: inline-block;
-  height: 48px;
-  width: 48px;
-}
-
-.color.black {
-  background-color: black;
-}
-
-.color.red {
-  background-color: red;
-}
-
-.color.green {
-  background-color: green;
-}
-
-.color.blue {
-  background-color: blue;
-}
-
-.color.yellow {
-  background-color: yellow;
 }
 
 /*# sourceMappingURL=court.css.map */
