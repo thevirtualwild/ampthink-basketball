@@ -1444,13 +1444,16 @@ function createCameraTypes() {
 function gameOver() {
   // the game is finished, submit the score and do stuff
 
+
   var gamedata = {
     player: playerData,
     score: score,
     combo: combo
   }
 
-  socket.emit('game over', gamedata);
+  if(playerData) {
+      socket.emit('game over', gamedata);
+  }
 
   //Show Results page
 }
