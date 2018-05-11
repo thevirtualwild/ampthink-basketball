@@ -399,16 +399,19 @@ footer{
         margin-bottom: 2px;
         font-weight: normal;
         font-weight: bold;
-        bottom: 25px;
+        // bottom: 25px;
         left: 0;
         &.textScoreLabel{
           font-size: 50px;
-          bottom: 20px;
-          line-height: 20px;
+          bottom: 0;
+          line-height: 1.1em;
           font-weight: bold;
           color:darkblue;
           background-color: white;
           font-family: XScale;
+          position: absolute;
+          width: 100%;
+
         }
       }
 
