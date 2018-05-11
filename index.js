@@ -594,7 +594,7 @@ function onConnection(socket) {
               syncdata:data
           };
 
-          // console.log("Court name in index: " + socket.court.name);
+          console.log("Court name in index: " + socket.court.name);
 
         socket.broadcast.to(socket.roomname).emit('sync with master', testData);
       } else {
@@ -826,8 +826,8 @@ function onConnection(socket) {
   });
 
   socket.on('sync screens', function(data) {
-    // // console.log('Sync Data test');
-    // // // console.dir(data);
+    console.log('Sync Data test');
+    console.dir(data);
     socket.syncdata = data;
 
     if (socket.court) {
