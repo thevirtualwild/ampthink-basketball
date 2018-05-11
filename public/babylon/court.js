@@ -507,7 +507,7 @@ var createScene = function(){
             if(currentLoadTime <= 0)
             {
                 sceneLoaded = true;
-                console.log("SCENE LOADED, READY TO SYNC");
+                //console.log("SCENE LOADED, READY TO SYNC");
             }
             if(currentEmitTime <= 0)
             {
@@ -567,6 +567,7 @@ var createScene = function(){
             {
                 if(readyToSync && !ISMASTER && sceneLoaded)
                 {
+                    console.log(masterData);
                     if(masterData === undefined) return;
 
                     var camPos = new BABYLON.Vector3(masterData.cameraPosition.x, masterData.cameraPosition.y, masterData.cameraPosition.z);
