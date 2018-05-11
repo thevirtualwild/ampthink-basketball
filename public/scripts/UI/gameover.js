@@ -4,8 +4,7 @@ var pages = document.getElementsByClassName("pages")[0];
 var canvas = document.getElementById("canvas");
 var inputForm = document.getElementsByClassName("form")[0];
 var customizeForm = document.getElementsByClassName("form")[1];
-var gameplayForm = document.getElementsByClassName("form")[2];
-var gameoverForm = document.getElementsByClassName("form")[3];
+var gameoverForm = document.getElementsByClassName("form")[2];
 var refreshLogo = document.getElementById("refreshLogo");
 var refreshImg = document.getElementById("refresh");
 var inputPage = document.getElementsByClassName("passcode page")[0];
@@ -19,13 +18,28 @@ var playAgain = document.getElementsByClassName("button")[0];
 
 var headerInstructions = document.getElementById("headerInstructions");
 
+var body = document.body,
+    html = document.documentElement;
+
+var height = Math.max( body.scrollHeight, body.offsetHeight,
+    html.clientHeight, html.scrollHeight, html.offsetHeight );
+
+var ReadyToAnimOut = false;
+playAgain.addEventListener('click', function (e) {
+    UIGameoverAnimateOut();
+});
+
 function UIGameoverAnimateIn()
 {
+    ReadyToAnimOut = true;
     inputPage.style.display = "none";
     customizePage.style.display = "none";
     gameoverPage.style.display = "block";
     pages.style.display = "block";
+    gameoverPage.style.pointerEvents = "all";
 
+    gameoverForm.style.top = (.33 * height).toString() +"px";
+    gameoverForm.style.opacity = 1;
     thank.style.opacity = 0;
     you.style.opacity = 0;
     dashImg.style.opacity = 0;
@@ -39,8 +53,10 @@ function UIGameoverAnimateIn()
     TweenMax.to(playAgain, gameoverFadeTime, {delay:gameoverFadeTime*4, opacity:1});
 }
 
-function UIGameplayAnimateOut()
-{
-    TweenMax.to(gameoverForm, gameoverFadeTime, {delay:gameoverFadeTime, top:0});
-    TweenMax.to(gameoverForm, gameoverFadeTime, {delay:gameoverFadeTime*2, opacity:0, onComplete: UIInputAnimateIn});
+function UIGameoverAnimateOut() {
+    if (ReadyToAnimOut) {
+        ReadyToAnimOut = false;
+        TweenMax.to(gameoverForm, gameoverFadeTime, {top: 0});
+        TweenMax.to(gameoverForm, gameoverFadeTime, {opacity: 0, onComplete: UIInputAnimateIn, ease: Back.easeIn});
+    }
 }

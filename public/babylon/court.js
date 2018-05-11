@@ -356,6 +356,7 @@ var createScene = function(){
               changeGameState(gameStates.ATTRACT);
               currentGameTime = initGameTime;
               updateClock();
+              if(ISMASTER)
               socket.emit('room reset');
           }
           else if(currentResultsTime <= 0)
@@ -434,7 +435,6 @@ var createScene = function(){
 
     BABYLON.SceneLoader.ImportMesh("", "./assets/BBall_V2/", "BBall_V2.babylon", scene, function (mesh) {
 
-        console.log("first import");
         var baseMaterial = new BABYLON.StandardMaterial("baseMaterial", scene);
         var overlayMaterial = new BABYLON.StandardMaterial("overlayMaterial", scene);
         var multimat = new BABYLON.MultiMaterial("multi", scene);
@@ -466,7 +466,6 @@ var createScene = function(){
 
             newBasketballs.push(newBasketball);
         }
-        console.log("second import");
         scene.registerBeforeRender(function()
         {
 
@@ -485,14 +484,12 @@ var createScene = function(){
 
                 if(currentGameState == gameStates.GAMEPLAY || currentGameState == gameStates.RESULTS)
                 {
-                    console.log("COMBO GAMEPLAY");
-                    //console.log("COMBO GAMEPLAY");
                     if(basketballs[i].position.y < -30 &&
                         /*basketballs[i].physicsImpostor.getLinearVelocity().y < 0 &&*/
                         basketballStates[i] == 1)
                     {
                         combo = 0;
-                        console.log("COMBO BREAKER " + i);
+                        //console.log("COMBO BREAKER " + i);
                         UIGameplayAnimateBadgeOff();
                         changeBallFX(false);
                         basketballStates[i] = 0;
@@ -559,13 +556,10 @@ var createScene = function(){
 
         });
 
-        //console.log("after registerbeforerender");
-
         for(var i = 0; i < basketballs.length; i++)
         {
             scene.registerAfterRender(function()
             {
-                //console.log("PHYSICS");
                 if(readyToSync && !ISMASTER && sceneLoaded)
                 {
                     if(masterData === undefined) return;
@@ -576,14 +570,9 @@ var createScene = function(){
                     currentWaitTime = masterData.waitTime;
                     currentGameTime = masterData.gameTime;
                     currentResultsTime = masterData.resultsTime;
-                    if(shotIndex != masterData.shotindex)
-                    {
-                        console.log("old shot index: " + shotIndex);
-                        console.log("new shot index: " + masterData.shotindex);
-                    }
+
                     shotIndex = masterData.shotindex;
                     shotIndex = masterData.shotindex;
-                    //console.log("AFTER TIME");
 
                     for(var i = 0; i < basketballs.length; i++)
                     {
@@ -598,7 +587,6 @@ var createScene = function(){
                         basketballs[i].physicsImpostor.setLinearVelocity(newVel);
                         basketballs[i].physicsImpostor.setAngularVelocity(newAng);
 
-                        //if(currentGameState != gameStates.GAMEPLAY)
                         if(i != shotIndex-1)
                         {
                             basketballStates[i] = masterData.states;
@@ -608,52 +596,6 @@ var createScene = function(){
                     readyToSync =false;
                 }
             });
-            /*
-            basketballs[i].physicsImpostor.registerAfterPhysicsStep(function()
-            {
-
-                //console.log("PHYSICS");
-                if(readyToSync && !ISMASTER && sceneLoaded)
-                {
-                    if(masterData === undefined) return;
-
-                    //console.log("Cam Pos: " + camera.position);
-                    //console.log("data cam Pos: " + masterData.cameraPosition);
-                    //console.dir(masterData.cameraPosition);
-                    var camPos = new BABYLON.Vector3(masterData.cameraPosition.x, masterData.cameraPosition.y, masterData.cameraPosition.z);
-
-                    camera.position = camPos;
-                    currentWaitTime = masterData.waitTime;
-                    currentGameTime = masterData.gameTime;
-                    currentResultsTime = masterData.resultsTime;
-                    if(shotIndex != masterData.shotindex)
-                    {
-                        console.log("old shot index: " + shotIndex);
-                        console.log("new shot index: " + masterData.shotindex);
-                    }
-                    shotIndex = masterData.shotindex;
-                    shotIndex = masterData.shotindex;
-                    //console.log("AFTER TIME");
-
-                    for(var i = 0; i < basketballs.length; i++)
-                    {
-
-                        var newPos = new BABYLON.Vector3(masterData.basketballs[i].posx,masterData.basketballs[i].posy, masterData.basketballs[i].posz);
-                        var newRot = new BABYLON.Vector3(masterData.basketballs[i].rotx,masterData.basketballs[i].roty, masterData.basketballs[i].rotz);
-                        var newVel = new BABYLON.Vector3(masterData.basketballs[i].velx,masterData.basketballs[i].vely, masterData.basketballs[i].velz);
-                        var newAng = new BABYLON.Vector3(masterData.basketballs[i].angx,masterData.basketballs[i].angy, masterData.basketballs[i].angz);
-
-                        basketballs[i].position = newPos;
-                        basketballs[i].rotation = newRot;
-                        basketballs[i].physicsImpostor.setLinearVelocity(newVel);
-                        basketballs[i].physicsImpostor.setAngularVelocity(newAng);
-
-                    }
-
-                    readyToSync =false;
-                }
-            });
-            */
         };
 
     });

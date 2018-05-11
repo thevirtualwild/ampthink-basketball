@@ -3,8 +3,7 @@ var customizeFadeTime = 0.5;
 var canvas = document.getElementById("canvas");
 var inputForm = document.getElementsByClassName("form")[0];
 var customizeForm = document.getElementsByClassName("form")[1];
-var gameplayForm = document.getElementsByClassName("form")[2];
-var gameoverForm = document.getElementsByClassName("form")[3];
+var gameoverForm = document.getElementsByClassName("form")[2];
 var refreshLogo = document.getElementById("refreshLogo");
 var refreshImg = document.getElementById("refresh");
 var inputPage = document.getElementsByClassName("passcode page")[0];
@@ -24,12 +23,20 @@ refreshLogo.addEventListener('click', function (e) {
     changeName();
 });
 
+var body = document.body,
+    html = document.documentElement;
+
+var height = Math.max( body.scrollHeight, body.offsetHeight,
+    html.clientHeight, html.scrollHeight, html.offsetHeight );
+
 function UICustomizeAnimateIn()
 {
     inputPage.style.display = "none";
     customizePage.style.display = "block";
     gameoverPage.style.display = "none";
 
+    customizeForm.style.top = (.3 * height).toString() + "px";
+    customizeForm.style.opacity =1;
     firstName.style.opacity = 0;
     lastName.style.opacity = 0;
     dashImage.style.opacity = 0;
@@ -84,9 +91,6 @@ function getName()
     TweenMax.to(firstName, customizeFadeTime, {opacity: 1});
     TweenMax.to(lastName, customizeFadeTime, {opacity: 1, onComplete: stopAnimating});
 
-    console.log(userdata);
-    console.log(userdata.username);
-    console.log(name);
     userdata.username = name;
 
     socket.emit("change player name", userdata);
@@ -97,10 +101,3 @@ function stopAnimating()
 {
     animating = false;
 }
-
-/*
-function UIAttractUpdateCourtName(name)
-{
-    attractRightStep2.innerHTML = "<h2>THEN ENTER</h2><h2>CODE '<span id=\"courtCode\">" + name + "</span>'</h2>";
-}
-*/

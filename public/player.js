@@ -270,8 +270,6 @@ function createScene() {
       convertedRot.x = velocity.z;
       convertedRot.z = -velocity.x;
       basketball.physicsImpostor.setAngularVelocity(convertedRot);
-      console.log("RESETBALL");
-
   }
 
   function resetGame() {
@@ -371,6 +369,11 @@ function joinCourt(someCourt) {
 function cleanInput(input) {
   return $('<div/>').text(input).html();
 }
+
+socket.on('reset game', function(){
+    UIGameoverAnimateOut();
+    console.log("reset game EMIT");
+});
 
 socket.on('you joined court', function() {
     UIInputAnimateOut();

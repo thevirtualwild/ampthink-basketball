@@ -25,10 +25,7 @@ function UIWaitingAnimateIn()
 {
     footerWidth = parseInt(footerCenter.style.width.substr(0, footerCenter.style.width.length-2));
     footerWidth = canvas.width * .09;
-    console.log(waitingRight.style.width);
-    console.log(footerWidth);
-    //Fade in
-    //footerLeft.style.maxWidth = 200;
+
     transitioned = false;
     attractLeftStep1.style.display = "none";
     attractLeftStep2.style.display = "none";
@@ -40,18 +37,15 @@ function UIWaitingAnimateIn()
     countdown.style.opacity = 0;
     textWaiting.style.opacity = 0;
     textWaiting.style.left = footerWidth + "px";
-    console.log(textWaiting.style.left);
     TweenMax.to(countdown, textFadeTime, {opacity:1});
     TweenMax.to(textWaiting, textFadeTime, {opacity:1});
 }
 
 function UIWaitingAnimateOut()
 {
-
     TweenMax.to(countdown, textFadeTime, {opacity:0, delay: textFadeTime, onComplete: UIGameplayAnimateIn});
     TweenMax.to(textWaiting, textFadeTime/2, {opacity:0, delay: textFadeTime});
     TweenMax.to(textWaiting, textFadeTime, {left: footerWidth + 300 , delay: textFadeTime})
-
 }
 
 function UIWaitingUpdateClock(time)
@@ -63,7 +57,6 @@ function UIWaitingUpdateClock(time)
         transitioned=  true;
         countdown.innerHTML = "0";
         UIWaitingAnimateOut();
-        console.log("TRIGGERED");
     }
     else if(time+1<0)
     {
