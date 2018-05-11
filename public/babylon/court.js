@@ -294,8 +294,9 @@ var createScene = function(){
       camera.setTarget(newPos);
 
       //dynamically set fov based on screen resolution
-      camera.fov = 2 + (-.676 * canvas.width/canvas.height);
-
+      //camera.fov = 2 + (-.676/canvas.height);
+camera.fov = 1;
+console.log(canvas.height);
       if(currentGameState == gameStates.WAITING)
       {
           currentWaitTime -= (engine.getDeltaTime() / 1000);
