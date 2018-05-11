@@ -1395,9 +1395,9 @@ function updateUI() {
             attractLabel.innerHTML = "";
             currentGameTime = initGameTime;
             UIGameplayUpdateScore(0);
-            if(!initRun){
+            //if(!initRun){
                 UIAttractAnimateIn();
-            }
+            //}
             break;
         case gameStates.WAITING:
             scoreLabel.innerHTML = "COURT CODE: " + courtName;
