@@ -787,6 +787,9 @@ function onConnection(socket) {
       gamesplayed[socket.game] = [gamedata.score];
     }
 
+    for (ascore in gamesplayed[socket.game]) {
+      currentHighScore = ascore
+    }
     if (gamedata.score > gamesplayed[socket.game][0]) {
       currentHighScore = gamedata;
     } else {
@@ -888,6 +891,10 @@ function onConnection(socket) {
       console.log('unknown device type disconnected');
     }
   })
+  socket.on('reconnecting', function() {
+    console.log('socket reconnected - ' + socket.id);
+    console.dir(socket);
+  });
 
   socket.on('touch event', function(data) {
     // // console.log('Some Touch Event');
