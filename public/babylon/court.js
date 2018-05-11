@@ -294,7 +294,7 @@ var createScene = function(){
       camera.setTarget(newPos);
 
       //dynamically set fov based on screen resolution
-      camera.fov = 1.8 + (-.676 * canvas.width/canvas.height);
+      camera.fov = 2 + (-.676 * canvas.width/canvas.height);
 
       if(currentGameState == gameStates.WAITING)
       {
@@ -1395,9 +1395,9 @@ function updateUI() {
             attractLabel.innerHTML = "";
             currentGameTime = initGameTime;
             UIGameplayUpdateScore(0);
-            //if(!initRun){
+            if(!initRun){
                 UIAttractAnimateIn();
-            //}
+            }
             break;
         case gameStates.WAITING:
             scoreLabel.innerHTML = "COURT CODE: " + courtName;
