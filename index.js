@@ -827,7 +827,7 @@ function onConnection(socket) {
 
   socket.on('sync screens', function(data) {
     console.log('Sync Data test');
-    console.dir(data);
+    // console.dir(data);
     socket.syncdata = data;
 
     if (socket.court) {
