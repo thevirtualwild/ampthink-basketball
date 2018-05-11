@@ -891,7 +891,7 @@ function onConnection(socket) {
       console.log('unknown device type disconnected');
     }
   })
-  socket.on('reconnecting', function() {
+  socket.on('reconnect', function() {
     console.log('socket reconnected - ' + socket.id);
     console.dir(socket);
   });
