@@ -1572,7 +1572,10 @@ socket.on('end all games', function(courtthatfinished) {
   console.log('court that finished - ' + courtthatfinished);
 
   //now end everything and send results
-  gameOver();
+    if(ISMASTER){
+        gameOver();
+
+    }
 });
 socket.on('show results', function(resultsdata) {
   console.log('Results!');
