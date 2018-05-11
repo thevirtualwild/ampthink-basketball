@@ -317,6 +317,9 @@
   width: 50%;
   margin-right: 0;
   margin-left: auto;
+  padding-top:25px;
+  padding-bottom:25px;
+
 }
 #preFooter #playNow h2 {
   font-size: 70px;
