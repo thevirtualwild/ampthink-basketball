@@ -757,7 +757,12 @@ function onConnection(socket) {
 
     // // // console.log('take shot');
 
-    socket.broadcast.to(socket.roomname).emit('take shot', shotInfo);
+    var emitData = {
+      court: socket.court,
+      shotInfo: shotInfo
+    }
+
+    socket.broadcast.to(socket.roomname).emit('take shot', emitData);
 
   });
   socket.on('game over', function(gamedata) {
@@ -765,9 +770,10 @@ function onConnection(socket) {
     // Submit Player Data To Database
     // // console.log('game over');
     // // console.dir(gamedata);
+    addScoreToDatabase(gamedata);
 
     // Check Database for High Score (of room)
-    addScoreToDatabase(gamedata);
+
 
     if (gamedata.score > currentHighScore.score) {
       currentHighScore = gamedata;

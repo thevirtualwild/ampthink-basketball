@@ -1519,34 +1519,45 @@ socket.on('court joined room', function(data) {
 })
 
 socket.on('player joined court', function(userdata) {
-    console.log('Player ' + userdata.username + ' - Joined Court - ' + userdata.court);
+  if (userdata.court == courtName) {
+    console.log('Player ' + userdata.username + ' - Joined Your Court - ' + userdata.court);
     UIGameplayUpdateName(userdata.username);
     UIResultsUpdateName(userdata.username);
 
     playerData = userdata;
-    if (userdata.court == courtName) {
-      hasplayer = true;
-    }
+    hasplayer = true;
 
     scene.actionManager.processTrigger(scene.actionManager.actions[2].trigger, {additionalData: "y"});
+  } else {
+    console.log('Player ' + userdata.username + ' - Joined Sister Court - ' + userdata.court);
+  }
 });
 socket.on('player changed name', function(data) {
-  console.log('Player ' + playerData.username + ' - Change Name - ' + data.newplayer.username);
+  if (userdata.court == courtName) {
+    console.log('Player ' + playerData.username + ' - Change Name - ' + data.newplayer.username);
 
-  playerData = data.newplayer;
+    playerData = data.newplayer;
 
-  UIGameplayUpdateName(playerData.username);
-  UIResultsUpdateName(playerData.username);
+    UIGameplayUpdateName(playerData.username);
+    UIResultsUpdateName(playerData.username);
+  } else {
+    console.log('Player ' + playerData.username + ' - Change Name - ' + data.newplayer.username);
+  }
 });
 
-socket.on('take shot', function(info) {
+socket.on('take shot', function(data) {
 
-    shotInfo = info;
+  var shotmadeincourt = data.court;
+  var shotInfo = data.shotInfo;
+  if (shotmadeincourt == courtName) {
     //var trigger = scene.actionManager.actions[0].trigger;
     console.log(shotInfo);
     var ae = BABYLON.ActionEvent.CreateNewFromScene(scene, {additionalData: "r"});
     //console.log(ae);
     scene.actionManager.processTrigger(scene.actionManager.actions[0].trigger,  ae);
+  } else {
+    console.log('shot made in a sister court - ' + shotmadeincourt);
+  }
 
     //console.log(scene.actionManager.actions.length);
 });
