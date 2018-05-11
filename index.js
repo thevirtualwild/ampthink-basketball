@@ -499,7 +499,6 @@ function onConnection(socket) {
 
   function assignCourtToRoom(somecourt, someroomid) {
     fullroomdata = allrooms[someroomid];
-
     // // console.log('telling device in court: ' + somecourt.name + ' to join room: ' + fullroomdata.name);
     // // console.dir(fullroomdata);
 
@@ -508,14 +507,14 @@ function onConnection(socket) {
       room: fullroomdata
     }
 
-
     socket.court = somecourt;
     // console.log('socket.court.id: ' + socket.court.id);
     // console.log('socket court');
     // console.dir(courtsandmaster[socket.court.id]);
+    console.log('assigning court - ' + socket.court);
     courtsandmaster[socket.court.id] = socket.court;
-    console.log('after');
-    console.dir(courtsandmaster[socket.court.id]);
+    // console.log('after');
+    // console.dir(courtsandmaster[socket.court.id]);
     // // console.log('socket room: '+ socket.room);
     // // // console.log('room: ');
     // // console.dir(allrooms[someroom]);
@@ -525,7 +524,6 @@ function onConnection(socket) {
       setSocketMaster();
     }
     if (socket.syncdata){
-
       // console.log('calling syncslaves from assign court to room');
       syncSlaves(socket.syncdata);
     }
@@ -553,7 +551,6 @@ function onConnection(socket) {
     // console.dir(data);
 
     playername = data.player.username;
-
     playerteam = teamindex[data.player.team.name];
     // // console.log(playerteam);
     playerscore = data.player.score;
@@ -574,6 +571,31 @@ function onConnection(socket) {
       });
     }
   }
+
+
+  function syncSlaves(data) {
+    var courtmaster;
+    if (socket.court.master) {
+      courtmaster = socket.court.master;
+      if (courtmaster == socket.id) {
+        // console.log('this screen is master - ' + socket.id);
+          var testData = {
+            courtname:socket.court.name,
+              syncdata:data
+          };
+
+          console.log("Court name in index: " + socket.court.name);
+
+        socket.broadcast.to(socket.roomname).emit('sync with master', testData);
+      } else {
+        // console.log('someone else is master - ' + courtmaster);
+      }
+    } else {
+      setSocketMaster();
+    }
+  }
+
+
 
   //court stuff I think
   socket.on('get court', function(deviceIP) {
@@ -761,46 +783,25 @@ function onConnection(socket) {
     // // console.dir(data);
     socket.syncdata = data;
 
-    var thiscourt = courtsandmaster[socket.court];
+    if (socket.court) {
+      var thiscourt = courtsandmaster[socket.court.id];
+      console.log('thiscourt - '+ thiscourt);
 
-    if (!thiscourt) {
+      console.log('thiscourt from sync screens: ');
+      // console.dir(thiscourt);
 
+      syncSlaves(data);
+    } else {
       // console.log('deviceIP ' + data.deviceIP);
       mydevice = alldevices[data.deviceIP];
       // console.log('mydevice - ');
       // console.dir(mydevice);
       // mycourt = allcourts[mydevice.court];
       myzone = allzones[mydevice.zone];
+      console.log('cant find court');
       findACourt(mydevice,myzone);
-    } else {
-      console.log('thiscourt from sync screens: ');
-      // console.dir(thiscourt);
-
-      syncSlaves(data);
     }
   });
-
-  function syncSlaves(data) {
-    var courtmaster;
-    if (socket.court.master) {
-      courtmaster = socket.court.master;
-      if (courtmaster == socket.id) {
-        // console.log('this screen is master - ' + socket.id);
-          var testData = {
-            courtname:socket.court.name,
-              syncdata:data
-          };
-
-          console.log("Court name in index: " + socket.court.name);
-
-        socket.broadcast.to(socket.roomname).emit('sync with master', testData);
-      } else {
-        // console.log('someone else is master - ' + courtmaster);
-      }
-    } else {
-      setSocketMaster();
-    }
-  }
 
   //server stuff
   socket.on('disconnect', function() {
