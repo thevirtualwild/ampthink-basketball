@@ -322,10 +322,12 @@
       }
 
       #teamScores{
-        width: 75%;
+        // width: 75%;
+        width: auto;
         margin-top: 0px;
         height: 250px;
         padding: 0 50px;
+        text-align: center;
 
         &:after {
           display:block;
@@ -344,8 +346,10 @@
         }
 
         .score {
-          width: 33.3%;
-          float: left;
+          // width: 33.3%;
+          width: auto;
+          // float: left;
+          float:none;
           text-align: center;
           //margin: 0;
           display: inline-block;

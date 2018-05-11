@@ -312,10 +312,11 @@
   text-align: right;
 }
 #inner #container #results #teamScores {
-  width: 75%;
+  width: auto;
   margin-top: 0px;
   height: 250px;
   padding: 0 50px;
+  text-align: center;
 }
 #inner #container #results #teamScores:after {
   display: block;
@@ -332,8 +333,8 @@
   font-family: "Xscale";
 }
 #inner #container #results #teamScores .score {
-  width: 33.3%;
-  float: left;
+  width: auto;
+  float: none;
   text-align: center;
   display: inline-block;
 }
