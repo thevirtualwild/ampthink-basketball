@@ -253,17 +253,21 @@ function onConnection(socket) {
         socket.master = socket.id;
         console.log('thiscourt master: ');
         console.dir(thiscourt);
+        thiscourt.slaves = [];
         courtsandmaster[courtid] = thiscourt;
         socket.emit('set master');
 
       } else if (thiscourt.master) {
         console.log('court has master: ' + thiscourt.master);
+        thiscourt.slaves.push(socket.id);
+        courtsandmaster[courtid] = thiscourt;
         socket.master = thiscourt.master;
       } else {
         thiscourt.master = socket.id;
         socket.master = socket.id;
         console.log('thiscourt master: ');
         console.dir(thiscourt);
+        thiscourt.slaves = [];
         courtsandmaster[courtid] = thiscourt;
         socket.emit('set master');
       }
@@ -518,9 +522,11 @@ function onConnection(socket) {
     // // console.log('socket room: '+ socket.room);
     // // // console.log('room: ');
     // // console.dir(allrooms[someroom]);
-
     if (!socket.hasmaster) {
       socket.hasmaster = true;
+      court = courtsandmaster[socket.court.id];
+      court.slaves = [];
+      courtsandmaster[socket.court.id] = court;
       setSocketMaster();
     }
     if (socket.syncdata){
@@ -596,6 +602,12 @@ function onConnection(socket) {
   }
 
 
+  function findNewMaster(oldsocketid) {
+    var slaveindex = court.slaves.indexOf(socket.id);
+    var newmaster = court.slaves.pop(slaveindex);
+    courtsandmaster[socket.court.id].master = newmaster;
+    io.to(courtsandmaster[socket.court.id].master).emit('set master');
+  }
 
   //court stuff I think
   socket.on('get court', function(deviceIP) {
@@ -806,8 +818,25 @@ function onConnection(socket) {
   //server stuff
   socket.on('disconnect', function() {
     // // console.log('user from: ' + socket.roomname + ' disconnected');
-    if (masters[socket.court] == socket.id) {
-      findNewMaster();
+    if (socket.court) {
+      var courtid = socket.court.id;
+      var court = courtsandmaster[courtid];
+      if (court.master == socket.id) {
+        console.log('need to find new master - ');
+        console.dir(socket.court);
+        console.log('current courtsandmaster');
+        console.dir(courtsandmaster);
+        findNewMaster();
+      } else {
+        var slaveindex = court.slaves.indexOf(socket.id);
+        court.slaves.pop(slaveindex);
+        courtsandmaster[courtid] = court;
+
+          console.log('court after pop');
+          console.dir(court);
+          console.log('current courtsandmaster');
+          console.dir(courtsandmaster);
+      }
     }
   })
 
