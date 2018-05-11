@@ -203,7 +203,15 @@
       padding: 0 50px;
       font-size: 80px;
       color: yellow;
+/*
+      #leftLight{
+        background-image: url("assets/UI/D4/LightsOverlay.png");
+      }
 
+      #rightLight{
+        background-image: url("assets/UI/D4/LightsOverlay.png");
+      }
+*/
       #playerScores .score {
         height: 220px;
         //border: 1px solid yellow;
@@ -221,6 +229,9 @@
             padding-right: 10px;
           }
 
+          .scoreNum{
+            font-weight: bold;
+          }
           .playerName {
             text-align: left;
             font-style: italic;
@@ -391,7 +402,7 @@ footer{
       float: none;
 
       h2{
-        font-size: 90px;
+        font-size: 80px;
         text-transform: uppercase;
         text-align: center;
         color: yellow;
@@ -399,7 +410,7 @@ footer{
         margin-bottom: 2px;
         font-weight: normal;
         font-weight: bold;
-        // bottom: 25px;
+        bottom: 30px;
         left: 0;
         &.textScoreLabel{
           font-size: 50px;

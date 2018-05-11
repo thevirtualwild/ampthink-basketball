@@ -18,6 +18,7 @@ var scoreLabel = gameplayLeft.getElementsByClassName("textScoreLabel")[0];
 var firstName = gameplayRight.getElementsByClassName("textGameplayFirst")[0];
 var lastName = gameplayRight.getElementsByClassName("textGameplayLast")[0];
 var footerWidth;
+
 function UIGameplayAnimateIn()
 {
     footerWidth = parseInt(footerCenter.style.width.substr(0, footerCenter.style.width.length-2));
@@ -29,14 +30,19 @@ function UIGameplayAnimateIn()
     gameplayLeft.style.display = "inline";
     gameplayRight.style.display = "inline"
 
-    gameplayLeft.opacity = 0;
+    gameplayLeft.style.opacity = 0;
     firstName.style.opacity = 0;
     lastName.style.opacity = 0;
     firstName.style.left = "0px";
     lastName.style.left = "0px";
 
+    scoreText.style.opacity= 0;
+    scoreLabel.style.lineHeight = 0;
 
+    //TweenMax.to(scoreLabel, textFadeTime, {lineHeight:40});
     TweenMax.to(gameplayLeft, textFadeTime, {opacity:1, delay: textFadeTime});
+    TweenMax.to(scoreText, textFadeTime, {opacity:1, delay: textFadeTime});
+
     TweenMax.to(firstName, textFadeTime, {opacity:1, delay: textFadeTime, left:footerWidth});
     TweenMax.to(lastName, textFadeTime, {opacity:1, delay: textFadeTime, left: footerWidth});
 }

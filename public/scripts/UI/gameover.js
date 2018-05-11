@@ -45,9 +45,11 @@ function UIGameoverAnimateIn()
     dashImg.style.opacity = 0;
     dashImg.style.width = 0;
     playAgain.style.opacity = 0;
+    thank.style.marginLeft = "-300px";
+    you.style.marginRight = "-300px";
 
-    TweenMax.to(thank, gameoverFadeTime, {delay:gameoverFadeTime, opacity:1});
-    TweenMax.to(you, gameoverFadeTime, {delay:gameoverFadeTime*2, opacity:1});
+    TweenMax.to(thank, gameoverFadeTime, {delay:gameoverFadeTime, opacity:1, marginLeft:0});
+    TweenMax.to(you, gameoverFadeTime, {delay:gameoverFadeTime*2, opacity:1, marginRight:0});
     TweenMax.to(dashImg, gameoverFadeTime, {delay:gameoverFadeTime*3, opacity:1, width:400, ease:Back.easeOut});
     TweenMax.to(dashImg, gameoverFadeTime, {delay:gameoverFadeTime*4, opacity:1});
     TweenMax.to(playAgain, gameoverFadeTime, {delay:gameoverFadeTime*4, opacity:1});
@@ -56,7 +58,12 @@ function UIGameoverAnimateIn()
 function UIGameoverAnimateOut() {
     if (ReadyToAnimOut) {
         ReadyToAnimOut = false;
-        TweenMax.to(gameoverForm, gameoverFadeTime, {top: 0});
-        TweenMax.to(gameoverForm, gameoverFadeTime, {opacity: 0, onComplete: UIInputAnimateIn, ease: Back.easeIn});
+        //TweenMax.to(gameoverForm, gameoverFadeTime, {top: 0});
+        TweenMax.to(thank, gameoverFadeTime, {top: 0});
+        TweenMax.to(you, gameoverFadeTime, {top: 0});
+        TweenMax.to(dashImg, gameoverFadeTime, {top: 0});
+        TweenMax.to(gameoverForm, gameoverFadeTime, {top: 0, ease: Back.easeIn});
+        TweenMax.to(playAgain, gameoverFadeTime, {top: 0});
+        TweenMax.to(gameoverForm, gameoverFadeTime, {opacity: 0, onComplete: UIInputAnimateIn});
     }
 }

@@ -44,7 +44,6 @@ function UICustomizeAnimateIn()
     teamName.style.opacity = 0;
     teamLabel.style.opacity = 0;
     refreshLogo.style.opacity = 0;
-    //customizeForm.style.opacity = 0;
 
     name = userdata.username;
     firstName.innerHTML = name.substr(0, name.indexOf(' '));
@@ -53,8 +52,11 @@ function UICustomizeAnimateIn()
     teamName.innerHTML = userdata.team.name;
     teamName.style.color = userdata.team.colorHex;
 
-    TweenMax.to(firstName, customizeFadeTime, {delay:customizeFadeTime, opacity:1});
-    TweenMax.to(lastName, customizeFadeTime, {delay:customizeFadeTime*2, opacity:1});
+    firstName.style.marginLeft=  "-300px";
+    lastName.style.marginRight=  "-300px";
+
+    TweenMax.to(firstName, customizeFadeTime, {delay:customizeFadeTime, opacity:1, marginLeft:0});
+    TweenMax.to(lastName, customizeFadeTime, {delay:customizeFadeTime*2, opacity:1, marginRight:0});
     TweenMax.to(dashImage, customizeFadeTime, {delay:customizeFadeTime*3, opacity:1, width:400, ease:Back.easeOut});
     TweenMax.to(teamName, customizeFadeTime, {delay:customizeFadeTime*4, opacity:1});
     TweenMax.to(teamLabel, customizeFadeTime, {delay:customizeFadeTime*4, opacity:1});
@@ -88,8 +90,11 @@ function getName()
     firstName.innerHTML = name.substr(0, name.indexOf(' '));
     lastName.innerHTML = name.substr(name.indexOf(' ') + 1);
 
-    TweenMax.to(firstName, customizeFadeTime, {opacity: 1});
-    TweenMax.to(lastName, customizeFadeTime, {opacity: 1, onComplete: stopAnimating});
+    firstName.style.marginLeft=  "-300px";
+    lastName.style.marginRight=  "-300px";
+
+    TweenMax.to(firstName, customizeFadeTime, {opacity: 1, marginLeft: 0});
+    TweenMax.to(lastName, customizeFadeTime, {opacity: 1, marginRight: 0, onComplete: stopAnimating});
 
     userdata.username = name;
 
