@@ -295,8 +295,22 @@ var createScene = function(){
 
       //dynamically set fov based on screen resolution
       //camera.fov = 2 + (-.676/canvas.height);
-camera.fov = 1;
-console.log(canvas.height);
+
+        console.log(canvas.height);
+        var scaleFactor = canvas.height / 1080;
+        camera.fov = 1;
+        if(canvas.height > 2200)
+        {
+            camera.fov = 1.4;
+        }
+        else if(canvas.height > 1100)
+        {
+            camera.fov = 1.2;
+        }
+        else {
+            camera.fov = 1;
+        }
+
       if(currentGameState == gameStates.WAITING)
       {
           currentWaitTime -= (engine.getDeltaTime() / 1000);
