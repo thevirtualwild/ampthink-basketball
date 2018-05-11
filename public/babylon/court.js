@@ -179,7 +179,9 @@ var createScene = function(){
                 currentCameraIndex = 0;
                 gameReady = false;
                 console.log("Aspect Ratio: " + canvas.width/canvas.height);
-                //animateCamera();
+                if(ISMASTER) {
+                    animateCamera();
+                }
                 updateUI();
                 combo = 0;
                 changeBallFX(false);
