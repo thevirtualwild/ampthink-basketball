@@ -197,7 +197,7 @@ var createScene = function(){
                 updateUI();
                 break;
             case gameStates.GAMEPLAY:
-                initEmitTime = 0.25;
+                initEmitTime = 0.05;
                 currentGameState = gameState;
                 currentCameraIndex = 1;
                 updateUI();
@@ -1461,7 +1461,9 @@ function gameOver() {
   }
 
   if(playerData) {
-      socket.emit('game over', gamedata);
+      if(ISMASTER) {
+          socket.emit('game over', gamedata);
+      }
   }
 
   //Show Results page
