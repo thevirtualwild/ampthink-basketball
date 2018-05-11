@@ -50,7 +50,7 @@ var initNetLerpDelayTime = 2;
 var currentNetLerpTime = 0.25;
 var initNetLerpTime = 0.25;
 
-var initEmitTime = 0.05;
+var initEmitTime = 0.5;
 var currentEmitTime = 0.05;
 
 var gameReady = false;
@@ -194,12 +194,14 @@ var createScene = function(){
                 updateUI();
                 break;
             case gameStates.GAMEPLAY:
+                initEmitTime = 0.5;
                 currentGameState = gameState;
                 currentCameraIndex = 1;
                 updateUI();
                 updateBallColor();
                 break;
             case gameStates.RESULTS:
+                initEmitTime = 0.05;
                 currentGameState = gameState;
                 currentCameraIndex = 1;
                 gameOver();
@@ -483,14 +485,15 @@ var createScene = function(){
 
                 if(currentGameState == gameStates.GAMEPLAY || currentGameState == gameStates.RESULTS)
                 {
+                    console.log("COMBO GAMEPLAY");
+                    //console.log("COMBO GAMEPLAY");
                     if(basketballs[i].position.y < -30 &&
-                        basketballs[i].physicsImpostor.getLinearVelocity().y < 0 &&
+                        /*basketballs[i].physicsImpostor.getLinearVelocity().y < 0 &&*/
                         basketballStates[i] == 1)
                     {
                         combo = 0;
-                        //console.log("COMBO BREAKER " + i);
+                        console.log("COMBO BREAKER " + i);
                         UIGameplayAnimateBadgeOff();
-
                         changeBallFX(false);
                         basketballStates[i] = 0;
                     }
@@ -518,7 +521,8 @@ var createScene = function(){
                         waitTime: currentWaitTime,
                         resultsTime: currentResultsTime,
                         basketballs: [],
-                        shotindex: shotIndex
+                        shotindex: shotIndex,
+                        states: []
                     }
 
                     for(var i = 0; i < basketballs.length; i++) {
@@ -538,6 +542,9 @@ var createScene = function(){
                         }
 
                         syncData['basketballs'].push(newbasketballvar);
+
+                        var state = basketballStates[i];
+                        syncData['states'].push(state);
                     }
 
                     if(hasCourt)
@@ -591,7 +598,12 @@ var createScene = function(){
                         basketballs[i].physicsImpostor.setLinearVelocity(newVel);
                         basketballs[i].physicsImpostor.setAngularVelocity(newAng);
 
-                    }
+                        //if(currentGameState != gameStates.GAMEPLAY)
+                        if(i != shotIndex-1)
+                        {
+                            basketballStates[i] = masterData.states;
+                        }
+                }
 
                     readyToSync =false;
                 }
