@@ -401,6 +401,9 @@ function onConnection(socket) {
     // // // console.log('player needs to join court: ' + somecourtname);
     // // console.log('courtnames - ');
     // // console.dir(courtnames);
+
+      //TODO: CHECK ROOM TO SEE IF GAME HAS STARTED. IF IT HAS, DON'T LET USER JOIN
+
     var courttojoin = courtnames[somecourtname];
     // // console.log('full court info: ');
     // // console.dir(courttojoin);
@@ -426,6 +429,8 @@ function onConnection(socket) {
 
       // // // // console.log('socket data?');
       // // // console.dir(socket);
+
+        console.log("IS GAME IN PROGRESS? " + socket.gamesrunning);
 
       socket.broadcast.to(socket.roomname).emit('player joined court', data);
 
@@ -736,6 +741,10 @@ function onConnection(socket) {
     socket.gamesrunning = true;
     // // // console.log('game almost ready by - ' + courtName);
     socket.broadcast.to(socket.roomname).emit('game almost ready', courtName);
+
+      //TODO: SET ROOM TO GAME IN PROGRESS HERE SO NO ONE ELSE CAN JOIN
+      //TODO: WILL NEED TO LISTEN FOR AN EVENT TO TURN GAME PROGRESS OFF AFTER RESULTS ARE SHOWN
+
   });
   socket.on('throw ball', function(data) {
     // // // // console.log('Full Data - ' + data);
