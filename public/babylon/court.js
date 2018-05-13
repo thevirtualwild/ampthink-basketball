@@ -37,8 +37,8 @@ var netSpheres = [];
 var attractShots = [-.12, 1.2, 1.1, .3, 1, -.2, -2.5, 1.8, 0, 3.2]
 var cameraSettings = [];
 
-var initWaitTime = 7;
-var currentWaitTime = 7;
+var initWaitTime = 15;
+var currentWaitTime = 15;
 var initGameTime = 30;
 var currentGameTime = 30;
 var initResultsTime = 10;
@@ -179,6 +179,7 @@ var createScene = function(){
                 currentCameraIndex = 0;
                 gameReady = false;
                 console.log("Aspect Ratio: " + canvas.width/canvas.height);
+                lobbyStarted = false;
                 if(ISMASTER) {
                     animateCamera();
                 }
@@ -311,7 +312,7 @@ var createScene = function(){
             camera.fov = 1;
         }
 
-      if(currentGameState == gameStates.WAITING)
+      if(currentGameState == gameStates.WAITING || lobbyStarted)
       {
           currentWaitTime -= (engine.getDeltaTime() / 1000);
 
@@ -335,19 +336,22 @@ var createScene = function(){
           }
           else if(currentWaitTime <= -2)
           {
-              //attractLabel.innerHTML = "GAME STARTS IN <br />" +  (5.5 + currentWaitTime).toFixed(0);
+              attractLabel.innerHTML = "GAME STARTS IN <br />" +  (5.5 + currentWaitTime).toFixed(0);
               //attractLabel.innerHTML = "";
           }
           else if(currentWaitTime < 0)
           {
-              //attractLabel.innerHTML = "PLAYERS LOCKED IN";
+              attractLabel.innerHTML = "PLAYERS LOCKED IN";
               //attractLabel.innerHTML = "";
           }
           else
           {
               if (hasplayer) {
-                  //attractLabel.innerHTML =  currentWaitTime.toFixed(0) + "<br /> WAITING FOR PLAYERS";
+                  attractLabel.innerHTML =  currentWaitTime.toFixed(0) + "<br /> WAITING FOR PLAYERS";
                   //attractLabel.innerHTML =  "";
+              }
+              else{
+                  //DISPLAY COUNTDOWN HERE IF GAME STARTED IN SAME ROOM BUT DIFF COURT
               }
           }
       }
@@ -1328,6 +1332,7 @@ var countdownStarted = true;
 var thisRoom = '';
 var courtName = '';
 var hasplayer = false;
+var lobbyStarted = false;
 
 // $passcodeInput.focus();
 
@@ -1568,6 +1573,8 @@ socket.on('player joined court', function(userdata) {
 
     scene.actionManager.processTrigger(scene.actionManager.actions[2].trigger, {additionalData: "y"});
   } else {
+      //IS THIS WHERE LOBBY IS STARTED??
+      lobbyStarted = true;
     console.log('Player ' + userdata.username + ' - Joined Sister Court - ' + userdata.court);
   }
 });
