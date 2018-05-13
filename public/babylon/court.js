@@ -352,7 +352,7 @@ var createScene = function(){
               }
               else{
                   //DISPLAY COUNTDOWN HERE IF GAME STARTED IN SAME ROOM BUT DIFF COURT
-                  attractLabel.innerHTML = "GAME STARTS IN <br />" +  (5.5 + currentWaitTime).toFixed(0);
+                  attractLabel.innerHTML = "JOIN NOW!<br />" +  (currentWaitTime).toFixed(0);
               }
           }
       }
