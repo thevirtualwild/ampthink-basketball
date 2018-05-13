@@ -77,6 +77,25 @@
   color: #999;
   cursor: default; }
 
+#attractLabel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 800px;
+  height: 500px;
+  overflow: visible;
+  font-size: 64px;
+  margin: auto;
+  padding: 50px;
+  border-radius: 3px;
+  text-align: center;
+  /*background:rgba(0,0,0, 0.2);*/
+  color: #999;
+  cursor: default; }
+
 #list-top, #list-bot {
   left: 20px;
   right: initial; }
@@ -322,24 +341,6 @@
         font-weight: bold;
         color: white; }
 
-footer #attractLabel {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-  max-width: 800px;
-  height: 500px;
-  overflow: visible;
-  font-size: 64px;
-  margin: auto;
-  padding: 50px;
-  border-radius: 3px;
-  text-align: center;
-  /*background:rgba(0,0,0, 0.2);*/
-  color: #999;
-  cursor: default; }
 footer #timeLabel {
   position: absolute;
   left: 0;
