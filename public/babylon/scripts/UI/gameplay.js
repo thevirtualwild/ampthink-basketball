@@ -21,9 +21,11 @@ var footerWidth;
 
 function UIGameplayAnimateIn()
 {
-    footerWidth = parseInt(footerCenter.style.width.substr(0, footerCenter.style.width.length-2));
-    footerWidth = canvas.width * .09 + "px";
-
+    footerWidth = initWaitingLeftWidth;
+    footerCenter.style.width = initWaitingLeftWidth + "px";
+    console.log(footerWidth);
+    initLeftPos = firstName.style.left;
+    console.log(initLeftPos);
     waitingLeft.style.display = "none";
     waitingRight.style.display = "none";
 
@@ -39,12 +41,14 @@ function UIGameplayAnimateIn()
     scoreText.style.opacity= 0;
     scoreLabel.style.lineHeight = 0;
 
+    console.log(initWaitingLeftWidth);
     //TweenMax.to(scoreLabel, textFadeTime, {lineHeight:40});
     TweenMax.to(gameplayLeft, textFadeTime, {opacity:1, delay: textFadeTime});
     TweenMax.to(scoreText, textFadeTime, {opacity:1, delay: textFadeTime});
 
-    TweenMax.to(firstName, textFadeTime, {opacity:1, delay: textFadeTime, left:footerWidth});
-    TweenMax.to(lastName, textFadeTime, {opacity:1, delay: textFadeTime, left: footerWidth});
+
+    TweenMax.to(firstName, textFadeTime, {opacity:1, delay: textFadeTime, left:(canvas.width * .09) - initWaitingLeftWidth/4});
+    TweenMax.to(lastName, textFadeTime, {opacity:1, delay: textFadeTime, left: canvas.width * .09 - initWaitingLeftWidth/4});
 }
 
 function UIGameplayAnimateOut()
@@ -57,7 +61,7 @@ function UIGameplayAnimateOut()
     TweenMax.to(footerLeft, textFadeTime, {top:200});
     TweenMax.to(footerCenter, textFadeTime, {top:200, onComplete: turnOffDisplay});
     TweenMax.to(firstName, textFadeTime, {opacity:1, delay: .1, left:footerWidth + 300});
-    TweenMax.to(lastName, textFadeTime, {opacity:1, delay: .2, left: footerWidth + 300});
+    TweenMax.to(lastName, textFadeTime, {opacity:1, delay: .2, left:footerWidth + 300});
 }
 
 function UIGameplayUpdateScore(scoreInput)

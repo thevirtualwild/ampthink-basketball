@@ -296,7 +296,7 @@ var createScene = function(){
       //dynamically set fov based on screen resolution
       //camera.fov = 2 + (-.676/canvas.height);
 
-        console.log(canvas.height);
+        //console.log(canvas.height);
         var scaleFactor = canvas.height / 1080;
         camera.fov = 1;
         if(canvas.height > 2200)

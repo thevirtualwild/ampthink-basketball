@@ -8,37 +8,31 @@ var footerCenter = document.getElementById("footerCenter");
 var playNow= document.getElementById("playNow");
 var comboBadge= document.getElementById("comboBadge");
 
-var attractLeftStep1 = document.getElementById("footerLeft").getElementsByClassName("attractLeft")[0];
-var attractRightStep1 = document.getElementById("footerLeft").getElementsByClassName("attractRight")[0];
-
-var attractLeftStep2 = document.getElementById("footerCenter").getElementsByClassName("attractLeft")[0];
-var attractRightStep2 = document.getElementById("footerCenter").getElementsByClassName("attractRight")[0];
-
-var waitingLeft = document.getElementById("footerLeft").getElementsByClassName("waitingLeft")[0];
-var waitingRight = document.getElementById("footerCenter").getElementsByClassName("waitingRight")[0];
+//var waitingLeft = document.getElementById("footerLeft").getElementsByClassName("waitingLeft")[0];
+//var waitingRight = document.getElementById("footerCenter").getElementsByClassName("waitingRight")[0];
 var countdown = waitingLeft.getElementsByClassName("textCountdown")[0];
-var textWaiting = waitingRight.getElementsByClassName("textWaiting")[0];
-
-var footerWidth;
+//var textWaiting = waitingRight.getElementsByClassName("textWaiting")[0];
+var initWaitingLeftTextPos;
 
 function UIWaitingAnimateIn()
 {
-    footerWidth = parseInt(footerCenter.style.width.substr(0, footerCenter.style.width.length-2));
-    footerWidth = canvas.width * .09;
-
+    //initWaitingLeftTextPos = textWaiting.style.left;
+    console.log(initWaitingLeftTextPos);
     transitioned = false;
-    attractLeftStep1.style.display = "none";
-    attractLeftStep2.style.display = "none";
-    attractRightStep1.style.display = "none";
-    attractRightStep2.style.display = "none";
+    turnOnWaiting();
 
+    //textWaiting.style.left = footerWidth + "px";
+    TweenMax.from(countdown, textFadeTime, {opacity:0});
+    TweenMax.from(textWaiting, textFadeTime, {opacity:0});
+}
+
+function turnOnWaiting()
+{
     waitingLeft.style.display = "inline";
     waitingRight.style.display = "inline"
-    countdown.style.opacity = 0;
-    textWaiting.style.opacity = 0;
-    textWaiting.style.left = footerWidth + "px";
-    TweenMax.to(countdown, textFadeTime, {opacity:1});
-    TweenMax.to(textWaiting, textFadeTime, {opacity:1});
+    countdown.style.opacity = 1;
+    textWaiting.style.opacity = 1;
+    textWaiting.style.left = "9%";
 }
 
 function UIWaitingAnimateOut()

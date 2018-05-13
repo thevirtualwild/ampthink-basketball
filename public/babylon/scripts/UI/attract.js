@@ -9,71 +9,91 @@ var playNow= document.getElementById("playNow");
 var comboBadge= document.getElementById("comboBadge");
 var results = document.getElementById("results");
 var inner = document.getElementById("inner");
-var attractLeftStep1 = document.getElementById("footerLeft").getElementsByClassName("attractLeft");
-var attractRightStep1 = document.getElementById("footerLeft").getElementsByClassName("attractRight");
 
-var attractLeftStep2 = document.getElementById("footerCenter").getElementsByClassName("attractLeft");
-var attractRightStep2 = document.getElementById("footerCenter").getElementsByClassName("attractRight");
-//var attractLeft = document.getElementByID("attractTopLeft");
-/*
-var attractBottomLeft = document.getElementById("attractBottomLeft");
-var attractRight = document.getElementById("attractRight");
-var attractStep2TopLeft = document.getElementById("attractStep2TopLeft");
-var attractStep2BottomLeft = document.getElementById("attractStep2BottomLeft");
-var attractStep2Right = document.getElementById("attractStep2Right");
-*/
+var attractLeftStep1 = document.getElementById("footerLeft").getElementsByClassName("attractLeft")[0];
+var attractRightStep1 = document.getElementById("footerLeft").getElementsByClassName("attractRight")[0];
+
+var attractLeftStep2 = document.getElementById("footerCenter").getElementsByClassName("attractLeft")[0];
+var attractRightStep2 = document.getElementById("footerCenter").getElementsByClassName("attractRight")[0];
+
+var waitingLeft = document.getElementById("footerLeft").getElementsByClassName("waitingLeft")[0];
+var waitingRight = document.getElementById("footerCenter").getElementsByClassName("waitingRight")[0];
+var textWaiting = waitingRight.getElementsByClassName("textWaiting")[0];
+
+var initFooterLeftWidth;
+var initFooterCenterWidth;
+var initWaitingLeftWidth;
 var attractLeftStepNum = document.getElementById("footerLeft").getElementsByClassName("stepNum");
-
+var initAttractLoad = true;
 function UIAttractAnimateIn()
 {
-    // footerLeft.style.width =  .4*canvas.width+ "px";
-    // footerCenter.style.width =  .4*canvas.width+ "px";
-    //
-    // //console.log(.4*canvas.width+ "px");
-    // attractLeftStep1.style.display = "inline";
-    // attractLeftStep2.style.display = "inline";
-    // attractRightStep1.style.display = "inline";
-    // attractRightStep2.style.display = "inline";
-    //
-    // inner.style.backgroundColor = "transparent";
-    // results.style.display = "none";
-    // footer.style.backgroundPositionY = "200";
-    // footerLeft.style.top = "200";
-    // footerCenter.style.top = "200";
-    //
-    // TweenMax.to(footer, textFadeTime, {backgroundPositionY:0});
-    // TweenMax.to(footerLeft, textFadeTime, {top:0});
-    // TweenMax.to(footerCenter, textFadeTime, {top:0});
-    //
-    // playNow.style.opacity = 1;
-    // console.log("AnimateIn");
-    // TweenMax.to(playNow, textFadeTime * 3, {opacity: 0, repeat: -1,  ease:Power2.easeIn, yoyo:true});
-    // comboBadge.style.opacity = 0;
-    //
-    // attractLeftStep1.style.opacity = 0;
-    // attractRightStep1.style.opacity = 0;
-    // attractLeftStep2.style.opacity = 0;
-    // attractRightStep2.style.opacity = 0;
-    //
-    // TweenMax.to(attractLeftStep1, textFadeTime, {delay: 3*textFadeTime, alpha:1});
-    // TweenMax.to(attractRightStep1, textFadeTime, {delay: 3*textFadeTime, alpha:1});
-    // TweenMax.to(attractLeftStep2, textFadeTime, {delay: 3*textFadeTime, alpha:1});
-    // TweenMax.to(attractRightStep2, textFadeTime, {delay: 3*textFadeTime, alpha:1});
+    turnOnAttract();
+    inner.style.backgroundColor = "transparent";
+    results.style.display = "none";
+    TweenMax.from(footer, textFadeTime, {backgroundPositionY:200});
+    TweenMax.from(footerLeft, textFadeTime, {top:200});
+    TweenMax.from(footerCenter, textFadeTime, {top:200});
+    TweenMax.to(playNow, textFadeTime * 3, {opacity: 0, repeat: -1,  ease:Power2.easeIn, yoyo:true});
+    TweenMax.from(attractLeftStep1, textFadeTime, {delay: 2*textFadeTime, opacity:0});
+    TweenMax.from(attractRightStep1, textFadeTime, {delay: 2*textFadeTime, opacity:0});
+    TweenMax.from(attractLeftStep2, textFadeTime, {delay: 2*textFadeTime, opacity:0});
+    TweenMax.from(attractRightStep2, textFadeTime, {delay: 2*textFadeTime, opacity:0});
 }
 
 function UIAttractAnimateOut()
 {
-    TweenMax.to(attractLeftStep1, textFadeTime, {alpha:0});
-    TweenMax.to(attractRightStep1, textFadeTime, {alpha:0});
-    TweenMax.to(attractLeftStep2, textFadeTime, {alpha:0});
-    TweenMax.to(attractRightStep2, textFadeTime, {alpha:0});
+    TweenMax.to(attractLeftStep1, textFadeTime, {opacity:0});
+    TweenMax.to(attractRightStep1, textFadeTime, {opacity:0});
+    TweenMax.to(attractLeftStep2, textFadeTime, {opacity:0});
+    TweenMax.to(attractRightStep2, textFadeTime, {opacity:0});
 
-    TweenMax.to(playNow, textFadeTime, {alpha:0});
-    TweenMax.to(comboBadge, textFadeTime, {alpha:0});
+    TweenMax.to(playNow, textFadeTime, {opacity:0});
+    TweenMax.to(comboBadge, textFadeTime, {opacity:0});
 
-    TweenMax.to(footerLeft, textFadeTime, {delay: textFadeTime*2, width:.22*canvas.width});
-    TweenMax.to(footerCenter, textFadeTime, {delay: textFadeTime*2, width:.22*canvas.width, onComplete: UIWaitingAnimateIn});
-    console.log("ANIMATE OUT");
+    TweenMax.to(footerLeft, textFadeTime, {delay: textFadeTime*2, width:202, onComplete: turnOffAttract});
+}
+
+function turnOnAttract()
+{
+    attractLeftStep1.style.display = "inline";
+    attractRightStep1.style.display = "inline";
+    attractLeftStep2.style.display = "inline";
+    attractRightStep2.style.display = "inline";
+
+    attractLeftStep1.style.opacity = 1;
+    attractLeftStep2.style.opacity = 1;
+    attractRightStep1.style.opacity = 1;
+    attractRightStep2.style.opacity = 1;
+
+    footer.style.backgroundPositionY = 0;
+    footerLeft.style.top = 0;
+    footerCenter.style.top = 0;
+
+    playNow.style.opacity = 1;
+    comboBadge.style.opacity = 0;
+
+    if(initAttractLoad)
+    {
+        initWaitingLeftWidth = waitingLeft.offsetWidth;
+        initAttractLoad = false;
+    }
+    else
+    {
+        footerLeft.style.width = "auto";
+        footerCenter.style.width = "auto";
+    }
+    waitingLeft.style.display = "none";
+    waitingRight.style.display = "none";
+}
+
+function turnOffAttract()
+{
+    attractLeftStep1.style.display = "none";
+    attractRightStep1.style.display = "none";
+    attractLeftStep2.style.display = "none";
+    attractRightStep2.style.display = "none";
+
+    UIWaitingAnimateIn();
 }
 
 function UIAttractUpdateCourtName(name)
