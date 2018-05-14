@@ -673,7 +673,7 @@ function onConnection(socket) {
               syncdata:data
           };
 
-          // console.log("Court name in index: " + socket.court.name);
+           console.log("Court name in index: " + socket.court.name);
 
         socket.broadcast.to(socket.roomname).emit('sync with master', testData);
       } else {
