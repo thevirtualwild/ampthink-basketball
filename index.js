@@ -919,10 +919,10 @@ function onConnection(socket) {
 
     if (socket.court) {
       var thiscourt = courtsandmaster[socket.court.id];
-       console.log('thiscourt - '+ thiscourt);
+       //console.log('thiscourt - '+ thiscourt);
 
        console.log('thiscourt from sync screens: ');
-       console.dir(thiscourt);
+       //console.dir(thiscourt);
 
       syncSlaves(data);
     } else {
