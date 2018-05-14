@@ -1234,7 +1234,7 @@ net.setIndices(indices, indices.length);
             },
 
             function () {
-                updatePhysics();
+                //updatePhysics();
             }
         )
     );
@@ -1640,6 +1640,7 @@ function gameOver() {
       gamename: gameName
   }
 
+  console.log("game over, gameName: " + gameName);
   if(playerData) {
       if(ISMASTER) {//MAYBE CHECK IF HAS PLAYER
           socket.emit('game over', gamedata);
@@ -1652,7 +1653,9 @@ function gameOver() {
 
 
 
-
+socket.on('reconnecting', function() {
+    console.log('reconnecting');
+});
 
 socket.on('set master', function(){
     ISMASTER = true;
@@ -1662,7 +1665,9 @@ socket.on('set master', function(){
 });
 
 socket.on('game almost ready', function(gamedata){
+
    gameName = gamedata.gamename;
+    console.log("gameName: " + gameName)
 });
 
 socket.on('device knows court', function(data) {
