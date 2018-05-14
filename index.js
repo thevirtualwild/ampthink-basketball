@@ -928,8 +928,8 @@ function onConnection(socket) {
     } else {
       console.log('deviceIP ' + data.deviceIP);
       mydevice = alldevices[data.deviceIP];
-      console.log('mydevice - ');
-      console.dir(mydevice);
+      //console.log('mydevice - ');
+      //console.dir(mydevice);
       // mycourt = allcourts[mydevice.court];
       myzone = allzones[mydevice.zone];
       console.log('cant find court');
