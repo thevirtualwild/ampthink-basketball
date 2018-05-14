@@ -176,6 +176,7 @@ function UIResultsUpdateScore(playerScore)
 function UIResultsSetData(data) {
     topScoreText.innerHTML = data.highscorer.player.score;
 
+
     if(data.highscorer.player.username === undefined)
     {
         winner = true;

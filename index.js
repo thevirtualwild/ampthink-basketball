@@ -403,6 +403,7 @@ function onConnection(socket) {
     // // console.dir(courtnames);
 
       //TODO: CHECK ROOM TO SEE IF GAME HAS STARTED. IF IT HAS, DON'T LET USER JOIN
+      //TODO: CHECK COURT TO SEE IF GAME ALREADY HAS A PLAYER. IF IT HAS, DON'T LET USER JOIN
 
     var courttojoin = courtnames[somecourtname];
     // // console.log('full court info: ');
@@ -432,7 +433,9 @@ function onConnection(socket) {
 
         console.log("IS GAME IN PROGRESS? " + socket.gamesrunning);
 
-      if(socket.gamesrunning)
+      //
+
+      if(socket.gamesrunning)//DONT USE GAMESRUNNING ANYMORE
       {
           socket.emit('court not found');
       }

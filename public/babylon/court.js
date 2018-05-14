@@ -330,8 +330,11 @@ var createScene = function(){
           else if(currentWaitTime <= -4 && !gameReady)
           {
               gameReady = true;
-              if (hasplayer) {
-                  socket.emit("game almost ready", courtName);
+
+              if(ISMASTER) {
+                  if (hasplayer) {
+                      socket.emit("game almost ready", courtName);
+                  }
               }
           }
           else if(currentWaitTime <= -2)
@@ -1332,6 +1335,7 @@ var countdownStarted = true;
 
 var thisRoom = '';
 var courtName = '';
+var gameName = '';
 var hasplayer = false;
 var lobbyStarted = false;
 
@@ -1496,11 +1500,12 @@ function gameOver() {
   var gamedata = {
     player: playerData,
     score: score,
-    combo: combo
+    combo: combo,
+      gamename: gameName
   }
 
   if(playerData) {
-      if(ISMASTER) {
+      if(ISMASTER) {//MAYBE CHECK IF HAS PLAYER
           socket.emit('game over', gamedata);
       }
   }
@@ -1518,6 +1523,10 @@ socket.on('set master', function(){
     console.log(ISMASTER);
     scene.actionManager.processTrigger(scene.actionManager.actions[3].trigger, {additionalData: "p"});
 
+});
+
+socket.on('game almost ready', function(gamedata){
+   gameName = gamedata.gamename;
 });
 
 socket.on('device knows court', function(data) {
@@ -1625,6 +1634,7 @@ socket.on('end all games', function(courtthatfinished) {
 socket.on('show results', function(resultsdata) {
   console.log('Results!');
   console.dir(resultsdata);
+
   UIResultsSetData(resultsdata);
 });
 socket.on('reset game', function() {
