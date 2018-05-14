@@ -905,6 +905,12 @@ function onConnection(socket) {
 
     socket.broadcast.to(socket.roomname).emit('reset game');
   });
+  socket.on('court reset', function(somecourtname) {
+    console.log('court resetting');
+    var thiscourt = courtnames[somecourtname];
+    thiscourt.hasplayer = false;
+    courtnames[somecourtname] = thiscourt;
+  });
 
   socket.on('sync screens', function(data) {
     // console.log('Sync Data test');

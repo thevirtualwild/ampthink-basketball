@@ -1822,6 +1822,8 @@ socket.on('show results', function(resultsdata) {
 });
 socket.on('reset game', function() {
   scene.actionManager.processTrigger(scene.actionManager.actions[1].trigger, {additionalData: "t"});
+  console.log('court should be reset here');
+  socket.emit('court reset', courtName);
 });
 
 socket.on('change player name', function(data) {
