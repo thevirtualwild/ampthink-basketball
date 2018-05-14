@@ -898,12 +898,14 @@ function onConnection(socket) {
   socket.on('room reset', function() {
     var thisgamesroom = roomnames[socket.roomname];
 
+    console.log('room reset called');
     thisgamesroom.gamerunning = false;
 
     roomnames[socket.roomname] = thisgamesroom;
     allrooms[thisgamesroom.id] = thisgamesroom;
 
     socket.broadcast.to(socket.roomname).emit('reset game');
+    socket.emit('reset game');
   });
   socket.on('court reset', function(somecourtname) {
     console.log('court resetting');
