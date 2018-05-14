@@ -570,6 +570,9 @@ function onConnection(socket) {
     // // console.log('Adding Score:');
     // // console.dir(data);
 
+    getHighScore(socket.game, data);
+
+
     playername = data.player.username;
     playerteam = teamindex[data.player.team.name];
     // // // console.log(playerteam);
@@ -592,6 +595,45 @@ function onConnection(socket) {
     }
   }
 
+  function getHighScore(somegame, gamedata) {
+
+    var thisgamesroom = allrooms[somegame];
+
+    console.log('get high score');
+    console.dir(gamedata);
+
+    if (gamesplayed[somegame]) {
+      var updategame = gamesplayed[somegame].push(gamedata);
+      gamesplayed[somegame] = updategame;
+    } else {
+      gamesplayed[somegame] = [gamedata];
+    }
+
+    for (ascore in gamesplayed[socket.game]) {
+      thisgamesroom.currentHighScore = ascore;
+    }
+
+    if (gamedata.score > thisgamesroom.currentHighScore) {
+      thisgamesroom.currentHighScore = courtgamedata;
+    } else {
+      // // // console.log('Sorry not the best');
+    }
+
+    var resultsdata = {
+      highscorer: currentHighScore,
+      yourscore: courtgamedata,
+      teamscores: teamscores
+    };
+
+    var emitData = {
+      court: socket.court.name,
+      game: socket.game,
+      resultsdata: resultsdata
+    };
+
+    socket.broadcast.to(socket.roomname).emit('show results', emitData);
+
+  }
 
   function syncSlaves(data) {
     var courtmaster;
@@ -745,12 +787,26 @@ function onConnection(socket) {
 
     var thisgamesroom = allrooms[socket.roomname];
 
-    thisgamesroom.gamerunning = true;
+    if (thisgamesroom.gamerunning) {
+      socket.game = thisgamesroom.gamename;
+      thisgamesroom.courtcount += 1;
+    } else {
+      thisgamesroom.gamerunning = true;
+      thisgamesroom.gamename = thisgamesroom.id + '_' + gamenum;
+      thisgamesroom.courtcount = 1;
+      gamenum += 1;
+      socket.game = thisgamesroom.gamename;
+    }
 
     allrooms[socket.roomname] = thisgamesroom;
 
+    var gamedata = {
+      courtname: courtName,
+      gamename: thisgamesroom.gamename
+    }
+
     // // // console.log('game almost ready by - ' + courtName);
-    socket.broadcast.to(socket.roomname).emit('game almost ready', courtName);
+    socket.broadcast.to(socket.roomname).emit('game almost ready', gamedata);
 
       //TODO: WILL NEED TO LISTEN FOR AN EVENT TO TURN GAME PROGRESS OFF AFTER RESULTS ARE SHOWN
 
@@ -787,57 +843,21 @@ function onConnection(socket) {
     socket.broadcast.to(socket.roomname).emit('take shot', emitData);
 
   });
-  socket.on('game over', function(gamedata) {
+  socket.on('game over', function(courtgamedata) {
 
     // Submit Player Data To Database
     // // console.log('game over');
     // // console.dir(gamedata);
-    addScoreToDatabase(gamedata);
+    addScoreToDatabase(courtgamedata);
 
-    // Check Database for High Score (of room)
-    socket.game = socket.court.name + gamenum;
-    gamenum += 1;
+    var thisgamesroom = allrooms[socket.roomname];
 
-    if (gamesplayed[socket.game]) {
-      var updategame = gamesplayed[socket.game].push(gamedata.score);
-      gamesplayed[socket.game] = updategame;
-    } else {
-      gamesplayed[socket.game] = [gamedata.score];
-    }
-
-    for (ascore in gamesplayed[socket.game]) {
-      currentHighScore = ascore
-    }
-    if (gamedata.score > gamesplayed[socket.game][0]) {
-      currentHighScore = gamedata;
-    } else {
-      // // // console.log('Sorry not the best');
-    }
-
-    var resultsdata = {
-      highscorer: currentHighScore,
-      yourscore: gamedata,
-      teamscores: teamscores
-    };
-
-    console.log('court - ' + socket.court);
-    console.log('game - ' + socket.game);
-    var emitData = {
-      court: socket.court.name,
-      game: socket.game,
-      resultsdata: resultsdata
-    };
-
-    socket.broadcast.to(socket.roomname).emit('show results', emitData);
-
-    if (socket.gamesrunning) {
+    if (thisgamesroom.gamerunning) {
       socket.broadcast.to(socket.roomname).emit('end all games', socket.court);
-      socket.gamesrunning = false;
-    } else {
-      // // // console.log(socket.court + ': Games already over');
-    }
-    // socket.emit('show results', highscorer);
+      thisgamesroom.gamerunning = false;
 
+      allrooms[socket.roomname] = thisgamesroom;
+    }
   });
   socket.on('room reset', function() {
     var thisgamesroom = allrooms[socket.roomname];
@@ -899,6 +919,7 @@ function onConnection(socket) {
   }
   function playerDisconnected(somesocket) {
   }
+
   //server stuff
   socket.on('disconnect', function() {
     // console.log('user from: ' + socket.roomname + ' disconnected');
