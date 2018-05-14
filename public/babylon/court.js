@@ -367,7 +367,7 @@ var createScene = function(){
               }
               else{
                   //DISPLAY COUNTDOWN HERE IF GAME STARTED IN SAME ROOM BUT DIFF COURT
-                  attractLabel.innerHTML = "JOIN NOW!<br />" +  (currentWaitTime - 2).toFixed(0);
+                  attractLabel.innerHTML = "JOIN NOW!<br />" +  (currentWaitTime).toFixed(0);
               }
           }
       }
