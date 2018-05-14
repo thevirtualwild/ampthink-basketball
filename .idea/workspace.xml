@@ -45,8 +45,8 @@
       <file leaf-file-name="court.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/babylon/court.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="218">
-              <caret line="1389" column="52" lean-forward="true" selection-start-line="1389" selection-start-column="52" selection-end-line="1389" selection-end-column="52" />
+            <state relative-caret-position="439">
+              <caret line="1396" column="0" lean-forward="true" selection-start-line="1396" selection-start-column="0" selection-end-line="1396" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -105,8 +105,8 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
-              <caret line="976" column="33" lean-forward="false" selection-start-line="976" selection-start-column="33" selection-end-line="976" selection-end-column="33" />
+            <state relative-caret-position="107">
+              <caret line="409" column="37" lean-forward="true" selection-start-line="409" selection-start-column="37" selection-end-line="409" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -133,11 +133,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>uiresultssetdata</find>
-      <find>attractlabel</find>
-      <find>courttojoin</find>
-      <find>court not found</find>
-      <find>var allrooms</find>
       <find>allrooms</find>
       <find>socket.id</find>
       <find>allcourts[</find>
@@ -156,13 +151,18 @@
       <find>reconnect</find>
       <find>netspheres</find>
       <find>cannon</find>
-      <find>updatephysics</find>
       <find>netlerpdelaytime</find>
       <find>sleep</find>
       <find>initnetlerptime</find>
       <find>currentnetlerpdelaytime</find>
       <find>var scene</find>
       <find>currentmass</find>
+      <find>hasplayer</find>
+      <find>courtname</find>
+      <find>courtName =</find>
+      <find>getphysicsplugin</find>
+      <find>currentnetlerptime</find>
+      <find>updatephysics</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -374,7 +374,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="599300000" />
+    <option name="totallyTimeSpent" value="601342000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -728,16 +728,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="976" column="33" lean-forward="false" selection-start-line="976" selection-start-column="33" selection-end-line="976" selection-end-column="33" />
+        <state relative-caret-position="107">
+          <caret line="409" column="37" lean-forward="true" selection-start-line="409" selection-start-column="37" selection-end-line="409" selection-end-column="37" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/babylon/court.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="1389" column="52" lean-forward="true" selection-start-line="1389" selection-start-column="52" selection-end-line="1389" selection-end-column="52" />
+        <state relative-caret-position="439">
+          <caret line="1396" column="0" lean-forward="true" selection-start-line="1396" selection-start-column="0" selection-end-line="1396" selection-end-column="0" />
           <folding />
         </state>
       </provider>

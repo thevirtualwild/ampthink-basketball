@@ -952,7 +952,7 @@ var createScene = function(){
             {
                 if(lowEndDevice)
                 {
-                    currentMass = .5 - j*.1;
+                    currentMass = .4 - j*.1;
 
                     if(j == 0){
                         currentRestitution = 15;
@@ -972,14 +972,14 @@ var createScene = function(){
                 }
                 else
                 {
-                    currentMass = .5 - j*.1;
+                    currentMass = .4 - j*.1;
 
                     if(j == 0){
-                        currentRestitution = 35;
+                        currentRestitution = 8;
                     }
                     else if(j ==1)
                     {
-                        currentRestitution = 30;
+                        currentRestitution = 8;
                     }
                     else if(j ==2)
                     {
@@ -1353,6 +1353,15 @@ net.setIndices(indices, indices.length);
 
     function updatePhysics()
     {
+
+        if(lowEndDevice)
+        {
+            scene.getPhysicsEngine().getPhysicsPlugin().world.solver.iterations = 1;
+        }
+        else
+        {
+            scene.getPhysicsEngine().getPhysicsPlugin().world.solver.iterations = 3;
+        }
         for(var j = 0; j < height; j++)
         {
             for (var i = 0; i < sphereAmount; i++)
@@ -1364,7 +1373,7 @@ net.setIndices(indices, indices.length);
                 {
                     if(lowEndDevice)
                     {
-                        currentMass = .5 - j*.1;
+                        currentMass = .4 - j*.1;
 
                         if(j == 0){
                             currentRestitution = 15;
@@ -1384,14 +1393,14 @@ net.setIndices(indices, indices.length);
                     }
                     else
                     {
-                        currentMass = .5 - j*.1;
+                        currentMass = .4 - j*.1;
 
                         if(j == 0){
-                            currentRestitution = 25;
+                            currentRestitution = 8;
                         }
                         else if(j ==1)
                         {
-                            currentRestitution = 20;
+                            currentRestitution = 6;
                         }
                         else if(j ==2)
                         {
