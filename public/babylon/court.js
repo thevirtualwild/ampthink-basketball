@@ -362,12 +362,12 @@ var createScene = function(){
           else
           {
               if (hasplayer) {
-                  attractLabel.innerHTML =  currentWaitTime.toFixed(0) + "<br /> WAITING FOR PLAYERS";
+                  //attractLabel.innerHTML =  currentWaitTime.toFixed(0) - 2 + "<br /> WAITING FOR PLAYERS";
                   //attractLabel.innerHTML =  "";
               }
               else{
                   //DISPLAY COUNTDOWN HERE IF GAME STARTED IN SAME ROOM BUT DIFF COURT
-                  attractLabel.innerHTML = "JOIN NOW!<br />" +  (currentWaitTime).toFixed(0);
+                  attractLabel.innerHTML = "JOIN NOW!<br />" +  (currentWaitTime - 2).toFixed(0);
               }
           }
       }
