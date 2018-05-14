@@ -787,7 +787,9 @@ function onConnection(socket) {
 
       console.log(allrooms);
       console.log("room name " + socket.roomname);
+      console.log("socketid " + socket.id);
     var thisgamesroom = allrooms[socket.roomname];
+
     console.log("this games room " + thisgamesroom);
     if (thisgamesroom.gamerunning) {
       socket.game = thisgamesroom.gamename;
