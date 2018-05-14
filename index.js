@@ -402,53 +402,52 @@ function onConnection(socket) {
     // // console.log('courtnames - ');
     // // console.dir(courtnames);
 
-      //TODO: CHECK ROOM TO SEE IF GAME HAS STARTED. IF IT HAS, DON'T LET USER JOIN
-
     var courttojoin = courtnames[somecourtname];
     // // console.log('full court info: ');
     // // console.dir(courttojoin);
 
     if (courttojoin) {
-      var roomtojoin = allrooms[courttojoin.room].name;
 
-      // // // console.log('roomtojoin - ' + roomtojoin);
+      var roomcourtisapartof = allrooms[courttojoin.room];
 
-      socket.roomname = roomtojoin;
+      gamestarted = roomcourtisapartof.gamerunning;
 
-      // // // console.log('joining room? - ' + socket.roomname);
+      if (gamestarted) {
+        socket.emit('game already running');
+      } else {
+        //CHECK COURT TO SEE IF GAME HAS STARTED, also if it has a player IF IT HAS, DON'T LET USER JOIN
+        hasplayer = courttojoin.hasplayer;
+        if (hasplayer) {
+          socket.emit('someone already playing');
+          // same as court not found
+        } else {
+          courtojoin.hasplayer = true;
 
-      socket.join(socket.roomname);
+          // save the hasplayer variable back to our list of courts
+          courtnames[somecourtname] = courtojoin;
 
-      var data = {
-        username: socket.username,
-        team: socket.team,
-        court: socket.court
-      }
-      // // console.log('tell everyone player joined the court: ');
-      // // console.dir(data);
+          socket.roomname = roomcourtisapartof.name;
 
-      // // // // console.log('socket data?');
-      // // // console.dir(socket);
+          // player has joined court, and room
+          socket.join(socket.roomname);
 
-        console.log("IS GAME IN PROGRESS? " + socket.gamesrunning);
+          var data = {
+            username: socket.username,
+            team: socket.team,
+            court: socket.court
+          }
 
-      if(socket.gamesrunning)
-      {
-          socket.emit('court not found');
-      }
-      else
-      {
+          console.log("IS GAME IN PROGRESS? " + socket.gamesrunning);
+
           socket.broadcast.to(socket.roomname).emit('player joined court', data);
 
           socket.emit('you joined court');
+        }
       }
     } else {
       // // // console.log('court not found');
       socket.emit('court not found');
     }
-    // // // // console.log(courttojoin);
-    // // // // console.log('courtnames');
-    // // // console.dir(courtnames);
   }
 
   function createCourt(somedevice,somezone) {
@@ -741,14 +740,18 @@ function onConnection(socket) {
   //    // // // console.log('countdown already running')
   //   }
   // });
+
   socket.on('game almost ready', function(courtName) {
-    // // // // console.log('game almost ready - ' + courtName);
-    // // // // console.log('court room? - ' + socket.roomname);
-    socket.gamesrunning = true;
+
+    var thisgamesroom = allrooms[socket.roomname];
+
+    thisgamesroom.gamerunning = true;
+
+    allrooms[socket.roomname] = thisgamesroom;
+
     // // // console.log('game almost ready by - ' + courtName);
     socket.broadcast.to(socket.roomname).emit('game almost ready', courtName);
 
-      //TODO: SET ROOM TO GAME IN PROGRESS HERE SO NO ONE ELSE CAN JOIN
       //TODO: WILL NEED TO LISTEN FOR AN EVENT TO TURN GAME PROGRESS OFF AFTER RESULTS ARE SHOWN
 
   });
@@ -837,6 +840,12 @@ function onConnection(socket) {
 
   });
   socket.on('room reset', function() {
+    var thisgamesroom = allrooms[socket.roomname];
+
+    thisgamesroom.gamerunning = false;
+
+    allrooms[socket.roomname] = thisgamesroom;
+
     socket.broadcast.to(socket.roomname).emit('reset game');
   });
 
