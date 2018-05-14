@@ -20,7 +20,7 @@ var cameraNames = Object.freeze({"freeThrow": 0, "quarterFar": 1, "close": 2});
 var selectedCameraType = cameraNames.freeThrow;
 
 var basketballStates = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-
+var FPSArray = [];
 var pulseAmbientColor = false;
 
 var sceneLoaded = false;
@@ -69,6 +69,8 @@ var newBasketballOutlines = [];
 
 var emitInitTime = .5;
 var emitCurrentTime = .5;
+
+var lowEndDevice = false;
 
 createCameraTypes();
 
@@ -938,23 +940,47 @@ var createScene = function(){
 
             if(useCannon)
             {
-                currentMass = .5 - j*.1;
+                if(lowEndDevice)
+                {
+                    currentMass = .5 - j*.1;
 
-                if(j == 0){
-                    currentRestitution = 15;
-                }
-                else if(j ==1)
-                {
-                    currentRestitution = 10;
-                }
-                else if(j ==2)
-                {
-                    currentRestitution = .5;
+                    if(j == 0){
+                        currentRestitution = 15;
+                    }
+                    else if(j ==1)
+                    {
+                        currentRestitution = 10;
+                    }
+                    else if(j ==2)
+                    {
+                        currentRestitution = .5;
+                    }
+                    else
+                    {
+                        currentRestitution = 0.5;
+                    }
                 }
                 else
                 {
-                    currentRestitution = 0.5;
+                    currentMass = .1;
+
+                    if(j == 0){
+                        currentRestitution = 35;
+                    }
+                    else if(j ==1)
+                    {
+                        currentRestitution = 30;
+                    }
+                    else if(j ==2)
+                    {
+                        currentRestitution = 1;
+                    }
+                    else
+                    {
+                        currentRestitution = 0.5;
+                    }
                 }
+
 
             }
             else
@@ -1200,6 +1226,19 @@ net.setIndices(indices, indices.length);
         )
     );
 
+    scene.actionManager.registerAction(
+        new BABYLON.ExecuteCodeAction(
+            {
+                trigger: BABYLON.ActionManager.OnKeyUpTrigger,
+                additionalData: '['
+            },
+
+            function () {
+                updatePhysics();
+            }
+        )
+    );
+
     function updateClock() {
         if (currentGameTime + 1 > 10) {
             var firstDigit = Math.ceil(parseInt((currentGameTime+1).toFixed(2).substr(0, 1)));
@@ -1302,6 +1341,77 @@ net.setIndices(indices, indices.length);
         }
     }
 
+    function updatePhysics()
+    {
+        for(var j = 0; j < height; j++)
+        {
+            for (var i = 0; i < sphereAmount; i++)
+            {
+                var currentMass;
+                var currentRestitution;
+
+                if(useCannon)
+                {
+                    if(lowEndDevice)
+                    {
+                        currentMass = .5 - j*.1;
+
+                        if(j == 0){
+                            currentRestitution = 15;
+                        }
+                        else if(j ==1)
+                        {
+                            currentRestitution = 10;
+                        }
+                        else if(j ==2)
+                        {
+                            currentRestitution = .5;
+                        }
+                        else
+                        {
+                            currentRestitution = 0.5;
+                        }
+                    }
+                    else
+                    {
+                        currentMass = .1;
+
+                        if(j == 0){
+                            currentRestitution = 25;
+                        }
+                        else if(j ==1)
+                        {
+                            currentRestitution = 20;
+                        }
+                        else if(j ==2)
+                        {
+                            currentRestitution = 1;
+                        }
+                        else
+                        {
+                            currentRestitution = 0.5;
+                        }
+                    }
+
+
+                }
+                else
+                {
+                    currentMass = 15000 - j*4000;
+                    //currentMass = 55000 - j*4000;
+                }
+
+                if(j == 0)//top row
+                {
+                    currentMass = 0;
+                }
+
+                netSpheres[j*10 + i].physicsImpostor.mass = currentMass;
+                netSpheres[j*10 + i].physicsImpostor.restitution = currentRestitution;
+            }
+        }
+    }
+
     function changeCamera() {
         currentCameraIndex++;
     }
@@ -1315,7 +1425,33 @@ engine.runRenderLoop(function() {
     scene.render();
     var fpsLabel = document.getElementById("fpsLabel");
     fpsLabel.innerHTML = engine.getFps().toFixed()+ " fps";
-    //fpsLabel.innerHTML = ISMASTER.toString();
+    FPSArray.push(parseInt(engine.getFps().toFixed()));
+
+    if(FPSArray.length == 50)
+    {
+
+        var average = 0;
+        for(var i = 0; i < 50; i++)
+        {
+            average += FPSArray[i];
+        }
+
+        average /=50;
+        if(average < 45)
+        {
+            lowEndDevice = true;
+            scene.getPhysicsEngine().setTimeStep(1/(20 * .6));
+        }
+        else
+        {
+            lowEndDevice = false;
+            scene.getPhysicsEngine().setTimeStep(1/(40 * .6));
+        }
+        FPSArray = [];
+        scene.actionManager.processTrigger(scene.actionManager.actions[4].trigger, {additionalData: "["});
+
+    }
+
     if(ISMASTER)
     {
         fpsLabel.style.background = "red";
