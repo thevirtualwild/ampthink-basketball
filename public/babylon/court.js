@@ -1354,7 +1354,7 @@ function getMyIP() {
    {
     myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(ice.candidate.candidate)[1];
 
-    // console.log('my IP: ', myIP);
+    console.log('my IP: ', myIP);
 
     showCourt(myIP);
 

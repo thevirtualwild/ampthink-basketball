@@ -21,6 +21,7 @@ var allzones = {};
 var allcourts = {};
 var allconfigs = {};
 var courtnames = {};
+var roomnames = {};
 
 function getDataFromAirtable() {
 
@@ -58,12 +59,14 @@ function getDataFromAirtable() {
         zones = record.get('Zones');
         courts = record.get('Courts');
 
-        allrooms[record.id] = {
+        recorddata = {
           id: record.id,
           name: name,
           zones: zones,
           courts: courts
         };
+        allrooms[record.id] = recorddata;
+        roomnames[name] = recorddata;
       });
       fetchNextPage();
     }, function done(err) {
@@ -408,7 +411,12 @@ function onConnection(socket) {
 
     if (courttojoin) {
 
+      console.log('DEBUG: courttojoin:');
+      console.dir(courttojoin)
       var roomcourtisapartof = allrooms[courttojoin.room];
+
+      console.log('DEBUG: roomcourt:');
+      console.dir(roomcourtisapartof);
 
       gamestarted = roomcourtisapartof.gamerunning;
 
@@ -502,9 +510,11 @@ function onConnection(socket) {
         // // // console.log('NewRoom - ' + newroomid);
 
         newroom = {
-            name: newroomname
+          id: newroomid,
+          name: newroomname
         }
         allrooms[newroomid] = newroom;
+        roomnames[newroom.name] = newroom;
 
         somecourt['room'] = [roomid];
         allcourts[somecourt.id] = somecourt;
@@ -595,18 +605,26 @@ function onConnection(socket) {
     }
   }
 
-  function getHighScore(somegame, gamedata) {
+  function getHighScore(somegame, courtgamedata) {
 
-    var thisgamesroom = allrooms[somegame];
+    var thisgamesroom = roomnames[socket.roomname];
 
-    console.log('get high score');
-    console.dir(gamedata);
+    console.log('get data');
+    console.dir(courtgamedata);
+
+    console.log('DEBUG: allrooms');
+    console.dir(courtallrooms);
+
+    console.log('roomname - ' + socket.roomname);
+
+    console.log('DEBUG: thisgamesroom');
+    console.dir(thisgamesroom);
 
     if (gamesplayed[somegame]) {
-      var updategame = gamesplayed[somegame].push(gamedata);
+      var updategame = gamesplayed[somegame].push(courtgamedata);
       gamesplayed[somegame] = updategame;
     } else {
-      gamesplayed[somegame] = [gamedata];
+      gamesplayed[somegame] = [courtgamedata];
     }
 
     for (ascore in gamesplayed[socket.game]) {
@@ -618,6 +636,8 @@ function onConnection(socket) {
     } else {
       // // // console.log('Sorry not the best');
     }
+
+    allrooms[socket.roomname] = thisgamesroom;
 
     var resultsdata = {
       highscorer: currentHighScore,
@@ -787,7 +807,9 @@ function onConnection(socket) {
 
       console.log(allrooms);
       console.log("room name " + socket.roomname);
-    var thisgamesroom = allrooms[socket.roomname];
+    var thisgamesroom = roomnames[socket.roomname];
+    console.log('all rooms');
+    console.dir(allrooms);
     console.log("this games room " + thisgamesroom);
     if (thisgamesroom.gamerunning) {
       socket.game = thisgamesroom.gamename;
@@ -800,7 +822,8 @@ function onConnection(socket) {
       socket.game = thisgamesroom.gamename;
     }
 
-    allrooms[socket.roomname] = thisgamesroom;
+    roomnames[socket.roomname] = thisgamesroom;
+    allrooms[thisgamesroom.id] = thisgamesroom;
 
     var gamedata = {
       courtname: courtName,
@@ -852,21 +875,23 @@ function onConnection(socket) {
     // // console.dir(gamedata);
     addScoreToDatabase(courtgamedata);
 
-    var thisgamesroom = allrooms[socket.roomname];
+    var thisgamesroom = roomnames[socket.roomname];
 
     if (thisgamesroom.gamerunning) {
       socket.broadcast.to(socket.roomname).emit('end all games', socket.court);
       thisgamesroom.gamerunning = false;
 
-      allrooms[socket.roomname] = thisgamesroom;
+      roomnames[socket.roomname] = thisgamesroom;
+      allrooms[thisgamesroom.id] = thisgamesroom;
     }
   });
   socket.on('room reset', function() {
-    var thisgamesroom = allrooms[socket.roomname];
+    var thisgamesroom = roomnames[socket.roomname];
 
     thisgamesroom.gamerunning = false;
 
-    allrooms[socket.roomname] = thisgamesroom;
+    roomnames[socket.roomname] = thisgamesroom;
+    allrooms[thisgamesroom.id] = thisgamesroom;
 
     socket.broadcast.to(socket.roomname).emit('reset game');
   });
