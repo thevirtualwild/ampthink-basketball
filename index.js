@@ -677,7 +677,7 @@ function onConnection(socket) {
 
         socket.broadcast.to(socket.roomname).emit('sync with master', testData);
       } else {
-        // // console.log('someone else is master - ' + courtmaster);
+         console.log('someone else is master - ' + courtmaster);
       }
     } else {
       setSocketMaster();
@@ -921,7 +921,7 @@ function onConnection(socket) {
       var thiscourt = courtsandmaster[socket.court.id];
        //console.log('thiscourt - '+ thiscourt);
 
-       console.log('thiscourt from sync screens: ');
+       //console.log('thiscourt from sync screens: ');
        //console.dir(thiscourt);
 
       syncSlaves(data);
