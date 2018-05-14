@@ -913,26 +913,26 @@ function onConnection(socket) {
   });
 
   socket.on('sync screens', function(data) {
-    // console.log('Sync Data test');
-    // console.dir(data);
+     console.log('Sync Data test');
+     console.dir(data);
     socket.syncdata = data;
 
     if (socket.court) {
       var thiscourt = courtsandmaster[socket.court.id];
-      // console.log('thiscourt - '+ thiscourt);
+       console.log('thiscourt - '+ thiscourt);
 
-      // console.log('thiscourt from sync screens: ');
-      // // console.dir(thiscourt);
+       console.log('thiscourt from sync screens: ');
+       console.dir(thiscourt);
 
       syncSlaves(data);
     } else {
-      // // console.log('deviceIP ' + data.deviceIP);
+      console.log('deviceIP ' + data.deviceIP);
       mydevice = alldevices[data.deviceIP];
-      // // console.log('mydevice - ');
-      // // console.dir(mydevice);
+      console.log('mydevice - ');
+      console.dir(mydevice);
       // mycourt = allcourts[mydevice.court];
       myzone = allzones[mydevice.zone];
-      // console.log('cant find court');
+      console.log('cant find court');
       findACourt(mydevice,myzone);
     }
   });

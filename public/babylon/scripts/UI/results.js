@@ -177,11 +177,10 @@ function UIResultsSetData(data) {
     if(data.highscorer === undefined)
     {
         console.log("NO HIGH SCORER");
+        return;
     }
-    else
-    {
-        topScoreText.innerHTML = data.highscorer.player.score;
-    }
+
+    topScoreText.innerHTML = data.highscorer.player.score;
 
     if(data.highscorer.player.username === undefined)
     {
