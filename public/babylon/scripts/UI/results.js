@@ -174,8 +174,14 @@ function UIResultsUpdateScore(playerScore)
 }
 
 function UIResultsSetData(data) {
-    topScoreText.innerHTML = data.highscorer.player.score;
-
+    if(data.highscorer === undefined)
+    {
+        console.log("NO HIGH SCORER");
+    }
+    else
+    {
+        topScoreText.innerHTML = data.highscorer.player.score;
+    }
 
     if(data.highscorer.player.username === undefined)
     {
