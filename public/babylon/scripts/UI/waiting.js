@@ -50,6 +50,7 @@ function UIWaitingUpdateClock(time)
     {
         transitioned=  true;
         countdown.innerHTML = "0";
+        if(hasplayer)
         UIWaitingAnimateOut();
     }
     else if(time+1<0)
