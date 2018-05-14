@@ -663,6 +663,7 @@ function onConnection(socket) {
   }
 
   function syncSlaves(data) {
+    console.log("SYNC SLAVES");
     var courtmaster;
     if (socket.court.master) {
       courtmaster = socket.court.master;
