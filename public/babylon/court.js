@@ -47,8 +47,8 @@ var shotIndex = 0;
 var attractIndex = 0;
 var currentNetLerpDelayTime = 2;
 var initNetLerpDelayTime = 2;
-var currentNetLerpTime = 0.5;
-var initNetLerpTime = 0.5;
+var currentNetLerpTime = 0.25;
+var initNetLerpTime = 0.25;
 
 var initEmitTime = 0.05;
 var currentEmitTime = 0.05;
@@ -75,6 +75,16 @@ var lowEndDevice = false;
 createCameraTypes();
 
 var initRun = true;
+
+
+
+
+//socket data to send
+var hasconnected = false;
+var reconnecting = false;
+var isconnected = false;
+
+
 
 var createScene = function(){
     var scene = new BABYLON.Scene(engine);
@@ -942,7 +952,7 @@ var createScene = function(){
             {
                 if(lowEndDevice)
                 {
-                    currentMass = .4 - j*.1;
+                    currentMass = .5 - j*.1;
 
                     if(j == 0){
                         currentRestitution = 15;
@@ -962,14 +972,14 @@ var createScene = function(){
                 }
                 else
                 {
-                    currentMass = .4 - j*.1;
+                    currentMass = .1;
 
                     if(j == 0){
-                        currentRestitution = 25;
+                        currentRestitution = 35;
                     }
                     else if(j ==1)
                     {
-                        currentRestitution = 20;
+                        currentRestitution = 30;
                     }
                     else if(j ==2)
                     {
@@ -1343,15 +1353,6 @@ net.setIndices(indices, indices.length);
 
     function updatePhysics()
     {
-
-        if(lowEndDevice)
-        {
-            scene.getPhysicsEngine().getPhysicsPlugin().world.solver.iterations = 1;
-        }else
-        {
-            scene.getPhysicsEngine().getPhysicsPlugin().world.solver.iterations = 3;
-        }
-
         for(var j = 0; j < height; j++)
         {
             for (var i = 0; i < sphereAmount; i++)
@@ -1363,7 +1364,7 @@ net.setIndices(indices, indices.length);
                 {
                     if(lowEndDevice)
                     {
-                        currentMass = .4 - j*.1;
+                        currentMass = .5 - j*.1;
 
                         if(j == 0){
                             currentRestitution = 15;
@@ -1383,14 +1384,14 @@ net.setIndices(indices, indices.length);
                     }
                     else
                     {
-                        currentMass = .4 - j*.1;
+                        currentMass = .1;
 
                         if(j == 0){
-                            currentRestitution = 8;
+                            currentRestitution = 25;
                         }
                         else if(j ==1)
                         {
-                            currentRestitution = 6;
+                            currentRestitution = 20;
                         }
                         else if(j ==2)
                         {
@@ -1401,10 +1402,13 @@ net.setIndices(indices, indices.length);
                             currentRestitution = 0.5;
                         }
                     }
+
+
                 }
                 else
                 {
                     currentMass = 15000 - j*4000;
+                    //currentMass = 55000 - j*4000;
                 }
 
                 if(j == 0)//top row
@@ -1414,11 +1418,6 @@ net.setIndices(indices, indices.length);
 
                 netSpheres[j*10 + i].physicsImpostor.mass = currentMass;
                 netSpheres[j*10 + i].physicsImpostor.restitution = currentRestitution;
-                if(lowEndDevice)
-                {
-                    //console.log(j*10 + i + "mass " + currentMass);
-                    //console.log(j*10 + i + "restitution " + currentRestitution);
-                }
             }
         }
     }
@@ -1488,7 +1487,7 @@ var lobbyStarted = false;
 
 // $passcodeInput.focus();
 
-var myIP = getMyIP();
+var myIP;
 
 function getMyIP() {
   window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;//compatibility for Firefox and chrome
@@ -1515,9 +1514,46 @@ function showCourt(someIP) {
 }
 function checkMyDeviceInfo(someIP) {
   // check if Device Knows What Court it should be in
-  socket.emit('get court to show', someIP);
+
+  console.log('court ready for setup: ip-' + myIP);
+
+  var data = {
+    hasconnected: hasconnected,
+    reconnecting: reconnecting,
+    deviceIP: myIP,
+    hascourt: hasCourt,
+    courtname: courtName,
+    roomname: thisRoom
+  }
+  socket.emit('court connected', data);
+
+  // reconnecting = false;
+  // hasconnected = true; //never set this again
 }
 
+
+function courtReconnection(courtinfofromserver) {
+  console.log('CONNECTION: court just reconnected:');
+  console.dir(courtinfofromserver);
+
+  if (courtinfofromserver.hascourt) {
+    console.log('court setup: '+ courtinfofromserver.courtname);
+  } else {
+    console.log('we need to set up court')
+  }
+
+  // reconnecting = true;
+  // var data = {
+  //   hasconnected: hasconnected,
+  //   reconnecting: reconnecting,
+  //   deviceIP: myIP,
+  //   hascourt: hasCourt,
+  //   courtname: courtName,
+  //   roomname: thisRoom
+  // };
+  //
+  // socket.emit('court reconnected', data);
+}
 
 function haveCourtJoinRoom(courtname, roomnametojoin) {
   var data = {
@@ -1651,7 +1687,6 @@ function gameOver() {
       gamename: gameName
   }
 
-  console.log("game over, gameName: " + gameName);
   if(playerData) {
       if(ISMASTER) {//MAYBE CHECK IF HAS PLAYER
           socket.emit('game over', gamedata);
@@ -1664,9 +1699,7 @@ function gameOver() {
 
 
 
-socket.on('reconnecting', function() {
-    console.log('reconnecting');
-});
+
 
 socket.on('set master', function(){
     ISMASTER = true;
@@ -1676,9 +1709,7 @@ socket.on('set master', function(){
 });
 
 socket.on('game almost ready', function(gamedata){
-
    gameName = gamedata.gamename;
-    console.log("gameName: " + gameName)
 });
 
 socket.on('device knows court', function(data) {
@@ -1800,67 +1831,14 @@ socket.on('change player name', function(data) {
     console.log(data);
 });
 
+socket.on('connect', function() {
+  isconnected = true;
+  myIP = getMyIP();
+});
+socket.on('court reconnected', function(courtinfo) {
+  courtReconnection(courtinfo);
+});
 
-
-
-//To Delete Soon I think? (not needed?)
-
-  function joinRoom() {
-    var roomtojoin = randomCode(7);
-
-    var courtdata = {
-      name: nameCourt(),
-      room: roomtojoin
-    };
-
-    thisRoom = courtdata.room;
-    courtName = courtdata.name;
-
-    socket.emit('query request');
-    socket.emit('join room', courtdata);
-    socket.emit('add court', courtdata);
-    console.log('COURT ' + courtdata.name + ' - joining room - ' + courtdata.room);
-
-    updateUI();
-    // $pages.fadeOut();
-    // Tell the server your new room to connect to
-    //socket.emit('room', roomname);
-    //socket.emit('add user', jsonstring);
-  }
-
-  function nameCourt() {
-    return randomCode(5);
-  }
-
-  function joinQueryRoom(query) {
-    roomcode = query;
-
-    $('.insertRoomCode').text(roomcode);
-    $(document).prop('title', roomcode);
-
-    roomcode = roomcode.toUpperCase();
-
-    courtData = {
-      name: courtName,
-      room: roomcode
-    }
-
-    console.log('joining room - ' + roomcode);
-    socket.emit('room', roomcode);
-    socket.emit('update court', courtData );
-  }
-
-  socket.on('query', function(query) {
-    console.log('query received - ' + query);
-
-    joinQueryRoom(query);
-  });
-  socket.on('use random query', function() {
-    console.log('no query received starting random');
-
-    var query = randomCode(7);
-
-    joinQueryRoom(query);
-  });
-
-//End of to delete soon I think
+socket.on('disconnect', function() {
+  isconnected = false;
+});

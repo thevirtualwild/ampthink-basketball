@@ -23,7 +23,10 @@ var allconfigs = {};
 var courtnames = {};
 var roomnames = {};
 
+var connectedcourts = {};
+
 function getDataFromAirtable() {
+  console.log('gettingDataFromAirtable');
 
   function getDevices() {
     config_base('Devices').select({}).eachPage(function page(records, fetchNextPage) {
@@ -227,6 +230,7 @@ var gamesplayed = {};
 // Web Socket (Socket.io)
 function onConnection(socket) {
 
+  console.log('new connection - ' + socket.id);
   var gamenum = 1;
 
   // // console.log('socket connected: ' + socket.id);
@@ -368,6 +372,9 @@ function onConnection(socket) {
     // add device to list of devices
     alldevices[deviceIP] = newdevice;
     var devicezone = allzones[newdevice.zone];
+
+    console.log('allzones');
+    console.dir(allzones);
 
     allzones[newdevice.zone] = devicezone;
     if (devicezone.devices) {
@@ -613,7 +620,7 @@ function onConnection(socket) {
     console.dir(courtgamedata);
 
     console.log('DEBUG: allrooms');
-    console.dir(courtallrooms);
+    console.dir(allrooms);
 
     console.log('roomname - ' + socket.roomname);
 
@@ -631,7 +638,7 @@ function onConnection(socket) {
       thisgamesroom.currentHighScore = ascore;
     }
 
-    if (gamedata.score > thisgamesroom.currentHighScore) {
+    if (courtgamedata.score > thisgamesroom.currentHighScore) {
       thisgamesroom.currentHighScore = courtgamedata;
     } else {
       // // // console.log('Sorry not the best');
@@ -666,7 +673,7 @@ function onConnection(socket) {
               syncdata:data
           };
 
-          console.log("Court name in index: " + socket.court.name);
+          // console.log("Court name in index: " + socket.court.name);
 
         socket.broadcast.to(socket.roomname).emit('sync with master', testData);
       } else {
@@ -686,7 +693,7 @@ function onConnection(socket) {
   }
 
   //court stuff I think
-  socket.on('get court to show', function(deviceIP) {
+  function getCourtToShow(deviceIP) {
     // we know this is a court, so tell the Socket
     socket.devicetype = 'court';
 
@@ -725,7 +732,7 @@ function onConnection(socket) {
       // // // console.log('device: ' + deviceIP + ' not in alldevices list');
       unknownDevice(deviceIP);
     }
-  });
+  };
 
   socket.on('update court', function(courtdata) { //court joins new room
     // // // console.log('updating court');
@@ -805,6 +812,7 @@ function onConnection(socket) {
 
   socket.on('game almost ready', function(courtName) {
 
+    console.log('GAME ALMOST READY LISTENER');
       console.log(allrooms);
       console.log("room name " + socket.roomname);
 
@@ -899,7 +907,7 @@ function onConnection(socket) {
   });
 
   socket.on('sync screens', function(data) {
-    console.log('Sync Data test');
+    // console.log('Sync Data test');
     // console.dir(data);
     socket.syncdata = data;
 
@@ -951,7 +959,7 @@ function onConnection(socket) {
 
   //server stuff
   socket.on('disconnect', function() {
-    // console.log('user from: ' + socket.roomname + ' disconnected');
+    console.log('user from: ' + socket.id + ' disconnected');
 
     // if socket is a court socket
     if (socket.devicetype == 'court') {
@@ -974,6 +982,33 @@ function onConnection(socket) {
     // // console.log('Some Touch Event');
     // // console.dir(data);
   });
+
+  socket.on('court connected', function(data) {
+    var deviceIP = data.deviceIP;
+    socket.deviceIP = data.deviceIP;
+
+    console.log(alldevices[socket.deviceIP]);
+
+    // console.log('court connected: ip-' + deviceIP);
+    //when court has connected, save it to the courts dictionary
+
+    if (connectedcourts[deviceIP]) {
+      var courtinfo = connectedcourts[deviceIP];
+      //court has already connected
+      console.log('CONNECTION: court reconnecting');
+      socket.emit('court reconnected', courtinfo);
+    } else {
+      console.log('CONNECTION: court connected for the first time');
+      connectedcourts[deviceIP] = data;
+    }
+
+    console.log('connected courts at ip');
+    console.dir(connectedcourts[deviceIP]);
+
+    getCourtToShow(deviceIP);
+  });
+
+
 }
 
 
