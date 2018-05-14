@@ -421,10 +421,10 @@ function onConnection(socket) {
           socket.emit('someone already playing');
           // same as court not found
         } else {
-          courtojoin.hasplayer = true;
+          courttojoin.hasplayer = true;
 
           // save the hasplayer variable back to our list of courts
-          courtnames[somecourtname] = courtojoin;
+          courtnames[somecourtname] = courttojoin;
 
           socket.roomname = roomcourtisapartof.name;
 
@@ -785,8 +785,10 @@ function onConnection(socket) {
 
   socket.on('game almost ready', function(courtName) {
 
+      console.log(allrooms);
+      console.log("room name " + socket.roomname);
     var thisgamesroom = allrooms[socket.roomname];
-
+    console.log("this games room " + thisgamesroom);
     if (thisgamesroom.gamerunning) {
       socket.game = thisgamesroom.gamename;
       thisgamesroom.courtcount += 1;

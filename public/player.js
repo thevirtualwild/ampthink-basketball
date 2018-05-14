@@ -382,6 +382,14 @@ socket.on('court not found', function() {
     console.log("COURT NOT FOUND");
 });
 
+socket.on('someone already playing', function() {
+    console.log("someone already playing");
+});
+
+socket.on('game already running', function() {
+    console.log("game already running");
+});
+
 socket.on('game almost ready', function(courtName) {
     //fade out customization screen
     //roll in ball;
