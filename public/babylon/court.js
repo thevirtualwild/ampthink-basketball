@@ -972,7 +972,7 @@ var createScene = function(){
                 }
                 else
                 {
-                    currentMass = .1;
+                    currentMass = .5 - j*.1;
 
                     if(j == 0){
                         currentRestitution = 35;
@@ -1384,7 +1384,7 @@ net.setIndices(indices, indices.length);
                     }
                     else
                     {
-                        currentMass = .1;
+                        currentMass = .5 - j*.1;
 
                         if(j == 0){
                             currentRestitution = 25;
