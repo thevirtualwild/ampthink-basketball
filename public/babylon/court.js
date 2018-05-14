@@ -1826,8 +1826,10 @@ socket.on('end all games', function(courtthatfinished) {
 socket.on('show results', function(resultsdata) {
   console.log('Results!');
   console.dir(resultsdata);
+if(hasplayer){
+    UIResultsSetData(resultsdata);
+}
 
-  UIResultsSetData(resultsdata);
 });
 socket.on('reset game', function() {
   scene.actionManager.processTrigger(scene.actionManager.actions[1].trigger, {additionalData: "t"});
