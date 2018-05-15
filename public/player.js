@@ -327,6 +327,7 @@ $window.keydown(function (event) {
   if (event.which === 13)
   {
       initializePlayer();
+      $passcodeInput.blur();
   }
 });
 
