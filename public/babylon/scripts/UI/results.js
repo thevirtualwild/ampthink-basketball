@@ -174,6 +174,8 @@ function UIResultsUpdateScore(playerScore)
 }
 
 function UIResultsSetData(data) {
+
+    console.log(data);
     if(data.highscorer === undefined)
     {
         console.log("NO HIGH SCORER");
