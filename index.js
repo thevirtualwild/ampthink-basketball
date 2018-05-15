@@ -835,6 +835,7 @@ function onConnection(socket) {
     console.dir(allrooms);
 
     console.log("this games room " + thisgamesroom);
+    console.log('running:' + thisgamesroom.gamerunning);
     if (thisgamesroom.gamerunning) {
       socket.game = thisgamesroom.gamename;
       thisgamesroom.courtcount += 1;
@@ -912,6 +913,7 @@ function onConnection(socket) {
   socket.on('room reset', function() {
     var thisgamesroom = roomnames[socket.roomname];
 
+    console.log('roomname:' +socket.roomname);
     console.log('room reset called');
     console.dir(roomnames);
     thisgamesroom.gamerunning = false;
