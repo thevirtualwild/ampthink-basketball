@@ -213,6 +213,7 @@ var createScene = function(){
                 initEmitTime = 0.05;
                 currentGameState = gameState;
                 currentCameraIndex = 1;
+                lobbyStarted = false;
                 updateUI();
                 updateBallColor();
                 break;

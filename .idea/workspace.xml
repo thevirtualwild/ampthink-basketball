@@ -22,8 +22,8 @@
       <file leaf-file-name="court.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/babylon/court.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="395">
-              <caret line="344" column="54" lean-forward="false" selection-start-line="344" selection-start-column="54" selection-end-line="344" selection-end-column="54" />
+            <state relative-caret-position="293">
+              <caret line="896" column="0" lean-forward="true" selection-start-line="896" selection-start-column="0" selection-end-line="896" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -156,12 +156,12 @@
       <find>show results</find>
       <find>topscoretext</find>
       <find>socket.broad</find>
-      <find>lobbystarted</find>
       <find>player joined court</find>
       <find>court names don't match</find>
       <find>footerwidth</find>
       <find>game starts in</find>
       <find>game almost ready</find>
+      <find>lobbystarted</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -398,7 +398,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="619946000" />
+    <option name="totallyTimeSpent" value="620266000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -760,8 +760,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/babylon/court.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="395">
-          <caret line="344" column="54" lean-forward="false" selection-start-line="344" selection-start-column="54" selection-end-line="344" selection-end-column="54" />
+        <state relative-caret-position="293">
+          <caret line="896" column="0" lean-forward="true" selection-start-line="896" selection-start-column="0" selection-end-line="896" selection-end-column="0" />
           <folding />
         </state>
       </provider>
