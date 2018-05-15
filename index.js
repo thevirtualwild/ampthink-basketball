@@ -739,8 +739,16 @@ function onConnection(socket) {
     var newmaster = court.slaves.pop();
       console.log("new master");
     console.dir(newmaster);
-    courtsandmaster[socket.court.id].master = newmaster;
-    io.to(courtsandmaster[socket.court.id].master).emit('set master');
+
+    if(newmaster)
+    {
+        courtsandmaster[socket.court.id].master = newmaster;
+        io.to(courtsandmaster[socket.court.id].master).emit('set master');
+    }
+    else {
+      syncSlaves(socket.syncdata);
+    }
+
   }
 
   //court stuff I think
