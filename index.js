@@ -267,12 +267,14 @@ function onConnection(socket) {
         thiscourt.slaves = [];
         courtsandmaster[courtid] = thiscourt;
         socket.emit('set master');
+        console.log("set master");
 
       } else if (thiscourt.master) {
         // console.log('court has master: ' + thiscourt.master);
         thiscourt.slaves.push(socket.id);
         courtsandmaster[courtid] = thiscourt;
         socket.master = thiscourt.master;
+          console.log("setting socket.master");
       } else {
         thiscourt.master = socket.id;
         socket.master = socket.id;
@@ -281,6 +283,7 @@ function onConnection(socket) {
         thiscourt.slaves = [];
         courtsandmaster[courtid] = thiscourt;
         socket.emit('set master');
+          console.log("set master 2");
       }
     } else {
       // // console.log('add court to list and set master to this socket');
@@ -288,6 +291,7 @@ function onConnection(socket) {
         id: courtid,
         master: socket.id
       };
+      console.log("add court to list and set master to this socket");
 
       courtsandmaster[courtid] = thiscourt;
       // // console.dir(thiscourt);
@@ -665,8 +669,6 @@ function onConnection(socket) {
   function syncSlaves(data) {
     //console.log("SYNC SLAVES");
     var courtmaster;
-    console.log(socket.court);
-    console.log(socket.court.master);
     if (socket.court.master) {
       courtmaster = socket.court.master;
       if (courtmaster == socket.id) {
