@@ -1642,7 +1642,7 @@ function updateUI() {
             scoreLabel.innerHTML = "COURT CODE: " + courtName;
             // attractLabel.innerHTML = "COURT CODE: " + courtName; + " <br/>" + initWaitTime.toString();
             attractLabel.innerHTML = "";
-            currentWaitTime = initWaitTime;
+            //currentWaitTime = initWaitTime;
             UIAttractAnimateOut();
             break;
         case gameStates.GAMEPLAY:
