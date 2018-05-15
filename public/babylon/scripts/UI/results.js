@@ -181,6 +181,7 @@ function UIResultsSetData(data) {
         topFirstName.innerHTML = currentName.substr(0, currentName.indexOf(' '));
         topLastName.innerHTML = currentName.substr(currentName.indexOf(' ') + 1);
         yourScore.style.display = "none";
+        console.log("HI SCORER IS UNDEFINED");
     }
     else
     {
@@ -191,6 +192,8 @@ function UIResultsSetData(data) {
             topFirstName.innerHTML = currentName.substr(0, currentName.indexOf(' '));
             topLastName.innerHTML = currentName.substr(currentName.indexOf(' ') + 1);
             yourScore.style.display = "none";
+            console.log("YOU ARE HIGH SCORER");
+
         }
         else
         {
@@ -200,6 +203,8 @@ function UIResultsSetData(data) {
             topLastName.innerHTML = name.substr(name.indexOf(' ') + 1);
             topScoreText.innerHTML = data.resultsdata.highscorer.score;
             yourScore.style.display = "auto";
+            console.log("YOU LOST TO HIGH SCORER");
+
         }
     }
 
