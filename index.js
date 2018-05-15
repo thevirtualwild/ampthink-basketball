@@ -680,7 +680,7 @@ function onConnection(socket) {
               syncdata:data
           };
 
-           console.log("Court name in index: " + socket.court.name);
+           // console.log("Court name in index: " + socket.court.name);
 
         socket.broadcast.to(socket.roomname).emit('sync with master', testData);
       } else {
@@ -907,6 +907,7 @@ function onConnection(socket) {
     var thisgamesroom = roomnames[socket.roomname];
 
     console.log('room reset called');
+    console.dir(roomnames);
     thisgamesroom.gamerunning = false;
 
     roomnames[socket.roomname] = thisgamesroom;
