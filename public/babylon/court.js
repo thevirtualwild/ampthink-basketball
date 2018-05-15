@@ -1546,6 +1546,8 @@ function checkMyDeviceInfo(someIP) {
     courtname: courtName,
     roomname: thisRoom
   }
+
+  console.log('trying to emit');
   socket.emit('court connected', data);
 
   // reconnecting = false;
@@ -1844,9 +1846,9 @@ socket.on('end all games', function(courtthatfinished) {
 socket.on('show results', function(resultsdata) {
   console.log('Results!');
   console.dir(resultsdata);
-if(hasplayer){
-    UIResultsSetData(resultsdata);
-}
+  if(hasplayer){
+      UIResultsSetData(resultsdata);
+  }
 
 });
 socket.on('reset game', function() {
@@ -1871,7 +1873,16 @@ socket.on('court reconnected', function(courtinfo) {
 });
 
 socket.on('reconnect', function() {
-    isconnected = true;
+  isconnected = true;
+
+  console.log('reconnect');
+  // socket.emit('reconnect');
+})
+socket.on('reconnecting', function() {
+  console.log('reconnecting');
+});
+socket.on('reconnect_failed', function() {
+  console.log('reconnect failed');
 });
 
 socket.on('disconnect', function() {
