@@ -1446,6 +1446,13 @@ net.setIndices(indices, indices.length);
 var scene = createScene();
 engine.runRenderLoop(function() {
 
+
+    if(!isconnected){
+        console.log("RETURNED BECAUSE NOT CONNECTED");
+
+        return;
+    }
+
     scene.render();
     var fpsLabel = document.getElementById("fpsLabel");
     fpsLabel.innerHTML = engine.getFps().toFixed()+ " fps";
@@ -1861,6 +1868,10 @@ socket.on('connect', function() {
 });
 socket.on('court reconnected', function(courtinfo) {
   courtReconnection(courtinfo);
+});
+
+socket.on('reconnect', function() {
+    isconnected = true;
 });
 
 socket.on('disconnect', function() {
