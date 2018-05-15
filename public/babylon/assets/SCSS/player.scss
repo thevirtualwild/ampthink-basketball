@@ -188,6 +188,15 @@ canvas{
   pointer-events: none;
 }
 
+#footerLogo .gameLogo {
+  position:fixed;
+  top:0px;
+  left:10px;
+  width:120px;
+  height:120px;
+  object-fit: contain;
+
+}
 
 #footerLogo h2{
   position:absolute;

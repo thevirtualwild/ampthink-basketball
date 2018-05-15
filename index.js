@@ -459,6 +459,7 @@ function onConnection(socket) {
           console.log("IS GAME IN PROGRESS? " + socket.gamesrunning);
 
           socket.broadcast.to(socket.roomname).emit('player joined court', data);
+          console.log('socket.roomname - ' + socket.roomname);
 
           socket.emit('you joined court');
         }
