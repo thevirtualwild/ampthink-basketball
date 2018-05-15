@@ -192,7 +192,8 @@ function UIResultsSetData(data) {
             topFirstName.innerHTML = currentName.substr(0, currentName.indexOf(' '));
             topLastName.innerHTML = currentName.substr(currentName.indexOf(' ') + 1);
             yourScore.style.display = "none";
-            console.log("YOU ARE HIGH SCORER");
+
+            console.log("YOU ARE HIGH SCORER beat score of " + data.resultsdata.highscorer.score);
 
         }
         else
