@@ -677,7 +677,7 @@ function onConnection(socket) {
     }
 
     if (courtgamedata.score > thisgamesroom.currentHighScore) {
-      thisgamesroom.currentHighScore = courtgamedata.score;
+      thisgamesroom.currentHighScore = courtgamedata;
     } else {
       // // // // // console.log('Sorry not the best');
     }
@@ -686,7 +686,7 @@ function onConnection(socket) {
     allrooms[socket.roomname] = thisgamesroom;
 
     var resultsdata = {
-      highscorer: thisgamesroom.currentHighScore,
+      highscorer: currentHighScore,
       yourscore: courtgamedata,
       teamscores: teamscores
     };
