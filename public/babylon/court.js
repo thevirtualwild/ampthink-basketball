@@ -26,7 +26,7 @@ var pulseAmbientColor = false;
 var sceneLoaded = false;
 var initLoadTime = 7;
 var currentLoadTime = 7;
-
+var cameraAnimation;
 var hasCourt = false;
 var ISMASTER = false;
 var readyToSync = false;
@@ -192,9 +192,9 @@ var createScene = function(){
                 gameReady = false;
                 console.log("Aspect Ratio: " + canvas.width/canvas.height);
                 lobbyStarted = false;
-                if(ISMASTER) {
+                //if(ISMASTER) {
                     animateCamera();
-                }
+                //}
                 console.log("SWITCHED TO ATTRACT");
                 updateUI();
                 combo = 0;
@@ -260,7 +260,7 @@ var createScene = function(){
                     value: finalPosition});
 
             var dataType = BABYLON.Animation.ANIMATIONTYPE_VECTOR3;
-            var cameraAnimation = new BABYLON.Animation("attractAnimation", "position", 30, dataType, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+            cameraAnimation = new BABYLON.Animation("attractAnimation", "position", 30, dataType, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
 
             var ease = new BABYLON.QuadraticEase();
             ease.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
@@ -563,7 +563,8 @@ var createScene = function(){
                         resultsTime: currentResultsTime,
                         basketballs: [],
                         shotindex: shotIndex,
-                        states: []
+                        states: [],
+                        key: cameraAnimation.currentFrame
                     }
 
                     for(var i = 0; i < basketballs.length; i++) {
@@ -615,11 +616,12 @@ var createScene = function(){
 
                     var camPos = new BABYLON.Vector3(masterData.cameraPosition.x, masterData.cameraPosition.y, masterData.cameraPosition.z);
 
-                    camera.position = camPos;
+                    //camera.position = camPos;
                     currentWaitTime = masterData.waitTime;
                     currentGameTime = masterData.gameTime;
                     currentResultsTime = masterData.resultsTime;
 
+                    cameraAnimation.goToFrame(masterData.key);
                     shotIndex = masterData.shotindex;
                     shotIndex = masterData.shotindex;
 
