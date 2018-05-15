@@ -1657,7 +1657,7 @@ function updateUI() {
             break;
         case gameStates.INACTIVE:
             scoreLabel.innerHTML = "";
-            attractLabel.innerHTML = "Please Wait, Game In Progress";
+            //attractLabel.innerHTML = "Please Wait, Game In Progress";
             currentResultsTime = initResultsTime;
             break;
         default:
