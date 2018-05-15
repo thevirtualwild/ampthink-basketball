@@ -79,6 +79,7 @@ function getDataFromAirtable() {
     });
   }
   function getZones() {
+    console.log('getting allzones');
     config_base('Zones').select({}).eachPage(function page(records, fetchNextPage) {
       records.forEach(function(record) {
         name = record.get('Name');
@@ -381,10 +382,14 @@ function onConnection(socket) {
     console.dir(allzones);
 
     allzones[newdevice.zone] = devicezone;
-    if (devicezone.devices) {
-      devicezone.devices.push(newdevice);
+    if(devicezone) {
+      if (devicezone.devices) {
+        devicezone.devices.push(newdevice);
+      } else {
+        devicezone.devices = [newdevice];
+      }
     } else {
-      devicezone.devices = [newdevice];
+
     }
     //update record in allzones
 
@@ -634,6 +639,12 @@ function onConnection(socket) {
     console.dir(thisgamesroom);
 
     var agame = gamesplayed[somegame];
+    console.log('gamesplayed: ');
+    console.dir(gamesplayed);
+
+    console.log('somegame:');
+    console.dir(somegame);
+
     if (agame) {
       console.log('agame:');
       console.dir(agame);
@@ -643,7 +654,13 @@ function onConnection(socket) {
       agame = [courtgamedata];
     }
 
+
+    console.log('agame to store:');
+    agame.gamename = somegame;
     gamesplayed[somegame] = agame;
+
+    console.log('gamesplayed: ');
+    console.dir(gamesplayed);
 
     for (ascore in gamesplayed[socket.game]) {
       thisgamesroom.currentHighScore = ascore;
@@ -744,6 +761,7 @@ function onConnection(socket) {
       }
     } else { //unknown device
       // // // console.log('device: ' + deviceIP + ' not in alldevices list');
+      getDataFromAirtable();
       unknownDevice(deviceIP);
     }
   };
