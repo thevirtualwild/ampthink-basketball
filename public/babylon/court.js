@@ -146,7 +146,7 @@ var createScene = function(){
 
     camera.position = cameraSettings[currentCameraIndex].initPos;
     camera.setTarget(cameraSettings[currentCameraIndex].initFocus);
-    //camera.maxZ = 130;
+    camera.maxZ = 50;
     //camera.minZ = 1;
 
     var shotClockTens =  BABYLON.Mesh.CreatePlane("shotClock", 1.0, scene);
