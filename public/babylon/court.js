@@ -572,9 +572,9 @@ var createScene = function(){
                         var linVelY = basketballs[i].physicsImpostor.getLinearVelocity().y;
                         var linVelZ = basketballs[i].physicsImpostor.getLinearVelocity().z;
                         var newbasketballvar = {
-                            posx: basketballs[i].position.x + linVelX,
-                            posy: basketballs[i].position.y + linVelY,
-                            posz: basketballs[i].position.z + linVelZ,
+                            posx: basketballs[i].position.x + linVelX * initEmitTime,
+                            posy: basketballs[i].position.y + linVelY * initEmitTime,
+                            posz: basketballs[i].position.z + linVelZ * initEmitTime,
                             rotx: basketballs[i].rotation.x,
                             roty: basketballs[i].rotation.y,
                             rotz: basketballs[i].rotation.z,
