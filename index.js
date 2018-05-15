@@ -263,11 +263,13 @@ function onConnection(socket) {
       if (thiscourt.master === undefined) {
         console.log('master undefined');
         thiscourt.master = socket.id;
-        socket.master = socket.id;
-        // // // console.log('thiscourt master: ');
-        // // // console.dir(thiscourt);
+        socket.court.master = socket.id;
+        console.log('thiscourt master: ');
+        console.dir(thiscourt);
         thiscourt.slaves = [];
         courtsandmaster[courtid] = thiscourt;
+        console.log('candm:');
+        console.dir(courtsandmaster);
         socket.emit('set master');
 
       } else if (thiscourt.master) {
@@ -276,10 +278,10 @@ function onConnection(socket) {
         courtsandmaster[courtid] = thiscourt;
         console.log("this court: " + thiscourt);
           //// // console.log("this court master: " + thiscourt.master);
-        socket.master = thiscourt.master;
+        socket.court.master = thiscourt.master;
       } else {
         thiscourt.master = socket.id;
-        socket.master = socket.id;
+        socket.court.master = socket.id;
         console.log('thiscourt master: ');
         console.dir(thiscourt);
         thiscourt.slaves = [];
@@ -297,8 +299,8 @@ function onConnection(socket) {
       // console.dir(thiscourt);
       // console.log('candm list: ');
       // console.dir(courtsandmaster);
-      socket.master = socket.id;
-      console.log('setting this socket to master:' + socket.master);
+      socket.court.master = socket.id;
+      console.log('setting this socket to master:' + socket.court.master);
       socket.emit('set master');
     }
 
@@ -571,6 +573,7 @@ function onConnection(socket) {
       court = courtsandmaster[socket.court.id];
       court.slaves = [];
       courtsandmaster[socket.court.id] = court;
+      console.log('socket does not have master');
       setSocketMaster();
     }
     if (socket.syncdata){
@@ -724,7 +727,7 @@ function onConnection(socket) {
          // console.log('someone else is master - ' + courtmaster);
       }
     } else {
-      // console.log('master needs to be set');
+      console.log('SYNC SLAVes: master needs to be set');
       setSocketMaster();
     }
   }
