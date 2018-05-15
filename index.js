@@ -632,12 +632,17 @@ function onConnection(socket) {
     console.log('DEBUG: thisgamesroom');
     console.dir(thisgamesroom);
 
-    if (gamesplayed[somegame]) {
-      var updategame = gamesplayed[somegame].push(courtgamedata);
-      gamesplayed[somegame] = updategame;
+    var agame = gamesplayed[somegame];
+    if (agame) {
+      console.log('agame:');
+      console.dir(agame);
+      var updategame = agame.push(courtgamedata);
+      agame = updategame;
     } else {
-      gamesplayed[somegame] = [courtgamedata];
+      agame = [courtgamedata];
     }
+
+    gamesplayed[somegame] = agame;
 
     for (ascore in gamesplayed[socket.game]) {
       thisgamesroom.currentHighScore = ascore;
