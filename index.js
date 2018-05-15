@@ -747,6 +747,7 @@ function onConnection(socket) {
     }
     else {
       socket.court.master = null;
+      courtsandmaster[socket.court.id] = null;
       syncSlaves(socket.syncdata);
     }
 
