@@ -734,8 +734,11 @@ function onConnection(socket) {
 
 
   function findNewMaster(oldsocketid) {
-    var slaveindex = court.slaves.indexOf(socket.id);
-    var newmaster = court.slaves.pop(slaveindex);
+    //var slaveindex = court.slaves.indexOf(socket.id);
+
+    var newmaster = court.slaves.pop();
+      console.log("new master");
+    console.dir(newmaster);
     courtsandmaster[socket.court.id].master = newmaster;
     io.to(courtsandmaster[socket.court.id].master).emit('set master');
   }
