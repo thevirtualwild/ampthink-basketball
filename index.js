@@ -547,6 +547,7 @@ function onConnection(socket) {
       room: fullroomdata
     }
 
+    socket.roomname = fullroomdata.name;
     socket.court = somecourt;
     // // console.log('socket.court.id: ' + socket.court.id);
     // // console.log('socket court');
