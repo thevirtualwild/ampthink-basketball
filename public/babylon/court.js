@@ -1669,7 +1669,8 @@ function updateUI() {
 function createCameraTypes() {
     var cameraType = {
         cameraNames: cameraNames.quarterFar,
-        initPos: new BABYLON.Vector3(20, 0, -15),
+        //initPos: new BABYLON.Vector3(20, 0, -15),
+        initPos: new BABYLON.Vector3(0, -7, -18),
         //initPos: new BABYLON.Vector3(0, 5, -10),
         initFocus: new BABYLON.Vector3(0, -2.6, 11.75)
         //initFocus: new BABYLON.Vector3(0, -10, -30)
@@ -1701,6 +1702,8 @@ function gameOver() {
     combo: combo,
       gamename: gameName
   }
+
+    console.log(gamedata);
 
   if(playerData) {
       if(ISMASTER) {//MAYBE CHECK IF HAS PLAYER
