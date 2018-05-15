@@ -50,8 +50,8 @@ var initNetLerpDelayTime = 2;
 var currentNetLerpTime = 0.25;
 var initNetLerpTime = 0.25;
 
-var initEmitTime = 0.05;
-var currentEmitTime = 0.05;
+var initEmitTime = 0.01;
+var currentEmitTime = 0.01;
 
 var gameReady = false;
 
