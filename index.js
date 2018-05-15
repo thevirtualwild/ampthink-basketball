@@ -648,10 +648,15 @@ function onConnection(socket) {
     if (agame) {
       console.log('agame:');
       console.dir(agame);
-      var updategame = agame.push(courtgamedata);
-      agame = updategame;
+      agame.push(courtgamedata);
     } else {
       agame = [courtgamedata];
+      console.log('agame init:');
+      console.dir(agame);
+      console.log('gamedata');
+      console.dir(courtgamedata);
+      agame.gamename = somegame;
+      gamesplayed[somegame] = agame;
     }
 
 
