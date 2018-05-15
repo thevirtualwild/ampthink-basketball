@@ -296,11 +296,16 @@ function onConnection(socket) {
       };
 
       courtsandmaster[courtid] = thiscourt;
+      console.log(courtsandmaster[courtid]);
       // console.dir(thiscourt);
       // console.log('candm list: ');
       // console.dir(courtsandmaster);
+
       socket.court.master = socket.id;
+      console.log("SYNC DATA " + socket.syncdata);
+      syncSlaves(socket.syncdata);
       console.log('setting this socket to master:' + socket.court.master);
+      socket.hasmaster = true;
       socket.emit('set master');
     }
 
@@ -736,6 +741,7 @@ function onConnection(socket) {
   function findNewMaster(oldsocketid) {
     //var slaveindex = court.slaves.indexOf(socket.id);
 
+      socket.hasmaster = false;
     var newmaster = court.slaves.pop();
       console.log("new master");
     console.dir(newmaster);
@@ -743,12 +749,15 @@ function onConnection(socket) {
     if(newmaster)
     {
         courtsandmaster[socket.court.id].master = newmaster;
+        socket.hasmaster = true;
         io.to(courtsandmaster[socket.court.id].master).emit('set master');
     }
     else {
       socket.court.master = null;
       courtsandmaster[socket.court.id] = null;
-      syncSlaves(socket.syncdata);
+      console.log(courtsandmaster[socket.court.id]);
+      //socket.court.id = null;
+      setSocketMaster();
     }
 
   }
@@ -1006,6 +1015,10 @@ function onConnection(socket) {
   });
 
   function courtDisconnected(somesocket) {
+
+
+
+
     if (socket.court) {
       var somecourtid = somesocket.court.id;
       var courtid = somecourtid;
@@ -1015,7 +1028,7 @@ function onConnection(socket) {
         // // // console.dir(socket.court);
         // // // console.log('current courtsandmaster');
         // // // console.dir(courtsandmaster);
-        findNewMaster();
+        findNewMaster(socket.id);
       } else {
         var slaveindex = court.slaves.indexOf(socket.id);
         court.slaves.pop(slaveindex);
