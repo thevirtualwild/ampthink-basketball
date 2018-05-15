@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1c95612d-4678-4af6-a1f9-2ab5baa022a4" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/public/babylon/court.js" afterPath="$PROJECT_DIR$/public/babylon/court.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -22,8 +23,8 @@
       <file leaf-file-name="court.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/babylon/court.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="393">
-              <caret line="1872" column="35" lean-forward="true" selection-start-line="1872" selection-start-column="35" selection-end-line="1872" selection-end-column="35" />
+            <state relative-caret-position="208">
+              <caret line="93" column="40" lean-forward="true" selection-start-line="93" selection-start-column="40" selection-end-line="93" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -134,10 +135,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>master</find>
-      <find>initemit</find>
-      <find>animatecamera</find>
-      <find>ismaster</find>
       <find>masterdata</find>
       <find>uiresults</find>
       <find>show results</find>
@@ -164,6 +161,10 @@
       <find>render</find>
       <find>isconnected</find>
       <find>reconnected</find>
+      <find>socket.onco</find>
+      <find>room reset</find>
+      <find>createscene</find>
+      <find>var scene</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -393,7 +394,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="634101000" />
+    <option name="totallyTimeSpent" value="635235000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -745,18 +746,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/babylon/court.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="393">
-          <caret line="1872" column="35" lean-forward="true" selection-start-line="1872" selection-start-column="35" selection-end-line="1872" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1270">
           <caret line="970" column="23" lean-forward="false" selection-start-line="970" selection-start-column="23" selection-end-line="970" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/babylon/court.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="93" column="40" lean-forward="true" selection-start-line="93" selection-start-column="40" selection-end-line="93" selection-end-column="40" />
           <folding />
         </state>
       </provider>

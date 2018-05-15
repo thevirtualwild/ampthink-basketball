@@ -1444,6 +1444,7 @@ net.setIndices(indices, indices.length);
 }
 
 var scene = createScene();
+
 engine.runRenderLoop(function() {
 
 
@@ -1865,6 +1866,7 @@ socket.on('change player name', function(data) {
 socket.on('connect', function() {
   isconnected = true;
   myIP = getMyIP();
+  //scene = createScene();
 });
 socket.on('court reconnected', function(courtinfo) {
   courtReconnection(courtinfo);
@@ -1872,6 +1874,8 @@ socket.on('court reconnected', function(courtinfo) {
 
 socket.on('reconnect', function() {
     isconnected = true;
+    console.log("reconnect");
+    //scene = createScene();
 });
 
 socket.on('disconnect', function() {
