@@ -746,6 +746,7 @@ function onConnection(socket) {
         io.to(courtsandmaster[socket.court.id].master).emit('set master');
     }
     else {
+      socket.court.master = null;
       syncSlaves(socket.syncdata);
     }
 
