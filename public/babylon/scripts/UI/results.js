@@ -180,6 +180,7 @@ function UIResultsSetData(data) {
         topScoreText.innerHTML = currentScore.toString();
         topFirstName.innerHTML = currentName.substr(0, currentName.indexOf(' '));
         topLastName.innerHTML = currentName.substr(currentName.indexOf(' ') + 1);
+        yourScore.style.display = "none";
     }
     else
     {
@@ -189,6 +190,7 @@ function UIResultsSetData(data) {
             topScoreText.innerHTML = currentScore.toString();
             topFirstName.innerHTML = currentName.substr(0, currentName.indexOf(' '));
             topLastName.innerHTML = currentName.substr(currentName.indexOf(' ') + 1);
+            yourScore.style.display = "none";
         }
         else
         {
@@ -197,6 +199,7 @@ function UIResultsSetData(data) {
             topFirstName.innerHTML = name.substr(0, name.indexOf(' '));
             topLastName.innerHTML = name.substr(name.indexOf(' ') + 1);
             topScoreText.innerHTML = data.resultsdata.highscorer.score;
+            yourScore.style.display = "auto";
         }
     }
 
