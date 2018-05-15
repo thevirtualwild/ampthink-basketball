@@ -330,13 +330,16 @@ var createScene = function(){
 
           UIWaitingUpdateClock(currentWaitTime);
 
-
+            console.log(currentWaitTime);
           if(currentWaitTime <= -5)
           {
+              console.log("got less that 5 seconds");
             if (hasplayer) {
               changeGameState(gameStates.GAMEPLAY);
+                console.log("switched ot gameplay");
             } else {
               changeGameState(gameStates.INACTIVE);
+                console.log("switched to inactive");
             }
           }
           else if(currentWaitTime <= -4 && !gameReady)
