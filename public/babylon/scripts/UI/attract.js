@@ -25,19 +25,26 @@ var initFooterCenterWidth;
 var initWaitingLeftWidth;
 var attractLeftStepNum = document.getElementById("footerLeft").getElementsByClassName("stepNum");
 var initAttractLoad = true;
+var attractIsAnimating = false;
 function UIAttractAnimateIn()
 {
-    turnOnAttract();
-    inner.style.backgroundColor = "transparent";
-    results.style.display = "none";
-    TweenMax.from(footer, textFadeTime, {backgroundPositionY:200});
-    TweenMax.from(footerLeft, textFadeTime, {top:200});
-    TweenMax.from(footerCenter, textFadeTime, {top:200});
-    TweenMax.to(playNow, textFadeTime * 3, {opacity: 0, repeat: -1,  ease:Power2.easeIn, yoyo:true});
-    TweenMax.from(attractLeftStep1, textFadeTime, {delay: 2*textFadeTime, opacity:0});
-    TweenMax.from(attractRightStep1, textFadeTime, {delay: 2*textFadeTime, opacity:0});
-    TweenMax.from(attractLeftStep2, textFadeTime, {delay: 2*textFadeTime, opacity:0});
-    TweenMax.from(attractRightStep2, textFadeTime, {delay: 2*textFadeTime, opacity:0});
+    if(!attractIsAnimating)
+    {
+        turnOnAttract();
+        attractIsAnimating = true;
+        console.log("UIATTRACTANIMATEIN");
+        inner.style.backgroundColor = "transparent";
+        results.style.display = "none";
+        TweenMax.from(footer, textFadeTime, {backgroundPositionY:200});
+        TweenMax.from(footerLeft, textFadeTime, {top:200});
+        TweenMax.from(footerCenter, textFadeTime, {top:200});
+        TweenMax.to(playNow, textFadeTime * 3, {opacity: 0, repeat: -1,  ease:Power2.easeIn, yoyo:true});
+        TweenMax.from(attractLeftStep1, textFadeTime, {delay: 2*textFadeTime, opacity:0});
+        TweenMax.from(attractRightStep1, textFadeTime, {delay: 2*textFadeTime, opacity:0});
+        TweenMax.from(attractLeftStep2, textFadeTime, {delay: 2*textFadeTime, opacity:0});
+        TweenMax.from(attractRightStep2, textFadeTime, {delay: 2*textFadeTime, opacity:0, onComplete:animatingOff});
+    }
+
 }
 
 function UIAttractAnimateOut()
@@ -99,4 +106,9 @@ function turnOffAttract()
 function UIAttractUpdateCourtName(name)
 {
     attractRightStep2.innerHTML = "<h2>THEN ENTER</h2><h2>CODE '<span id=\"courtCode\">" + name + "</span>'</h2>";
+}
+
+function animatingOff()
+{
+    attractIsAnimating = false;
 }
