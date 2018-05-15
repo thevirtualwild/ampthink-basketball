@@ -26,7 +26,7 @@ var pulseAmbientColor = false;
 var sceneLoaded = false;
 var initLoadTime = 7;
 var currentLoadTime = 7;
-var cameraAnimation;
+
 var hasCourt = false;
 var ISMASTER = false;
 var readyToSync = false;
@@ -50,8 +50,8 @@ var initNetLerpDelayTime = 2;
 var currentNetLerpTime = 0.25;
 var initNetLerpTime = 0.25;
 
-var initEmitTime = 0.1;
-var currentEmitTime = 0.1;
+var initEmitTime = 0.01;
+var currentEmitTime = 0.01;
 
 var gameReady = false;
 
@@ -192,9 +192,9 @@ var createScene = function(){
                 gameReady = false;
                 console.log("Aspect Ratio: " + canvas.width/canvas.height);
                 lobbyStarted = false;
-                //if(ISMASTER) {
+                if(ISMASTER) {
                     animateCamera();
-                //}
+                }
                 console.log("SWITCHED TO ATTRACT");
                 updateUI();
                 combo = 0;
@@ -210,7 +210,7 @@ var createScene = function(){
                 updateUI();
                 break;
             case gameStates.GAMEPLAY:
-                //initEmitTime = 0.01;
+                initEmitTime = 0.05;
                 currentGameState = gameState;
                 currentCameraIndex = 1;
                 lobbyStarted = false;
@@ -218,7 +218,7 @@ var createScene = function(){
                 updateBallColor();
                 break;
             case gameStates.RESULTS:
-                //initEmitTime = 0.01;
+                initEmitTime = 0.05;
                 currentGameState = gameState;
                 currentCameraIndex = 1;
                 gameOver();
@@ -260,7 +260,7 @@ var createScene = function(){
                     value: finalPosition});
 
             var dataType = BABYLON.Animation.ANIMATIONTYPE_VECTOR3;
-            cameraAnimation = new BABYLON.Animation("attractAnimation", "position", 30, dataType, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+            var cameraAnimation = new BABYLON.Animation("attractAnimation", "position", 30, dataType, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
 
             var ease = new BABYLON.QuadraticEase();
             ease.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
@@ -563,25 +563,20 @@ var createScene = function(){
                         resultsTime: currentResultsTime,
                         basketballs: [],
                         shotindex: shotIndex,
-                        states: [],
-                        key: cameraAnimation.currentFrame
+                        states: []
                     }
 
                     for(var i = 0; i < basketballs.length; i++) {
-
-                        var linVelX = basketballs[i].physicsImpostor.getLinearVelocity().x;
-                        var linVelY = basketballs[i].physicsImpostor.getLinearVelocity().y;
-                        var linVelZ = basketballs[i].physicsImpostor.getLinearVelocity().z;
                         var newbasketballvar = {
-                            posx: basketballs[i].position.x + linVelX * initEmitTime,
-                            posy: basketballs[i].position.y + linVelY * initEmitTime,
-                            posz: basketballs[i].position.z + linVelZ * initEmitTime,
+                            posx: basketballs[i].position.x,
+                            posy: basketballs[i].position.y,
+                            posz: basketballs[i].position.z,
                             rotx: basketballs[i].rotation.x,
                             roty: basketballs[i].rotation.y,
                             rotz: basketballs[i].rotation.z,
-                            velx: linVelX,
-                            vely: linVelY,
-                            velz: linVelZ,
+                            velx: basketballs[i].physicsImpostor.getLinearVelocity().x,
+                            vely: basketballs[i].physicsImpostor.getLinearVelocity().y,
+                            velz: basketballs[i].physicsImpostor.getLinearVelocity().z,
                             angx: basketballs[i].physicsImpostor.getAngularVelocity().x,
                             angy: basketballs[i].physicsImpostor.getAngularVelocity().y,
                             angz: basketballs[i].physicsImpostor.getAngularVelocity().z
@@ -616,12 +611,11 @@ var createScene = function(){
 
                     var camPos = new BABYLON.Vector3(masterData.cameraPosition.x, masterData.cameraPosition.y, masterData.cameraPosition.z);
 
-                    //camera.position = camPos;
+                    camera.position = camPos;
                     currentWaitTime = masterData.waitTime;
                     currentGameTime = masterData.gameTime;
                     currentResultsTime = masterData.resultsTime;
 
-                    cameraAnimation.goToFrame(masterData.key);
                     shotIndex = masterData.shotindex;
                     shotIndex = masterData.shotindex;
 
