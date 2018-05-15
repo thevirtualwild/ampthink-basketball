@@ -392,7 +392,7 @@ var createScene = function(){
 
           if(currentResultsTime <= -2)
           {
-              changeGameState(gameStates.ATTRACT);
+              //changeGameState(gameStates.ATTRACT);
               currentGameTime = initGameTime;
               updateClock();
               if(ISMASTER)
@@ -1205,6 +1205,7 @@ net.setIndices(indices, indices.length);
 
             function () {
                 changeGameState(gameStates.ATTRACT);
+                console.log("Change game state to attract from reset game");
             }
         )
     );
@@ -1629,6 +1630,7 @@ function updateUI() {
             currentGameTime = initGameTime;
             UIGameplayUpdateScore(0);
             if(!initRun){
+                console.log("uianimatein inside of updateui");
                 UIAttractAnimateIn();
             }
             break;

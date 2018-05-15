@@ -665,6 +665,8 @@ function onConnection(socket) {
   function syncSlaves(data) {
     //console.log("SYNC SLAVES");
     var courtmaster;
+    console.log(socket.court);
+    console.log(socket.court.master);
     if (socket.court.master) {
       courtmaster = socket.court.master;
       if (courtmaster == socket.id) {
@@ -682,7 +684,6 @@ function onConnection(socket) {
       }
     } else {
       setSocketMaster();
-        console.log("SETTING SOCKET MASTER");
     }
   }
 
