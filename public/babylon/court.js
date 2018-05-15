@@ -50,8 +50,8 @@ var initNetLerpDelayTime = 2;
 var currentNetLerpTime = 0.25;
 var initNetLerpTime = 0.25;
 
-var initEmitTime = 0.01;
-var currentEmitTime = 0.01;
+var initEmitTime = 0.075;
+var currentEmitTime = 0.075;
 
 var gameReady = false;
 
@@ -210,7 +210,7 @@ var createScene = function(){
                 updateUI();
                 break;
             case gameStates.GAMEPLAY:
-                initEmitTime = 0.01;
+                //initEmitTime = 0.01;
                 currentGameState = gameState;
                 currentCameraIndex = 1;
                 lobbyStarted = false;
@@ -218,7 +218,7 @@ var createScene = function(){
                 updateBallColor();
                 break;
             case gameStates.RESULTS:
-                initEmitTime = 0.01;
+                //initEmitTime = 0.01;
                 currentGameState = gameState;
                 currentCameraIndex = 1;
                 gameOver();
