@@ -1783,15 +1783,17 @@ socket.on('player joined court', function(userdata) {
   }
 });
 socket.on('player changed name', function(data) {
-  if (userdata.court == courtName) {
+    //console.log(data);
+    //console.log(data.dir);
+  if (courtName == data.newplayer.court ) {
     console.log('Player ' + playerData.username + ' - Change Name - ' + data.newplayer.username);
 
     playerData = data.newplayer;
 
-    UIGameplayUpdateName(playerData.username);
-    UIResultsUpdateName(playerData.username);
+    UIGameplayUpdateName(data.newplayer.username);
+    UIResultsUpdateName(data.newplayer.username);
   } else {
-    console.log('Player ' + playerData.username + ' - Change Name - ' + data.newplayer.username);
+    console.log('Player ' + data.username + ' - Change Name - ' + data.newplayer.username);
   }
 });
 

@@ -23,9 +23,9 @@ function UIGameplayAnimateIn()
 {
     footerWidth = initWaitingLeftWidth;
     footerCenter.style.width = initWaitingLeftWidth + "px";
-    console.log(footerWidth);
+    //console.log(footerWidth);
     initLeftPos = firstName.style.left;
-    console.log(initLeftPos);
+    //console.log(initLeftPos);
     waitingLeft.style.display = "none";
     waitingRight.style.display = "none";
 
@@ -41,7 +41,7 @@ function UIGameplayAnimateIn()
     scoreText.style.opacity= 0;
     scoreLabel.style.lineHeight = 0;
 
-    console.log(initWaitingLeftWidth);
+    //console.log(initWaitingLeftWidth);
     //TweenMax.to(scoreLabel, textFadeTime, {lineHeight:40});
     TweenMax.to(gameplayLeft, textFadeTime, {opacity:1, delay: textFadeTime});
     TweenMax.to(scoreText, textFadeTime, {opacity:1, delay: textFadeTime});

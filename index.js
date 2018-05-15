@@ -798,6 +798,7 @@ function onConnection(socket) {
       oldplayer: oldplayer,
       newplayer: newplayer
     }
+    console.log("Broadcasting to player changed name: " + data);
     socket.broadcast.to(socket.roomname).emit('player changed name', data);
   })
 
