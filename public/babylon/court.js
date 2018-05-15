@@ -210,7 +210,7 @@ var createScene = function(){
                 updateUI();
                 break;
             case gameStates.GAMEPLAY:
-                initEmitTime = 0.05;
+                initEmitTime = 0.01;
                 currentGameState = gameState;
                 currentCameraIndex = 1;
                 lobbyStarted = false;
@@ -218,7 +218,7 @@ var createScene = function(){
                 updateBallColor();
                 break;
             case gameStates.RESULTS:
-                initEmitTime = 0.05;
+                initEmitTime = 0.01;
                 currentGameState = gameState;
                 currentCameraIndex = 1;
                 gameOver();
@@ -567,16 +567,20 @@ var createScene = function(){
                     }
 
                     for(var i = 0; i < basketballs.length; i++) {
+
+                        var linVelX = basketballs[i].physicsImpostor.getLinearVelocity().x;
+                        var linVelY = basketballs[i].physicsImpostor.getLinearVelocity().y;
+                        var linVelZ = basketballs[i].physicsImpostor.getLinearVelocity().z;
                         var newbasketballvar = {
-                            posx: basketballs[i].position.x,
-                            posy: basketballs[i].position.y,
-                            posz: basketballs[i].position.z,
+                            posx: basketballs[i].position.x + linVelX,
+                            posy: basketballs[i].position.y + linVelY,
+                            posz: basketballs[i].position.z + linVelZ,
                             rotx: basketballs[i].rotation.x,
                             roty: basketballs[i].rotation.y,
                             rotz: basketballs[i].rotation.z,
-                            velx: basketballs[i].physicsImpostor.getLinearVelocity().x,
-                            vely: basketballs[i].physicsImpostor.getLinearVelocity().y,
-                            velz: basketballs[i].physicsImpostor.getLinearVelocity().z,
+                            velx: linVelX,
+                            vely: linVelY,
+                            velz: linVelZ,
                             angx: basketballs[i].physicsImpostor.getAngularVelocity().x,
                             angy: basketballs[i].physicsImpostor.getAngularVelocity().y,
                             angz: basketballs[i].physicsImpostor.getAngularVelocity().z
