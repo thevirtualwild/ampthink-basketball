@@ -313,6 +313,8 @@ function onConnection(socket) {
     thiszone = allzones[zoneid];
 
     if (thiszone.rooms) {
+      console.log('thiszone.rooms');
+      console.dir(thiszone.rooms);
       roomid = thiszone.rooms[0];
       // // // // console.log('findaroom assign');
       // // // console.dir(somecourt);
@@ -525,7 +527,7 @@ function onConnection(socket) {
         allrooms[newroomid] = newroom;
         roomnames[newroom.name] = newroom;
 
-        somecourt['room'] = [roomid];
+        somecourt['room'] = [newroomid];
         allcourts[somecourt.id] = somecourt;
         courtnames[somecourt.name] = somecourt;
         // // // console.log('create a room assign');
