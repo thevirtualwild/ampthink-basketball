@@ -275,7 +275,6 @@ function onConnection(socket) {
           console.log("this court: " + thiscourt);
           console.log("this court master: " + thiscourt.master);
         socket.master = thiscourt.master;
-
       } else {
         thiscourt.master = socket.id;
         socket.master = socket.id;
@@ -296,7 +295,7 @@ function onConnection(socket) {
       // // console.dir(thiscourt);
       // // console.log('candm list: ');
       // // console.dir(courtsandmaster);
-      //socket.master = socket.id;
+      socket.master = socket.id;
       socket.emit('set master');
     }
 
