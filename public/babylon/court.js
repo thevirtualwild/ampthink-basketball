@@ -303,7 +303,7 @@ var createScene = function(){
 
       var newPos = new BABYLON.Vector3(0,0,0);
       newPos.x = torus.position.x + 0;
-      newPos.y = torus.position.y + 4;
+      newPos.y = torus.position.y + 0;
       newPos.z = torus.position.z - 0;
       camera.setTarget(newPos);
 
