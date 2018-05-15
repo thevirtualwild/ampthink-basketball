@@ -39,7 +39,7 @@ function UIWaitingAnimateOut()
 {
     TweenMax.to(countdown, textFadeTime, {opacity:0, delay: textFadeTime, onComplete: UIGameplayAnimateIn});
     TweenMax.to(textWaiting, textFadeTime/2, {opacity:0, delay: textFadeTime});
-    TweenMax.to(textWaiting, textFadeTime, {left: footerWidth + 300 , delay: textFadeTime})
+    TweenMax.to(textWaiting, textFadeTime, {left: initWaitingLeftWidth + 300 , delay: textFadeTime})
 }
 
 function UIWaitingUpdateClock(time)
