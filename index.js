@@ -272,8 +272,8 @@ function onConnection(socket) {
         // console.log('court has master: ' + thiscourt.master);
         thiscourt.slaves.push(socket.id);
         courtsandmaster[courtid] = thiscourt;
-          console.log("this court: " + thiscourt);
-          console.log("this court master: " + thiscourt.master);
+          //console.log("this court: " + thiscourt);
+          //console.log("this court master: " + thiscourt.master);
         socket.master = thiscourt.master;
       } else {
         thiscourt.master = socket.id;
@@ -648,6 +648,7 @@ function onConnection(socket) {
       // // // console.log('Sorry not the best');
     }
 
+    console.log("socket roomname: " + socket.roomname);
     allrooms[socket.roomname] = thisgamesroom;
 
     var resultsdata = {
@@ -663,6 +664,7 @@ function onConnection(socket) {
     };
 
     socket.broadcast.to(socket.roomname).emit('show results', emitData);
+    socket.emit('show results', emitData);
 
   }
 

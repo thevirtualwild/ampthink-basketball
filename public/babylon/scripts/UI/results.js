@@ -174,53 +174,44 @@ function UIResultsUpdateScore(playerScore)
 }
 
 function UIResultsSetData(data) {
-
-    console.log(data);
-    if(data.highscorer === undefined)
-    {
-        console.log("NO HIGH SCORER");
-        return;
-    }
-
-    topScoreText.innerHTML = data.highscorer.player.score;
-
-    if(data.highscorer.player.username === undefined)
+    if(data.resultsdata.highscorer === undefined)
     {
         winner = true;
-        topScoreText.innerHTML = "0";
+        topScoreText.innerHTML = currentScore.toString();
         topFirstName.innerHTML = currentName.substr(0, currentName.indexOf(' '));
         topLastName.innerHTML = currentName.substr(currentName.indexOf(' ') + 1);
     }
     else
     {
-        var name = data.highscorer.player.username;
-        topFirstName.innerHTML = name.substr(0, name.indexOf(' '));
-        topLastName.innerHTML = name.substr(name.indexOf(' ') + 1);
-
-        if(currentScore >= data.highscorer.player.score)
+        if(currentScore >= data.resultsdata.highscorer.score)
         {
             winner = true;
+            topScoreText.innerHTML = currentScore.toString();
+            topFirstName.innerHTML = currentName.substr(0, currentName.indexOf(' '));
+            topLastName.innerHTML = currentName.substr(currentName.indexOf(' ') + 1);
         }
         else
         {
             winner = false;
+            var name = data.resultsdata.highscorer.player;
+            topFirstName.innerHTML = name.substr(0, name.indexOf(' '));
+            topLastName.innerHTML = name.substr(name.indexOf(' ') + 1);
+            topScoreText.innerHTML = data.resultsdata.highscorer.score;
         }
     }
 
-
-    for (ateam in data.teamscores) {
-        if(primaryTeam.name == data.teamscores[ateam].name) {
-            team1Name.innerHTML = data.teamscores[ateam].name;
-            team1Score.innerHTML = data.teamscores[ateam].score;
+    for (ateam in data.resultsdata.teamscores) {
+        if(primaryTeam.name == data.resultsdata.teamscores[ateam].name) {
+            team1Name.innerHTML = data.resultsdata.teamscores[ateam].name;
+            team1Score.innerHTML = data.resultsdata.teamscores[ateam].score;
         }
-        else if(secondaryTeam.name == data.teamscores[ateam].name) {
-            team2Name.innerHTML = data.teamscores[ateam].name;
-            team2Score.innerHTML = data.teamscores[ateam].score;
+        else if(secondaryTeam.name == data.resultsdata.teamscores[ateam].name) {
+            team2Name.innerHTML = data.resultsdata.teamscores[ateam].name;
+            team2Score.innerHTML = data.resultsdata.teamscores[ateam].score;
         }
-        else if(tertiaryTeam.name == data.teamscores[ateam].name) {
-            team3Name.innerHTML = data.teamscores[ateam].name;
-            team3Score.innerHTML = data.teamscores[ateam].score;
+        else if(tertiaryTeam.name == data.resultsdata.teamscores[ateam].name) {
+            team3Name.innerHTML = data.resultsdata.teamscores[ateam].name;
+            team3Score.innerHTML = data.resultsdata.teamscores[ateam].score;
         }
     }
-
 }
