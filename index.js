@@ -270,6 +270,7 @@ function onConnection(socket) {
       // // // // console.log('court master: ' + thiscourt.master);
 
       if (thiscourt.master === undefined) {
+        console.log('master undefined ' + thiscourt.master + " " + socket.id);
         console.log('master undefined');
         thiscourt.master = socket.id;
         socket.court.master = socket.id;
@@ -287,12 +288,13 @@ function onConnection(socket) {
         courtsandmaster[courtid] = thiscourt;
         //console.log("this court: " + thiscourt);
           //// // console.log("this court master: " + thiscourt.master);
-          console.log(thiscourt.master);
+          console.log("MIDDLE IF " + thiscourt.master);
           console.log(socket.court.master);
           socket.court.master = thiscourt.master;
           sendToSpecificSocket(socket.id);
           //io.to(thiscourt.master).emit('set master');
       } else {
+          console.log("LAST IF " + socket.id);
         thiscourt.master = socket.id;
         socket.court.master = socket.id;
         console.log('thiscourt master: ');
@@ -314,6 +316,7 @@ function onConnection(socket) {
       // console.log('candm list: ');
       // console.dir(courtsandmaster);
 
+        console.log("END OF SOCKET " + socket.id);
       socket.court.master = socket.id;
       console.log("SYNC DATA " + socket.syncdata);
       syncSlaves(socket.syncdata);
