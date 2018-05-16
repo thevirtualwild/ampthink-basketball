@@ -298,7 +298,8 @@ function onConnection(socket) {
           console.log("MIDDLE IF " + thiscourt.master);
           console.log(socket.court.master);
           socket.court.master = thiscourt.master;
-          sendToSpecificSocket(socket.id);
+          //was socket.id
+          sendToSpecificSocket(socket.court.master);
           //io.to(thiscourt.master).emit('set master');
       } else {
           console.log("LAST IF " + socket.id);
