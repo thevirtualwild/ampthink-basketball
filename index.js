@@ -1098,7 +1098,7 @@ function onConnection(socket) {
       // // console.log('CONNECTION: court reconnecting');
       socket.emit('court reconnected', courtinfo);
       if(socket.court === undefined) {
-          unknownDevice(deviceIP);
+          getCourtToShow(deviceIP);
           console.log("UNKNOWN DEVICE");
       }
       else{
