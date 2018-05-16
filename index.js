@@ -1051,7 +1051,7 @@ function onConnection(socket) {
       var thiscourt = courtnames[somesocket.court.name];
       console.log(thiscourt);
 
-
+        console.log("COURT DISCONNECTED");
       thiscourt.hasplayer = false;
       courtnames[somesocket.court] = thiscourt;
 
@@ -1063,11 +1063,13 @@ function onConnection(socket) {
 
       socket.emit('reset game');
       socket.broadcast.to(somesocket.roomname).emit('reset game');
+        console.log("CHECKING IF WE FIND NEW MASTER " + court.master + " " + socket.id);
       if (court.master == socket.id) {
         // // // console.log('need to find new master - ');
         // // // console.dir(socket.court);
         // // // console.log('current courtsandmaster');
         // // // console.dir(courtsandmaster);
+
         findNewMaster(socket.id);
       } else {
         var slaveindex = court.slaves.indexOf(socket.id);
