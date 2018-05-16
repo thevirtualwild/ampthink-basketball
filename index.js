@@ -776,6 +776,7 @@ function onConnection(socket) {
     {
         courtsandmaster[socket.court.id].master = newmaster;
         socket.hasmaster = true;
+        console.log("FIND NEW MASTER SET MASTER EMIT " + socket.id)
         io.to(courtsandmaster[socket.court.id].master).emit('set master');
     }
     else {
@@ -1246,6 +1247,7 @@ function onConnection(socket) {
 
 function sendToSpecificSocket(socketID)
 {
+    console.log("SEND TO SPECIFIC MASTER " + socketID);
     io.to(socketID).emit('set master');
 }
 

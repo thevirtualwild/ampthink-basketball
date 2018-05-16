@@ -114,8 +114,8 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="768" column="82" lean-forward="false" selection-start-line="768" selection-start-column="82" selection-end-line="768" selection-end-column="82" />
+            <state relative-caret-position="446">
+              <caret line="288" column="11" lean-forward="true" selection-start-line="288" selection-start-column="11" selection-end-line="288" selection-end-column="11" />
               <folding />
             </state>
           </provider>
@@ -132,7 +132,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>position</find>
       <find>syncdata</find>
       <find>game almost ready</find>
       <find>courtsandmaster</find>
@@ -162,6 +161,7 @@
       <find>findnewmaster</find>
       <find>socketmaster</find>
       <find>socket.master</find>
+      <find>emit('set master'</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -391,7 +391,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="643220000" />
+    <option name="totallyTimeSpent" value="643707000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -752,8 +752,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="768" column="82" lean-forward="false" selection-start-line="768" selection-start-column="82" selection-end-line="768" selection-end-column="82" />
+        <state relative-caret-position="446">
+          <caret line="288" column="11" lean-forward="true" selection-start-line="288" selection-start-column="11" selection-end-line="288" selection-end-column="11" />
           <folding />
         </state>
       </provider>
