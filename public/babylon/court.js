@@ -1484,7 +1484,7 @@ engine.runRenderLoop(function() {
     if(ISMASTER)
     {
         fpsLabel.style.background = "red";
-        fpsLabel.style.height = "100%";
+        fpsLabel.style.height = "2px";
     }
 
     //scene.getPhysicsEngine().setTimeStep(1/(engine.getFps() * .75));
