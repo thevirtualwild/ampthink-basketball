@@ -1044,13 +1044,25 @@ function onConnection(socket) {
 
   function courtDisconnected(somesocket) {
 
+      var thisgamesroom = roomnames[somesocket.roomname];
+      thisgamesroom.gamerunning = false;
+      roomnames[somesocket.roomname] = thisgamesroom;
+
+      var thiscourt = courtnames[somesocket.court.name];
+      console.log(thiscourt);
 
 
+      thiscourt.hasplayer = false;
+      courtnames[somesocket.court] = thiscourt;
 
+      console.log("")
     if (socket.court) {
       var somecourtid = somesocket.court.id;
       var courtid = somecourtid;
       var court = courtsandmaster[courtid];
+
+      socket.emit('reset game');
+      socket.broadcast.to(somesocket.roomname).emit('reset game');
       if (court.master == socket.id) {
         // // // console.log('need to find new master - ');
         // // // console.dir(socket.court);
