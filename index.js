@@ -284,7 +284,14 @@ function onConnection(socket) {
 
       } else if (thiscourt.master) {
         //console.log('court has master: ' + thiscourt.master);
-        thiscourt.slaves.push(socket.id);
+          if(thiscourt.master == socket.id){
+              console.log("SOCKET ALREADY MASTER");
+          }
+          else {
+              thiscourt.slaves.push(socket.id);
+              console.log("SOCKET IS SLAVE PUSHING");
+          }
+
         courtsandmaster[courtid] = thiscourt;
         //console.log("this court: " + thiscourt);
           //// // console.log("this court master: " + thiscourt.master);
