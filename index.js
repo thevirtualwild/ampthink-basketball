@@ -318,19 +318,19 @@ function onConnection(socket) {
         master: socket.id
       };
 
-      courtsandmaster[courtid] = thiscourt;
+      //courtsandmaster[courtid] = thiscourt;
       console.log(courtsandmaster[courtid]);
       // console.dir(thiscourt);
       // console.log('candm list: ');
       // console.dir(courtsandmaster);
 
         console.log("END OF SOCKET " + socket.id);
-      socket.court.master = socket.id;
+      //socket.court.master = socket.id;
       console.log("SYNC DATA " + socket.syncdata);
-      syncSlaves(socket.syncdata);
+      //syncSlaves(socket.syncdata);
       console.log('setting this socket to master:' + socket.court.master);
-      socket.hasmaster = true;
-      socket.emit('set master');
+      //socket.hasmaster = true;
+      //socket.emit('set master');
     }
 
     // if (masters[socket.court.id]) {
