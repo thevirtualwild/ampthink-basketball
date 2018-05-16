@@ -1446,10 +1446,8 @@ net.setIndices(indices, indices.length);
 var scene = createScene();
 engine.runRenderLoop(function() {
 
-
     if(!isconnected){
         console.log("RETURNED BECAUSE NOT CONNECTED");
-
         return;
     }
 
@@ -1730,7 +1728,7 @@ function gameOver() {
 
 socket.on('set master', function(){
     ISMASTER = true;
-    console.log(ISMASTER);
+    console.log("SET MASTER " + ISMASTER);
     scene.actionManager.processTrigger(scene.actionManager.actions[3].trigger, {additionalData: "p"});
 
 });

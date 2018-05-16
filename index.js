@@ -249,6 +249,15 @@ function onConnection(socket) {
     console.log('--setting socket master')
     // // // // console.log('socket court');
     // // // // console.dir(socket.court);
+      if(socket.court === undefined)
+      {
+          console.log("UNKNOWN DEVICe");
+          console.log(socket.deviceIP);
+          //unknownDevice(socket.deviceIP);
+          //return;
+          console.log(socket.court);
+      }
+
     var courtid = socket.court.id;
     console.log('socket.court.id: ' + courtid);
     var thiscourt = courtsandmaster[courtid];
@@ -278,7 +287,11 @@ function onConnection(socket) {
         courtsandmaster[courtid] = thiscourt;
         console.log("this court: " + thiscourt);
           //// // console.log("this court master: " + thiscourt.master);
-        socket.court.master = thiscourt.master;
+          console.log(thiscourt.master);
+          console.log(socket.court.master);
+          socket.court.master = thiscourt.master;
+          sendToSpecificSocket(socket.id);
+          //io.to(thiscourt.master).emit('set master');
       } else {
         thiscourt.master = socket.id;
         socket.court.master = socket.id;
@@ -1084,6 +1097,14 @@ function onConnection(socket) {
       //court has already connected
       // // console.log('CONNECTION: court reconnecting');
       socket.emit('court reconnected', courtinfo);
+      if(socket.court === undefined) {
+          unknownDevice(deviceIP);
+          console.log("UNKNOWN DEVICE");
+      }
+      else{
+          setSocketMaster();
+      }
+
     } else {
       // // console.log('CONNECTION: court connected for the first time');
       connectedcourts[deviceIP] = data;
@@ -1209,7 +1230,10 @@ function onConnection(socket) {
 
 // Ready to delete finished
 
-
+function sendToSpecificSocket(socketID)
+{
+    io.to(socketID).emit('set master');
+}
 
 
 io.on('connection', onConnection);
