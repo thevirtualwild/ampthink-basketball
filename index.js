@@ -767,8 +767,7 @@ function onConnection(socket) {
 
       socket.hasmaster = false;
       console.log("SOCKET COURT MASTER " + socket.court.master + " " + socket.id);
-        socket.court.master = null;
-
+      courtsandmaster[socket.court.id].master = null;
     var newmaster = court.slaves.pop();
       console.log("new master");
     console.dir(newmaster);
