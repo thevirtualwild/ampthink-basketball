@@ -282,10 +282,10 @@ function onConnection(socket) {
         socket.emit('set master');
 
       } else if (thiscourt.master) {
-        console.log('court has master: ' + thiscourt.master);
+        //console.log('court has master: ' + thiscourt.master);
         thiscourt.slaves.push(socket.id);
         courtsandmaster[courtid] = thiscourt;
-        console.log("this court: " + thiscourt);
+        //console.log("this court: " + thiscourt);
           //// // console.log("this court master: " + thiscourt.master);
           console.log(thiscourt.master);
           console.log(socket.court.master);
@@ -1097,6 +1097,7 @@ function onConnection(socket) {
       //court has already connected
       // // console.log('CONNECTION: court reconnecting');
       socket.emit('court reconnected', courtinfo);
+      console.log("DEVICE IP" + deviceIP + " socketid " + socket.id);
       if(socket.court === undefined) {
           getCourtToShow(deviceIP);
           console.log("UNKNOWN DEVICE");
