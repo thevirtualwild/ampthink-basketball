@@ -114,8 +114,8 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="463">
-              <caret line="296" column="64" lean-forward="false" selection-start-line="296" selection-start-column="64" selection-end-line="296" selection-end-column="64" />
+            <state relative-caret-position="293">
+              <caret line="775" column="5" lean-forward="true" selection-start-line="775" selection-start-column="5" selection-end-line="775" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -132,13 +132,10 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>camera.settarget</find>
-      <find>pos</find>
       <find>position</find>
       <find>syncdata</find>
       <find>game almost ready</find>
       <find>courtsandmaster</find>
-      <find>findnewmaster</find>
       <find>render</find>
       <find>reconnected</find>
       <find>socket.onco</find>
@@ -162,6 +159,9 @@
       <find>master</find>
       <find>disconnect</find>
       <find>slaves.push</find>
+      <find>findnewmaster</find>
+      <find>socketmaster</find>
+      <find>socket.master</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -391,7 +391,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="642218000" />
+    <option name="totallyTimeSpent" value="642724000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -752,8 +752,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="463">
-          <caret line="296" column="64" lean-forward="false" selection-start-line="296" selection-start-column="64" selection-end-line="296" selection-end-column="64" />
+        <state relative-caret-position="293">
+          <caret line="775" column="5" lean-forward="true" selection-start-line="775" selection-start-column="5" selection-end-line="775" selection-end-column="5" />
           <folding />
         </state>
       </provider>
