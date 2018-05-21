@@ -37,6 +37,7 @@ var netSpheres = [];
 var attractShots = [-.12, 1.2, 1.1, .3, 1, -.2, -2.5, 1.8, 0, 3.2]
 var cameraSettings = [];
 
+var worldtime = 0;
 var initWaitTime = 15;
 var currentWaitTime = 15;
 var initGameTime = 30;
@@ -76,9 +77,6 @@ createCameraTypes();
 
 var initRun = true;
 
-
-
-
 //socket data to send
 var hasconnected = false;
 var reconnecting = false;
@@ -88,22 +86,14 @@ var isconnected = false;
 
 var createScene = function(){
     var scene = new BABYLON.Scene(engine);
-
     var shotClockTextures = [10];
 
     engine.enableOfflineSupport = false;
-
-    //engine.setHardwareScalingLevel(1.25);
-
     scene.clearColor = BABYLON.Color3.Black();
-
     scene.fogMode = BABYLON.Scene.FOGMODE_LINEAR;
     scene.fogStart = 30;
     scene.fogEnd = 100;
     scene.fogColor =  BABYLON.Color3.Black();
-
-    //scene.autoClear = false; // Color buffer
-    //scene.autoClearDepthAndStencil = false; // Depth and stencil, obviously
 
     var initCameraPos;
     var initCameraFocus;
@@ -301,6 +291,7 @@ var createScene = function(){
     scene.registerBeforeRender(function() {
       var i = 0;
 
+      worldtime += engine.getDeltaTime()/1000;
       var newPos = new BABYLON.Vector3(0,0,0);
       newPos.x = torus.position.x + 0;
       newPos.y = torus.position.y + 0;
@@ -512,7 +503,6 @@ var createScene = function(){
         }
         scene.registerBeforeRender(function()
         {
-
             for(var i = 0 ; i < basketballs.length; i++)
             {
                 if(ISMASTER)
@@ -563,6 +553,7 @@ var createScene = function(){
                         gameTime: currentGameTime,
                         waitTime: currentWaitTime,
                         resultsTime: currentResultsTime,
+                        worldTime: worldtime,
                         basketballs: [],
                         netvertexes: [],
                         shotindex: shotIndex,
@@ -626,13 +617,14 @@ var createScene = function(){
                     // currentResultsTime = masterData.resultsTime;
 
                     shotIndex = masterData.shotindex;
-
+                    console.log("PING: " + (worldtime - masterData.worldTime));
                     for(var i = 0; i < basketballs.length; i++)
                     {
 
                         var newPos = new BABYLON.Vector3(masterData.basketballs[i].posx,masterData.basketballs[i].posy, masterData.basketballs[i].posz);
                         var newRot = new BABYLON.Quaternion(masterData.basketballs[i].rotx,masterData.basketballs[i].roty, masterData.basketballs[i].rotz, masterData.basketballs[i].rotw);
 
+                        //newPos = BABYLON.Vector3.Lerp(newBasketballs[i].position, newPos, )
                         newBasketballs[i].position = newPos;
                         newBasketballs[i].rotation = newRot.toEulerAngles();
 
