@@ -741,6 +741,7 @@ function onConnection(socket) {
       courtmaster = socket.court.master;
       // console.log('has court master:');
       // console.dir(courtmaster);
+
       if (courtmaster == socket.id) {
         // console.log('this screen is master - ' + socket.id);
         var testData = {
@@ -750,8 +751,9 @@ function onConnection(socket) {
 
         // console.log("Sync with master called on : " + socket.court.name);
         // console.dir(testData);
-
+          //console.log("SYNC THE SLAVES");
         socket.broadcast.to(socket.roomname).emit('sync with master', testData);
+        socket.emit('sync with master', testData);
       } else {
          // console.log('someone else is master - ' + courtmaster);
       }

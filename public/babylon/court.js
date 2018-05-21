@@ -501,6 +501,7 @@ var createScene = function(){
                 friction:0.1,
                 ignoreParent: true});
 
+            basketballs[i].material.alpha = 0;
             var newBasketball = mesh[0].clone("index: " + i);
 
             //newBasketball.position.x =+ i*2;
@@ -514,14 +515,15 @@ var createScene = function(){
 
             for(var i = 0 ; i < basketballs.length; i++)
             {
-                newBasketballs[i].parent = basketballs[i];
-
-                if (basketballs[0].position.y < -85)
+                if(ISMASTER)
                 {
-                    if (currentGameState == gameStates.ATTRACT)
+                    if (basketballs[0].position.y < -85)
                     {
-                        shotIndex = 0;
-                        takeShot();
+                        if (currentGameState == gameStates.ATTRACT)
+                        {
+                            shotIndex = 0;
+                            takeShot();
+                        }
                     }
                 }
 
@@ -562,6 +564,7 @@ var createScene = function(){
                         waitTime: currentWaitTime,
                         resultsTime: currentResultsTime,
                         basketballs: [],
+                        netvertexes: [],
                         shotindex: shotIndex,
                         states: []
                     }
@@ -571,21 +574,26 @@ var createScene = function(){
                             posx: basketballs[i].position.x,
                             posy: basketballs[i].position.y,
                             posz: basketballs[i].position.z,
-                            rotx: basketballs[i].rotation.x,
-                            roty: basketballs[i].rotation.y,
-                            rotz: basketballs[i].rotation.z,
-                            velx: basketballs[i].physicsImpostor.getLinearVelocity().x,
-                            vely: basketballs[i].physicsImpostor.getLinearVelocity().y,
-                            velz: basketballs[i].physicsImpostor.getLinearVelocity().z,
-                            angx: basketballs[i].physicsImpostor.getAngularVelocity().x,
-                            angy: basketballs[i].physicsImpostor.getAngularVelocity().y,
-                            angz: basketballs[i].physicsImpostor.getAngularVelocity().z
+                            rotx: basketballs[i].rotationQuaternion.x,
+                            roty: basketballs[i].rotationQuaternion.y,
+                            rotz: basketballs[i].rotationQuaternion.z,
+                            rotw: basketballs[i].rotationQuaternion.w
                         }
 
                         syncData['basketballs'].push(newbasketballvar);
 
                         var state = basketballStates[i];
                         syncData['states'].push(state);
+                    }
+
+                    for(var i = sphereAmount; i < 40; i++) {
+                        var newNetPosition = {
+                            posx: netSpheres[i].position.x,
+                            posy: netSpheres[i].position.y,
+                            posz: netSpheres[i].position.z
+                        }
+                        //console.log(newNetPosition);
+                        syncData['netvertexes'].push(newNetPosition);
                     }
 
                     if(hasCourt)
@@ -604,39 +612,44 @@ var createScene = function(){
         {
             scene.registerAfterRender(function()
             {
-                if(readyToSync && !ISMASTER && sceneLoaded)
+                //console.log(readyToSync);
+                if(readyToSync /*&& !ISMASTER */&& sceneLoaded)
                 {
-                    console.log(masterData);
+                    //console.log(masterData);
                     if(masterData === undefined) return;
 
-                    var camPos = new BABYLON.Vector3(masterData.cameraPosition.x, masterData.cameraPosition.y, masterData.cameraPosition.z);
+                    // var camPos = new BABYLON.Vector3(masterData.cameraPosition.x, masterData.cameraPosition.y, masterData.cameraPosition.z);
+                    //
+                    // camera.position = camPos;
+                    // currentWaitTime = masterData.waitTime;
+                    // currentGameTime = masterData.gameTime;
+                    // currentResultsTime = masterData.resultsTime;
 
-                    camera.position = camPos;
-                    currentWaitTime = masterData.waitTime;
-                    currentGameTime = masterData.gameTime;
-                    currentResultsTime = masterData.resultsTime;
-
-                    shotIndex = masterData.shotindex;
                     shotIndex = masterData.shotindex;
 
                     for(var i = 0; i < basketballs.length; i++)
                     {
 
                         var newPos = new BABYLON.Vector3(masterData.basketballs[i].posx,masterData.basketballs[i].posy, masterData.basketballs[i].posz);
-                        var newRot = new BABYLON.Vector3(masterData.basketballs[i].rotx,masterData.basketballs[i].roty, masterData.basketballs[i].rotz);
-                        var newVel = new BABYLON.Vector3(masterData.basketballs[i].velx,masterData.basketballs[i].vely, masterData.basketballs[i].velz);
-                        var newAng = new BABYLON.Vector3(masterData.basketballs[i].angx,masterData.basketballs[i].angy, masterData.basketballs[i].angz);
+                        var newRot = new BABYLON.Quaternion(masterData.basketballs[i].rotx,masterData.basketballs[i].roty, masterData.basketballs[i].rotz, masterData.basketballs[i].rotw);
 
-                        basketballs[i].position = newPos;
-                        basketballs[i].rotation = newRot;
-                        basketballs[i].physicsImpostor.setLinearVelocity(newVel);
-                        basketballs[i].physicsImpostor.setAngularVelocity(newAng);
+                        newBasketballs[i].position = newPos;
+                        newBasketballs[i].rotation = newRot.toEulerAngles();
 
-                        if(i != shotIndex-1)
+                        // if(i != shotIndex-1)
+                        // {
+                        //     basketballStates[i] = masterData.states;
+                        // }
+                    }
+
+                    if(!ISMASTER){
+                        for(var i = 0; i < 30; i++)
                         {
-                            basketballStates[i] = masterData.states;
+                            var newPos = new BABYLON.Vector3(masterData.netvertexes[i].posx,masterData.netvertexes[i].posy, masterData.netvertexes[i].posz);
+                            netSpheres[i+10].position = newPos;
                         }
-                }
+                    }
+
 
                     readyToSync =false;
                 }
@@ -1088,7 +1101,7 @@ var createScene = function(){
 
     var scoreTrigger = new BABYLON.Mesh.CreateBox("scoreTrigger", 2, scene);
     scoreTrigger.position = torus.position;
-    scoreTrigger.position.y += 2;
+    scoreTrigger.position.y += 1;
     var clearMat = new BABYLON.StandardMaterial("myMaterial", scene);
     clearMat.alpha = 0;
     scoreTrigger.material = clearMat;
@@ -1750,6 +1763,7 @@ socket.on('sync with master', function(syncData){
     //console.log("COURT NAME: " + courtName);
     //console.log(syncData);
     //console.log("syncDataCourtName: " + syncData.courtname);
+    //console.log("SYNCED WITH MASTER");
     if(courtName == syncData.courtname)
     {
         masterData = syncData.syncdata;
