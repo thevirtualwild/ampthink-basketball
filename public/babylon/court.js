@@ -200,7 +200,6 @@ var createScene = function(){
                 updateUI();
                 break;
             case gameStates.GAMEPLAY:
-                initEmitTime = 0.05;
                 currentGameState = gameState;
                 currentCameraIndex = 1;
                 lobbyStarted = false;
@@ -208,7 +207,6 @@ var createScene = function(){
                 updateBallColor();
                 break;
             case gameStates.RESULTS:
-                initEmitTime = 0.05;
                 currentGameState = gameState;
                 currentCameraIndex = 1;
                 gameOver();
@@ -452,6 +450,7 @@ var createScene = function(){
     {
         basketball = BABYLON.Mesh.CreateSphere("basketball", 16, 3.1, scene);
         var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
+        myMaterial.alpha = 0;
         basketball.material = myMaterial;
         basketball.position = torus.position;
         var newPos = new BABYLON.Vector3(0,0,0);
@@ -609,7 +608,7 @@ var createScene = function(){
                 //console.log(masterData);
                 if(masterData === undefined) return;
 
-                console.log("PING: " + (worldtime - masterData.worldTime));
+                //console.log("PING: " + (worldtime - masterData.worldTime));
                 worldtime = 0;
                 for(var i = 0; i < basketballs.length; i++)
                 {
@@ -620,6 +619,7 @@ var createScene = function(){
                     //newPos = BABYLON.Vector3.Lerp(newBasketballs[i].position, newPos, )
                     newBasketballs[i].position = newPos;
                     newBasketballs[i].rotation = newRot.toEulerAngles();
+                    newBasketballOutlines[i].position = newPos;
 
                     // if(i != shotIndex-1)
                     // {
@@ -1323,9 +1323,10 @@ net.setIndices(indices, indices.length);
             basketballs[shotIndex].physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 0, 0));
             basketballs[shotIndex].physicsImpostor.setAngularVelocity(new BABYLON.Vector3(0, 0, 0));
             basketballs[shotIndex].physicsImpostor.applyImpulse(new BABYLON.Vector3(shotInfo.xSpeed, 18, 12), basketballs[shotIndex].getAbsolutePosition());
-            basketballs[shotIndex].material.alpha = 1;
+            //basketballs[shotIndex].material.alpha = 1;
             basketballStates[shotIndex] = 1;
         }
+
 
 
         var convertedRot = new BABYLON.Vector3(0,0,0);
