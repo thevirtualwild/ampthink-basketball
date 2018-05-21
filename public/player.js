@@ -264,7 +264,7 @@ function createScene() {
       basketball.position = new BABYLON.Vector3(-10, 0, 0);
       basketball.physicsImpostor.setAngularVelocity(0,0,0);
       basketball.physicsImpostor.setLinearVelocity(0,0,0);
-      basketball.physicsImpostor.applyImpulse(new BABYLON.Vector3(10, 0, 0), basketball.position);
+      basketball.physicsImpostor.applyImpulse(new BABYLON.Vector3(randomRange(9, 11), 0, randomRange(-1,1)), basketball.position);
       var convertedRot = new BABYLON.Vector3(0,0,0);
       var velocity = basketball.physicsImpostor.getLinearVelocity();
       convertedRot.x = velocity.z;
@@ -319,6 +319,11 @@ engine.runRenderLoop(function(){
 
   scene.render();
 });
+
+function randomRange (min, max) {
+    var number = (Math.random() * (min - max) + max);
+    return number;
+}
 
 $gameover.fadeOut();
 // $passcodeInput.focus();

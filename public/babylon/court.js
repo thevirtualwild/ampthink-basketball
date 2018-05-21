@@ -652,7 +652,7 @@ var createScene = function(){
             var newBasketballOutline = mesh[0].clone("index: " + i);
 
             //newBasketball.position.x =+ i*2;
-            newBasketballOutline.scaling = new BABYLON.Vector3(1.6, 1.6, 1.6);
+            newBasketballOutline.scaling = new BABYLON.Vector3(1.1, 1.1, 1.1);
             newBasketballOutline.material = baseMaterial;
 
             newBasketballOutlines.push(newBasketballOutline);
