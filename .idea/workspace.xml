@@ -22,8 +22,8 @@
       <file leaf-file-name="court.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/babylon/court.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="361">
-              <caret line="630" column="47" lean-forward="true" selection-start-line="630" selection-start-column="47" selection-end-line="630" selection-end-column="47" />
+            <state relative-caret-position="310">
+              <caret line="612" column="30" lean-forward="true" selection-start-line="612" selection-start-column="30" selection-end-line="612" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -132,9 +132,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>courtdisconnected</find>
-      <find>gamerunning</find>
-      <find>hasplayer</find>
       <find>court reset</find>
       <find>uireu</find>
       <find>courtname</find>
@@ -160,8 +157,11 @@
       <find>usecannon</find>
       <find>capturerender</find>
       <find>engine.getfps</find>
-      <find>worldtime</find>
       <find>masterdata</find>
+      <find>engine.getdeltatime</find>
+      <find>getdeltatime</find>
+      <find>worldtime</find>
+      <find>worldtime +=</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -388,12 +388,12 @@
       <workItem from="1523919857858" duration="15263000" />
       <workItem from="1524498240817" duration="55736000" />
       <workItem from="1525705426882" duration="49686000" />
-      <workItem from="1526919808662" duration="9241000" />
+      <workItem from="1526919808662" duration="12802000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="658888000" />
+    <option name="totallyTimeSpent" value="662449000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -741,8 +741,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/babylon/court.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="630" column="47" lean-forward="true" selection-start-line="630" selection-start-column="47" selection-end-line="630" selection-end-column="47" />
+        <state relative-caret-position="310">
+          <caret line="612" column="30" lean-forward="true" selection-start-line="612" selection-start-column="30" selection-end-line="612" selection-end-column="30" />
           <folding />
         </state>
       </provider>

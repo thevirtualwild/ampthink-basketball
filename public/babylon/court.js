@@ -291,7 +291,6 @@ var createScene = function(){
     scene.registerBeforeRender(function() {
       var i = 0;
 
-      worldtime += engine.getDeltaTime()/1000;
       var newPos = new BABYLON.Vector3(0,0,0);
       newPos.x = torus.position.x + 0;
       newPos.y = torus.position.y + 0;
@@ -501,7 +500,7 @@ var createScene = function(){
 
             newBasketballs.push(newBasketball);
         }
-        scene.registerBeforeRender(function()
+        scene.registerAfterRender(function()
         {
             for(var i = 0 ; i < basketballs.length; i++)
             {
@@ -599,55 +598,45 @@ var createScene = function(){
 
         });
 
-        for(var i = 0; i < basketballs.length; i++)
+
+        scene.registerAfterRender(function()
         {
-            scene.registerAfterRender(function()
+            worldtime += engine.getDeltaTime()/1000;
+            //console.log(readyToSync);
+            //console.log(worldtime);
+            if(readyToSync /*&& !ISMASTER */&& sceneLoaded)
             {
-                //console.log(readyToSync);
-                if(readyToSync /*&& !ISMASTER */&& sceneLoaded)
+                //console.log(masterData);
+                if(masterData === undefined) return;
+
+                console.log("PING: " + (worldtime - masterData.worldTime));
+                worldtime = 0;
+                for(var i = 0; i < basketballs.length; i++)
                 {
-                    //console.log(masterData);
-                    if(masterData === undefined) return;
 
-                    // var camPos = new BABYLON.Vector3(masterData.cameraPosition.x, masterData.cameraPosition.y, masterData.cameraPosition.z);
-                    //
-                    // camera.position = camPos;
-                    // currentWaitTime = masterData.waitTime;
-                    // currentGameTime = masterData.gameTime;
-                    // currentResultsTime = masterData.resultsTime;
+                    var newPos = new BABYLON.Vector3(masterData.basketballs[i].posx,masterData.basketballs[i].posy, masterData.basketballs[i].posz);
+                    var newRot = new BABYLON.Quaternion(masterData.basketballs[i].rotx,masterData.basketballs[i].roty, masterData.basketballs[i].rotz, masterData.basketballs[i].rotw);
 
-                    shotIndex = masterData.shotindex;
-                    console.log("PING: " + (worldtime - masterData.worldTime));
-                    for(var i = 0; i < basketballs.length; i++)
-                    {
+                    //newPos = BABYLON.Vector3.Lerp(newBasketballs[i].position, newPos, )
+                    newBasketballs[i].position = newPos;
+                    newBasketballs[i].rotation = newRot.toEulerAngles();
 
-                        var newPos = new BABYLON.Vector3(masterData.basketballs[i].posx,masterData.basketballs[i].posy, masterData.basketballs[i].posz);
-                        var newRot = new BABYLON.Quaternion(masterData.basketballs[i].rotx,masterData.basketballs[i].roty, masterData.basketballs[i].rotz, masterData.basketballs[i].rotw);
-
-                        //newPos = BABYLON.Vector3.Lerp(newBasketballs[i].position, newPos, )
-                        newBasketballs[i].position = newPos;
-                        newBasketballs[i].rotation = newRot.toEulerAngles();
-
-                        // if(i != shotIndex-1)
-                        // {
-                        //     basketballStates[i] = masterData.states;
-                        // }
-                    }
-
-                    if(!ISMASTER){
-                        for(var i = 0; i < 30; i++)
-                        {
-                            var newPos = new BABYLON.Vector3(masterData.netvertexes[i].posx,masterData.netvertexes[i].posy, masterData.netvertexes[i].posz);
-                            netSpheres[i+10].position = newPos;
-                        }
-                    }
-
-
-                    readyToSync =false;
+                    // if(i != shotIndex-1)
+                    // {
+                    //     basketballStates[i] = masterData.states;
+                    // }
                 }
-            });
-        };
 
+                if(!ISMASTER){
+                    for(var i = 0; i < 30; i++)
+                    {
+                        var newPos = new BABYLON.Vector3(masterData.netvertexes[i].posx,masterData.netvertexes[i].posy, masterData.netvertexes[i].posz);
+                        netSpheres[i+10].position = newPos;
+                    }
+                }
+                readyToSync =false;
+            }
+        });
     });
 
     BABYLON.SceneLoader.ImportMesh("", "./assets/BBall/", "Bball_Outline.babylon", scene, function (mesh) {
