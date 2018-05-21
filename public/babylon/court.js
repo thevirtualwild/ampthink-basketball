@@ -619,7 +619,7 @@ var createScene = function(){
                     //newPos = BABYLON.Vector3.Lerp(newBasketballs[i].position, newPos, )
                     newBasketballs[i].position = newPos;
                     newBasketballs[i].rotation = newRot.toEulerAngles();
-                    newBasketballOutlines[i].position = newPos;
+                    //newBasketballOutlines[i].position = newPos;
 
                     // if(i != shotIndex-1)
                     // {
@@ -661,7 +661,7 @@ var createScene = function(){
         {
             for(var i = 0 ; i < basketballs.length; i++)
             {
-                newBasketballOutlines[i].parent = basketballs[i];
+                newBasketballOutlines[i].parent = newBasketballs[i];
             }
         });
     });
