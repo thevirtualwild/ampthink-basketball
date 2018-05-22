@@ -884,11 +884,11 @@ var createScene = function(){
                     currentMass = .4 - j*.1;
 
                     if(j == 0){
-                        currentRestitution = 15;
+                        currentRestitution = 8;
                     }
                     else if(j ==1)
                     {
-                        currentRestitution = 10;
+                        currentRestitution = 4;
                     }
                     else if(j ==2)
                     {
@@ -904,11 +904,11 @@ var createScene = function(){
                     currentMass = .4 - j*.1;
 
                     if(j == 0){
-                        currentRestitution = 8;
+                        currentRestitution = 4;
                     }
                     else if(j ==1)
                     {
-                        currentRestitution = 8;
+                        currentRestitution = 2;
                     }
                     else if(j ==2)
                     {
