@@ -23,7 +23,7 @@ function generateName()
 var primaryTeam =
 {
     name: 'Red',
-    colorHex: 'cc0000',
+    colorHex: '#cc0000',
     colorRGB: new BABYLON.Color3(204,0,0),
 
     colorR: 204,
