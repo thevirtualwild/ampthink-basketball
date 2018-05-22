@@ -719,7 +719,7 @@ function onConnection(socket) {
     if (thisgamesroom.scorescounted == thisgamesroom.courtcount) {
       for (index in thisgame.scores) {
 
-        var ascore = thisgames.scores[index];
+        var ascore = thisgame.scores[index];
         console.log('ascore in thisgame');
         console.log(ascore);
 
