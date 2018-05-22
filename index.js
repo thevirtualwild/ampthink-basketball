@@ -661,7 +661,6 @@ function onConnection(socket) {
 
     var thisgamesroom = roomnames[socket.roomname];
 
-
     thisgamesroom.scorescounted += 1;
     console.log('scores counted:' + thisgamesroom.scorescounted);
     roomnames[socket.roomname];
@@ -1067,6 +1066,8 @@ function onConnection(socket) {
 
       syncSlaves(data);
     } else {
+      console.log('no socket.court: ');
+      console.dir(data);
       // // console.log('deviceIP ' + data.deviceIP);
       mydevice = alldevices[data.deviceIP];
       //// // console.log('mydevice - ');
