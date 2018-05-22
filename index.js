@@ -394,6 +394,8 @@ function onConnection(socket) {
       // // // // // console.log('no zone config for that location');
       // // // // // console.dir(myzone);
       mycourt = allcourts[myzone.courts[0]];
+      mydevice.court = mycourt;
+      alldevices[mydevice.ipaddress] = mydevice;
       findARoom(mycourt,mydevice);
     }
   }
@@ -541,6 +543,8 @@ function onConnection(socket) {
         }
         allcourts[newcourtid] = newcourt;
         courtnames[newcourtname] = newcourt;
+        somedevice.court = newcourt;
+        alldevices[somedevice.ipaddress] = somedevice;
 
         // // // // // console.log('find a room court: ' + newcourt.name + ' device: ' + somedevice.ipaddress);
         findARoom(newcourt,somedevice);
