@@ -67,7 +67,7 @@ var playerData;
 var score = 0;
 var combo = 0;
 var newBasketballs = [];
-var newBasketballOutlines = [];
+//var newBasketballOutlines = [];
 
 var lowEndDevice = false;
 
@@ -627,6 +627,7 @@ var createScene = function(){
         baseMaterial.alpha = 0;
         scene.meshes.pop(mesh[0]);
 
+        /*
         for (var i= 0; i< basketballs.length; i++)
         {
             var newBasketballOutline = mesh[0].clone("index: " + i);
@@ -636,6 +637,7 @@ var createScene = function(){
 
             newBasketballOutlines.push(newBasketballOutline);
         }
+
         scene.registerBeforeRender(function()
         {
             for(var i = 0 ; i < basketballs.length; i++)
@@ -643,6 +645,7 @@ var createScene = function(){
                 newBasketballOutlines[i].parent = newBasketballs[i];
             }
         });
+        */
     });
 
     BABYLON.SceneLoader.ImportMesh("Goal_Backboard", "./assets/Layout/", "Goal.babylon", scene, function (mesh) {
@@ -1221,18 +1224,22 @@ net.setIndices(indices, indices.length);
     {
         if(toggle == true) {
             pulseAmbientColor = true;
+            /*
             for(var i = 0; i < newBasketballOutlines.length; i++)
             {
                 newBasketballOutlines[i].material.alpha = 1;
             }
+            */
         }
         else {
             pulseAmbientColor = false;
             scene.ambientColor = new BABYLON.Color3(1,1,1);
+            /*
             for(var i = 0; i < newBasketballOutlines.length; i++)
             {
                 newBasketballOutlines[i].material.alpha = 0;
             }
+            */
         }
     }
 
@@ -1273,7 +1280,7 @@ net.setIndices(indices, indices.length);
         for(var i = 0; i < basketballs.length; i++)
         {
             newBasketballs[i].material.subMaterials[1].ambientColor = playerData.team.colorRGB;
-            newBasketballOutlines[i].material.ambientColor = playerData.team.colorRGB;
+            //newBasketballOutlines[i].material.ambientColor = playerData.team.colorRGB;
         }
     }
 
@@ -1283,7 +1290,7 @@ net.setIndices(indices, indices.length);
         for(var i = 0; i < basketballs.length; i++)
         {
             newBasketballs[i].material.subMaterials[1].ambientColor = new BABYLON.Color3(1,.4,.2);
-            newBasketballOutlines[i].material.ambientColor = new BABYLON.Color3(1,.4,.2);
+            //newBasketballOutlines[i].material.ambientColor = new BABYLON.Color3(1,.4,.2);
         }
     }
 
