@@ -22,8 +22,8 @@
       <file leaf-file-name="court.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/babylon/court.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="263">
-              <caret line="89" column="2" lean-forward="false" selection-start-line="89" selection-start-column="2" selection-end-line="89" selection-end-column="2" />
+            <state relative-caret-position="301">
+              <caret line="1205" column="13" lean-forward="true" selection-start-line="1205" selection-start-column="13" selection-end-line="1205" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -143,7 +143,6 @@
       <find>getdeltatime</find>
       <find>worldtime</find>
       <find>worldtime +=</find>
-      <find>takeshot</find>
       <find>syncdata</find>
       <find>newbasketballoutlines</find>
       <find>applyimpulse</find>
@@ -160,6 +159,7 @@
       <find>sync with master</find>
       <find>netvertexes</find>
       <find>lowenddevice</find>
+      <find>takeshot</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -387,12 +387,12 @@
       <workItem from="1524498240817" duration="55736000" />
       <workItem from="1525705426882" duration="49686000" />
       <workItem from="1526919808662" duration="18076000" />
-      <workItem from="1527002570191" duration="1372000" />
+      <workItem from="1527002570191" duration="2092000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="669095000" />
+    <option name="totallyTimeSpent" value="669815000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -740,8 +740,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/babylon/court.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="263">
-          <caret line="89" column="2" lean-forward="false" selection-start-line="89" selection-start-column="2" selection-end-line="89" selection-end-column="2" />
+        <state relative-caret-position="301">
+          <caret line="1205" column="13" lean-forward="true" selection-start-line="1205" selection-start-column="13" selection-end-line="1205" selection-end-column="13" />
           <folding />
         </state>
       </provider>

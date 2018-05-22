@@ -1197,11 +1197,13 @@ net.setIndices(indices, indices.length);
             basketballs[shotIndex].physicsImpostor.applyImpulse(new BABYLON.Vector3(attractShots[attractIndex], 20, 11), basketballs[shotIndex].getAbsolutePosition());
         }
         else if(currentGameState == gameStates.GAMEPLAY){
-            basketballs[shotIndex].position = new BABYLON.Vector3(0, -9, -14);
-            basketballs[shotIndex].physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 0, 0));
-            basketballs[shotIndex].physicsImpostor.setAngularVelocity(new BABYLON.Vector3(0, 0, 0));
-            basketballs[shotIndex].physicsImpostor.applyImpulse(new BABYLON.Vector3(shotInfo.xSpeed, 18, 12), basketballs[shotIndex].getAbsolutePosition());
-            basketballStates[shotIndex] = 1;
+            if(ISMASTER){
+                basketballs[shotIndex].position = new BABYLON.Vector3(0, -9, -14);
+                basketballs[shotIndex].physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 0, 0));
+                basketballs[shotIndex].physicsImpostor.setAngularVelocity(new BABYLON.Vector3(0, 0, 0));
+                basketballs[shotIndex].physicsImpostor.applyImpulse(new BABYLON.Vector3(shotInfo.xSpeed, 18, 12), basketballs[shotIndex].getAbsolutePosition());
+                basketballStates[shotIndex] = 1;
+            }
         }
 
         var convertedRot = new BABYLON.Vector3(0,0,0);
