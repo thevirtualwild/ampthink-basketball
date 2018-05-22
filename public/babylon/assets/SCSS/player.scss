@@ -36,6 +36,7 @@ body {
   position:fixed;
   width:100%;
   height:100%;
+  text-transform: uppercase !important;
 }
 
 html {
@@ -45,13 +46,8 @@ html {
 
 html, input {
   font-family:
-          "HelveticaNeue-Light",
-          "Helvetica Neue Light",
-          "Helvetica Neue",
-          Helvetica,
-          Arial,
-          "Lucida Grande",
-          sans-serif;
+    "Gobold",
+    sans-serif;
 }
 
 ul {
@@ -145,7 +141,6 @@ canvas{
 
 .login.page .title, .passcode.page .title, .login.page .usernameInput, .passcode.page .passcodeInput {
   color: #fff;
-  font-weight: 100;
   color: #F6E14C; /*yellow*/
   text-shadow: 1px 4px 2px rgba(0,0,0,.2);
 }
@@ -252,6 +247,7 @@ color:yellow;
 .player.page .form .lastName{
   color:rgb(77, 196, 249);
   font-size:60px;
+  font-weight: bold;
 }
 
 .player.page .form img{
@@ -266,6 +262,7 @@ color:yellow;
   font-size:70px;
   transform: translateX(-10px) rotate(-12deg);
   text-shadow:  1px 4px 2px rgba(0,0,0,.2);
+  font-weight: bold;
 }
 
 .player.page .form .teamLabel{
