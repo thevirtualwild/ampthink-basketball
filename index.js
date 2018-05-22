@@ -667,7 +667,7 @@ function onConnection(socket) {
 
     thisgamesroom.scorescounted += 1;
     console.log('scores counted:' + thisgamesroom.scorescounted);
-    roomnames[socket.roomname];
+    roomnames[socket.roomname] = thisgamesroom;
 
     // // console.log('get data');
     // // console.dir(courtgamedata);
@@ -716,6 +716,7 @@ function onConnection(socket) {
     // // console.dir(gamesplayed);
 
     var thisgame = gamesplayed[gamename];
+    console.log('scorescounted: ' + thisgamesroom.scorescounted);
     if (thisgamesroom.scorescounted == thisgamesroom.courtcount) {
       for (index in thisgame.scores) {
 
@@ -731,7 +732,8 @@ function onConnection(socket) {
         }
       }
       thisgamesroom.scorescounted = 0;
-      roomnames[socket.roomname];
+      console.log('resetting scorescounted' + thisgamesroom.scorescounted);
+      roomnames[socket.roomname] = thisgamesroom;
 
       var resultsdata = {
         highscorer: thisgame.highscorer,
