@@ -502,6 +502,7 @@ var createScene = function(){
                         waitTime: currentWaitTime,
                         resultsTime: currentResultsTime,
                         worldTime: worldtime,
+                        score: score,
                         basketballs: [],
                         netvertexes: [],
                         shotindex: shotIndex,
@@ -563,6 +564,12 @@ var createScene = function(){
 
                     newBasketballs[i].position = newPos;
                     newBasketballs[i].rotation = newRot.toEulerAngles();
+                }
+
+                if(masterData.score > score)
+                {
+                    score = masterData.score;
+                    addScore();
                 }
 
                 if(!ISMASTER){
@@ -996,7 +1003,8 @@ for(var i = 0; i < basketballs.length; i++) {
 
                     if(basketballStates[idx] != 0) {
                         basketballStates[idx] = 0;
-                        addScore();
+                        score++;
+                        //addScore();
 
                         if(combo >= 2)
                         {
@@ -1454,7 +1462,7 @@ function addScore() {
 
     if(currentGameState != gameStates.GAMEPLAY && currentGameState != gameStates.RESULTS) return;
     //console.log("SCORE ADDED");
-    score++;
+    //score++;
     UIGameplayUpdateScore(score);
     UIResultsUpdateScore(score);
     var scoreLabel = document.getElementById("scoreLabel");
