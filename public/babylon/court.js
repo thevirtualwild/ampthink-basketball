@@ -544,7 +544,6 @@ var createScene = function(){
                     if(hasCourt)
                     {
                         socket.emit("sync screens", syncData);
-                        add1Point = false;
                     }
 
                 }
@@ -586,6 +585,7 @@ var createScene = function(){
                     {
                         changeBallFX(true);
                     }
+                    add1Point = false;
                 }
 
                 if(masterData.comboIsBroken == true)
