@@ -881,14 +881,15 @@ var createScene = function(){
             {
                 if(lowEndDevice)
                 {
-                    currentMass = .4 - j*.1;
+                    //currentMass = .4 - j*.1;
+                    currentMass = .15;
 
                     if(j == 0){
-                        currentRestitution = 8;
+                        currentRestitution = 15;
                     }
                     else if(j ==1)
                     {
-                        currentRestitution = 4;
+                        currentRestitution = 10;
                     }
                     else if(j ==2)
                     {
@@ -901,14 +902,15 @@ var createScene = function(){
                 }
                 else
                 {
-                    currentMass = .4 - j*.1;
+                    //currentMass = .4 - j*.1;
+                    currentMass = .15;
 
                     if(j == 0){
-                        currentRestitution = 4;
+                        currentRestitution = 8;
                     }
                     else if(j ==1)
                     {
-                        currentRestitution = 2;
+                        currentRestitution = 8;
                     }
                     else if(j ==2)
                     {
@@ -1290,7 +1292,8 @@ net.setIndices(indices, indices.length);
                 {
                     if(lowEndDevice)
                     {
-                        currentMass = .4 - j*.1;
+                        //currentMass = .4 - j*.1;
+                        currentMass = .15;
 
                         if(j == 0){
                             currentRestitution = 15;
@@ -1310,7 +1313,8 @@ net.setIndices(indices, indices.length);
                     }
                     else
                     {
-                        currentMass = .4 - j*.1;
+                        //currentMass = .4 - j*.1;
+                        currentMass = .15;
 
                         if(j == 0){
                             currentRestitution = 8;
