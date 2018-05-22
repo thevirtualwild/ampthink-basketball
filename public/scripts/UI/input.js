@@ -15,6 +15,7 @@ var height = Math.max( body.scrollHeight, body.offsetHeight,
 
     passcodeInput.defaultValue = "";
     passcodeInput.focus();
+
 function UIInputAnimateIn()
 {
     passcodeInput.value = "";

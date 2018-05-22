@@ -38,7 +38,7 @@ function UIGameoverAnimateIn()
     pages.style.display = "block";
     gameoverPage.style.pointerEvents = "all";
 
-    // gameoverForm.style.top = (.33 * height).toString() +"px";
+    gameoverForm.style.top = (.5 * height).toString() +"px";
     gameoverForm.style.opacity = 1;
     thank.style.opacity = 0;
     you.style.opacity = 0;
