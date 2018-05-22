@@ -199,7 +199,7 @@ function UIResultsSetData(data) {
         else
         {
             winner = false;
-            var name = data.resultsdata.highscorer.player;
+            var name = data.resultsdata.highscorer.player.username;
             topFirstName.innerHTML = name.substr(0, name.indexOf(' '));
             topLastName.innerHTML = name.substr(name.indexOf(' ') + 1);
             topScoreText.innerHTML = data.resultsdata.highscorer.score;

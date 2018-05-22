@@ -507,7 +507,7 @@ var createScene = function(){
                         console.log("IP IS UNDEFINED");
                         return;
                     }
-                    
+
                     var syncData = {
                         deviceIP: myIP,
                         cameraPosition: camera.position,
@@ -562,7 +562,7 @@ var createScene = function(){
 
         });
 
-        scene.registerAfterRender(function()
+        scene.registerBeforeRender(function()
         {
             worldtime += engine.getDeltaTime()/1000;
 
