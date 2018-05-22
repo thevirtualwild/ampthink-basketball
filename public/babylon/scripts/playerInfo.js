@@ -23,8 +23,9 @@ function generateName()
 var primaryTeam =
 {
     name: 'Red',
-    colorHex: 'cc0000',
+    colorHex: '#cc0000',
     colorRGB: new BABYLON.Color3(204,0,0),
+
     colorR: 204,
     colorG: 0,
     colorB: 0
@@ -43,12 +44,12 @@ var secondaryTeam =
 var tertiaryTeam =
 {
     name: 'Blue',
-    colorHex: '#1967a3',
-    colorRGB: new BABYLON.Color3(25,103,163),
+    colorHex: '#4cc2eb',
+    colorRGB: new BABYLON.Color3(76, 194, 235),
 
-    colorR: 25,
-    colorG: 103,
-    colorB: 163
+    colorR: 76,
+    colorG: 194,
+    colorB: 235
 }
 
 function generateTeam()
