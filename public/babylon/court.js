@@ -1042,7 +1042,7 @@ for(var i = 0; i < basketballs.length; i++) {
                     var idx = shotIndex-1;
                     if(idx < 0) idx = 9;
 
-                    if(basketballStates[idx] != 0) {
+                    if(basketballStates[idx] == 1) {
                         basketballStates[idx] = 0;
                         add1Point = true;
                         //addScore();
