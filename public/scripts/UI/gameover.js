@@ -53,6 +53,8 @@ function UIGameoverAnimateIn()
     TweenMax.to(dashImg, gameoverFadeTime, {delay:gameoverFadeTime*3, opacity:1, width:400, ease:Back.easeOut});
     TweenMax.to(dashImg, gameoverFadeTime, {delay:gameoverFadeTime*4, opacity:1});
     TweenMax.to(playAgain, gameoverFadeTime, {delay:gameoverFadeTime*4, opacity:1});
+
+    socket.emit('disconnect this device');
 }
 
 function UIGameoverAnimateOut() {

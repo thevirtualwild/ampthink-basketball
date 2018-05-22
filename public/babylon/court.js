@@ -560,7 +560,7 @@ var createScene = function(){
         {
             worldtime += engine.getDeltaTime()/1000;
 
-            if(readyToSync /*&& !ISMASTER */&& sceneLoaded)
+            if(readyToSync && sceneLoaded)
             {
                 //console.log(masterData);
                 if(masterData === undefined) return;

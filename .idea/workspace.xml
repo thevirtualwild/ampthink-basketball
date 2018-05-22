@@ -3,9 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="1c95612d-4678-4af6-a1f9-2ab5baa022a4" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/public/scripts/UI/customize.js" afterPath="$PROJECT_DIR$/public/scripts/UI/customize.js" />
+      <change beforePath="$PROJECT_DIR$/public/babylon/court.js" afterPath="$PROJECT_DIR$/public/babylon/court.js" />
       <change beforePath="$PROJECT_DIR$/public/scripts/UI/gameover.js" afterPath="$PROJECT_DIR$/public/scripts/UI/gameover.js" />
-      <change beforePath="$PROJECT_DIR$/public/scripts/UI/input.js" afterPath="$PROJECT_DIR$/public/scripts/UI/input.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -25,18 +24,18 @@
       <file leaf-file-name="court.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/babylon/court.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="293">
-              <caret line="1236" column="14" lean-forward="false" selection-start-line="1236" selection-start-column="14" selection-end-line="1236" selection-end-column="14" />
+            <state relative-caret-position="188">
+              <caret line="480" column="40" lean-forward="false" selection-start-line="480" selection-start-column="24" selection-end-line="480" selection-end-column="40" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gameover.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="gameover.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/scripts/UI/gameover.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="416">
-              <caret line="47" column="32" lean-forward="true" selection-start-line="47" selection-start-column="32" selection-end-line="47" selection-end-column="32" />
+            <state relative-caret-position="362">
+              <caret line="54" column="47" lean-forward="false" selection-start-line="54" selection-start-column="47" selection-end-line="54" selection-end-column="47" />
               <folding />
             </state>
           </provider>
@@ -62,11 +61,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="input.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="input.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/scripts/UI/input.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="248">
-              <caret line="17" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+            <state relative-caret-position="353">
+              <caret line="24" column="41" lean-forward="true" selection-start-line="24" selection-start-column="41" selection-end-line="24" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -75,8 +74,8 @@
       <file leaf-file-name="player.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/player.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="361" column="48" lean-forward="false" selection-start-line="361" selection-start-column="40" selection-end-line="361" selection-end-column="48" />
+            <state relative-caret-position="188">
+              <caret line="14" column="5" lean-forward="false" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -133,11 +132,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>add1point</find>
-      <find>iterations</find>
-      <find>basketballs</find>
-      <find>currentmass</find>
-      <find>currentmass = .15</find>
       <find>usecannon</find>
       <find>allowsleep</find>
       <find>netspheres</find>
@@ -163,6 +157,11 @@
       <find>changegamestate</find>
       <find>newbasketballoutlines</find>
       <find>t</find>
+      <find>game almost ready</find>
+      <find>syncdata</find>
+      <find>disabled</find>
+      <find>add1point</find>
+      <find>basketballstates</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -211,10 +210,10 @@
         <option value="$PROJECT_DIR$/index.js" />
         <option value="$PROJECT_DIR$/public/babylon/scripts/UI/attract.js" />
         <option value="$PROJECT_DIR$/public/babylon/scripts/playerInfo.js" />
-        <option value="$PROJECT_DIR$/public/babylon/court.js" />
         <option value="$PROJECT_DIR$/public/scripts/UI/customize.js" />
-        <option value="$PROJECT_DIR$/public/scripts/UI/gameover.js" />
         <option value="$PROJECT_DIR$/public/scripts/UI/input.js" />
+        <option value="$PROJECT_DIR$/public/babylon/court.js" />
+        <option value="$PROJECT_DIR$/public/scripts/UI/gameover.js" />
       </list>
     </option>
   </component>
@@ -391,12 +390,12 @@
       <workItem from="1524498240817" duration="55736000" />
       <workItem from="1525705426882" duration="49686000" />
       <workItem from="1526919808662" duration="18076000" />
-      <workItem from="1527002570191" duration="15486000" />
+      <workItem from="1527002570191" duration="16488000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="683209000" />
+    <option name="totallyTimeSpent" value="684211000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -684,14 +683,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/player.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="361" column="48" lean-forward="false" selection-start-line="361" selection-start-column="40" selection-end-line="361" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/babylon/scripts/UI/results.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="370">
@@ -716,14 +707,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/babylon/court.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
-          <caret line="1236" column="14" lean-forward="false" selection-start-line="1236" selection-start-column="14" selection-end-line="1236" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/scripts/UI/gameplay.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
@@ -740,18 +723,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/scripts/UI/gameover.js">
+    <entry file="file://$PROJECT_DIR$/public/scripts/UI/input.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="416">
-          <caret line="47" column="32" lean-forward="true" selection-start-line="47" selection-start-column="32" selection-end-line="47" selection-end-column="32" />
+        <state relative-caret-position="353">
+          <caret line="24" column="41" lean-forward="true" selection-start-line="24" selection-start-column="41" selection-end-line="24" selection-end-column="41" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/scripts/UI/input.js">
+    <entry file="file://$PROJECT_DIR$/public/babylon/court.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="17" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+        <state relative-caret-position="188">
+          <caret line="480" column="40" lean-forward="false" selection-start-line="480" selection-start-column="24" selection-end-line="480" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/player.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="14" column="5" lean-forward="false" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/UI/gameover.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="362">
+          <caret line="54" column="47" lean-forward="false" selection-start-line="54" selection-start-column="47" selection-end-line="54" selection-end-column="47" />
           <folding />
         </state>
       </provider>
