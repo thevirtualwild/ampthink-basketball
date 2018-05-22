@@ -161,6 +161,7 @@ var createScene = function(){
                 gameReady = false;
                 //console.log("Aspect Ratio: " + canvas.width/canvas.height);
                 lobbyStarted = false;
+                resetBallColor();
                 if(ISMASTER) {
                     animateCamera();
                 }
@@ -1273,6 +1274,16 @@ net.setIndices(indices, indices.length);
         {
             newBasketballs[i].material.subMaterials[1].ambientColor = playerData.team.colorRGB;
             newBasketballOutlines[i].material.ambientColor = playerData.team.colorRGB;
+        }
+    }
+
+    function resetBallColor()
+    {
+        if(basketballs === undefined) return;
+        for(var i = 0; i < basketballs.length; i++)
+        {
+            newBasketballs[i].material.subMaterials[1].ambientColor = new BABYLON.Color3(1,.4,.2);
+            newBasketballOutlines[i].material.ambientColor = new BABYLON.Color3(1,.4,.2);
         }
     }
 
