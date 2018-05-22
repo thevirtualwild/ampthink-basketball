@@ -82,11 +82,12 @@ var createScene = function(){
 
     engine.enableOfflineSupport = false;
     scene.clearColor = BABYLON.Color3.Black();
+    /*
     scene.fogMode = BABYLON.Scene.FOGMODE_LINEAR;
     scene.fogStart = 30;
     scene.fogEnd = 100;
     scene.fogColor =  BABYLON.Color3.Black();
-
+*/
     var initCameraPos;
     var initCameraFocus;
 
@@ -256,6 +257,20 @@ var createScene = function(){
         }
     }
 
+    var scaleFactor = canvas.height / 1080;
+    camera.fov = 1;
+    if(canvas.height > 2200)
+    {
+        camera.fov = 1.4;
+    }
+    else if(canvas.height > 1100)
+    {
+        camera.fov = 1.2;
+    }
+    else {
+        camera.fov = 1;
+    }
+
     scene.registerBeforeRender(function() {
       var i = 0;
 
@@ -264,20 +279,6 @@ var createScene = function(){
       newPos.y = torus.position.y + 0;
       newPos.z = torus.position.z - 0;
       camera.setTarget(newPos);
-
-        var scaleFactor = canvas.height / 1080;
-        camera.fov = 1;
-        if(canvas.height > 2200)
-        {
-            camera.fov = 1.4;
-        }
-        else if(canvas.height > 1100)
-        {
-            camera.fov = 1.2;
-        }
-        else {
-            camera.fov = 1;
-        }
 
       if(currentGameState == gameStates.WAITING || lobbyStarted)
       {
@@ -687,7 +688,7 @@ var createScene = function(){
         mesh.freezeWorldMatrix();
 
     });
-
+/*
     BABYLON.SceneLoader.ImportMesh("", "./assets/Layout/", "Seating_Close.babylon", scene, function (meshes) {
 
         var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
@@ -781,7 +782,7 @@ var createScene = function(){
     particleSystem.updateSpeed = 0.005;
     scene.meshes.pop(fountain);
     particleSystem.start();
-
+*/
     //CREATE CIRCLE OF SPHERE COLLIDERS
     var sphereAmount = 10;
     var radius = 3.5;
