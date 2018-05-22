@@ -661,6 +661,11 @@ function onConnection(socket) {
 
     var thisgamesroom = roomnames[socket.roomname];
 
+
+    thisgamesroom.scorescounted += 1;
+    console.log('scores counted:' + thisgamesroom.scorescounted);
+    roomnames[socket.roomname];
+
     // // console.log('get data');
     // // console.dir(courtgamedata);
 
@@ -743,8 +748,7 @@ function onConnection(socket) {
       socket.broadcast.to(socket.roomname).emit('show results', emitData);
       socket.emit('show results', emitData);
     } else {
-      thisgamesroom.scorescounted += 1;
-      roomnames[socket.roomname];
+      console.log('not ready to show results yet');
     }
 
 
@@ -956,6 +960,7 @@ function onConnection(socket) {
       console.log('courtcount: ' + thisgamesroom.courtcount);
     } else {
       thisgamesroom.gamerunning = true;
+      thisgamesroom.scorescounted = 0;
       gamenum = gamenum + 1;
       thisgamesroom.gamename = thisgamesroom.id + '_' + gamenum;
       console.log('game started: ' + thisgamesroom.gamename);
