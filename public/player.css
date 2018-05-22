@@ -22,6 +22,36 @@
   font-family: 'XScale';
   src: url("babylon/assets/Fonts/X-SCALE_.TTF");
 }
+.colors {
+  position: fixed;
+}
+
+.color {
+  display: inline-block;
+  height: 48px;
+  width: 48px;
+}
+
+.color.black {
+  background-color: black;
+}
+
+.color.red {
+  background-color: red;
+}
+
+.color.green {
+  background-color: green;
+}
+
+.color.blue {
+  background-color: blue;
+}
+
+.color.yellow {
+  background-color: yellow;
+}
+
 * {
   /*pointer-events: none;*/
   box-sizing: border-box;
@@ -97,12 +127,11 @@ canvas {
 
 /* Login & Roomcange Pages*/
 .login.page .form, .passcode.page .form, .player.page .form, .gameplay.page .form, .gameover.page .form {
-  height: 100px;
   /* margin-top: -100px; */
-  transform: translateY(-100%);
+  transform: translateY(-50%);
   position: absolute;
   text-align: center;
-  top: 40%;
+  top: 50%;
   width: 100%;
   max-width: 100%;
 }
@@ -135,8 +164,7 @@ canvas {
 }
 
 .login.page .title, .passcode.page .title, .login.page .usernameInput, .passcode.page .passcodeInput {
-  color: #fff;
-  color: #F6E14C;
+  color: #ffd502;
   /*yellow*/
   text-shadow: 1px 4px 2px rgba(0, 0, 0, 0.2);
 }
@@ -164,7 +192,7 @@ canvas {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  margin-top: -20px;
+  margin-top: -40px;
   max-width: 100%;
 }
 
@@ -182,16 +210,6 @@ canvas {
   text-align: center;
   pointer-events: none;
 }
-
-#footerLogo .gameLogo {
-  position: fixed;
-  top: 0px;
-  left: 10px;
-  width: 120px;
-  height: 120px;
-  object-fit: contain;
-}
-
 #footerLogo h2 {
   position: absolute;
   bottom: 0;
@@ -202,17 +220,25 @@ canvas {
   height: 100px;
   object-fit: contain;
   max-width: 100%;
-}
-
-#footerLogo h2 {
+  text-shadow: 1px 4px 2px rgba(0, 0, 0, 0.2);
   color: white;
+  font-weight: bold;
+  font-size: 1.8rem;
 }
-
 #footerLogo img {
   max-width: 120px;
   padding: 10px;
   width: 100%;
   max-height: 100%;
+  object-fit: contain;
+}
+#footerLogo img.gameLogo {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  max-width: 150px;
+  width: 150px;
+  height: 120px;
   object-fit: contain;
 }
 
@@ -229,32 +255,29 @@ canvas {
   opacity: 0;
   pointer-events: none;
 }
-
 #headerInstructions h2 {
-  color: yellow;
-}
-
-.player.page .form {
-  top: 30%;
+  color: #ffd502;
 }
 
 .player.page .form .firstName {
   color: white;
   font-size: 40px;
+  font-style: italic;
+  text-shadow: 1px 4px 2px rgba(0, 0, 0, 0.2);
 }
-
 .player.page .form .lastName {
-  color: #4dc4f9;
+  color: #4cc2eb;
   font-size: 60px;
   font-weight: bold;
+  font-style: italic;
+  text-shadow: 1px 4px 2px rgba(0, 0, 0, 0.2);
 }
-
 .player.page .form img {
   width: 50%;
-  margin-top: -20px;
+  margin-top: 0;
+  margin-bottom: 20px;
   max-width: 100%;
 }
-
 .player.page .form .teamColor {
   color: red;
   font-style: italic;
@@ -263,7 +286,6 @@ canvas {
   text-shadow: 1px 4px 2px rgba(0, 0, 0, 0.2);
   font-weight: bold;
 }
-
 .player.page .form .teamLabel {
   font-family: 'XScale';
   color: white;
@@ -271,8 +293,8 @@ canvas {
   font-style: normal;
   font-size: 60px;
   margin-top: 0;
-  letter-spacing: 10px;
   text-shadow: 1px 4px 2px rgba(0, 0, 0, 0.2);
+  line-height: 0.7;
 }
 
 #refreshLogo img {
@@ -288,15 +310,10 @@ canvas {
 .gameplay.page .form {
   top: 8%;
 }
-
 .gameplay.page .form .instructions {
-  color: yellow;
+  color: #ffd502;
   margin-top: -20px;
   font-size: 40px;
-}
-
-.gameover.page .form {
-  top: 33%;
 }
 
 .gameover.page .form .thank, .gameover.page .form .you {
@@ -305,7 +322,6 @@ canvas {
   font-weight: bold;
   text-shadow: 1px 4px 2px rgba(0, 0, 0, 0.2);
 }
-
 .gameover.page .form .dash {
   width: 90%;
   display: block;
@@ -315,7 +331,6 @@ canvas {
   float: none;
   max-width: 100%;
 }
-
 .gameover.page .form .button {
   width: 70%;
   display: block;
@@ -330,61 +345,12 @@ canvas {
   display: block;
 }
 
-.player.page {
-  display: none;
-}
-
 .gameplay.page {
-  display: none;
   z-index: -100;
 }
 
-.gameover.page {
+.player.page, .gameplay.page, .gameover.page {
   display: none;
-}
-
-/**
- * Canvas
- */
-/*
-.whiteboard {
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  top: 0;
-}
-*/
-.colors {
-  position: fixed;
-}
-
-.color {
-  display: inline-block;
-  height: 48px;
-  width: 48px;
-}
-
-.color.black {
-  background-color: black;
-}
-
-.color.red {
-  background-color: red;
-}
-
-.color.green {
-  background-color: green;
-}
-
-.color.blue {
-  background-color: blue;
-}
-
-.color.yellow {
-  background-color: yellow;
 }
 
 /*# sourceMappingURL=player.css.map */

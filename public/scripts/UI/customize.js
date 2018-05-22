@@ -35,7 +35,7 @@ function UICustomizeAnimateIn()
     customizePage.style.display = "block";
     gameoverPage.style.display = "none";
 
-    customizeForm.style.top = (.3 * height).toString() + "px";
+    // customizeForm.style.top = (.3 * height).toString() + "px";
     customizeForm.style.opacity =1;
     firstName.style.opacity = 0;
     lastName.style.opacity = 0;
