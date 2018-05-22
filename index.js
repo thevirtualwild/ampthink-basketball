@@ -1065,6 +1065,7 @@ function onConnection(socket) {
 
       socket.emit('reset game');
       socket.broadcast.to(somesocket.roomname).emit('reset game');
+      //COURT WAS NULL
         console.log("CHECKING IF WE FIND NEW MASTER " + court.master + " " + socket.id);
       if (court.master == socket.id) {
         // // // console.log('need to find new master - ');
