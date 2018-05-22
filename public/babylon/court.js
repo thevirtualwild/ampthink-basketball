@@ -95,6 +95,7 @@ var createScene = function(){
 
     if(useCannon) {
         var physicsPlugin = new BABYLON.CannonJSPlugin(false, 1);
+        physicsPlugin.allowSleep = false;
     }
     else
     {
