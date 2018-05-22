@@ -24,6 +24,7 @@ var primaryTeam =
 {
     name: 'Red',
     colorHex: 'cc0000',
+    colorRGB: new BABYLON.Color3(204,0,0),
     colorR: 204,
     colorG: 0,
     colorB: 0
@@ -33,6 +34,8 @@ var secondaryTeam =
 {
     name: 'White',
     colorHex: '#ffffff',
+    colorRGB: new BABYLON.Color3(255,255,255),
+
     colorR: 255,
     colorG: 255,
     colorB: 255
@@ -41,6 +44,8 @@ var tertiaryTeam =
 {
     name: 'Blue',
     colorHex: '#1967a3',
+    colorRGB: new BABYLON.Color3(25,103,163),
+
     colorR: 25,
     colorG: 103,
     colorB: 163
