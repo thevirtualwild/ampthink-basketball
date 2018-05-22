@@ -21,7 +21,7 @@ function UIGameplayAnimateIn()
     customizePage.style.pointerEvents = "none";
     gameoverPage.style.pointerEvents = "none";
 
-    TweenMax.to(headerInstructions, customizeFadeTime, {delay:customizeFadeTime, top:0});
+    TweenMax.to(headerInstructions, customizeFadeTime, {delay:customizeFadeTime, top:50});
     TweenMax.to(headerInstructions, customizeFadeTime, {delay:customizeFadeTime*2, opacity:1});
 }
 

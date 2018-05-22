@@ -369,6 +369,8 @@
   font-size: 40px;
   transform: rotate(-12deg);
   margin-top: -10px;
+  font-weight: bold;
+  font-style: italic;
 }
 
 #preFooter {
