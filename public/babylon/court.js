@@ -20,6 +20,8 @@ var basketballStates = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 var FPSArray = [];
 var pulseAmbientColor = false;
 
+var add1Point = false;
+
 var sceneLoaded = false;
 var initLoadTime = 7;
 var currentLoadTime = 7;
@@ -47,7 +49,7 @@ var currentNetLerpDelayTime = 2;
 var initNetLerpDelayTime = 2;
 var currentNetLerpTime = 0.25;
 var initNetLerpTime = 0.25;
-
+var ComboIsBroken = false;
 var initEmitTime = 0.01;
 var currentEmitTime = 0.01;
 
@@ -475,9 +477,10 @@ var createScene = function(){
                         basketballStates[i] == 1)
                     {
                         combo = 0;
-                        UIGameplayAnimateBadgeOff();
-                        changeBallFX(false);
+                        //UIGameplayAnimateBadgeOff();
+                        //changeBallFX(false);
                         basketballStates[i] = 0;
+                        ComboIsBroken = true;
                     }
                 }
             }
@@ -502,7 +505,9 @@ var createScene = function(){
                         waitTime: currentWaitTime,
                         resultsTime: currentResultsTime,
                         worldTime: worldtime,
-                        score: score,
+                        score: add1Point,
+                        combo: combo,
+                        comboIsBroken: ComboIsBroken,
                         basketballs: [],
                         netvertexes: [],
                         shotindex: shotIndex,
@@ -539,6 +544,7 @@ var createScene = function(){
                     if(hasCourt)
                     {
                         socket.emit("sync screens", syncData);
+                        add1Point = false;
                     }
 
                 }
@@ -566,11 +572,35 @@ var createScene = function(){
                     newBasketballs[i].rotation = newRot.toEulerAngles();
                 }
 
-                if(masterData.score > score)
+                if(masterData.score == true)
                 {
-                    score = masterData.score;
+                    score++;
                     addScore();
+
+                    if(combo >= 2)
+                    {
+                        UIGameplayAnimateBadgeOn(combo);
+                    }
+
+                    if(combo >= 3)
+                    {
+                        changeBallFX(true);
+                    }
                 }
+
+                if(masterData.comboIsBroken == true)
+                {
+                    UIGameplayAnimateBadgeOff();
+                    changeBallFX(false);
+                    ComboIsBroken = false;
+                }
+
+                //if(combo != masterData.combo)
+                //{
+                    //combo = masterData.combo;
+
+
+                //}
 
                 if(!ISMASTER){
                     for(var i = 0; i < 30; i++)
@@ -1003,9 +1033,10 @@ for(var i = 0; i < basketballs.length; i++) {
 
                     if(basketballStates[idx] != 0) {
                         basketballStates[idx] = 0;
-                        score++;
+                        add1Point = true;
                         //addScore();
 
+                        /*
                         if(combo >= 2)
                         {
                             UIGameplayAnimateBadgeOn(combo);
@@ -1015,6 +1046,7 @@ for(var i = 0; i < basketballs.length; i++) {
                         {
                             changeBallFX(true);
                         }
+                        */
                     }
                 }
             }
@@ -1358,7 +1390,7 @@ engine.runRenderLoop(function() {
     if(ISMASTER)
     {
         fpsLabel.style.background = "red";
-        fpsLabel.style.height = "2px";
+        fpsLabel.style.height = "100%";
     }
 });
 
