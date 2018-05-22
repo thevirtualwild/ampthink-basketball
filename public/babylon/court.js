@@ -26,6 +26,8 @@ var sceneLoaded = false;
 var initLoadTime = 7;
 var currentLoadTime = 7;
 
+var netPhysicsDisabled = false;
+
 var hasCourt = false;
 var ISMASTER = false;
 var readyToSync = false;
@@ -940,6 +942,7 @@ var createScene = function(){
 
             })
 
+            //sphere1.physicsImpostor.
             netSpheres.push(sphere1);
 
             if(!registered)
@@ -1167,6 +1170,7 @@ net.setIndices(indices, indices.length);
             },
 
             function () {
+                if(ISMASTER)
                 updatePhysics();
             }
         )
@@ -1344,6 +1348,7 @@ net.setIndices(indices, indices.length);
                     currentMass = 0;
                 }
 
+                //currentRestitution = 0;
                 netSpheres[j*10 + i].physicsImpostor.mass = currentMass;
                 netSpheres[j*10 + i].physicsImpostor.restitution = currentRestitution;
             }
@@ -1629,8 +1634,18 @@ socket.on('sync with master', function(syncData){
     {
         masterData = syncData.syncdata;
         readyToSync = true;
-        //console.log(masterData);
-        //console.log("RECEIVED SYNC DATA");
+        if(!ISMASTER){
+            console.log("SYNC WITH MASTER");
+
+            if(netPhysicsDisabled == false)
+            {
+                for(var i = 0; i < netSpheres.length; i++){
+                    netSpheres[i].physicsImpostor.dispose();
+                }
+                netPhysicsDisabled = true;
+            }
+        }
+
     }
     else {
         //console.log("COURT NAMES DON't MATCH");
