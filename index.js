@@ -394,6 +394,8 @@ function onConnection(socket) {
       // // // // // console.log('no zone config for that location');
       // // // // // console.dir(myzone);
       mycourt = allcourts[myzone.courts[0]];
+      mydevice.court = mycourt;
+      alldevices[mydevice.ipaddress] = mydevice;
       findARoom(mycourt,mydevice);
     }
   }
@@ -541,6 +543,8 @@ function onConnection(socket) {
         }
         allcourts[newcourtid] = newcourt;
         courtnames[newcourtname] = newcourt;
+        somedevice.court = newcourt;
+        alldevices[somedevice.ipaddress] = somedevice;
 
         // // // // // console.log('find a room court: ' + newcourt.name + ' device: ' + somedevice.ipaddress);
         findARoom(newcourt,somedevice);
@@ -661,10 +665,9 @@ function onConnection(socket) {
 
     var thisgamesroom = roomnames[socket.roomname];
 
-
     thisgamesroom.scorescounted += 1;
     console.log('scores counted:' + thisgamesroom.scorescounted);
-    roomnames[socket.roomname];
+    roomnames[socket.roomname] = thisgamesroom;
 
     // // console.log('get data');
     // // console.dir(courtgamedata);
@@ -713,10 +716,11 @@ function onConnection(socket) {
     // // console.dir(gamesplayed);
 
     var thisgame = gamesplayed[gamename];
+    console.log('scorescounted: ' + thisgamesroom.scorescounted);
     if (thisgamesroom.scorescounted == thisgamesroom.courtcount) {
       for (index in thisgame.scores) {
 
-        var ascore = thisgames.scores[index];
+        var ascore = thisgame.scores[index];
         console.log('ascore in thisgame');
         console.log(ascore);
 
@@ -728,7 +732,8 @@ function onConnection(socket) {
         }
       }
       thisgamesroom.scorescounted = 0;
-      roomnames[socket.roomname];
+      console.log('resetting scorescounted' + thisgamesroom.scorescounted);
+      roomnames[socket.roomname] = thisgamesroom;
 
       var resultsdata = {
         highscorer: thisgame.highscorer,
@@ -1067,6 +1072,8 @@ function onConnection(socket) {
 
       syncSlaves(data);
     } else {
+      console.log('no socket.court: ');
+      console.dir(data);
       // // console.log('deviceIP ' + data.deviceIP);
       mydevice = alldevices[data.deviceIP];
       //// // console.log('mydevice - ');
