@@ -1229,7 +1229,7 @@ net.setIndices(indices, indices.length);
     {
         if(lowEndDevice)
         {
-            scene.getPhysicsEngine().getPhysicsPlugin().world.solver.iterations = 1;
+            scene.getPhysicsEngine().getPhysicsPlugin().world.solver.iterations = 3;
         }
         else
         {
