@@ -502,6 +502,12 @@ var createScene = function(){
 
                 if(ISMASTER)
                 {
+                    if(myIP === undefined){
+
+                        console.log("IP IS UNDEFINED");
+                        return;
+                    }
+                    
                     var syncData = {
                         deviceIP: myIP,
                         cameraPosition: camera.position,
@@ -1073,7 +1079,6 @@ clothMat.diffuseTexture.vScale = 4;
 clothMat.diffuseTexture.uScale = 4;
 clothMat.backFaceCulling = false;
 clothMat.diffuseTexture.hasAlpha = true;
-
 
 var net = BABYLON.Mesh.CreateGround("ground1", 1, 1, sphereAmount, scene, true);
 
