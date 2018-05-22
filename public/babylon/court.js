@@ -1,6 +1,3 @@
-// Main Controller Code
-
-//Variables (Folded below)
 var socket = io();
 
 var canvas = document.getElementById("canvas");
@@ -68,9 +65,6 @@ var combo = 0;
 var newBasketballs = [];
 var newBasketballOutlines = [];
 
-var emitInitTime = .5;
-var emitCurrentTime = .5;
-
 var lowEndDevice = false;
 
 createCameraTypes();
@@ -81,8 +75,6 @@ var initRun = true;
 var hasconnected = false;
 var reconnecting = false;
 var isconnected = false;
-
-
 
 var createScene = function(){
     var scene = new BABYLON.Scene(engine);
@@ -99,13 +91,11 @@ var createScene = function(){
     var initCameraFocus;
 
     if(useCannon) {
-        var physicsPlugin = new BABYLON.CannonJSPlugin(true, 1);
-        //physicsPlugin.setTimeStep(1/100);
+        var physicsPlugin = new BABYLON.CannonJSPlugin(false, 1);
     }
     else
     {
         var physicsPlugin = new BABYLON.OimoJSPlugin(5);
-        //physicsPlugin.setTimeStep(1/100);
         physicsPlugin.allowSleep = true;
 
     }
@@ -113,24 +103,7 @@ var createScene = function(){
     var gravityVector = new BABYLON.Vector3(0,-15.81, 0);
     scene.enablePhysics(gravityVector, physicsPlugin);
     scene.getPhysicsEngine().setTimeStep(1/(20 * .6));
-    //scene.getPhysicsEngine().getPhysicsPlugin().world.allowSleep = true;
     var camera = new BABYLON.FreeCamera("camera1", initCameraPos, scene);
-
-    /*
-    var pipeline = new BABYLON.DefaultRenderingPipeline(
-        "default", // The name of the pipeline
-        true, // Do you want HDR textures ?
-        scene, // The scene instance
-        [camera] // The list of cameras to be attached to
-    );
-
-    /*
-        pipeline.bloomEnabled = true;
-        pipeline.bloomThreshold = 0.8;
-        pipeline.bloomWeight = 0.2;
-        pipeline.bloomKernel = 4;
-        pipeline.bloomScale = 0.3;
-    */
 
     camera.attachControl(canvas, true);
 
@@ -180,12 +153,11 @@ var createScene = function(){
                 currentGameState = gameState;
                 currentCameraIndex = 0;
                 gameReady = false;
-                console.log("Aspect Ratio: " + canvas.width/canvas.height);
+                //console.log("Aspect Ratio: " + canvas.width/canvas.height);
                 lobbyStarted = false;
                 if(ISMASTER) {
                     animateCamera();
                 }
-                console.log("SWITCHED TO ATTRACT");
                 updateUI();
                 combo = 0;
                 changeBallFX(false);
@@ -257,8 +229,6 @@ var createScene = function(){
             camera.animations = [];
             camera.animations.push(cameraAnimation);
             scene.beginAnimation(camera, 0, 300, false, 1, animateCamera);
-            //prevAnimation = scene.beginAnimation(camera, 0, 600, false, 1, animateCamera);
-            //prevAnimation = animation;
         }
         else if(currentGameState == gameStates.WAITING)
         {
@@ -295,10 +265,6 @@ var createScene = function(){
       newPos.z = torus.position.z - 0;
       camera.setTarget(newPos);
 
-      //dynamically set fov based on screen resolution
-      //camera.fov = 2 + (-.676/canvas.height);
-
-        //console.log(canvas.height);
         var scaleFactor = canvas.height / 1080;
         camera.fov = 1;
         if(canvas.height > 2200)
@@ -319,16 +285,12 @@ var createScene = function(){
 
           UIWaitingUpdateClock(currentWaitTime);
 
-            console.log(currentWaitTime);
           if(currentWaitTime <= -5)
           {
-              console.log("got less that 5 seconds");
             if (hasplayer) {
               changeGameState(gameStates.GAMEPLAY);
-                console.log("switched ot gameplay");
             } else {
               changeGameState(gameStates.INACTIVE);
-                console.log("switched to inactive");
             }
           }
           else if(currentWaitTime <= -4 && !gameReady)
@@ -380,11 +342,9 @@ var createScene = function(){
       else if(currentGameState == gameStates.RESULTS)
       {
           currentResultsTime -= (engine.getDeltaTime() / 1000);
-          //attractLabel.innerHTML = "Score: " + score;
 
           if(currentResultsTime <= -2)
           {
-              //changeGameState(gameStates.ATTRACT);
               currentGameTime = initGameTime;
               updateClock();
               if(ISMASTER)
@@ -396,7 +356,6 @@ var createScene = function(){
               currentGameTime = initGameTime;
               updateClock();
           }
-
       }
 
       if(currentNetState ==  netStates.FREE)
@@ -407,7 +366,6 @@ var createScene = function(){
       else if(currentNetState == netStates.WAITING)
       {
           currentNetLerpTime = initNetLerpTime;
-          //console.log(currentNetLerpDelayTime);
           currentNetLerpDelayTime -= (engine.getDeltaTime() / 1000);
           if(currentNetLerpDelayTime <= 0)
           {
@@ -434,10 +392,6 @@ var createScene = function(){
       }
 
     });
-
-    //var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
-
-    //light.intensity = 0;
 
     var torus = BABYLON.Mesh.CreateTorus("torus", 4.3, 0.2, 50, scene);
     torus.position = new BABYLON.Vector3(0, -4.75, 8.9);
@@ -493,7 +447,6 @@ var createScene = function(){
             basketballs[i].material.alpha = 0;
             var newBasketball = mesh[0].clone("index: " + i);
 
-            //newBasketball.position.x =+ i*2;
             newBasketball.scaling = new BABYLON.Vector3(1.6, 1.6, 1.6);
             newBasketball.material = multimat;
 
@@ -518,11 +471,9 @@ var createScene = function(){
                 if(currentGameState == gameStates.GAMEPLAY || currentGameState == gameStates.RESULTS)
                 {
                     if(basketballs[i].position.y < -30 &&
-                        /*basketballs[i].physicsImpostor.getLinearVelocity().y < 0 &&*/
                         basketballStates[i] == 1)
                     {
                         combo = 0;
-                        //console.log("COMBO BREAKER " + i);
                         UIGameplayAnimateBadgeOff();
                         changeBallFX(false);
                         basketballStates[i] = 0;
@@ -536,12 +487,10 @@ var createScene = function(){
             if(currentLoadTime <= 0)
             {
                 sceneLoaded = true;
-                //console.log("SCENE LOADED, READY TO SYNC");
             }
             if(currentEmitTime <= 0)
             {
                 currentEmitTime = initEmitTime;
-
 
                 if(ISMASTER)
                 {
@@ -588,27 +537,22 @@ var createScene = function(){
                     if(hasCourt)
                     {
                         socket.emit("sync screens", syncData);
-                        //console.log(syncData);
                     }
 
                 }
             }
 
-
         });
-
 
         scene.registerAfterRender(function()
         {
             worldtime += engine.getDeltaTime()/1000;
-            //console.log(readyToSync);
-            //console.log(worldtime);
+
             if(readyToSync /*&& !ISMASTER */&& sceneLoaded)
             {
                 //console.log(masterData);
                 if(masterData === undefined) return;
 
-                //console.log("PING: " + (worldtime - masterData.worldTime));
                 worldtime = 0;
                 for(var i = 0; i < basketballs.length; i++)
                 {
@@ -616,15 +560,8 @@ var createScene = function(){
                     var newPos = new BABYLON.Vector3(masterData.basketballs[i].posx,masterData.basketballs[i].posy, masterData.basketballs[i].posz);
                     var newRot = new BABYLON.Quaternion(masterData.basketballs[i].rotx,masterData.basketballs[i].roty, masterData.basketballs[i].rotz, masterData.basketballs[i].rotw);
 
-                    //newPos = BABYLON.Vector3.Lerp(newBasketballs[i].position, newPos, )
                     newBasketballs[i].position = newPos;
                     newBasketballs[i].rotation = newRot.toEulerAngles();
-                    //newBasketballOutlines[i].position = newPos;
-
-                    // if(i != shotIndex-1)
-                    // {
-                    //     basketballStates[i] = masterData.states;
-                    // }
                 }
 
                 if(!ISMASTER){
@@ -651,7 +588,6 @@ var createScene = function(){
         {
             var newBasketballOutline = mesh[0].clone("index: " + i);
 
-            //newBasketball.position.x =+ i*2;
             newBasketballOutline.scaling = new BABYLON.Vector3(1.1, 1.1, 1.1);
             newBasketballOutline.material = baseMaterial;
 
@@ -763,10 +699,6 @@ var createScene = function(){
                 meshes[i].name != "Floor") {
 
                 myMaterial.emissiveTexture = new BABYLON.Texture("./assets/Colors.png", scene);
-                //myMaterial.diffuseTexture.hasAlpha = true;
-                //myMaterial.freeze();
-                //myMaterial.bumpTexture = new BABYLON.Texture("./assets/Layout/Layout_Normal.png", scene);
-                //myMaterial.specularTexture = new BABYLON.Texture("./assets/Layout/Layout_Smoothness.png", scene);
 
                 var newPos = new BABYLON.Vector3(0, 0, 0);
                 newPos.x = meshes[i].position.x + 0;
@@ -798,11 +730,7 @@ var createScene = function(){
         newPos.y = mesh.position.y + -35.75;
         newPos.z = mesh.position.z - 60;
         mesh.position = newPos;
-        //mesh.scaling = new BABYLON.Vector3(.8, 1, 1.1);
-        //console.log(meshes[i].name);
         mesh.material = myMaterial;
-        //console.log(mesh[0].name);
-
     });
 
     BABYLON.SceneLoader.ImportMesh("ArenaLights_Large", "./assets/Layout/", "ArenaLights.babylon", scene, function (mesh) {
@@ -821,73 +749,38 @@ var createScene = function(){
         newPos.y = mesh.position.y + -35.75;
         newPos.z = mesh.position.z - 60;
         mesh.position = newPos;
-        //mesh.scaling = new BABYLON.Vector3(.8, 1, 1.1);
-        //console.log(meshes[i].name);
         mesh.material = myMaterial;
-        //console.log(mesh[0].name);
-
     });
 
     var particleSystem = new BABYLON.ParticleSystem("particles", 200, scene);
 
-    //Texture of each particle
     particleSystem.particleTexture = new BABYLON.Texture("./assets/Alpha Textures/LenseFlash_01.png", scene);
 
     var fountain = BABYLON.Mesh.CreateBox("fountain", 1.0, scene);
     fountain.scaling = new BABYLON.Vector3(800, 120, 1);
-
     var newPos = new BABYLON.Vector3(0,0,0);
     newPos.x = fountain.position.x + 0;
     newPos.y = fountain.position.y + 25;
     newPos.z = fountain.position.z + 170;
-
     fountain.position = newPos;
     fountain.rotation = new BABYLON.Vector3(45, 0, 0);
-    //fountain.position
-    // Where the particles come from
     particleSystem.emitter = fountain; // the starting object, the emitter
     particleSystem.minEmitBox = new BABYLON.Vector3(-1, -1, 0); // Starting all from
     particleSystem.maxEmitBox = new BABYLON.Vector3(1, 0, 0); // To...
-
-    // Colors of all particles
-    //particleSystem.color1 = new BABYLON.Color4(0.7, 0.8, 1.0, 1.0);
-    //particleSystem.color2 = new BABYLON.Color4(0.2, 0.5, 1.0, 1.0);
-    //particleSystem.colorDead = new BABYLON.Color4(0, 0, 0.2, 0.0);
-
-    // Size of each particle (random between...
     particleSystem.minSize = 2;
     particleSystem.maxSize = 4;
-
-    // Life time of each particle (random between...
     particleSystem.minLifeTime = 0.1;
     particleSystem.maxLifeTime = 0.3;
-
-    // Emission rate
     particleSystem.emitRate = 3000;
-
-    // Blend mode : BLENDMODE_ONEONE, or BLENDMODE_STANDARD
     particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
-
-    // Set the gravity of all particles
     particleSystem.gravity = new BABYLON.Vector3(0, -9.81, 0);
-
-    // Direction of each particle after it has been emitted
-    //particleSystem.direction1 = new BABYLON.Vector3(-7, 8, 3);
-    //particleSystem.direction2 = new BABYLON.Vector3(7, 8, -3);
-
-    // Angular speed, in radians
     particleSystem.minAngularSpeed = 0;
     particleSystem.maxAngularSpeed = Math.PI;
-
-    // Speed
     particleSystem.minEmitPower = 0;
     particleSystem.maxEmitPower = 0;
     particleSystem.updateSpeed = 0.005;
-
     scene.meshes.pop(fountain);
-    // Start the particle system
     particleSystem.start();
-
 
     //CREATE CIRCLE OF SPHERE COLLIDERS
     var sphereAmount = 10;
@@ -904,7 +797,6 @@ var createScene = function(){
             centerPos.z + Math.cos(i*Math.PI * 2/sphereAmount) * radius
         );
 
-        //scene.meshes.pop(sphere);
         sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.SphereImpostor, {mass: 0,
             friction: 1,
             restitution:4} )
@@ -988,13 +880,10 @@ var createScene = function(){
                         currentRestitution = 0.5;
                     }
                 }
-
-
             }
             else
             {
                 currentMass = 15000 - j*4000;
-                //currentMass = 55000 - j*4000;
             }
 
             if(j == 0)//top row
@@ -1045,7 +934,6 @@ var createScene = function(){
             if(row == 0)
             {
                 horiDistance = 1.85
-                //vertDistance = 3 - .1* Math.floor(idx/sphereAmount);
             }
             else if(row == 1)
             {
@@ -1100,8 +988,6 @@ for(var i = 0; i < basketballs.length; i++) {
                 parameter: basketballs[i]
             },
             function () {
-
-                //console.log("HIT TRIGGER");
                 if(currentGameState == gameStates.GAMEPLAY || currentGameState == gameStates.RESULTS)
                 {
                     var idx = shotIndex-1;
@@ -1109,7 +995,6 @@ for(var i = 0; i < basketballs.length; i++) {
 
                     if(basketballStates[idx] != 0) {
                         basketballStates[idx] = 0;
-                        console.log("disabled " + idx);
                         addScore();
 
                         if(combo >= 2)
@@ -1130,10 +1015,7 @@ for(var i = 0; i < basketballs.length; i++) {
 
 
 var clothMat = new BABYLON.StandardMaterial("netMat", scene);
-//var testMat = new BABYLON.standr
 clothMat.diffuseTexture = new BABYLON.Texture("./assets/Layout/Net.png", scene);
-//clothMat.diffuseColor = new BABYLON.Color3(1,1,1);
-//clothMat.diffuseTexture.vOffset = 0.;
 clothMat.emissiveTexture = new BABYLON.Texture("./assets/Layout/Net.png", scene);
 clothMat.diffuseTexture.vScale = 4;
 clothMat.diffuseTexture.uScale = 4;
@@ -1142,9 +1024,6 @@ clothMat.diffuseTexture.hasAlpha = true;
 
 
 var net = BABYLON.Mesh.CreateGround("ground1", 1, 1, sphereAmount, scene, true);
-
-//net.needAlphaBlending = true;
-//net.needAlphaTesting = true;
 
 var positions = net.getVerticesData(BABYLON.VertexBuffer.PositionKind);
 
@@ -1315,19 +1194,14 @@ net.setIndices(indices, indices.length);
             basketballs[shotIndex].physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 0, 0));
             basketballs[shotIndex].physicsImpostor.setAngularVelocity(new BABYLON.Vector3(0, 0, 0));
             basketballs[shotIndex].physicsImpostor.applyImpulse(new BABYLON.Vector3(attractShots[attractIndex], 20, 11), basketballs[shotIndex].getAbsolutePosition());
-
         }
         else if(currentGameState == gameStates.GAMEPLAY){
             basketballs[shotIndex].position = new BABYLON.Vector3(0, -9, -14);
-
             basketballs[shotIndex].physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 0, 0));
             basketballs[shotIndex].physicsImpostor.setAngularVelocity(new BABYLON.Vector3(0, 0, 0));
             basketballs[shotIndex].physicsImpostor.applyImpulse(new BABYLON.Vector3(shotInfo.xSpeed, 18, 12), basketballs[shotIndex].getAbsolutePosition());
-            //basketballs[shotIndex].material.alpha = 1;
             basketballStates[shotIndex] = 1;
         }
-
-
 
         var convertedRot = new BABYLON.Vector3(0,0,0);
         var velocity = basketballs[shotIndex].physicsImpostor.getLinearVelocity();
@@ -1353,7 +1227,6 @@ net.setIndices(indices, indices.length);
 
     function updatePhysics()
     {
-
         if(lowEndDevice)
         {
             scene.getPhysicsEngine().getPhysicsPlugin().world.solver.iterations = 1;
@@ -1411,13 +1284,10 @@ net.setIndices(indices, indices.length);
                             currentRestitution = 0.5;
                         }
                     }
-
-
                 }
                 else
                 {
                     currentMass = 15000 - j*4000;
-                    //currentMass = 55000 - j*4000;
                 }
 
                 if(j == 0)//top row
@@ -1442,7 +1312,6 @@ var scene = createScene();
 engine.runRenderLoop(function() {
 
     if(!isconnected){
-        console.log("RETURNED BECAUSE NOT CONNECTED");
         return;
     }
 
@@ -1473,7 +1342,6 @@ engine.runRenderLoop(function() {
         }
         FPSArray = [];
         scene.actionManager.processTrigger(scene.actionManager.actions[4].trigger, {additionalData: "["});
-
     }
 
     if(ISMASTER)
@@ -1481,8 +1349,6 @@ engine.runRenderLoop(function() {
         fpsLabel.style.background = "red";
         fpsLabel.style.height = "2px";
     }
-
-    //scene.getPhysicsEngine().setTimeStep(1/(engine.getFps() * .75));
 });
 
 var $window = $(window);
@@ -1498,8 +1364,6 @@ var courtName = '';
 var gameName = '';
 var hasplayer = false;
 var lobbyStarted = false;
-
-// $passcodeInput.focus();
 
 var myIP;
 
@@ -1527,8 +1391,6 @@ function showCourt(someIP) {
   checkMyDeviceInfo(someIP);
 }
 function checkMyDeviceInfo(someIP) {
-  // check if Device Knows What Court it should be in
-
   console.log('court ready for setup: ip-' + myIP);
 
   var data = {
@@ -1540,35 +1402,17 @@ function checkMyDeviceInfo(someIP) {
     roomname: thisRoom
   }
 
-  console.log('trying to emit');
   socket.emit('court connected', data);
-
-  // reconnecting = false;
-  // hasconnected = true; //never set this again
 }
 
 
 function courtReconnection(courtinfofromserver) {
-  console.log('CONNECTION: court just reconnected:');
-  console.dir(courtinfofromserver);
 
   if (courtinfofromserver.hascourt) {
     console.log('court setup: '+ courtinfofromserver.courtname);
   } else {
     console.log('we need to set up court')
   }
-
-  // reconnecting = true;
-  // var data = {
-  //   hasconnected: hasconnected,
-  //   reconnecting: reconnecting,
-  //   deviceIP: myIP,
-  //   hascourt: hasCourt,
-  //   courtname: courtName,
-  //   roomname: thisRoom
-  // };
-  //
-  // socket.emit('court reconnected', data);
 }
 
 function haveCourtJoinRoom(courtname, roomnametojoin) {
@@ -1587,8 +1431,6 @@ function haveCourtJoinRoom(courtname, roomnametojoin) {
   updateUI();
 }
 
-
-
 function randomCode(howLong) {
   var randomname = "";
   var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -1602,7 +1444,6 @@ function randomRange (min, max) {
     var number = (Math.random() * (min - max) + max);
     return number;
 }
-
 
 function addScore() {
     currentNetState = netStates.WAITING;
@@ -1712,14 +1553,7 @@ function gameOver() {
           socket.emit('game over', gamedata);
       }
   }
-
-  //Show Results page
 }
-
-
-
-
-
 
 socket.on('set master', function(){
     ISMASTER = true;
@@ -1742,10 +1576,6 @@ socket.on('device needs court', function() {
 });
 socket.on('sync with master', function(syncData){
 
-    //console.log("COURT NAME: " + courtName);
-    //console.log(syncData);
-    //console.log("syncDataCourtName: " + syncData.courtname);
-    //console.log("SYNCED WITH MASTER");
     if(courtName == syncData.courtname)
     {
         masterData = syncData.syncdata;
@@ -1761,13 +1591,9 @@ socket.on('sync with master', function(syncData){
 
 
 socket.on('join this room', function(data) {
-  //console.log('Court and Room Data: ');
-  //console.dir(data);
 
   var courtname = data.court.name;
   var roomname = data.room.name;
-
-  //console.log('told to join ' + courtname + ' in ' + roomname);
 
   haveCourtJoinRoom(courtname,roomname);
 });
@@ -1820,8 +1646,6 @@ socket.on('take shot', function(data) {
   } else {
     console.log('shot made in a sister court - ' + shotmadeincourt);
   }
-
-    //console.log(scene.actionManager.actions.length);
 });
 socket.on('shot sent', function() {
   // console.log('We got a message back!');
@@ -1831,7 +1655,6 @@ socket.on('shot sent', function() {
 socket.on('end all games', function(courtthatfinished) {
   console.log('court that finished - ' + courtthatfinished);
 
-  //now end everything and send results
     if(ISMASTER){
         gameOver();
 
@@ -1870,7 +1693,6 @@ socket.on('reconnect', function() {
   isconnected = true;
 
   console.log('reconnect');
-  // socket.emit('reconnect');
 })
 socket.on('reconnecting', function() {
   console.log('reconnecting');

@@ -59,14 +59,14 @@ var winner = false;
 var widthTweenDistance;
 var heightTweenDistance;
 
-yourFirstName.innerHTML = "JIMMY";
-yourLastName.innerHTML = "DELANEY";
+yourFirstName.innerHTML = "";
+yourLastName.innerHTML = "";
 
-topFirstName.innerHTML = "BOB";
-topLastName.innerHTML = "WINKLEBURG";
+topFirstName.innerHTML = "";
+topLastName.innerHTML = "";
 
-topScoreText.innerHTML = "45";
-yourScoreText.innerHTML = "42";
+topScoreText.innerHTML = "21";
+yourScoreText.innerHTML = "12";
 
 var animating = false;
 var currentScore;
