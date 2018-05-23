@@ -35,6 +35,7 @@ var masterData;
 //Game Variables?
 var totalTime = 0;
 var netSpheres = [];
+var netVisiblePositions = [];
 var attractShots = [-.12, 1.2, 1.1, .3, 1, -.2, -2.5, 1.8, 0, 3.2]
 var cameraSettings = [];
 
@@ -619,13 +620,13 @@ var createScene = function(){
 
                 //}
 
-                if(!ISMASTER){
+                //if(!ISMASTER){
                     for(var i = 0; i < 30; i++)
                     {
                         var newPos = new BABYLON.Vector3(masterData.netvertexes[i].posx,masterData.netvertexes[i].posy, masterData.netvertexes[i].posz);
-                        netSpheres[i+10].position = newPos;
+                        netVisiblePositions[i+10].position = newPos;
                     }
-                }
+                //}
                 readyToSync =false;
             }
         });
@@ -951,12 +952,19 @@ var createScene = function(){
                 currentMass = 0;
             }
 
-            //scene.meshes.pop(sphere);
+            var sphere2 = BABYLON.Mesh.CreateSphere("sphere1", 10, sphereDiameter, scene);
+            sphere2.position = new BABYLON.Vector3(
+                centerPos.x + Math.sin(i * Math.PI * 2 / sphereAmount) * radius * (1- (j/2/height)),
+                centerPos.y + height - j,
+                centerPos.z + Math.cos(i * Math.PI * 2 / sphereAmount) * radius * (1- (j/2/height))
+            );
+            netVisiblePositions.push(sphere2);
+            scene.meshes.pop(sphere2);
             sphere1.physicsImpostor = new BABYLON.PhysicsImpostor(sphere1, BABYLON.PhysicsImpostor.SphereImpostor, {
                 mass: currentMass,
                 restitution: currentRestitution
 
-            })
+            });
 
             //sphere1.physicsImpostor.
             netSpheres.push(sphere1);
@@ -1103,13 +1111,13 @@ net.setIndices(indices, indices.length);
     {
         var positions = [];
 
-        netSpheres.forEach(function (s, idx)
+        netVisiblePositions.forEach(function (s, idx)
         {
-            positions.push(netSpheres[idx].position.x, netSpheres[idx].position.y, netSpheres[idx].position.z);
+            positions.push(netVisiblePositions[idx].position.x, netVisiblePositions[idx].position.y, netVisiblePositions[idx].position.z);
 
             if((idx % sphereAmount) == (sphereAmount - 1))
             {
-                positions.push(netSpheres[idx - sphereAmount + 1].position.x, netSpheres[idx - sphereAmount + 1].position.y, netSpheres[idx - sphereAmount + 1].position.z);
+                positions.push(netVisiblePositions[idx - sphereAmount + 1].position.x, netVisiblePositions[idx - sphereAmount + 1].position.y, netVisiblePositions[idx - sphereAmount + 1].position.z);
             }
         });
 
