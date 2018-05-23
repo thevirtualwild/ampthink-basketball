@@ -34,7 +34,8 @@ var overlayMaterial;
 var scene = createScene();
 var pageScaleFactorX;
 var pageScaleFactorY;
-
+var mouseDownPos;
+var mouseUpPos;
 function createScene() {
   var scene = new BABYLON.Scene(engine);
   engine.enableOfflineSupport = false;
@@ -98,13 +99,17 @@ function createScene() {
               currentBallState = ballStates.DRAGGING;
               targetX = ev.pageX;
               targetY = ev.pageY;
+              mouseDownPos = new BABYLON.Vector2(ev.pageX, ev.pageY);
           }
       });
 
       document.addEventListener('mouseup', function(ev){
           if(currentBallState == ballStates.DRAGGING)
           {
-              if (basketball.physicsImpostor.getLinearVelocity().z > 5)
+              mouseUpPos = new BABYLON.Vector2(ev.pageX, ev.pageY);
+                console.log(mouseDownPos);
+                console.log(mouseUpPos);
+              if (Math.abs(mouseUpPos.y - mouseDownPos.y) > 10 && basketball.physicsImpostor.getLinearVelocity().z > 5)
               {
                   takeShot();
               }
