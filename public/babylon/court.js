@@ -554,7 +554,11 @@ var createScene = function(){
                     if(hasCourt)
                     {
                         socket.emit("sync screens", syncData);
-                        add1Point = false;
+                        if(add1Point == true){
+                            console.log("SENT BASKET MADE")
+                            add1Point = false;
+                        }
+
                     }
 
                 }
@@ -584,6 +588,7 @@ var createScene = function(){
 
                 if(masterData.score == true)
                 {
+                    console.log("BASKET MADE RECEIVED");
                     score++;
                     addScore();
 
@@ -604,6 +609,7 @@ var createScene = function(){
                     UIGameplayAnimateBadgeOff();
                     changeBallFX(false);
                     ComboIsBroken = false;
+                    combo = 0;
                 }
 
                 //if(combo != masterData.combo)
