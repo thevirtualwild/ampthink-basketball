@@ -1029,13 +1029,12 @@ var createScene = function(){
         scene.meshes.pop(netSpheres[i]);
     });
 
-    var scoreTrigger = new BABYLON.Mesh.CreateBox("scoreTrigger", 2, scene);
+    var scoreTrigger = new BABYLON.Mesh.CreateBox("scoreTrigger", 3, scene);
     scoreTrigger.position = torus.position;
-    scoreTrigger.position.y += 1;
+    scoreTrigger.position.y += .75;
     var clearMat = new BABYLON.StandardMaterial("myMaterial", scene);
     clearMat.alpha = 0;
     scoreTrigger.material = clearMat;
-    //scene.meshes.pop(scoreTrigger);
     score = 0;
     var manager = new BABYLON.ActionManager(scene);
     scoreTrigger.actionManager = manager;
