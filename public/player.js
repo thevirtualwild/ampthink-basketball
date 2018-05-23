@@ -214,7 +214,6 @@ function createScene() {
               if(basketball.position.z > 6)
               {
                   shotInfo = {
-
                            xSpeed:basketball.physicsImpostor.getLinearVelocity().x,
                            ySpeed:basketball.physicsImpostor.getLinearVelocity().z,
                            deviceWidth:canvas.width,
@@ -228,7 +227,7 @@ function createScene() {
           else if(currentBallState == ballStates.WAITING)
           {
               //console.log("CHECKING FOR DRAGGABLE");
-              if(basketball.position.x > -4)
+              if(basketball.position.x > -4 && basketball.position.x < 4)
               {
                   currentBallState = ballStates.DRAGGABLE;
               }
@@ -261,10 +260,21 @@ function createScene() {
 
   function resetBall() {
       currentBallState = ballStates.WAITING;
-      basketball.position = new BABYLON.Vector3(-10, 0, 0);
+
       basketball.physicsImpostor.setAngularVelocity(0,0,0);
       basketball.physicsImpostor.setLinearVelocity(0,0,0);
-      basketball.physicsImpostor.applyImpulse(new BABYLON.Vector3(randomRange(9, 11), 0, randomRange(-1,1)), basketball.position);
+      var left = true;
+      if(randomRange(0, 1) < .5)
+      {
+          basketball.position = new BABYLON.Vector3(-10, 0, 0);
+          basketball.physicsImpostor.applyImpulse(new BABYLON.Vector3(randomRange(9, 11), 0, randomRange(-1,1)), basketball.position);
+      }
+      else
+      {
+          basketball.position = new BABYLON.Vector3(10, 0, 0);
+          basketball.physicsImpostor.applyImpulse(new BABYLON.Vector3(randomRange(-9, -11), 0, randomRange(-1,1)), basketball.position);
+      }
+
       var convertedRot = new BABYLON.Vector3(0,0,0);
       var velocity = basketball.physicsImpostor.getLinearVelocity();
       convertedRot.x = velocity.z;

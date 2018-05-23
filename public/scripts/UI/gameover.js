@@ -26,7 +26,8 @@ var height = Math.max( body.scrollHeight, body.offsetHeight,
 
 var ReadyToAnimOut = false;
 playAgain.addEventListener('click', function (e) {
-    UIGameoverAnimateOut();
+    //UIGameoverAnimateOut();
+    window.location.href = window.location.href;
 });
 
 function UIGameoverAnimateIn()
@@ -54,7 +55,7 @@ function UIGameoverAnimateIn()
     TweenMax.to(dashImg, gameoverFadeTime, {delay:gameoverFadeTime*4, opacity:1});
     TweenMax.to(playAgain, gameoverFadeTime, {delay:gameoverFadeTime*4, opacity:1});
 
-    //socket.emit('disconnect this device');
+    socket.emit('disconnect this device');
 }
 
 function UIGameoverAnimateOut() {

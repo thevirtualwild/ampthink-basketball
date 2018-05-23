@@ -1663,7 +1663,7 @@ socket.on('sync with master', function(syncData){
         masterData = syncData.syncdata;
         readyToSync = true;
         if(!ISMASTER){
-            console.log("SYNC WITH MASTER");
+            //console.log("SYNC WITH MASTER");
 
             if(netPhysicsDisabled == false)
             {
@@ -1673,7 +1673,6 @@ socket.on('sync with master', function(syncData){
                 netPhysicsDisabled = true;
             }
         }
-
     }
     else {
         //console.log("COURT NAMES DON't MATCH");
