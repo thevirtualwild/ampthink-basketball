@@ -307,6 +307,7 @@ var createScene = function(){
 
               if(ISMASTER) {
                   if (hasplayer) {
+                      console.log("EMITTING GAME ALMOST READY " + courtName);
                       socket.emit("game almost ready", courtName);
                   }
               }
