@@ -632,16 +632,16 @@ function onConnection(socket) {
 
 
   function addCourtGameScore(courtgamedata) {
-    // console.log('add score to database socket.game - ' + socket.game);
+    console.log('add score to database socket.game - ' + socket.game);
 
     var thissocketgamename = socket.game;
     var agame = gamesplayed[thissocketgamename];
     // add score to list of scores
     if (agame) {
       console.log('thisgame already in gamesplayed:');
-      console.dir(agame);
       // console.log('pushing new score to agame array');
       agame.scores.push(courtgamedata);
+      console.dir(agame);
       // updateHighScorer(agame, courtgamedata);
       gamesplayed[thissocketgamename] = agame;
     } else {
