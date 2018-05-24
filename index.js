@@ -632,16 +632,16 @@ function onConnection(socket) {
 
 
   function addCourtGameScore(courtgamedata) {
-    // console.log('add score to database socket.game - ' + socket.game);
+    console.log('add score to database socket.game - ' + socket.game);
 
     var thissocketgamename = socket.game;
     var agame = gamesplayed[thissocketgamename];
     // add score to list of scores
     if (agame) {
       console.log('thisgame already in gamesplayed:');
-      console.dir(agame);
       // console.log('pushing new score to agame array');
       agame.scores.push(courtgamedata);
+      console.dir(agame);
       // updateHighScorer(agame, courtgamedata);
       gamesplayed[thissocketgamename] = agame;
     } else {
@@ -1031,13 +1031,18 @@ function onConnection(socket) {
     // // // console.log('roomname:' +socket.roomname);
     // // // console.log('room reset called');
     // // console.dir(roomnames);
-    thisgamesroom.gamerunning = false;
+    if (thisgamesroom.gamerunning) {
+      console.log('room reset called and game reset');
+      thisgamesroom.gamerunning = false;
 
-    roomnames[socket.roomname] = thisgamesroom;
-    allrooms[thisgamesroom.id] = thisgamesroom;
+      roomnames[socket.roomname] = thisgamesroom;
+      allrooms[thisgamesroom.id] = thisgamesroom;
 
-    socket.broadcast.to(socket.roomname).emit('reset game');
-    socket.emit('reset game');
+      socket.broadcast.to(socket.roomname).emit('reset game');
+      socket.emit('reset game');
+    } else {
+      console.log('room reset called while game not running');
+    }
   });
   socket.on('court reset', function(somecourtname) {
     // // // console.log('court resetting');
@@ -1082,7 +1087,7 @@ function onConnection(socket) {
       var thiscourt = courtnames[somesocket.court.name];
       // console.log(thiscourt);
 
-        // console.log("COURT DISCONNECTED");
+      console.log("COURT DISCONNECTED");
       thiscourt.hasplayer = false;
       courtnames[somesocket.court] = thiscourt;
 
