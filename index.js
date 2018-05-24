@@ -232,7 +232,7 @@ var gamesplayed = {};
 function onConnection(socket) {
 
   // // // // // console.log('new connection - ' + socket.id);
-  var gamenum = 1;
+  // var gamenum = 1;
 
   // // // // // // // console.log('socket connected: ' + socket.id);
   var currentHighScore = {
@@ -988,9 +988,13 @@ function onConnection(socket) {
 
     thisgamesroom.gamerunning = true;
     thisgamesroom.scorescounted = 0;
-    gamenum = gamenum + 1;
-    thisgamesroom.gamenum = gamenum;
-    thisgamesroom.gamename = thisgamesroom.id + '_' + gamenum;
+
+    if (thisgamesroom.gamenum) {
+      thisgamesroom.gamenum += 1;
+    } else {
+      thisgamesroom.gamenum = 1;
+    }
+    thisgamesroom.gamename = thisgamesroom.id + '_' + thisgamesroom.gamenum;
     console.log('starting game with new gamename: ' + thisgamesroom.gamename);
     // // // console.log('game started: ' + thisgamesroom.gamename);
     thisgamesroom.courtcount = 1;
