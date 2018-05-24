@@ -111,6 +111,7 @@ function UIResultsAnimateIn()
 
     if(!winner)
     {
+        console.log("TWEENING IN YOUR LOSER SCORE");
         TweenMax.to(yourScore, textFadeTimeResults, {delay: textFadeTimeResults*2, marginRight: 0, ease:Back.easeOut});
         TweenMax.to(yourScore, textFadeTimeResults*2, {delay: textFadeTimeResults*2, opacity: 1});
     }
