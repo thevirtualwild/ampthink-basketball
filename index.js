@@ -1082,7 +1082,7 @@ function onConnection(socket) {
       var thiscourt = courtnames[somesocket.court.name];
       // console.log(thiscourt);
 
-        // console.log("COURT DISCONNECTED");
+      console.log("COURT DISCONNECTED");
       thiscourt.hasplayer = false;
       courtnames[somesocket.court] = thiscourt;
 
