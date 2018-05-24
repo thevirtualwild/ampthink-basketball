@@ -941,8 +941,8 @@ function onConnection(socket) {
       // // // console.log("room name " + socket.roomname);
 
     var thisgamesroom = roomnames[socket.roomname];
-    // // // console.log('all rooms');
-    // // console.dir(allrooms);
+    console.log('roomnames');
+    console.dir(roomnames);
 
     // // // console.log("this games room " + thisgamesroom);
     // // // console.log('running:' + thisgamesroom.gamerunning);
@@ -951,16 +951,28 @@ function onConnection(socket) {
       socket.game = thisgamesroom.gamename;
       thisgamesroom.courtcount += 1;
       // console.log('courtcount: ' + thisgamesroom.courtcount);
+      roomnames[socket.roomname] = thisgamesroom;
+      allrooms[thisgamesroom.id] = thisgamesroom;
     } else {
-      thisgamesroom.gamerunning = true;
-      thisgamesroom.scorescounted = 0;
-      gamenum = gamenum + 1;
-      thisgamesroom.gamename = thisgamesroom.id + '_' + gamenum;
-      // console.log('game started: ' + thisgamesroom.gamename);
-      thisgamesroom.courtcount = 1;
-      // console.log('courtcount: ' + thisgamesroom.courtcount);
-      socket.game = thisgamesroom.gamename;
+      startGame(newgamename);
     }
+
+    //TODO: WILL NEED TO LISTEN FOR AN EVENT TO TURN GAME PROGRESS OFF AFTER RESULTS ARE SHOWN
+
+  });
+
+  function startGame(newgamename) {
+    var thisgamesroom = roomnames[socket.roomname];
+
+
+    thisgamesroom.gamerunning = true;
+    thisgamesroom.scorescounted = 0;
+    gamenum = gamenum + 1;
+    thisgamesroom.gamename = thisgamesroom.id + '_' + gamenum;
+    // console.log('game started: ' + thisgamesroom.gamename);
+    thisgamesroom.courtcount = 1;
+    // console.log('courtcount: ' + thisgamesroom.courtcount);
+    socket.game = thisgamesroom.gamename;
 
     roomnames[socket.roomname] = thisgamesroom;
     allrooms[thisgamesroom.id] = thisgamesroom;
@@ -972,10 +984,7 @@ function onConnection(socket) {
 
     console.log('game almost ready by - ' + courtName);
     socket.broadcast.to(socket.roomname).emit('game almost ready', gamedata);
-
-      //TODO: WILL NEED TO LISTEN FOR AN EVENT TO TURN GAME PROGRESS OFF AFTER RESULTS ARE SHOWN
-
-  });
+  }
   socket.on('throw ball', function(data) {
     // // // // // // // console.log('Full Data - ' + data);
 
