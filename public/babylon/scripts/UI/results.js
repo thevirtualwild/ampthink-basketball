@@ -148,7 +148,7 @@ function UIResultsAnimateOut()
     TweenMax.to(team3, textFadeTimeResults, {delay: textFadeTimeResults, marginTop: height, ease:Back.easeOut});
     TweenMax.to(team3, textFadeTimeResults, {delay: textFadeTimeResults, opacity: 0});
 
-    TweenMax.to(inner, textFadeTimeResults, {backgroundColor: "rgba(0,0,0,0.0)"});
+    TweenMax.to(inner, textFadeTimeResults, {backgroundColor: "rgba(0,0,0,0.0)", delay:textFadeTimeResults});
 
     animating = true;
 

@@ -1441,11 +1441,11 @@ engine.runRenderLoop(function() {
         scene.actionManager.processTrigger(scene.actionManager.actions[4].trigger, {additionalData: "["});
     }
 
-    if(ISMASTER)
-    {
-        fpsLabel.style.background = "red";
-        fpsLabel.style.height = "100%";
-    }
+    // if(ISMASTER)
+    // {
+    //     fpsLabel.style.background = "red";
+    //     fpsLabel.style.height = "100%";
+    // }
 });
 
 var $window = $(window);

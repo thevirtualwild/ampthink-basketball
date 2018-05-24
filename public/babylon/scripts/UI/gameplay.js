@@ -57,11 +57,11 @@ function UIGameplayAnimateOut()
     footerLeft.style.top = "0";
     footerCenter.style.top = "0";
 
-    TweenMax.to(footer, textFadeTime, {backgroundPositionY:200});
-    TweenMax.to(footerLeft, textFadeTime, {top:200});
-    TweenMax.to(footerCenter, textFadeTime, {top:200, onComplete: turnOffDisplay});
-    TweenMax.to(firstName, textFadeTime, {opacity:1, delay: .1, left:footerWidth + 300});
-    TweenMax.to(lastName, textFadeTime, {opacity:1, delay: .2, left:footerWidth + 300});
+    TweenMax.to(footer, textFadeTime, {backgroundPositionY:200, delay:2});
+    TweenMax.to(footerLeft, textFadeTime, {top:200, delay:2});
+    TweenMax.to(footerCenter, textFadeTime, {top:200, onComplete: turnOffDisplay, delay:2});
+    TweenMax.to(firstName, textFadeTime, {opacity:1, delay: 2.1, left:footerWidth + 300});
+    TweenMax.to(lastName, textFadeTime, {opacity:1, delay: 2.2, left:footerWidth + 300});
 }
 
 function UIGameplayUpdateScore(scoreInput)
