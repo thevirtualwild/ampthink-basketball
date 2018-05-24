@@ -66,7 +66,8 @@ function getDataFromAirtable() {
           id: record.id,
           name: name,
           zones: zones,
-          courts: courts
+          courts: courts,
+          canjoingame: true
         };
         allrooms[record.id] = recorddata;
         roomnames[name] = recorddata;
@@ -469,9 +470,13 @@ function onConnection(socket) {
       // // // // console.dir(roomcourtisapartof);
 
       gamestarted = roomcourtisapartof.gamerunning;
+      canjoingame = roomcourtisapartof.canjoingame;
 
       if (gamestarted) {
         socket.emit('game already running');
+      } else if (!canjoingame) {
+        console.log('cant join game yet');
+        socket.emit('cant join game yet');
       } else {
         //CHECK COURT TO SEE IF GAME HAS STARTED, also if it has a player IF IT HAS, DON'T LET USER JOIN
         hasplayer = courttojoin.hasplayer;
@@ -987,6 +992,7 @@ function onConnection(socket) {
     console.log('start game (current gamename)- ' + thisgamesroom.gamename);
 
     thisgamesroom.gamerunning = true;
+    thisgamesroom.canjoingame = false;
     thisgamesroom.scorescounted = 0;
 
     if (thisgamesroom.gamenum) {
@@ -1098,6 +1104,7 @@ function onConnection(socket) {
     // if (thisgamesroom.gamerunning) {
       // console.log('room reset called');
       thisgamesroom.gamerunning = false;
+      thisgamesroom.canjoingame = true;
 
       roomnames[socket.roomname] = thisgamesroom;
       allrooms[thisgamesroom.id] = thisgamesroom;
