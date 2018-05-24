@@ -679,7 +679,7 @@ function onConnection(socket) {
 
 
 
-    pushScoreToDatabase(data);
+    pushScoreToDatabase(courtgamedata);
 
   }
 
