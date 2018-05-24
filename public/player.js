@@ -420,7 +420,7 @@ socket.on('game almost ready', function(courtName) {
     //roll in ball;
 
     var ae = BABYLON.ActionEvent.CreateNewFromScene(scene, {additionalData: "r"});
-    //console.log(ae);
+    console.log("GAME ALMOST READY RECEIVED");
     scene.actionManager.processTrigger(scene.actionManager.actions[0].trigger,  ae);
 });
 socket.on('end all games', function() {
