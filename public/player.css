@@ -210,26 +210,29 @@ canvas {
   text-align: center;
   pointer-events: none;
 }
-#footerLogo h2 {
+#footerLogo #brought-by {
   position: absolute;
   bottom: 0;
   z-index: -10;
   left: 0;
   right: 0;
   width: 100%;
-  height: 100px;
-  object-fit: contain;
   max-width: 100%;
+}
+#footerLogo #brought-by h2 {
   text-shadow: 1px 4px 2px rgba(0, 0, 0, 0.2);
   color: white;
   font-weight: bold;
-  font-size: 1.8rem;
+  font-size: 1.4rem;
+  margin-bottom: 0;
+  display: inline-block;
+  transform: translateY(5px);
 }
 #footerLogo img {
-  max-width: 120px;
-  padding: 10px;
+  max-width: 80px;
+  padding: 5px;
   width: 100%;
-  max-height: 100%;
+  height: 70px;
   object-fit: contain;
 }
 #footerLogo img.gameLogo {
@@ -238,7 +241,7 @@ canvas {
   left: 0px;
   max-width: 150px;
   width: 150px;
-  height: 120px;
+  height: 100px;
   object-fit: contain;
 }
 
