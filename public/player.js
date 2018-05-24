@@ -149,8 +149,10 @@ function createScene() {
       document.addEventListener('touchend', function(ev){
           if(currentBallState == ballStates.DRAGGING)
           {
-              mouseUpPos = new BABYLON.Vector2(ev.targetTouches[0].clientX, ev.targetTouches[0].clientY);
-
+              mouseUpPos = new BABYLON.Vector2(ev.targetTouches[ev.targetTouches.length - 1].clientX, ev.targetTouches[ev.targetTouches - 1].clientY);
+              console.log("LENGTH " + ev.targetTouches.length);
+              console.log("DOWN " + mouseDownPos.y);
+              console.log("UP " + mouseUpPos.y);
               if (Math.abs(mouseUpPos.y - mouseDownPos.y) > 10 && basketball.physicsImpostor.getLinearVelocity().z > 5)
               {
                   takeShot();
