@@ -940,7 +940,7 @@ function onConnection(socket) {
 
   socket.on('game almost ready', function(courtName) {
 
-    console.log('GAME ALMOST READY LISTENER');
+    console.log('GAME ALMOST READY LISTENER - ' + courtName);
       // // // // console.log(allrooms);
       // // // // console.log("room name " + socket.roomname);
 
@@ -1046,7 +1046,7 @@ function onConnection(socket) {
     // // // // console.log('room reset called');
     // // // console.dir(roomnames);
     // if (thisgamesroom.gamerunning) {
-      // // console.log('room reset called while game running');
+      console.log('room reset called');
       thisgamesroom.gamerunning = false;
 
       roomnames[socket.roomname] = thisgamesroom;
