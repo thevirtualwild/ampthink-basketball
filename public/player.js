@@ -134,8 +134,7 @@ function createScene() {
               currentBallState = ballStates.DRAGGING;
               targetX = ev.targetTouches[0].clientX;
               targetY = ev.targetTouches[0].clientY;
-              //mouseDownPos = new BABYLON.Vector2(ev.targetTouches[0].x, ev.targetTouches[0].y);
-
+              mouseDownPos = new BABYLON.Vector2(ev.targetTouches[0].clientX, ev.targetTouches[0].clientY);
           }
       });
 
@@ -150,9 +149,9 @@ function createScene() {
       document.addEventListener('touchend', function(ev){
           if(currentBallState == ballStates.DRAGGING)
           {
-              //mouseUpPos = new BABYLON.Vector2(ev.targetTouches[ev.targetTouches.length-1].x, ev.targetTouches[ev.targetTouches.length-1].y);
+              mouseUpPos = new BABYLON.Vector2(ev.targetTouches[0].clientX, ev.targetTouches[0].clientY);
 
-              if (/*Math.abs(mouseUpPos.y - mouseDownPos.y) > 10 && */basketball.physicsImpostor.getLinearVelocity().z > 5)
+              if (Math.abs(mouseUpPos.y - mouseDownPos.y) > 10 && basketball.physicsImpostor.getLinearVelocity().z > 5)
               {
                   takeShot();
               }
