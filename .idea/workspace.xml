@@ -22,8 +22,8 @@
       <file leaf-file-name="court.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/babylon/court.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="188">
-              <caret line="1320" column="44" lean-forward="false" selection-start-line="1320" selection-start-column="44" selection-end-line="1320" selection-end-column="44" />
+            <state relative-caret-position="398">
+              <caret line="1330" column="32" lean-forward="true" selection-start-line="1330" selection-start-column="32" selection-end-line="1330" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -130,7 +130,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>colorrgb</find>
       <find>submaterials[1].ambient</find>
       <find>.material.sub</find>
       <find>submaterials</find>
@@ -160,6 +159,7 @@
       <find>socket.disconnect</find>
       <find>takeshot</find>
       <find>masterdata</find>
+      <find>updatephysics</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -388,12 +388,12 @@
       <workItem from="1524498240817" duration="55736000" />
       <workItem from="1525705426882" duration="49686000" />
       <workItem from="1526919808662" duration="18076000" />
-      <workItem from="1527002570191" duration="19449000" />
+      <workItem from="1527002570191" duration="19593000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="695457000" />
+    <option name="totallyTimeSpent" value="695601000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -755,8 +755,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/babylon/court.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="1320" column="44" lean-forward="false" selection-start-line="1320" selection-start-column="44" selection-end-line="1320" selection-end-column="44" />
+        <state relative-caret-position="398">
+          <caret line="1330" column="32" lean-forward="true" selection-start-line="1330" selection-start-column="32" selection-end-line="1330" selection-end-column="32" />
           <folding />
         </state>
       </provider>
