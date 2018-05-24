@@ -73,6 +73,7 @@ var currentScore;
 var currentName;
 function UIResultsAnimateIn()
 {
+    console.log("ANIMATE RESULTS IN");
     animating = false;
     yourScore.style.opacity = 0;
     topScore.style.opacity = 0;
