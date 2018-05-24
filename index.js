@@ -632,9 +632,10 @@ function onConnection(socket) {
 
 
   function addCourtGameScore(courtgamedata) {
-    // console.log('add score to database socket.game - ' + socket.game);
+    console.log('add score to database socket.game - ' + socket.game);
     // console.dir('my court game data');
     // console.dir(courtgamedata);
+
 
     var thissocketgamename = socket.game;
     var agame = gamesplayed[thissocketgamename];
@@ -712,6 +713,7 @@ function onConnection(socket) {
   }
 
   function getHighScore(gamename) {
+    console.log('get highscore for: ' + gamename);
 
     var thisgamesroom = roomnames[socket.roomname];
     var thisgame = gamesplayed[gamename];
@@ -941,17 +943,28 @@ function onConnection(socket) {
   socket.on('game almost ready', function(courtName) {
 
     console.log('GAME ALMOST READY LISTENER - ' + courtName);
-      // // // // console.log(allrooms);
-      // // // // console.log("room name " + socket.roomname);
+    console.log('socket game: ' + socket.game);
+    // // // // console.log(allrooms);
+    // // // // console.log("room name " + socket.roomname);
 
     var thisgamesroom = roomnames[socket.roomname];
+    if (!socket.game) {
+      socket.game = thisgamesroom.id + '_' + thisgamesroom.gamenum;
+    }
+
     // console.log('roomnames');
     // console.dir(roomnames);
+
+    thisgamesroom.gamename = socket.game;
+    // // console.log('courtcount: ' + thisgamesroom.courtcount);
+    roomnames[socket.roomname] = thisgamesroom;
+    allrooms[thisgamesroom.id] = thisgamesroom;
 
     // // // // console.log("this games room " + thisgamesroom);
     // // // // console.log('running:' + thisgamesroom.gamerunning);
     if (thisgamesroom.gamerunning) {
       console.log('game running: ' + thisgamesroom.gamename);
+      console.dir(thisgamesroom);
       socket.game = thisgamesroom.gamename;
       thisgamesroom.courtcount += 1;
       // // console.log('courtcount: ' + thisgamesroom.courtcount);
@@ -973,15 +986,19 @@ function onConnection(socket) {
     thisgamesroom.gamerunning = true;
     thisgamesroom.scorescounted = 0;
     gamenum = gamenum + 1;
+    thisgamesroom.gamenum = gamenum;
     thisgamesroom.gamename = thisgamesroom.id + '_' + gamenum;
     console.log('starting game with new gamename: ' + thisgamesroom.gamename);
     // // console.log('game started: ' + thisgamesroom.gamename);
     thisgamesroom.courtcount = 1;
     // // console.log('courtcount: ' + thisgamesroom.courtcount);
     socket.game = thisgamesroom.gamename;
+    console.log('new socketgame: '+ socket.game);
 
     roomnames[socket.roomname] = thisgamesroom;
     allrooms[thisgamesroom.id] = thisgamesroom;
+
+    updateGameName(socket.game);
 
     var gamedata = {
       gamename: thisgamesroom.gamename
@@ -991,11 +1008,19 @@ function onConnection(socket) {
     socket.broadcast.to(socket.roomname).emit('game almost ready', gamedata);
   }
   function updateGameName(newgamename) {
+    console.log('update game name called: ' + newgamename);
     socket.game = newgamename;
+    var thisgamesroom = roomnames[socket.roomname];
+
+    thisgamesroom.gamename = socket.game;
+
+    roomnames[socket.roomname] = thisgamesroom;
+    allrooms[thisgamesroom.id] = thisgamesroom;
     socket.broadcast.to(socket.roomname).emit('update game name', newgamename);
   }
   socket.on('update game name', function(newgamename) {
     socket.game = newgamename;
+    console.log('update game name from socket - ' + socket.game);
 
     var thisgamesroom = roomnames[socket.roomname];
 
