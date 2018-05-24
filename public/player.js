@@ -152,7 +152,7 @@ function createScene() {
           {
               mouseUpPos = new BABYLON.Vector2(ev.targetTouches[ev.targetTouches.length-1].x, ev.targetTouches[ev.targetTouches.length-1].y);
 
-              if (Math.abs(mouseUpPos.y - mouseDownPos.y) > 10 && basketball.physicsImpostor.getLinearVelocity().z > 5)
+              if (/*Math.abs(mouseUpPos.y - mouseDownPos.y) > 10 && */basketball.physicsImpostor.getLinearVelocity().z > 5)
               {
                   takeShot();
               }
