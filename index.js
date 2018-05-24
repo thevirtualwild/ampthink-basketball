@@ -949,7 +949,7 @@ function onConnection(socket) {
 
     var thisgamesroom = roomnames[socket.roomname];
     if (!socket.game) {
-      socket.game = thisgamesroom.id + gamenum;
+      socket.game = thisgamesroom.id + '_' + thisgamesroom.gamenum;
     }
 
     // console.log('roomnames');
@@ -986,6 +986,7 @@ function onConnection(socket) {
     thisgamesroom.gamerunning = true;
     thisgamesroom.scorescounted = 0;
     gamenum = gamenum + 1;
+    thisgamesroom.gamenum = gamenum;
     thisgamesroom.gamename = thisgamesroom.id + '_' + gamenum;
     console.log('starting game with new gamename: ' + thisgamesroom.gamename);
     // // console.log('game started: ' + thisgamesroom.gamename);
