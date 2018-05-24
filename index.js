@@ -475,6 +475,7 @@ function onConnection(socket) {
       if (gamestarted) {
         socket.emit('game already running');
       } else if (!canjoingame) {
+        console.log('cant join game yet');
         socket.emit('cant join game yet');
       } else {
         //CHECK COURT TO SEE IF GAME HAS STARTED, also if it has a player IF IT HAS, DON'T LET USER JOIN
@@ -991,6 +992,7 @@ function onConnection(socket) {
     console.log('start game (current gamename)- ' + thisgamesroom.gamename);
 
     thisgamesroom.gamerunning = true;
+    thisgamesroom.canjoingame = false;
     thisgamesroom.scorescounted = 0;
 
     if (thisgamesroom.gamenum) {
