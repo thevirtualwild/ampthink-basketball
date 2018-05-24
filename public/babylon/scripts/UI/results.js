@@ -186,6 +186,13 @@ function UIResultsSetData(data) {
     }
     else
     {
+
+        if(currentScore === undefined){
+            currentScore = 0;
+            yourScoreText.innerHTML = currentScore.toString();
+        }
+
+
         if(currentScore >= data.resultsdata.highscorer.score)
         {
             winner = true;

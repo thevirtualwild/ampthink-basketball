@@ -23,8 +23,8 @@
       <file leaf-file-name="court.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/babylon/court.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="372">
-              <caret line="361" column="44" lean-forward="true" selection-start-line="361" selection-start-column="44" selection-end-line="361" selection-end-column="44" />
+            <state relative-caret-position="1329">
+              <caret line="1052" column="13" lean-forward="false" selection-start-line="1052" selection-start-column="4" selection-end-line="1052" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -60,16 +60,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/babylon/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="157">
-              <caret line="203" column="20" lean-forward="false" selection-start-line="203" selection-start-column="20" selection-end-line="203" selection-end-column="20" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="player.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/player.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -83,10 +73,17 @@
       <file leaf-file-name="results.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/babylon/scripts/UI/results.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="395">
-              <caret line="209" column="9" lean-forward="true" selection-start-line="209" selection-start-column="9" selection-end-line="209" selection-end-column="9" />
+            <state relative-caret-position="358">
+              <caret line="207" column="9" lean-forward="true" selection-start-line="207" selection-start-column="9" selection-end-line="207" selection-end-column="9" />
               <folding />
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="favicon.ico" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/babylon/favicon.ico">
+          <provider selected="true" editor-type-id="images">
+            <state />
           </provider>
         </entry>
       </file>
@@ -104,8 +101,10 @@
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="148">
-              <caret line="1106" column="31" lean-forward="false" selection-start-line="1106" selection-start-column="20" selection-end-line="1106" selection-end-column="31" />
-              <folding />
+              <caret line="1114" column="31" lean-forward="false" selection-start-line="1114" selection-start-column="20" selection-end-line="1114" selection-end-column="31" />
+              <folding>
+                <marker date="1527183187786" expanded="true" signature="28719:28933" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -131,7 +130,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>sync with master</find>
       <find>applyimpulse</find>
       <find>netspheres</find>
       <find>sphere2</find>
@@ -156,11 +154,12 @@
       <find>currentscore</find>
       <find>game almost ready by</find>
       <find>game almost ready</find>
-      <find>.username</find>
       <find>changegamestate</find>
       <find>reset game</find>
       <find>room reset</find>
       <find>console.log</find>
+      <find>.username</find>
+      <find>score = 0</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -389,12 +388,12 @@
       <workItem from="1524498240817" duration="55736000" />
       <workItem from="1525705426882" duration="49686000" />
       <workItem from="1526919808662" duration="18076000" />
-      <workItem from="1527002570191" duration="26831000" />
+      <workItem from="1527002570191" duration="27918000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="702839000" />
+    <option name="totallyTimeSpent" value="703926000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -475,13 +474,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/babylon/assets/bballnohooplowpoly.obj">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/2dgame/court.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4455">
@@ -740,26 +732,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/babylon/court.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="361" column="44" lean-forward="true" selection-start-line="361" selection-start-column="44" selection-end-line="361" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="148">
-          <caret line="1106" column="31" lean-forward="false" selection-start-line="1106" selection-start-column="20" selection-end-line="1106" selection-end-column="31" />
+          <caret line="1114" column="31" lean-forward="false" selection-start-line="1114" selection-start-column="20" selection-end-line="1114" selection-end-column="31" />
+          <folding>
+            <marker date="1527183187786" expanded="true" signature="28719:28933" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/babylon/favicon.ico">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/babylon/court.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1329">
+          <caret line="1052" column="13" lean-forward="false" selection-start-line="1052" selection-start-column="4" selection-end-line="1052" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/babylon/scripts/UI/results.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="395">
-          <caret line="209" column="9" lean-forward="true" selection-start-line="209" selection-start-column="9" selection-end-line="209" selection-end-column="9" />
+        <state relative-caret-position="358">
+          <caret line="207" column="9" lean-forward="true" selection-start-line="207" selection-start-column="9" selection-end-line="207" selection-end-column="9" />
           <folding />
         </state>
       </provider>
