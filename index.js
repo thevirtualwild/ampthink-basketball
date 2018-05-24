@@ -978,11 +978,10 @@ function onConnection(socket) {
     allrooms[thisgamesroom.id] = thisgamesroom;
 
     var gamedata = {
-      courtname: courtName,
       gamename: thisgamesroom.gamename
     }
 
-    console.log('game almost ready by - ' + courtName);
+    console.log('game almost ready');
     socket.broadcast.to(socket.roomname).emit('game almost ready', gamedata);
   }
   socket.on('throw ball', function(data) {
