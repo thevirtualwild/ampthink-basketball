@@ -638,9 +638,11 @@ function onConnection(socket) {
     var agame = gamesplayed[thissocketgamename];
     // add score to list of scores
     if (agame) {
-      console.log('thisgame already in gamesplayed:');
+      console.log('thisgame already in gamesplayed: ');
+      console.dir(courtgamedata);
       // console.log('pushing new score to agame array');
       agame.scores.push(courtgamedata);
+      console.log('agame full data:');
       console.dir(agame);
       // updateHighScorer(agame, courtgamedata);
       gamesplayed[thissocketgamename] = agame;
@@ -671,6 +673,7 @@ function onConnection(socket) {
     if (thisgamesroom.scorescounted == thisgamesroom.courtcount) {
       console.log('all scores added, getting highscore: ');
       console.dir(thisgamesroom);
+      console.log('get high score for gamename - ' + thissocketgamename);
       getHighScore(thissocketgamename);
     } else {
       console.log('not all scores added, waiting for all scores: ');
@@ -947,7 +950,7 @@ function onConnection(socket) {
     // // // console.log("this games room " + thisgamesroom);
     // // // console.log('running:' + thisgamesroom.gamerunning);
     if (thisgamesroom.gamerunning) {
-      // console.log('game running: ' + thisgamesroom.gamename);
+      console.log('game running: ' + thisgamesroom.gamename);
       socket.game = thisgamesroom.gamename;
       thisgamesroom.courtcount += 1;
       // console.log('courtcount: ' + thisgamesroom.courtcount);
@@ -964,11 +967,12 @@ function onConnection(socket) {
   function startGame() {
     var thisgamesroom = roomnames[socket.roomname];
 
-
+    console.log('start game - ' + thisgamesroom.gamename);
     thisgamesroom.gamerunning = true;
     thisgamesroom.scorescounted = 0;
     gamenum = gamenum + 1;
     thisgamesroom.gamename = thisgamesroom.id + '_' + gamenum;
+    console.log('starting game with new gamename: ' + thisgamesroom.gamename);
     // console.log('game started: ' + thisgamesroom.gamename);
     thisgamesroom.courtcount = 1;
     // console.log('courtcount: ' + thisgamesroom.courtcount);
