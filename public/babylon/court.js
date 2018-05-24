@@ -169,6 +169,7 @@ var createScene = function(){
                 updateUI();
                 combo = 0;
                 changeBallFX(false);
+                roomReset = false;
                 break;
             case gameStates.WAITING:
                 currentGameState = gameState;
@@ -352,12 +353,15 @@ var createScene = function(){
       {
           currentResultsTime -= (engine.getDeltaTime() / 1000);
 
-          if(currentResultsTime <= -2)
+          if(currentResultsTime <= -2 && !roomReset)
           {
               currentGameTime = initGameTime;
               updateClock();
-              if(ISMASTER)
-              socket.emit('room reset');
+
+              if(ISMASTER){
+                  socket.emit('room reset');
+                  roomReset = true
+              }
           }
           else if(currentResultsTime <= 0)
           {
