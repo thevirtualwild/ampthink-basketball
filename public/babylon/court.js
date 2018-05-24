@@ -556,6 +556,7 @@ var createScene = function(){
                     {
                         socket.emit("sync screens", syncData);
                         if(add1Point == true){
+                            console.log(syncData.score);
                             console.log("SENT BASKET MADE")
                             add1Point = false;
                         }
@@ -602,6 +603,7 @@ var createScene = function(){
                     {
                         changeBallFX(true);
                     }
+                    masterData.score = false;
                     //add1Point = false;
                 }
 
@@ -1668,7 +1670,17 @@ socket.on('sync with master', function(syncData){
 
     if(courtName == syncData.courtname)
     {
-        masterData = syncData.syncdata;
+        if(masterData.score == true)
+        {
+            masterData = syncData.syncdata;
+            masterData.score = true;
+        }
+        else
+        {
+            masterData = syncData.syncdata;
+        }
+
+
         readyToSync = true;
         if(!ISMASTER){
             //console.log("SYNC WITH MASTER");
