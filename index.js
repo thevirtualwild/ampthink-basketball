@@ -632,9 +632,10 @@ function onConnection(socket) {
 
 
   function addCourtGameScore(courtgamedata) {
-    // console.log('add score to database socket.game - ' + socket.game);
+    console.log('add score to database socket.game - ' + socket.game);
     // console.dir('my court game data');
     // console.dir(courtgamedata);
+
 
     var thissocketgamename = socket.game;
     var agame = gamesplayed[thissocketgamename];
@@ -712,6 +713,7 @@ function onConnection(socket) {
   }
 
   function getHighScore(gamename) {
+    console.log('get highscore for: ' + gamename);
 
     var thisgamesroom = roomnames[socket.roomname];
     var thisgame = gamesplayed[gamename];
