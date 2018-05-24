@@ -194,7 +194,7 @@ function UIResultsSetData(data) {
             topLastName.innerHTML = currentName.substr(currentName.indexOf(' ') + 1);
             yourScore.style.display = "none";
 
-            console.log("YOU ARE HIGH SCORER beat score of " + data.resultsdata.highscorer.score);
+            console.log("YOU ARE HIGH SCORER " + currentScore + " top score " + data.resultsdata.highscorer.score);
 
         }
         else
@@ -205,7 +205,7 @@ function UIResultsSetData(data) {
             topLastName.innerHTML = name.substr(name.indexOf(' ') + 1);
             topScoreText.innerHTML = data.resultsdata.highscorer.score;
             yourScore.style.display = "auto";
-            console.log("YOU LOST TO HIGH SCORER");
+            console.log("YOU LOST TO HIGH SCORER " + currentScore + " top score " + data.resultsdata.highscorer.score);
 
         }
     }
