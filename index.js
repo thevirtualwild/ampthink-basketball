@@ -952,6 +952,7 @@ function onConnection(socket) {
     // // // // console.log('running:' + thisgamesroom.gamerunning);
     if (thisgamesroom.gamerunning) {
       console.log('game running: ' + thisgamesroom.gamename);
+      console.dir('thisgamesroom');
       socket.game = thisgamesroom.gamename;
       thisgamesroom.courtcount += 1;
       // // console.log('courtcount: ' + thisgamesroom.courtcount);
@@ -982,6 +983,8 @@ function onConnection(socket) {
 
     roomnames[socket.roomname] = thisgamesroom;
     allrooms[thisgamesroom.id] = thisgamesroom;
+
+    updateGameName(socket.game);
 
     var gamedata = {
       gamename: thisgamesroom.gamename
