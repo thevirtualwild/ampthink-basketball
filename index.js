@@ -633,8 +633,7 @@ function onConnection(socket) {
 
   function addCourtGameScore(courtgamedata) {
     console.log('add score to database socket.game - ' + socket.game);
-    // console.dir('my court game data');
-    // console.dir(courtgamedata);
+    console.dir(courtgamedata);
 
 
     var thissocketgamename = socket.game;
