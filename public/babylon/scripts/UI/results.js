@@ -213,7 +213,7 @@ function UIResultsSetData(data) {
             topLastName.innerHTML = name.substr(name.indexOf(' ') + 1);
             topScoreText.innerHTML = data.resultsdata.highscorer.score;
             yourScoreText.innerHTML = currentScore.toString();
-            yourScore.style.display = "auto";
+            yourScore.style.display = "block";
             console.log("YOU LOST TO HIGH SCORER " + currentScore + " top score " + data.resultsdata.highscorer.score);
 
         }
