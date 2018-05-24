@@ -943,6 +943,7 @@ function onConnection(socket) {
   socket.on('game almost ready', function(courtName) {
 
     console.log('GAME ALMOST READY LISTENER - ' + courtName);
+    console.log('socket game: ' + socket.game);
       // // // // console.log(allrooms);
       // // // // console.log("room name " + socket.roomname);
 
@@ -982,6 +983,7 @@ function onConnection(socket) {
     thisgamesroom.courtcount = 1;
     // // console.log('courtcount: ' + thisgamesroom.courtcount);
     socket.game = thisgamesroom.gamename;
+    console.log('new socketgame: '+ socket.game);
 
     roomnames[socket.roomname] = thisgamesroom;
     allrooms[thisgamesroom.id] = thisgamesroom;
@@ -1008,6 +1010,7 @@ function onConnection(socket) {
   }
   socket.on('update game name', function(newgamename) {
     socket.game = newgamename;
+    console.log('update game name from socket - ' + socket.game);
 
     var thisgamesroom = roomnames[socket.roomname];
 
