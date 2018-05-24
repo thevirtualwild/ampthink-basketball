@@ -636,6 +636,7 @@ function onConnection(socket) {
     // // // // console.log('Adding Score:');
     // // // // console.dir(data);
 
+    console.log('add score to database socket.game - ' + socket.game);
     getHighScore(socket.game, data);
 
 
@@ -681,6 +682,8 @@ function onConnection(socket) {
     // // console.dir(thisgamesroom);
 
     var agame = gamesplayed[gamename];
+
+    console.log('get high score agamename - ' + gamename);
     // // console.log('gamesplayed: ');
     // // console.dir(gamesplayed);
 
