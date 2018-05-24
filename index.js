@@ -954,14 +954,14 @@ function onConnection(socket) {
       roomnames[socket.roomname] = thisgamesroom;
       allrooms[thisgamesroom.id] = thisgamesroom;
     } else {
-      startGame(newgamename);
+      startGame();
     }
 
     //TODO: WILL NEED TO LISTEN FOR AN EVENT TO TURN GAME PROGRESS OFF AFTER RESULTS ARE SHOWN
 
   });
 
-  function startGame(newgamename) {
+  function startGame() {
     var thisgamesroom = roomnames[socket.roomname];
 
 
