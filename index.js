@@ -737,7 +737,6 @@ function onConnection(socket) {
     };
 
     var emitData = {
-      court: socket.court.name,
       game: gamename,
       resultsdata: resultsdata
     };
