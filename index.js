@@ -495,7 +495,7 @@ function onConnection(socket) {
             court: socket.court
           }
 
-          // // // // console.log("IS GAME IN PROGRESS? " + socket.gamesrunning);
+          // // // // console.log("IS GAME IN PROGRESS? " + socket.gamenamesrunning);
 
           socket.broadcast.to(socket.roomname).emit('player joined court', data);
           // // // // console.log('socket.roomname - ' + socket.roomname);
@@ -632,11 +632,11 @@ function onConnection(socket) {
 
 
   function addCourtGameScore(courtgamedata) {
-    console.log('add score to database socket.game - ' + socket.game);
+    console.log('add score to database socket.gamename - ' + socket.gamename);
     console.dir(courtgamedata);
 
 
-    var thissocketgamename = socket.game;
+    var thissocketgamename = socket.gamename;
     var agame = gamesplayed[thissocketgamename];
     // add score to list of scores
     if (agame) {
@@ -942,19 +942,20 @@ function onConnection(socket) {
   socket.on('game almost ready', function(courtName) {
 
     console.log('GAME ALMOST READY LISTENER - ' + courtName);
-    console.log('socket game: ' + socket.game);
+    console.log('socket game: ' + socket.gamename);
     // // // // console.log(allrooms);
     // // // // console.log("room name " + socket.roomname);
 
     var thisgamesroom = roomnames[socket.roomname];
-    if (!socket.game) {
-      socket.game = thisgamesroom.id + '_' + thisgamesroom.gamenum;
+    if (!socket.gamename) {
+      socket.gamename = thisgamesroom.id + '_' + thisgamesroom.gamenum;
+      console.log('setting socket.gamename' + socket.gamename);
     }
 
     // console.log('roomnames');
     // console.dir(roomnames);
 
-    thisgamesroom.gamename = socket.game;
+    thisgamesroom.gamename = socket.gamename;
     // // console.log('courtcount: ' + thisgamesroom.courtcount);
     roomnames[socket.roomname] = thisgamesroom;
     allrooms[thisgamesroom.id] = thisgamesroom;
@@ -964,7 +965,7 @@ function onConnection(socket) {
     if (thisgamesroom.gamerunning) {
       console.log('game running: ' + thisgamesroom.gamename);
       console.dir(thisgamesroom);
-      socket.game = thisgamesroom.gamename;
+      socket.gamename = thisgamesroom.gamename;
       thisgamesroom.courtcount += 1;
       // // console.log('courtcount: ' + thisgamesroom.courtcount);
       roomnames[socket.roomname] = thisgamesroom;
@@ -991,13 +992,13 @@ function onConnection(socket) {
     // // console.log('game started: ' + thisgamesroom.gamename);
     thisgamesroom.courtcount = 1;
     // // console.log('courtcount: ' + thisgamesroom.courtcount);
-    socket.game = thisgamesroom.gamename;
-    console.log('new socketgame: '+ socket.game);
+    socket.gamename = thisgamesroom.gamename;
+    console.log('new socketgame: '+ socket.gamename);
 
     roomnames[socket.roomname] = thisgamesroom;
     allrooms[thisgamesroom.id] = thisgamesroom;
 
-    updateGameName(socket.game);
+    updateGameName(socket.gamename);
 
     var gamedata = {
       gamename: thisgamesroom.gamename
@@ -1008,22 +1009,22 @@ function onConnection(socket) {
   }
   function updateGameName(newgamename) {
     console.log('update game name called: ' + newgamename);
-    socket.game = newgamename;
+    socket.gamename = newgamename;
     var thisgamesroom = roomnames[socket.roomname];
 
-    thisgamesroom.gamename = socket.game;
+    thisgamesroom.gamename = socket.gamename;
 
     roomnames[socket.roomname] = thisgamesroom;
     allrooms[thisgamesroom.id] = thisgamesroom;
     socket.broadcast.to(socket.roomname).emit('update game name', newgamename);
   }
   socket.on('update game name', function(newgamename) {
-    socket.game = newgamename;
-    console.log('update game name from socket - ' + socket.game);
+    socket.gamename = newgamename;
+    console.log('update game name from socket - ' + socket.gamename);
 
     var thisgamesroom = roomnames[socket.roomname];
 
-    thisgamesroom.gamename = socket.game;
+    thisgamesroom.gamename = socket.gamename;
 
     roomnames[socket.roomname] = thisgamesroom;
     allrooms[thisgamesroom.id] = thisgamesroom;
