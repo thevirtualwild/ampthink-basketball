@@ -1800,6 +1800,10 @@ socket.on('change player name', function(data) {
     console.log(data);
 });
 
+socket.on('update game name', function(newgamename) {
+  socket.emit('update game name');
+});
+
 socket.on('connect', function() {
   isconnected = true;
   myIP = getMyIP();

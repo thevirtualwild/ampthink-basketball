@@ -990,6 +990,14 @@ function onConnection(socket) {
     // console.log('game almost ready');
     socket.broadcast.to(socket.roomname).emit('game almost ready', gamedata);
   }
+  function updateGameName(newgamename) {
+    socket.game = newgamename;
+    socket.broadcast.to(socket.roomname).emit('update game name', newgamename);
+  }
+  socket.on('update game name', function(newgamename) {
+    socket.game = newgamename;
+  });
+
   socket.on('throw ball', function(data) {
     // // // // // // // // console.log('Full Data - ' + data);
 
