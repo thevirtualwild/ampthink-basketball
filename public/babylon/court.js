@@ -1801,7 +1801,7 @@ socket.on('change player name', function(data) {
 });
 
 socket.on('update game name', function(newgamename) {
-  socket.emit('update game name');
+  socket.emit('update game name', newgamename);
 });
 
 socket.on('connect', function() {

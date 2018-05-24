@@ -944,12 +944,21 @@ function onConnection(socket) {
 
     console.log('GAME ALMOST READY LISTENER - ' + courtName);
     console.log('socket game: ' + socket.game);
-      // // // // console.log(allrooms);
-      // // // // console.log("room name " + socket.roomname);
+    // // // // console.log(allrooms);
+    // // // // console.log("room name " + socket.roomname);
 
     var thisgamesroom = roomnames[socket.roomname];
+    if (!socket.game) {
+      socket.game = thisgamesroom.id + gamenum;
+    }
+
     // console.log('roomnames');
     // console.dir(roomnames);
+
+    thisgamesroom.gamename = socket.game;
+    // // console.log('courtcount: ' + thisgamesroom.courtcount);
+    roomnames[socket.roomname] = thisgamesroom;
+    allrooms[thisgamesroom.id] = thisgamesroom;
 
     // // // // console.log("this games room " + thisgamesroom);
     // // // // console.log('running:' + thisgamesroom.gamerunning);
@@ -998,7 +1007,7 @@ function onConnection(socket) {
     socket.broadcast.to(socket.roomname).emit('game almost ready', gamedata);
   }
   function updateGameName(newgamename) {
-    console.log('update game name called');
+    console.log('update game name called: ' + newgamename);
     socket.game = newgamename;
     var thisgamesroom = roomnames[socket.roomname];
 
