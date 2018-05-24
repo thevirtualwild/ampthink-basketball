@@ -262,7 +262,7 @@ function onConnection(socket) {
     // console.log('socket.court.id: ' + courtid);
     var thiscourt = courtsandmaster[courtid];
     // console.log('this court - ');
-    console.dir(thiscourt);
+    // console.dir(thiscourt);
 
     if (thiscourt) {
       // console.log('court is listed - ');
@@ -305,7 +305,7 @@ function onConnection(socket) {
         thiscourt.master = socket.id;
         socket.court.master = socket.id;
         // console.log('thiscourt master: ');
-        console.dir(thiscourt);
+        // console.dir(thiscourt);
         thiscourt.slaves = [];
         courtsandmaster[courtid] = thiscourt;
         socket.emit('set master');
@@ -739,7 +739,7 @@ function onConnection(socket) {
       resultsdata: resultsdata
     };
 
-    // console.log('emit data');
+    console.log('emit data');
     console.dir(emitData);
 
     socket.broadcast.to(socket.roomname).emit('show results', emitData);
@@ -1061,7 +1061,7 @@ function onConnection(socket) {
       syncSlaves(data);
     } else {
       // console.log('no socket.court: ');
-      console.dir(data);
+      // console.dir(data);
       // // // console.log('deviceIP ' + data.deviceIP);
       mydevice = alldevices[data.deviceIP];
       //// // // console.log('mydevice - ');
