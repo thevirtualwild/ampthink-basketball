@@ -1670,10 +1670,7 @@ socket.on('sync with master', function(syncData){
 
     if(courtName == syncData.courtname)
     {
-        if(masterData === undefined){
-            return;
-        }
-        else{
+        if(masterData !== undefined){
             if(masterData.score == true)
             {
                 masterData = syncData.syncdata;
@@ -1684,9 +1681,6 @@ socket.on('sync with master', function(syncData){
                 masterData = syncData.syncdata;
             }
         }
-
-
-
 
         readyToSync = true;
         if(!ISMASTER){
