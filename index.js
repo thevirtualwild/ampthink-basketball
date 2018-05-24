@@ -1031,13 +1031,18 @@ function onConnection(socket) {
     // // // console.log('roomname:' +socket.roomname);
     // // // console.log('room reset called');
     // // console.dir(roomnames);
-    thisgamesroom.gamerunning = false;
+    if (thisgamesroom.gamerunning) {
+      console.log('room reset called and game reset');
+      thisgamesroom.gamerunning = false;
 
-    roomnames[socket.roomname] = thisgamesroom;
-    allrooms[thisgamesroom.id] = thisgamesroom;
+      roomnames[socket.roomname] = thisgamesroom;
+      allrooms[thisgamesroom.id] = thisgamesroom;
 
-    socket.broadcast.to(socket.roomname).emit('reset game');
-    socket.emit('reset game');
+      socket.broadcast.to(socket.roomname).emit('reset game');
+      socket.emit('reset game');
+    } else {
+      console.log('room reset called while game not running');
+    }
   });
   socket.on('court reset', function(somecourtname) {
     // // // console.log('court resetting');
