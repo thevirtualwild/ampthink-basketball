@@ -996,6 +996,14 @@ function onConnection(socket) {
   }
   socket.on('update game name', function(newgamename) {
     socket.game = newgamename;
+
+    var thisgamesroom = roomnames[socket.roomname];
+
+    thisgamesroom.gamename = socket.game;
+
+    roomnames[socket.roomname] = thisgamesroom;
+    allrooms[thisgamesroom.id] = thisgamesroom;
+
   });
 
   socket.on('throw ball', function(data) {
