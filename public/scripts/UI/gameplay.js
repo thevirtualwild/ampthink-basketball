@@ -14,6 +14,13 @@ var gameoverPage = document.getElementsByClassName("gameover page")[0];
 
 var headerInstructions = document.getElementById("headerInstructions");
 var background = document.getElementById("background");
+
+var body = document.body,
+    html = document.documentElement;
+
+var height = Math.max( body.scrollHeight, body.offsetHeight,
+    html.clientHeight, html.scrollHeight, html.offsetHeight );
+
 function UIGameplayAnimateIn()
 {
     background.style.pointerEvents = "none";
@@ -27,6 +34,6 @@ function UIGameplayAnimateIn()
 
 function UIGameplayAnimateOut()
 {
-    TweenMax.to(headerInstructions, customizeFadeTime, {delay:customizeFadeTime, top:0});
+    TweenMax.to(headerInstructions, customizeFadeTime, {delay:customizeFadeTime, top:height * 1.5});
     TweenMax.to(headerInstructions, customizeFadeTime, {delay:customizeFadeTime*2, opacity:0, onComplete: UIGameoverAnimateIn});
 }
