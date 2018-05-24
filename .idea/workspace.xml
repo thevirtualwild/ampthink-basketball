@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1c95612d-4678-4af6-a1f9-2ab5baa022a4" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/public/babylon/scripts/UI/results.js" afterPath="$PROJECT_DIR$/public/babylon/scripts/UI/results.js" />
+      <change beforePath="$PROJECT_DIR$/index.js" afterPath="$PROJECT_DIR$/index.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -72,14 +72,14 @@
       <file leaf-file-name="player.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/player.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="426">
-              <caret line="158" column="18" lean-forward="true" selection-start-line="158" selection-start-column="18" selection-end-line="158" selection-end-column="18" />
+            <state relative-caret-position="199">
+              <caret line="401" column="0" lean-forward="true" selection-start-line="401" selection-start-column="0" selection-end-line="401" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="results.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="results.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/babylon/scripts/UI/results.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="194">
@@ -99,11 +99,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="188">
-              <caret line="639" column="26" lean-forward="false" selection-start-line="639" selection-start-column="25" selection-end-line="639" selection-end-column="26" />
+            <state relative-caret-position="405">
+              <caret line="992" column="5" lean-forward="true" selection-start-line="992" selection-start-column="5" selection-end-line="992" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -130,9 +130,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>shotindex</find>
-      <find>master</find>
-      <find>uiresultssetdata</find>
       <find>getmyip</find>
       <find>sync screens</find>
       <find>add1point</find>
@@ -160,6 +157,9 @@
       <find>a</find>
       <find>game almost ready</find>
       <find>court should be</find>
+      <find>you lost</find>
+      <find>joincourt</find>
+      <find>reset game</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -202,7 +202,6 @@
         <option value="$PROJECT_DIR$/public/babylon/scripts/UI/waiting.js" />
         <option value="$PROJECT_DIR$/public/babylon/assets/SCSS/court.scss" />
         <option value="$PROJECT_DIR$/public/babylon/court.css" />
-        <option value="$PROJECT_DIR$/index.js" />
         <option value="$PROJECT_DIR$/public/babylon/scripts/UI/attract.js" />
         <option value="$PROJECT_DIR$/public/babylon/scripts/playerInfo.js" />
         <option value="$PROJECT_DIR$/public/scripts/UI/customize.js" />
@@ -212,6 +211,7 @@
         <option value="$PROJECT_DIR$/public/scripts/UI/gameplay.js" />
         <option value="$PROJECT_DIR$/public/babylon/court.js" />
         <option value="$PROJECT_DIR$/public/babylon/scripts/UI/results.js" />
+        <option value="$PROJECT_DIR$/index.js" />
       </list>
     </option>
   </component>
@@ -388,12 +388,12 @@
       <workItem from="1524498240817" duration="55736000" />
       <workItem from="1525705426882" duration="49686000" />
       <workItem from="1526919808662" duration="18076000" />
-      <workItem from="1527002570191" duration="24145000" />
+      <workItem from="1527002570191" duration="25097000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="700153000" />
+    <option name="totallyTimeSpent" value="701105000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -683,14 +683,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/player.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="426">
-          <caret line="158" column="18" lean-forward="true" selection-start-line="158" selection-start-column="18" selection-end-line="158" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/babylon/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="157">
@@ -731,14 +723,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="639" column="26" lean-forward="false" selection-start-line="639" selection-start-column="25" selection-end-line="639" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/scripts/UI/input.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="353">
@@ -759,6 +743,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="194">
           <caret line="78" column="31" lean-forward="true" selection-start-line="78" selection-start-column="31" selection-end-line="78" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/player.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="401" column="0" lean-forward="true" selection-start-line="401" selection-start-column="0" selection-end-line="401" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="992" column="5" lean-forward="true" selection-start-line="992" selection-start-column="5" selection-end-line="992" selection-end-column="5" />
           <folding />
         </state>
       </provider>

@@ -985,7 +985,7 @@ function onConnection(socket) {
       gamename: thisgamesroom.gamename
     }
 
-    // // // // // console.log('game almost ready by - ' + courtName);
+    console.log('game almost ready by - ' + courtName);
     socket.broadcast.to(socket.roomname).emit('game almost ready', gamedata);
 
       //TODO: WILL NEED TO LISTEN FOR AN EVENT TO TURN GAME PROGRESS OFF AFTER RESULTS ARE SHOWN
