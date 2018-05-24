@@ -952,7 +952,7 @@ function onConnection(socket) {
     // // // // console.log('running:' + thisgamesroom.gamerunning);
     if (thisgamesroom.gamerunning) {
       console.log('game running: ' + thisgamesroom.gamename);
-      console.dir('thisgamesroom');
+      console.dir(thisgamesroom);
       socket.game = thisgamesroom.gamename;
       thisgamesroom.courtcount += 1;
       // // console.log('courtcount: ' + thisgamesroom.courtcount);
@@ -994,7 +994,14 @@ function onConnection(socket) {
     socket.broadcast.to(socket.roomname).emit('game almost ready', gamedata);
   }
   function updateGameName(newgamename) {
+    console.log('update game name called');
     socket.game = newgamename;
+    var thisgamesroom = roomnames[socket.roomname];
+
+    thisgamesroom.gamename = socket.game;
+
+    roomnames[socket.roomname] = thisgamesroom;
+    allrooms[thisgamesroom.id] = thisgamesroom;
     socket.broadcast.to(socket.roomname).emit('update game name', newgamename);
   }
   socket.on('update game name', function(newgamename) {
