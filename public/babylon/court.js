@@ -1318,11 +1318,11 @@ net.setIndices(indices, indices.length);
     {
         if(lowEndDevice)
         {
-            scene.getPhysicsEngine().getPhysicsPlugin().world.solver.iterations = 5;
+            scene.getPhysicsEngine().getPhysicsPlugin().world.solver.iterations = 2;
         }
         else
         {
-            scene.getPhysicsEngine().getPhysicsPlugin().world.solver.iterations = 5;
+            scene.getPhysicsEngine().getPhysicsPlugin().world.solver.iterations = 2;
         }
         for(var j = 0; j < height; j++)
         {
